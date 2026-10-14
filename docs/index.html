@@ -640,6 +640,16 @@
   .pgrid2 .code pre, .pgrid2 .code code{white-space:pre-wrap !important; overflow-wrap:anywhere; word-break:keep-all; font-size:13px; line-height:1.55;}
   .pgrid2 .code{min-width:0;}
   .pgrid2.mat .code pre, .pgrid2.mat .code code{font-size:11.5px; line-height:1.45; max-height:370px; overflow:auto;}
+  .kdo{display:flex; gap:12px; align-items:flex-start; background:#FFF4E8; border:1.5px dashed #F28C28; border-radius:12px; padding:11px 14px; margin-bottom:10px; break-inside:avoid;}
+  .kdo span{flex:none; font-weight:700; font-size:13px; color:#C25E00; white-space:nowrap;}
+  .kdo p{margin:0; font-size:13.5px; line-height:1.5; color:#333;}
+  .kdo b{font-family:var(--mono); font-size:12.5px; background:#fff; padding:1px 6px; border-radius:5px;}
+  .kit .kp .kdo{margin-bottom:0;}
+  .kgrid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .kgrid .code pre{max-height:178px; overflow:auto; padding:9px 14px;}
+  .kgrid .code code{font-size:11.5px; line-height:1.45; white-space:pre-wrap;}
+  .kgrid .code .bar{padding:6px 12px;}
+  .lfold{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:2px 8px; border-radius:6px;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
@@ -826,7 +836,7 @@
   <h2 class="s-title sm">실습 진행 방식</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>labs.zip 받기</b><span>아래 링크 · 덱과 같은 곳</span></div><div class="fa">→</div><div class="fs"><b>압축 풀기</b><span>바탕화면 등</span></div><div class="fa">→</div><div class="fs"><b>VS Code로 폴더 열기</b><span>실습마다 열 폴더 표시</span></div><div class="fa">→</div><div class="fs"><b>Claude Code 패널</b><span>왼쪽 위 아이콘</span></div><div class="fa">→</div><div class="fs"><b>요청문 붙여 넣기</b><span>「실습 진행」 장표</span></div></div><div class="kit wide" style="margin-top:22px"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">처음 한 번 · labs 폴더에서</span></div><pre><code>python3 · claude 버전을 확인하고
-python3 lab1_harness_vs_bare/run.py --dry-run 으로 실습 환경이 되는지 확인해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">막히면</span></div><pre><code>방금 오류를 보고 원인과 고칠 방법을 알려 줘. 내 PC 설정은 바꾸기 전에 물어봐</code></pre></div></div><div class="dbnote"><span>실습 자료</span> <a class="dl" href="dl/labs.zip" download>전체 실습 자료 labs.zip</a> · 설치할 패키지 없음 (표준 라이브러리만) · 코드는 직접 쓰지 않음</div></div></div>
+labs 폴더의 실습 폴더 목록을 보여 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">막히면</span></div><pre><code>방금 오류를 보고 원인과 고칠 방법을 알려 줘. 내 PC 설정은 바꾸기 전에 물어봐</code></pre></div></div><div class="dbnote"><span>실습 자료</span> <a class="dl" href="dl/labs.zip" download>전체 실습 자료 labs.zip</a> · 설치할 패키지 없음 (표준 라이브러리만) · 코드는 직접 쓰지 않음</div></div></div>
 </section>
 
 <section class="slide dk divider" data-title="[Ch1] 하네스 엔지니어링 개념">
@@ -1045,8 +1055,8 @@ python3 lab1_harness_vs_bare/run.py --dry-run 으로 실습 환경이 되는지 
   <h2 class="s-title sm">같은 질문 열 번</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>하네스 미적용 vs CLAUDE.md 한 장 · 파일 없이 장표 요청문만으로</p><div class="mine"><span>내 업무 적용</span>내 업무의 답 형식 · 규칙을 CLAUDE.md 세 줄로</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>빈 폴더를 VS Code로 열고 Claude Code 켜기</li><li>① 하네스 미적용으로 같은 질문 10번</li><li>② CLAUDE.md 한 장 입히고 10번</li><li>③ 비교표 · ④ 내 업무 규칙 넣고 다시</li></ol></div>
+    <div class="lc goal"><div class="lh">목표</div><p>하네스 미적용 vs CLAUDE.md 한 장 · 같은 질문 열 번</p><div class="lf">사용 파일 · <code class="lfold">labs/lab1_1_same_question</code></div><div class="mine"><span>내 업무 적용</span>내 업무의 답 형식 · 규칙을 CLAUDE.md 세 줄로</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 같은 질문 10번</li><li>장표의 CLAUDE.md를 직접 만들기</li><li>하네스 적용 상태로 같은 질문 10번</li><li>답 종류 · 형식 · 약속 여부 비교</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>형식이 같은 답 10 / 10</li><li>비교표를 최종 산출물 폴더에 저장</li></ul></div>
   </div></div>
 </section>
@@ -1056,14 +1066,10 @@ python3 lab1_harness_vs_bare/run.py --dry-run 으로 실습 환경이 되는지 
   <div class="eyebrow"><span class="tag">Ch1</span></div>
   <h2 class="s-title sm">실습 1-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>빈 폴더 하나 (예: 바탕화면/hx-lab1)</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 10번</span></div><pre><code>bare 폴더를 만들고 그 안에서 아래 명령을 10번 실행해
-답을 bare/01.txt ~ 10.txt 로 저장해 줘.
-
-claude -p --setting-sources "" "다음 주 부산 출장인데 노트북이 자꾸 꺼져요. 출장 전에 새 걸로 바꿔 주실 수 있죠? 안 되면 개인 노트북 써도 되나요?"</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 비교</span></div><pre><code>bare 와 harness 의 답을 비교해 표로 정리해 줘:
-분야 판단 종류 수 · 같은 형식(JSON) 답 수 · 교체를 약속한 답 수 · 평균 글자 수</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 내 업무 규칙</span></div><pre><code>harness/CLAUDE.md 에 〈내 업무 규칙 한 줄〉 을 넣고 ②③을 다시 해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② CLAUDE.md 입히고 10번</span></div><pre><code>harness 폴더에 아래 내용으로 CLAUDE.md 를 만들고, 그 안에서 같은 질문을
---setting-sources project 로 10번 실행해 harness/01.txt ~ 10.txt 로 저장해 줘.
-
-# 사내 문의 응대
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/lab1_1_same_question</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 10번</span></div><pre><code>질문.txt 의 질문을 claude -p --setting-sources "" 로 10번 실행해
+답을 runs/미적용_01.txt ~ 10.txt 로 저장해 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>탐색기에서 새 파일 <b>CLAUDE.md</b> → 오른쪽 「복사」 → 붙여 넣기 → 저장</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 하네스 적용 · 10번</span></div><pre><code>같은 질문을 claude -p --setting-sources project 로 10번 실행해
+답을 runs/적용_01.txt ~ 10.txt 로 저장해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 비교</span></div><pre><code>runs/ 의 미적용 · 적용 답을 비교해 표로 정리해 줘:
+분야 판단 종류 수 · 같은 형식(JSON) 답 수 · 교체를 약속한 답 수 · 평균 글자 수</code></pre></div></div><div class="kf"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code># 사내 문의 응대
 
 너는 사내 헬프데스크 담당이다. 문의 하나에 아래 형식의 JSON 한 줄만 답한다.
 JSON 밖에 다른 글이나 코드 블록 표시를 쓰지 않는다.
@@ -1074,7 +1080,7 @@ JSON 밖에 다른 글이나 코드 블록 표시를 쓰지 않는다.
 - 분야는 IT · 구매 · 인사 · 보안 · 기타 중 하나. 섞여 있으면 먼저 처리할 쪽
 - 교체 · 환불 · 승인처럼 담당 부서가 정할 일은 약속하지 않고 사람확인 true
 - 개인 기기의 업무 사용은 보안 규정 확인 대상으로 안내한다
-- 모르는 규정 번호 · 날짜 · 연락처는 지어내지 않는다</code></pre></div></div><div class="dbnote"><span>참고</span> 같은 질문 · 같은 모델 · 바뀌는 것은 폴더의 CLAUDE.md 한 장뿐 · 10번이 길면 5번으로</div></div></div>
+- 모르는 규정 번호 · 날짜 · 연락처는 지어내지 않는다</code></pre></div></div></div><div class="dbnote"><span>참고</span> 더 해 보기 · CLAUDE.md에 내 업무 규칙 한 줄 → ③④ 다시</div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 1-2] 확정 정보가 폴더 밖에 있을 때">
@@ -1083,9 +1089,9 @@ JSON 밖에 다른 글이나 코드 블록 표시를 쓰지 않는다.
   <h2 class="s-title sm">확정 정보가 폴더 밖에 있을 때</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>모델이 모르는 회사 결정을 하네스로 전달</p><div class="mine"><span>내 업무 적용</span>내 업무에서 문서로 남지 않은 확정 사항 하나</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>① 2025 정책 · 3분기 초안 두 문서 만들기</li><li>② 확정 회의 결과는 CLAUDE.md에만</li><li>③ 하네스 미적용 · 적용 각 3번 실행</li><li>최종 금액 · 기준 문서 · 토큰 비교</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>하네스 3 / 3 확정 금액</li><li>하네스 미적용이 고른 기준 문서 기록</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>모델이 모르는 회사 결정을 하네스로 전달</p><div class="lf">사용 파일 · <code class="lfold">labs/lab1_2_confirmed_policy</code></div><div class="mine"><span>내 업무 적용</span>내 업무에서 문서로 남지 않은 확정 사항 하나</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 견적 3번 (docs/에는 2025 정책 · 초안만)</li><li>확정 회의 결과를 CLAUDE.md로 직접 만들기</li><li>하네스 적용 상태로 견적 3번</li><li>최종 금액 · 기준 문서 · 토큰 비교</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>하네스 적용 3 / 3 확정 금액</li><li>하네스 미적용 쪽이 고른 기준 문서 기록</li></ul></div>
   </div></div>
 </section>
 
@@ -1094,22 +1100,10 @@ JSON 밖에 다른 글이나 코드 블록 표시를 쓰지 않는다.
   <div class="eyebrow"><span class="tag">Ch1</span></div>
   <h2 class="s-title sm">실습 1-2 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>빈 폴더 하나 (예: 바탕화면/hx-lab2)</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 자료 만들기</span></div><pre><code>bare/docs 와 harness/docs 폴더에 아래 두 문서를 똑같이 만들어 줘.
-
-[단가정책_2025.md]
-# 영업 단가 정책 (2025) · 시행 2025-01-01
-- 물량 할인: 50톤 이상 2% · 200톤 이상 4%
-- A 등급: 물량 할인에 2%p 추가 (B 등급 추가 없음)
-- 긴급 출하 할증: 할인 전 금액의 10%
-
-[단가정책_2026Q3_초안.md]
-# 영업 단가 정책 (2026년 3분기 개정 초안) · 2026-08-20 · 검토 중
-- 물량 할인: 100톤 이상 3% · 300톤 이상 5% (경계 포함)
-- A 등급: 물량 할인에 1%p 추가 (B 등급 추가 없음)
-- 긴급 출하 할증: 할인 후 금액의 8%
-- 할인액 = 소계 × 할인율 · 할증액 = (소계 − 할인액) × 8% · 10원 미만 절사</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 회사 확정 정보 → CLAUDE.md</span></div><pre><code>harness/CLAUDE.md 를 아래 내용으로 만들어 줘.
-
-# 견적 담당
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/lab1_2_confirmed_policy</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 3번</span></div><pre><code>요청.txt 의 요청을 claude -p --setting-sources "" --output-format json 으로
+3번 실행해 runs/미적용_1.json ~ 3.json 으로 저장해 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>새 파일 <b>CLAUDE.md</b> → 오른쪽 내용 붙여 넣기 · 9월 2일 확정 내용은 docs/ 에 없음</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 하네스 적용 · 3번</span></div><pre><code>같은 요청을 --setting-sources project 로 3번 실행해
+runs/적용_1.json ~ 3.json 으로 저장해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 비교</span></div><pre><code>runs/ 결과를 표로 정리해 줘:
+최종 금액 · 적용한 기준 문서 · 토큰 합계 · 턴 수</code></pre></div></div><div class="kf"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code># 견적 담당
 
 ## 확정 정책 (2026-09-02 회의 확정 · 시행 2026-09-15)
 - 3분기 초안을 기준으로 아래 세 가지만 바뀜
@@ -1120,12 +1114,7 @@ JSON 밖에 다른 글이나 코드 블록 표시를 쓰지 않는다.
 
 ## 답 형식
 - 적용한 기준 문서 · 할인율 · 할인액 · 할증액 · 최종 금액
-- 끝내기 전에 계산을 한 번 더 검산한다</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 3번씩 실행</span></div><pre><code>bare 폴더에서는 --setting-sources "", harness 폴더에서는 --setting-sources project 로
-아래 명령을 3번씩 실행해 줘 (--output-format json).
-
-claude -p --output-format json "견적 계산해 줘: 강판 350톤 · 톤당 100만 원 · A 등급 · 긴급 출하. docs 의 단가 정책 기준으로 할인액 · 할증액 · 최종 금액."
-
-끝나면 표: 최종 금액 · 적용한 기준 문서 · 토큰 합계 · 턴 수</code></pre></div></div></div></div>
+- 끝내기 전에 계산을 한 번 더 검산한다</code></pre></div></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="실측: 확정 정보가 폴더 밖일 때">
@@ -1149,7 +1138,7 @@ claude -p --output-format json "견적 계산해 줘: 강판 350톤 · 톤당 10
   <div class="eyebrow"><span class="tag">Ch1</span></div>
   <h2 class="s-title sm">하네스 적용 예시 다섯 유형</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>유형</th><th>실습 예시</th><th>내 업무라면 (예)</th><th>하네스 핵심</th></tr></thead><tbody><tr><td><b>문의 응대형</b></td><td>사내 문의 답변</td><td>고객 클레임 1차 답변 · 시스템 사용 문의</td><td>규정 근거 Skill · 승인 필요 건은 사람에게 · 발송 차단</td></tr><tr><td><b>문서 추출 · 계산형</b></td><td>사양서 → 견적</td><td>발주서 검토 · 계약 조항 추출</td><td>추출 양식 Skill · 불일치면 보류 · 원본 수정 차단</td></tr><tr><td><b>기록 → 보고서형</b></td><td>점검 기록 → 주간 보고서</td><td>장애 주간 보고 · 생산 실적 보고</td><td>기준값 · 양식 Skill · 빈 값은 확인 필요 · 수치 대조</td></tr><tr><td><b>비교 · 검토형</b></td><td>규정 개정 비교 · 코드 리뷰</td><td>계약 변경점 · 설정 변경 리뷰</td><td>비교 절차 Skill · 검증 Agent · 고치지 않고 판정</td></tr><tr><td><b>정리 · 작성형</b></td><td>회의록 → 할 일 · 안내 메일</td><td>회의 후속 조치 · 공지 · 협력사 메일</td><td>필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지</td></tr></tbody></table><div class="dbnote"><span>실습 자료</span> <a class="dl" href="dl/work_harness.zip" download>work_harness.zip</a> 의 Skill 6개가 이 유형들 · 가장 가까운 것을 가져와 값만 바꿈</div></div></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>유형</th><th>실습 예시</th><th>내 업무라면 (예)</th><th>하네스 핵심</th></tr></thead><tbody><tr><td><b>문의 응대형</b></td><td>사내 문의 답변</td><td>고객 클레임 1차 답변 · 시스템 사용 문의</td><td>규정 근거 Skill · 승인 필요 건은 사람에게 · 발송 차단</td></tr><tr><td><b>문서 추출 · 계산형</b></td><td>사양서 → 견적</td><td>발주서 검토 · 계약 조항 추출</td><td>추출 양식 Skill · 불일치면 보류 · 원본 수정 차단</td></tr><tr><td><b>기록 → 보고서형</b></td><td>점검 기록 → 주간 보고서</td><td>장애 주간 보고 · 생산 실적 보고</td><td>기준값 · 양식 Skill · 빈 값은 확인 필요 · 수치 대조</td></tr><tr><td><b>비교 · 검토형</b></td><td>규정 개정 비교 · 코드 리뷰</td><td>계약 변경점 · 설정 변경 리뷰</td><td>비교 절차 Skill · 검증 Agent · 고치지 않고 판정</td></tr><tr><td><b>정리 · 작성형</b></td><td>회의록 → 할 일 · 안내 메일</td><td>회의 후속 조치 · 공지 · 협력사 메일</td><td>필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지</td></tr></tbody></table><div class="dbnote"><span>실습 자료</span> <code class="lfold">labs/work_harness</code> 의 Skill 6개가 이 유형들 · 가장 가까운 것을 가져와 값만 바꿈</div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 준비] 내 업무에 가까운 예시 고르기">
@@ -1158,7 +1147,7 @@ claude -p --output-format json "견적 계산해 줘: 강판 350톤 · 톤당 10
   <h2 class="s-title sm">내 업무에 가까운 예시 고르기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>빈칸부터 쓰지 않고, 비슷한 하네스 예시를 가져와 내 업무 값으로 바꾸기</p><div class="lf">사용 파일 · <a class="dl" href="dl/my_work_spec.zip" download>my_work_spec.zip</a></div><div class="mine"><span>내 업무 적용</span>Ch8 마지막 실습에서 이 설계표로 내 업무 하네스를 만든다</div></div>
+    <div class="lc goal"><div class="lh">목표</div><p>빈칸부터 쓰지 않고, 비슷한 하네스 예시를 가져와 내 업무 값으로 바꾸기</p><div class="lf">사용 파일 · <code class="lfold">labs/my_work_spec</code></div><div class="mine"><span>내 업무 적용</span>Ch8 마지막 실습에서 이 설계표로 내 업무 하네스를 만든다</div></div>
     <div class="lc steps"><div class="lh">단계</div><ol><li>다섯 유형 중 내 업무와 가장 비슷한 것 하나 고르기</li><li>설계표에서 그 유형의 예시 값을 내 업무 말로 바꾸기 (모르는 칸은 예시 그대로)</li><li>고객명 · 실제 수치 · 시스템 주소는 가리기</li><li>실습이 끝날 때마다 해당 칸 다듬기</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>유형 1개 선택</li><li>설계표 8칸을 내 업무 값으로</li></ul></div>
   </div></div>
@@ -1169,7 +1158,7 @@ claude -p --output-format json "견적 계산해 줘: 강판 350톤 · 톤당 10
   <div class="eyebrow"><span class="tag">Ch1</span></div>
   <h2 class="s-title sm">실습 준비 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/my_work_spec</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 예시 고르기</span></div><pre><code>내_하네스_설계표.md 의 다섯 유형 중
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/my_work_spec</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 예시 고르기</span></div><pre><code>내_하네스_설계표.md 의 다섯 유형 중
 내 업무 〈한 줄 설명〉 과 가장 비슷한 것을 골라 이유와 함께 알려 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 내 업무 값으로</span></div><pre><code>고른 유형의 예시 값을 내 업무 값으로 바꿔 설계표를 채워 줘.
 모르는 칸은 예시 그대로 두고 TODO · 고객명 · 실제 수치는 가상 값으로</code></pre></div></div><div class="kf"><div data-file="내_하네스_설계표.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">내_하네스_설계표.md</span></div><pre><code># 내 하네스 설계표 — 사례에서 내 업무로 가져오기
 
@@ -1366,10 +1355,102 @@ model: sonnet
   <h2 class="s-title sm">하네스 부품 네 개</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>Skill · 명령 · Sub Agent · Hook을 내 예제에 붙이기</p><div class="lf">사용 파일 · <a class="dl" href="dl/lab2_claude_code_parts.zip" download>lab2_claude_code_parts.zip</a></div><div class="mine"><span>내 업무 적용</span>내 업무 절차 하나를 Skill 이름 · 단계로</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>project/.claude 구조 살펴보기</li><li>내 업무 Skill 하나 · 명령 하나 쓰기</li><li>reviewer를 읽기 전용으로 정의</li><li>guard 차단 목록에 규칙 하나 추가 → check.py로 확인</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>새 세션에서 Skill 자동 호출</li><li>.env 수정 요청이 차단됨</li><li>reviewer가 파일을 못 고침</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>Skill · Sub Agent · Hook을 직접 붙이고 전후 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/lab2_1_parts</code></div><div class="mine"><span>내 업무 적용</span>내 업무 절차 하나를 Skill 이름 · 단계로</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 요청 세 개 (보고서 · 리뷰 · .env)</li><li>장표의 파일 네 개를 같은 경로로 만들기</li><li>새 대화로 같은 요청 세 개</li><li>양식 · 위임 · 차단 비교 → 내 업무 Skill 하나 추가</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>보고서가 Skill 양식대로</li><li>리뷰가 reviewer로 위임</li><li>.env 쓰기 차단</li></ul></div>
   </div></div>
+</section>
+
+<section class="slide lt" data-title="실습 2-1 하네스">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">실습 2-1 하네스</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/lab2_1_parts</code><em>탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장</em></div><div class="kgrid"><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/incident-report/SKILL.md</span></div><pre><code>---
+name: incident-report
+description: 장애·이슈 내용을 받아 사내 장애 보고서 양식으로 정리한다. 사용자가 "장애 보고서", "이슈 정리", "보고서 양식으로" 를 말하면 호출된다.
+---
+
+# 장애 보고서 작성 기준
+
+&gt; ※ 가상 회사 「한빛스틸」의 실습용 가상 양식입니다.
+
+## 양식 (이 순서와 제목을 그대로 쓴다)
+
+```
+## [장애 보고] &lt;시스템명&gt; — &lt;한 줄 요약&gt;
+- 발생 일시 / 인지 일시 / 복구 일시 (YYYY-MM-DD HH:MM)
+- 영향 범위: 사용자 수, 업무, 설비
+- 등급: 1(전사 중단) / 2(일부 업무 중단) / 3(불편)
+
+### 경과
+| 시각 | 내용 | 담당 |
+
+### 원인
+- 직접 원인 / 근본 원인 (모르면 "조사 중" 이라고 쓴다)
+
+### 조치
+- 임시 조치 / 영구 조치 / 재발 방지 (담당자, 기한)
+```
+
+## 규칙
+
+1. 입력에 없는 시각·숫자·이름은 지어내지 않는다. 비어 있으면 `(확인 필요)` 라고 쓴다.
+2. 등급은 영향 범위로만 정한다. 판단이 어려우면 두 등급을 적고 이유를 한 줄로 쓴다.
+3. 개인 이름 대신 부서·역할로 쓴다 (예: "운영팀 담당자").
+4. 보고서 끝에 「확인 필요 항목」 목록을 붙인다.</code></pre></div><div data-file="reviewer.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/agents/reviewer.md</span></div><pre><code>---
+name: reviewer
+description: 코드를 읽고 문제만 보고하는 읽기 전용 리뷰어. "리뷰해줘", "검토해줘" 요청이나 코드를 고친 뒤 호출한다.
+tools: Read, Grep, Glob
+model: haiku
+---
+
+너는 한빛스틸 사내 코드 리뷰어다. 파일을 고치지 않고 읽기만 한다.
+
+## 기준 (이 순서로 본다)
+
+1. 비밀 값(키·비밀번호·토큰) 하드코딩
+2. 예외 처리 누락 — 외부 호출·파일·형 변환
+3. 입력 검증 누락 — 음수·빈 값·범위 밖
+4. 테스트 없는 분기
+
+## 출력
+
+| 파일:줄 | 심각도(높음/중간/낮음) | 문제 | 고칠 방향 |
+
+- 줄 번호를 반드시 적는다. 확신이 없으면 심각도 칸에 `확인 필요`.
+- 문제가 없으면 「문제 없음」 한 줄.</code></pre></div><div data-file="settings.json" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/settings.json</span></div><pre><code>{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Write|Edit|MultiEdit",
+        "hooks": [
+          {"type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.py\""}
+        ]
+      }
+    ]
+  }
+}</code></pre></div><div data-file="guard.py" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/hooks/guard.py</span></div><pre><code>"""PreToolUse Hook — 되돌릴 수 없는 명령 · .env 쓰기를 막는다. 막을 때는 exit 2 + 이유."""
+import json
+import re
+import sys
+
+BLOCK = [
+    (r"\brm\s+-\w*(rf|fr)", "rm -rf 는 되돌릴 수 없음"),
+    (r"\bgit\s+push\b.*(--force|\s-f\b)", "git push --force 는 원격 기록을 덮어씀"),
+    (r"&gt;&gt;?\s*\S*\.env\b", ".env 에는 비밀 값 · Agent가 쓰지 않음"),
+]
+
+e = json.load(sys.stdin)
+tool, inp = e.get("tool_name", ""), e.get("tool_input", {})
+if tool in ("Write", "Edit", "MultiEdit") and re.search(r"(^|[\\/])\.env$", inp.get("file_path", "")):
+    print("[가드레일] .env 에는 비밀 값 · Agent가 쓰지 않음", file=sys.stderr)
+    sys.exit(2)
+for pattern, reason in BLOCK:
+    if tool == "Bash" and re.search(pattern, inp.get("command", "")):
+        print(f"[가드레일] {reason}", file=sys.stderr)
+        sys.exit(2)
+sys.exit(0)</code></pre></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="실습 2-1 진행">
@@ -1377,10 +1458,7 @@ model: sonnet
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">실습 2-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/lab2_claude_code_parts/project</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 부품 확인</span></div><pre><code>/context
-/agents</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② Skill 호출</span></div><pre><code>어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ Sub Agent 위임</span></div><pre><code>src/order_api.py 리뷰해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ Hook 차단</span></div><pre><code>.env 에 API_KEY=test 써 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 내 업무 Skill</span></div><pre><code>〈업무 이름〉 절차를 .claude/skills/〈이름〉/SKILL.md 로 만들어 줘.
-단계 · 판단 기준 · 결과 양식 포함 · 예시 입력 하나로 시험</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑥ 차단 규칙 추가</span></div><pre><code>.claude/hooks/guard_rules.py 에 〈curl … | sh〉 차단을 추가하고
-python3 ../check.py --hook-only 로 확인해 줘</code></pre></div></div><div class="dbnote"><span>참고</span> .claude 아래 파일 쓰기는 승인 요청이 뜸 · 내용을 읽고 승인</div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/lab2_1_parts</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 요청 1</span></div><pre><code>어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 요청 2</span></div><pre><code>src/order_api.py 리뷰해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 요청 3</span></div><pre><code>.env 에 API_KEY=test 써 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>앞 장 파일 네 개를 같은 경로로 · 탐색기 새 파일에 <b>.claude/skills/incident-report/SKILL.md</b> 처럼 경로째 입력</p></div><div class="kdo"><span>③ 하네스 적용</span><p>Claude Code 창을 닫고 새로 열기 → ①의 세 요청 그대로 · /context 로 부품 확인</p></div><div class="kdo"><span>④ 비교</span><p>보고서 양식 · 「(확인 필요)」 표시 · reviewer 위임 표시 · .env 차단 메시지</p></div></div><div class="dbnote"><span>참고</span> Windows에서 python3가 안 잡히면 settings.json의 python3 → python</div></div></div>
 </section>
 
 <section class="slide lt" data-title="가드가 놓치는 비율">
@@ -1493,8 +1571,8 @@ if any(b in i.get('command', '') for b in bad) \
   <h2 class="s-title sm">Claude로 Hook 만들기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로</p><div class="lf">사용 파일 · <a class="dl" href="dl/lab2_hook_by_claude.zip" download>lab2_hook_by_claude.zip</a></div><div class="mine"><span>내 업무 적용</span>내 업무에서 Hook으로 막을 것 세 가지</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>막을 것 · 허용할 것 목록 정하기 (prompt.md)</li><li>Claude에게 Hook 생성 요청 · .claude 쓰기 승인</li><li>check_hook.py로 채점 → 놓친 사례를 Claude가 수정</li><li>우회 명령 추가 · 대화에서 실제 차단 확인</li></ol></div>
+    <div class="lc goal"><div class="lh">목표</div><p>「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로</p><div class="lf">사용 파일 · <code class="lfold">labs/lab2_hook_by_claude</code></div><div class="mine"><span>내 업무 적용</span>내 업무에서 Hook으로 막을 것 세 가지</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>Hook 없이 채점 (하네스 미적용)</li><li>장표의 요청문으로 Claude에게 Hook 생성 요청</li><li>다시 채점 → 놓친 사례를 Claude가 수정</li><li>대화에서 실제 차단 확인</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>check_hook.py 15/15</li><li>운영 DB 쓰기가 Hook으로 막히는 것 확인</li></ul></div>
   </div></div>
 </section>
@@ -1504,9 +1582,9 @@ if any(b in i.get('command', '') for b in bad) \
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">실습 2-2 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/lab2_hook_by_claude/project</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 준비</span></div><pre><code>python3 tools/make_db.py 로 DB를 만들고
-python3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 채점</span></div><pre><code>python3 ../check_hook.py 를 실행하고
-놓친 사례가 있으면 고쳐서 다시 채점해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 우회 시도</span></div><pre><code>../cases.json 의 막아야 할 사례에 〈우회 명령〉 을 추가하고 다시 채점해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ /clear 후 실제 차단</span></div><pre><code>리포트 오류 고쳐 줘</code></pre></div></div><div class="kf"><div data-file="prompt.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">prompt.md</span></div><pre><code>이 프로젝트에 PreToolUse Hook을 만들어 줘.
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/lab2_hook_by_claude/project</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 준비</span></div><pre><code>python3 tools/make_db.py 로 DB를 만들고
+python3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 하네스 미적용 · 채점</span></div><pre><code>python3 ../check_hook.py 를 실행해 점수를 보여 줘</code></pre></div><div class="kdo"><span>③ 하네스 만들기</span><p>오른쪽 요청문 「복사」 → 대화창에 붙여 넣기 · .claude 쓰기 승인 요청은 내용을 읽고 승인</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 하네스 적용 · 채점</span></div><pre><code>python3 ../check_hook.py 를 다시 실행해 ②와 비교하고
+놓친 사례가 있으면 고쳐서 다시 채점해 줘</code></pre></div><div class="kdo"><span>⑤ 실제 차단</span><p>Claude Code 새로 열기 → 「리포트 오류 고쳐 줘」 → 운영 DB 쓰기가 막히고 허락을 구하는지</p></div></div><div class="kf"><div data-file="prompt.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Hook 만들기 요청문</span></div><pre><code>이 프로젝트에 PreToolUse Hook을 만들어 줘.
 
 막을 것:
 - 운영 DB(db/prod.db, `--env prod`)에 쓰는 모든 동작 — UPDATE · INSERT · DELETE · DROP, sqlite3 직접 실행, python으로 직접 접속, 파일 덮어쓰기(cp · mv · Write)
@@ -1523,7 +1601,7 @@ python3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘</code></p
 - `.claude/hooks/guard.py`에 만들고 `.claude/settings.json`에 등록
 - 막을 때는 exit 2와 함께 이유를 한 줄로 (「운영 DB 쓰기는 사용자 허락 필요」처럼)
 - 표준 라이브러리만
-- 다 만들면 `python3 ../check_hook.py`로 시험하고, 실패한 사례가 있으면 고쳐서 다시 시험</code></pre></div></div></div></div></div>
+- 다 만들면 `python3 ../check_hook.py`로 시험하고, 실패한 사례가 있으면 고쳐서 다시 시험</code></pre></div></div></div><div class="dbnote"><span>참고</span> 하네스 미적용 6 / 15 (허용할 것만 맞음) → 목표 15 / 15</div></div></div>
 </section>
 
 <section class="slide lt" data-title="Claude Code로 하는 두 종류의 일">
@@ -1555,7 +1633,7 @@ python3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘</code></p
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">실무 과제 여섯 가지</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>과제</th><th>요청 한마디</th><th>검증 포인트</th></tr></thead><tbody><tr><td><b>T1 문의 답변</b></td><td>「사내 문의 5건에 답변 초안 써 줘」</td><td>규정 조항 근거 · 환불 문의는 담당자에게</td></tr><tr><td><b>T2 사양서 견적</b></td><td>「사양서 두 건으로 견적 내 줘」</td><td>단가표 대조 · 수량 불일치 사양서는 보류</td></tr><tr><td><b>T3 회의록 → 할 일</b></td><td>「회의록에서 할 일 정리해 줘」</td><td>「다음 주 화요일」 → 날짜 · 취소 항목 제외</td></tr><tr><td><b>T4 점검 → 주간 보고서</b></td><td>「점검 기록으로 주간 보고서 만들어 줘」</td><td>「초과」 기준 · 빈 값 · 이틀 연속 → 정비 요청</td></tr><tr><td><b>T5 규정 개정 비교</b></td><td>「작년이랑 뭐가 달라졌는지 정리해 줘」</td><td>초안 + 확정 회의록 반영</td></tr><tr><td><b>T6 납기 지연 메일</b></td><td>「고객사에 납기 지연 안내 메일 초안」</td><td>확정 안 된 날짜 · 보상 약속 금지</td></tr></tbody></table><div class="dbnote"><span>자료</span> <a class="dl" href="dl/work_harness.zip" download>work_harness.zip</a> · 모든 회사 · 인물 · 수치는 가상</div></div></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>과제</th><th>요청 한마디</th><th>검증 포인트</th></tr></thead><tbody><tr><td><b>T1 문의 답변</b></td><td>「사내 문의 5건에 답변 초안 써 줘」</td><td>규정 조항 근거 · 환불 문의는 담당자에게</td></tr><tr><td><b>T2 사양서 견적</b></td><td>「사양서 두 건으로 견적 내 줘」</td><td>단가표 대조 · 수량 불일치 사양서는 보류</td></tr><tr><td><b>T3 회의록 → 할 일</b></td><td>「회의록에서 할 일 정리해 줘」</td><td>「다음 주 화요일」 → 날짜 · 취소 항목 제외</td></tr><tr><td><b>T4 점검 → 주간 보고서</b></td><td>「점검 기록으로 주간 보고서 만들어 줘」</td><td>「초과」 기준 · 빈 값 · 이틀 연속 → 정비 요청</td></tr><tr><td><b>T5 규정 개정 비교</b></td><td>「작년이랑 뭐가 달라졌는지 정리해 줘」</td><td>초안 + 확정 회의록 반영</td></tr><tr><td><b>T6 납기 지연 메일</b></td><td>「고객사에 납기 지연 안내 메일 초안」</td><td>확정 안 된 날짜 · 보상 약속 금지</td></tr></tbody></table><div class="dbnote"><span>자료</span> <code class="lfold">labs/work_harness</code> · 모든 회사 · 인물 · 수치는 가상</div></div></div>
 </section>
 
 <section class="slide lt" data-title="실측: 하네스 미적용 vs 업무 처리 하네스">
@@ -1563,7 +1641,7 @@ python3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘</code></p
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">실측: 하네스 미적용 vs 업무 처리 하네스</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="hbars"><div class="hbt">Claude Sonnet 5.5 · 단일 Agent 하네스 · 각 2회</div><div class="hb" style="--d:0.00s"><span class="hn">하네스 미적용 · 과제 6개</span><span class="ht"><span class="hf" style="width:97.4%"></span></span><span class="hv">111 / 114</span></div><div class="hb" style="--d:0.10s"><span class="hn">하네스 적용 · 과제 6개</span><span class="ht"><span class="hf" style="width:96.5%"></span></span><span class="hv">110 / 114</span></div><div class="hb" style="--d:0.20s"><span class="hn">하네스 미적용 · 사양서 40건 견적</span><span class="ht"><span class="hf" style="width:90.2%"></span></span><span class="hv">74 / 82</span></div><div class="hb hl" style="--d:0.30s"><span class="hn">하네스 적용 · 사양서 40건 견적</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">82 / 82</span></div><div class="hb" style="--d:0.40s"><span class="hn">하네스 미적용 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:16.7%"></span></span><span class="hv">2 / 12</span></div><div class="hb hl" style="--d:0.50s"><span class="hn">하네스 적용 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">12 / 12</span></div></div><div class="dbnote"><span>차이가 난 곳</span> 40건 중 수량 불일치 · 누락 4건을 하네스 미적용은 견적에 넣음 (2/2) · 하네스는 규칙대로 보류 · 짧은 과제는 비슷 · 시간 1.3~1.7배</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness" target="_blank" rel="noopener">직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness</a></div></div></div>
+  <div class="body"><div class="mid"><div class="hbars"><div class="hbt">Claude Sonnet 5.5 · 단일 Agent 하네스 · 각 2회</div><div class="hb" style="--d:0.00s"><span class="hn">하네스 미적용 · 과제 6개</span><span class="ht"><span class="hf" style="width:97.4%"></span></span><span class="hv">111 / 114</span></div><div class="hb" style="--d:0.10s"><span class="hn">하네스 적용 · 과제 6개</span><span class="ht"><span class="hf" style="width:96.5%"></span></span><span class="hv">110 / 114</span></div><div class="hb" style="--d:0.20s"><span class="hn">하네스 미적용 · 사양서 40건 견적</span><span class="ht"><span class="hf" style="width:90.2%"></span></span><span class="hv">74 / 82</span></div><div class="hb hl" style="--d:0.30s"><span class="hn">하네스 적용 · 사양서 40건 견적</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">82 / 82</span></div><div class="hb" style="--d:0.40s"><span class="hn">하네스 미적용 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:16.7%"></span></span><span class="hv">2 / 12</span></div><div class="hb hl" style="--d:0.50s"><span class="hn">하네스 적용 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">12 / 12</span></div></div><div class="dbnote"><span>차이가 난 곳</span> 40건 중 수량 불일치 · 누락 4건을 하네스 미적용 쪽은 견적에 넣음 (2/2) · 하네스는 규칙대로 보류 · 짧은 과제는 비슷 · 시간 1.3~1.7배</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness" target="_blank" rel="noopener">직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="하네스 만드는 순서">
@@ -1571,7 +1649,7 @@ python3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘</code></p
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">하네스 만드는 순서</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 가까운 예시</b><span>유형 고르고 값 바꾸기</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (하네스 미적용 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (하네스 미적용은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 가까운 예시</b><span>유형 고르고 값 바꾸기</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (하네스 미적용 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
 </section>
 
 <section class="slide lt" data-title="내용별 넣을 위치">
@@ -1640,10 +1718,59 @@ CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.
   <h2 class="s-title sm">업무 처리 하네스로 실무 과제</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>코드가 아닌 업무도 같은 하네스로 · 하네스 미적용과 비교</p><div class="lf">사용 파일 · <a class="dl" href="dl/work_harness.zip" download>work_harness.zip</a></div><div class="mine"><span>내 업무 적용</span>내 업무 하나를 이 하네스에 Skill로 추가</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용으로 과제 2개 요청 → grade.py로 채점</li><li>harness/의 CLAUDE.md · .claude를 workspace에 복사</li><li>새 대화로 같은 과제 → 채점 · 결과 위치 · 근거 비교 (Agent Watch)</li><li>내 업무용 Skill 하나를 Claude에게 만들게 하고 처리</li></ol></div>
+    <div class="lc goal"><div class="lh">목표</div><p>코드가 아닌 업무도 같은 하네스로 · 하네스 미적용과 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/work_harness</code></div><div class="mine"><span>내 업무 적용</span>내 업무 하나를 이 하네스에 Skill로 추가</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 과제 2개 → 채점</li><li>장표의 CLAUDE.md · Skill 두 개 직접 만들기</li><li>새 대화로 같은 과제 → 채점 · 결과 위치 · 근거 비교</li><li>내 업무용 Skill 하나를 Claude에게 만들게 하고 처리</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>과제 2개 이상 하네스로 처리 · 채점</li><li>내 업무 Skill 1개</li></ul></div>
   </div></div>
+</section>
+
+<section class="slide lt" data-title="실습 2-3 하네스">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">실습 2-3 하네스</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/work_harness/workspace</code><em>탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장</em></div><div class="kgrid"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code># 업무 처리 하네스 (한빛스틸 · 교육용)
+
+## 원칙
+- 결과는 `out/&lt;과제번호&gt;/` 에 만든다 (예: out/T3/할일.md). 원본(`inputs/`)은 고치지 않는다
+- 숫자 · 이름 · 날짜는 원본에 있는 것만. 원본에 없거나 서로 다르면 「확인 필요」로 표시하고 지어내지 않는다
+- 근거를 단다: 규정 조항 번호, 원본 파일명 · 행
+- 확정되지 않은 정보는 「예정 · 확정 시 다시 안내」로 쓴다
+- 메일 발송 · 외부 전송은 하지 않는다. 초안까지만
+- 사람 판단이 필요한 건(예외 · 환불 · 보상 · 승인)은 「담당자 확인 필요」로 넘긴다
+
+## 작업 종류 → Skill
+| 요청 | Skill |
+|---|---|
+| 문의 답변 | inquiry-answer |
+| 사양서 · 견적 | spec-quote |
+| 회의록 → 할 일 | meeting-actions |
+| 점검 기록 → 보고서 | weekly-report |
+| 규정 · 문서 비교 | doc-diff |
+| 메일 초안 | mail-draft |
+
+## 끝내기 전
+결과를 원본과 한 번 더 대조한다: 숫자 · 이름 · 날짜 · 빠진 항목.</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/meeting-actions/SKILL.md</span></div><pre><code>---
+name: meeting-actions
+description: 회의록에서 할 일 · 담당 · 기한을 정리할 때.
+---
+
+# meeting-actions
+
+1. 「누가 · 무엇을 · 언제까지」가 있는 것만 할 일로 뽑는다
+2. 「이번 주 금요일」 「다음 주 화요일」 같은 상대 날짜는 회의 날짜 기준으로 YYYY-MM-DD로 바꾼다
+3. 취소 · 보류 · 다음에 논의는 할 일에서 빼고 「제외 항목」에 따로 적는다
+4. 결과: out/T3/할일.md — 표 (담당 · 할 일 · 기한 · 원문 근거)</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/weekly-report/SKILL.md</span></div><pre><code>---
+name: weekly-report
+description: 점검 기록으로 주간 보고서를 만들 때.
+---
+
+# weekly-report
+
+1. 점검 기준 문서의 기준값을 그대로 쓴다 (초과 · 이상 구분 주의)
+2. 경고 목록 (설비 · 일자 · 값 · 기준), 이틀 이상 연속 경고는 「정비 요청」
+3. 값이 비어 있으면 판단하지 않고 「확인 필요」
+4. 결과: out/T4/주간보고.md — 요약 3줄 · 정비 요청 · 경고 · 확인 필요 · 정상 설비 수</code></pre></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="실습 2-3 진행">
@@ -1651,8 +1778,7 @@ CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">실습 2-3 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/work_harness/workspace</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 과제</span></div><pre><code>inputs/T3 회의록에서 할 일 정리해 줘.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 과제</span></div><pre><code>inputs/T4 이번 주 설비 점검 기록으로 주간 보고서 만들어 줘.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 채점</span></div><pre><code>python3 ../grade.py . --task T3 T4 를 실행해서 점수 보여 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 하네스 입히기</span></div><pre><code>../harness 의 CLAUDE.md 와 .claude 폴더를 이 폴더로 복사해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ /clear 후 ①② 다시</span></div><pre><code>하네스 미적용 · 하네스 점수 · 결과 위치 · 근거 표기를 표로 비교해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 내 업무 Skill</span></div><pre><code>〈업무 이름〉 절차를 .claude/skills/〈이름〉/SKILL.md 로 만들어 줘.
-부록 ②~④의 Skill 하나를 본떠서 · 예시 입력 하나로 시험</code></pre></div></div><div class="dbnote"><span>참고</span> 다른 과제 · T1 문의 답변 · T2 견적 · T5 정책 비교 · T6 지연 안내 메일 · ③은 부록 ①⑥ 「파일로 저장」으로도</div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/work_harness/workspace</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 과제 1</span></div><pre><code>inputs/T3 회의록에서 할 일 정리해 줘.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 과제 2</span></div><pre><code>inputs/T4 이번 주 설비 점검 기록으로 주간 보고서 만들어 줘.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 채점</span></div><pre><code>python3 ../grade.py . --task T3 T4 를 실행해서 점수 보여 줘</code></pre></div><div class="kdo"><span>③ 하네스 만들기</span><p>앞 장 파일 세 개를 같은 경로로 (CLAUDE.md · Skill 두 개)</p></div><div class="kdo"><span>④ 하네스 적용</span><p>out 폴더 지우기 → Claude Code 새로 열기 → ①② 그대로</p></div><div class="kdo"><span>⑤ 비교</span><p>점수 · 결과 파일 위치 (out/T3 · out/T4) · 근거 표기 · 「확인 필요」 표시</p></div></div><div class="dbnote"><span>참고</span> 다른 과제 · T1 문의 답변 · T2 견적 · T5 정책 비교 · T6 지연 안내 메일 · 나머지 Skill은 부록 ②~④</div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="다음: 컨텍스트 설계">
@@ -1819,7 +1945,7 @@ CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.
   <h2 class="s-title sm">컨텍스트 실험 네 가지</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>같은 작업, 책상 상태만 바꿔 토큰 비교</p><div class="lf">사용 파일 · <a class="dl" href="dl/lab3_context.zip" download>lab3_context.zip</a></div><div class="mine"><span>내 업무 적용</span>내 업무 입력 중 항상 올릴 것 vs 필요할 때만 올릴 것</div></div>
+    <div class="lc goal"><div class="lh">목표</div><p>같은 작업, 책상 상태만 바꿔 토큰 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/lab3_context</code></div><div class="mine"><span>내 업무 적용</span>내 업무 입력 중 항상 올릴 것 vs 필요할 때만 올릴 것</div></div>
     <div class="lc steps"><div class="lh">단계</div><ol><li>CLAUDE.md 600줄 vs 30줄 + Skill</li><li>폴더 통째 읽기 vs 검색해서 읽기</li><li>직접 조사 vs Sub Agent 위임</li><li>긴 세션 vs 새 세션 · 결과표 채우기</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>변형 4종 입력 · 캐시 · 출력 토큰 표</li><li>품질이 떨어진 변형 표시</li></ul></div>
   </div></div>
@@ -1830,15 +1956,15 @@ CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.
   <div class="eyebrow"><span class="tag">Ch3</span></div>
   <h2 class="s-title sm">실습 3-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 실험 네 가지</span></div><pre><code>lab3_context/run.py --exp all 을 실행하고 변형별
-메인 토큰 · 전체 토큰 · 턴을 표로, 답이 달라진 변형은 표시해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 지금 대화의 책상</span></div><pre><code>/context</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 압축</span></div><pre><code>/compact 결정 사항과 설비 ID만 남겨</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ Skill 설명 줄이기</span></div><pre><code>lab3_context/a_lean/SKILL.md 의 description 을 「매뉴얼」 한 단어로,
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 실험 네 가지</span></div><pre><code>lab3_context/run.py --exp all 을 실행하고 변형별
+메인 토큰 · 전체 토큰 · 턴을 표로, 답이 달라진 변형은 표시해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 지금 대화의 컨텍스트</span></div><pre><code>/context</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 압축</span></div><pre><code>/compact 결정 사항과 설비 ID만 남겨</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ Skill 설명 줄이기</span></div><pre><code>lab3_context/a_lean/SKILL.md 의 description 을 「매뉴얼」 한 단어로,
 run.py 의 QUESTION["a"] 를 「P-210 점검 주기는?」 으로 바꿔
-실험 a 다시 → Skill이 호출됐는지 · 끝나면 되돌려 줘</code></pre></div></div><div class="kf"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code># 한빛스틸 업무 Agent
+실험 a 다시 → Skill이 호출됐는지 · 끝나면 되돌려 줘</code></pre></div></div><div class="kf"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">a_lean/CLAUDE.md</span></div><pre><code># 한빛스틸 업무 Agent
 
 &lt;!-- TODO(실습): 짧게 유지한다. 매뉴얼은 hanbit-manual 스킬(SKILL.md)로 옮겨 두었다. --&gt;
 
 너는 한빛스틸 사내 업무 Agent 다. 답은 짧게, 근거 조항 번호를 붙인다.
-사내 규정·점검 기준·예비품 재고가 필요할 때만 `hanbit-manual` 스킬을 쓴다.</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">SKILL.md</span></div><pre><code>---
+사내 규정·점검 기준·예비품 재고가 필요할 때만 `hanbit-manual` 스킬을 쓴다.</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">a_lean/SKILL.md</span></div><pre><code>---
 name: hanbit-manual
 description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·BUY·HR·SEC·GEN), 설비 정비 기준, 안전 수칙, 출장 경비, 설비별 점검 주기(부록 A), 예비품 최소 재고(부록 B). 사내 규정이나 기준 수치가 필요할 때 쓴다.
 ---
@@ -1968,8 +2094,8 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
   <h2 class="s-title sm">같은 과제, 네 가지 하네스</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>하네스 미적용 · 내 하네스 · Superpowers · gstack 비교</p><div class="lf">사용 파일 · <a class="dl" href="dl/lab4_public_harness.zip" download>lab4_public_harness.zip</a></div><div class="mine"><span>내 업무 적용</span>공개 하네스에서 내 업무에 가져올 것 하나</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>sample_app 과제 카드 읽기 (버그 2개)</li><li>하네스 미적용으로 해결 → 기록</li><li>Superpowers · gstack 각각 설치 후 해결</li><li>토큰 · 시간 · 테스트 통과 · 건너뛴 단계 비교</li></ol></div>
+    <div class="lc goal"><div class="lh">목표</div><p>하네스 미적용 · 내 하네스 · Superpowers · gstack 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/lab4_public_harness</code></div><div class="mine"><span>내 업무 적용</span>공개 하네스에서 내 업무에 가져올 것 하나</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>sample_app 과제 카드 읽기 (버그 2개)</li><li>하네스 미적용 상태로 해결 → 기록</li><li>Superpowers · gstack 각각 설치 후 해결</li><li>토큰 · 시간 · 테스트 통과 · 건너뛴 단계 비교</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>compare.md 4열 완성</li><li>내 하네스에 가져올 점 3개</li></ul></div>
   </div></div>
 </section>
@@ -1979,10 +2105,10 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">실습 4-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① Superpowers 설치</span></div><pre><code>/plugin marketplace add obra/superpowers-marketplace
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① Superpowers 설치</span></div><pre><code>/plugin marketplace add obra/superpowers-marketplace
 /plugin install superpowers@superpowers-marketplace</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② gstack 설치</span></div><pre><code>gstack 을 ~/.claude/skills/gstack 에 설치해 줘
 (github.com/garrytan/gstack 을 --depth 1 로 받고 ./setup)</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 네 가지로 실행</span></div><pre><code>lab4_public_harness/run_task.py 를 bare · mine · superpowers · gstack 순서로
-실행하고 토큰 · 시간 · 테스트 통과 · 건너뛴 단계를 compare.md 에 채워 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 가져올 점</span></div><pre><code>compare.md 를 보고 내 하네스에 가져올 점 3개를 이유와 함께 적어 줘</code></pre></div></div><div class="kf"><div data-file="task.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">task.md</span></div><pre><code>&lt;!-- 과제 카드 — 네 가지 하네스에 글자 하나 바꾸지 않고 똑같이 준다. run_task.py 는 이 주석을 빼고 넘긴다. --&gt;
+실행하고 토큰 · 시간 · 테스트 통과 · 건너뛴 단계를 compare.md 에 채워 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 가져올 점</span></div><pre><code>compare.md 를 보고 내 하네스에 가져올 점 3개를 이유와 함께 적어 줘</code></pre></div></div><div class="kf"><div data-file="task.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">과제 카드</span></div><pre><code>&lt;!-- 과제 카드 — 네 가지 하네스에 글자 하나 바꾸지 않고 똑같이 준다. run_task.py 는 이 주석을 빼고 넘긴다. --&gt;
 이 저장소는 자재 재고·문의 분류 앱이다. 다음을 해라.
 
 1. `python -m unittest` 가 실패한다. 원인을 찾아 고친다. 테스트 파일은 고치지 않는다.
@@ -2133,7 +2259,7 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
   <div class="eyebrow"><span class="tag">Ch5</span></div>
   <h2 class="s-title sm">실시간 대시보드: Agent Watch</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><img class="shot" src="img/agent_watch.png" alt="Agent Watch 화면"><div class="dbnote"><span>구성</span> Hook → 로컬 서버 → 브라우저 · 메인 · Sub Agent 레인 · 에이전트별 토큰 · 효율 점검 · <a class="dl" href="dl/agent_watch.zip" download>agent_watch.zip</a></div></div></div>
+  <div class="body"><div class="mid"><img class="shot" src="img/agent_watch.png" alt="Agent Watch 화면"><div class="dbnote"><span>구성</span> Hook → 로컬 서버 → 브라우저 · 메인 · Sub Agent 레인 · 에이전트별 토큰 · 효율 점검 · <code class="lfold">labs/agent_watch</code></div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 5-1] Supervisor + Sub Agent + 검증">
@@ -2142,7 +2268,7 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
   <h2 class="s-title sm">Supervisor + Sub Agent + 검증</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>예제 하나를 멀티에이전트로 · 실행을 시각화</p><div class="lf">사용 파일 · <a class="dl" href="dl/lab5_multiagent.zip" download>lab5_multiagent.zip</a></div><div class="mine"><span>내 업무 적용</span>내 업무를 나눌 Agent 역할 (나눌 필요 없으면 「단일」)</div></div>
+    <div class="lc goal"><div class="lh">목표</div><p>예제 하나를 멀티에이전트로 · 실행을 시각화</p><div class="lf">사용 파일 · <code class="lfold">labs/lab5_multiagent</code></div><div class="mine"><span>내 업무 적용</span>내 업무를 나눌 Agent 역할 (나눌 필요 없으면 「단일」)</div></div>
     <div class="lc steps"><div class="lh">단계</div><ol><li>예제 고르기 (라우팅 · 추출)</li><li>.claude/agents 역할 · 도구 · 반환 형식 손보기</li><li>run.py로 실행 · 실행 기록 저장</li><li>visualize.py → 타임라인에서 병목 · 실패 찾기</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>verifier가 오답 1건 이상 차단</li><li>타임라인 HTML · 레인별 토큰</li></ul></div>
   </div></div>
@@ -2153,11 +2279,11 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
   <div class="eyebrow"><span class="tag">Ch5</span></div>
   <h2 class="s-title sm">실습 5-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 실행</span></div><pre><code>lab5_multiagent/run.py --ids Q10 을 실행하고
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 실행</span></div><pre><code>lab5_multiagent/run.py --ids Q10 을 실행하고
 위임 순서 · 줄별 토큰 · 검증 결과를 정리해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 타임라인</span></div><pre><code>방금 저장된 runs/ 기록으로 lab5_multiagent/visualize.py 를 돌려
-타임라인 HTML을 만들고 열어 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 검증 빼 보기</span></div><pre><code>orchestrate-pangyo/SKILL.md 에서 검증 단계를 지우고 ①을 다시 →
+타임라인 HTML을 만들고 열어 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 검증 빼 보기</span></div><pre><code>lab5_multiagent/project 의 지휘 Skill 에서 검증 단계를 지우고 ①을 다시 →
 타임라인 비교 · 끝나면 되돌려 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 까다로운 입력</span></div><pre><code>run.py 를 --ids Q26 (프롬프트 주입) 로도 돌려
-verifier가 막았는지 알려 줘</code></pre></div></div><div class="kf"><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">SKILL.md</span></div><pre><code>---
+verifier가 막았는지 알려 줘</code></pre></div></div><div class="kf"><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">지휘 Skill</span></div><pre><code>---
 name: orchestrate-pangyo
 description: 판교 사내 문의를 classifier → responder-&lt;분야&gt; → verifier-pangyo 순서로 처리하는 지휘 절차. 사내 문의 처리 요청이면 쓴다.
 ---
@@ -2175,7 +2301,7 @@ description: 판교 사내 문의를 classifier → responder-&lt;분야&gt; →
 ```json
 {"intent": "구매", "reply": "답변 3문장 이내", "citations": ["BUY-4"], "needs_human": true,
  "verdict": "pass", "reason": "검증 메모", "trace": ["classifier", "responder-buy", "verifier-pangyo"]}
-```</code></pre></div><div data-file="verifier-pangyo.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">verifier-pangyo.md</span></div><pre><code>---
+```</code></pre></div><div data-file="verifier.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">검증 Agent</span></div><pre><code>---
 name: verifier-pangyo
 description: (판교) 답변 초안 검증 전담. 초안과 근거 조항 ID 를 받아 조항 원문과 대조한다. 고치지 않고 판정만 한다.
 tools: Read, Grep
@@ -2244,10 +2370,58 @@ model: haiku
   <h2 class="s-title sm">업무 하네스에 멀티에이전트 입히기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>같은 과제를 단일 vs 멀티로 · 숫자로 고르기</p><div class="lf">사용 파일 · <a class="dl" href="dl/work_harness.zip" download>work_harness.zip</a></div><div class="mine"><span>내 업무 적용</span>내 업무 하네스를 나눌지 말지 · 이유</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>단일 하네스로 T7 (사양서 40건) 처리 → grade.py</li><li>요청문으로 extractor · verifier · 나누기 규칙 추가 (또는 harness_multi/ 복사)</li><li>같은 과제 다시 → 점수 · 시간 · 토큰 비교 (Agent Watch로 레인 확인)</li><li>내 업무는 어느 쪽이 맞는지 기록</li></ol></div>
+    <div class="lc goal"><div class="lh">목표</div><p>같은 과제를 단일 vs 멀티로 · 숫자로 고르기</p><div class="lf">사용 파일 · <code class="lfold">labs/work_harness</code></div><div class="mine"><span>내 업무 적용</span>내 업무 하네스를 나눌지 말지 · 이유</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>단일 하네스로 T7 (사양서 40건) 처리 → 채점</li><li>장표의 extractor · verifier · 나누기 규칙 직접 만들기</li><li>같은 과제 다시 → 점수 · 시간 · 토큰 비교 (Agent Watch)</li><li>내 업무는 어느 쪽이 맞는지 기록</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>비교표 (단일 vs 멀티)</li><li>고른 구성과 이유 한 줄</li></ul></div>
   </div></div>
+</section>
+
+<section class="slide lt" data-title="실습 5-2 하네스">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch5</span></div>
+  <h2 class="s-title sm">실습 5-2 하네스</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/work_harness/workspace</code><em>탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장</em></div><div class="kgrid"><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/spec-quote/SKILL.md</span></div><pre><code>---
+name: spec-quote
+description: 사양서에서 품목을 뽑아 단가표로 견적을 낼 때.
+---
+
+# spec-quote
+
+1. 사양서마다 품목 · 규격 · 재질 · 수량 · 단위를 뽑는다. 박스 · 묶음은 낱개 수량으로 바꾼다
+2. 본문과 표의 수량이 다르거나 빠지면 그 사양서는 견적하지 않고 「확인 필요 (무엇이 어떻게 다른지)」
+3. 단가표에서 품목 · 규격 · 재질이 모두 맞는 행만 쓴다. 없으면 「단가 없음」
+4. 금액 = 수량 × 단가, 사양서별 합계
+5. 결과: out/&lt;과제&gt;/견적.md (표 · 사양서별 금액 · 상태 · 전체 합계) + out/&lt;과제&gt;/견적.json</code></pre></div><div data-file="extractor.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/agents/extractor.md</span></div><pre><code>---
+name: extractor
+description: 문서 여러 건을 맡아 정해진 형식으로 뽑고 계산한다. 맡은 문서만 읽는다.
+tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+---
+
+너는 추출 담당이다. 감독이 준 문서 목록만 읽고, 해당 업무 Skill의 절차를 그대로 따른다.
+- 견적이면: 품목 · 규격 · 재질 · 수량 · 단위를 뽑고 단가표에서 세 가지가 모두 맞는 행으로 금액 계산
+- 박스 · 묶음 단위는 낱개 수량으로 바꾼다 (계산 과정을 근거에 적음)
+- 수량이 서로 다르거나 비어 있으면 금액을 만들지 않고 「확인 필요 (이유)」
+- 단가표에 맞는 행이 없으면 「단가 없음」
+반환: 문서마다 한 줄 JSON — {"id": 파일명, "items": [...], "금액": 숫자 또는 null, "상태": "정상|확인 필요|단가 없음", "근거": "..."}</code></pre></div><div data-file="verifier.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/agents/verifier.md</span></div><pre><code>---
+name: verifier
+description: 업무 결과물을 원본과 대조해 검증한다. 고치지 않고 판정만 한다.
+tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+---
+
+너는 검증 담당이다. 파일을 고치지 않는다.
+- 결과물의 숫자 · 이름 · 날짜가 원본(inputs/)에 있는지
+- 빠진 항목 · 지어낸 내용 · 확정 아닌 정보를 확정처럼 쓴 곳
+- 사람 판단이 필요한데 답해 버린 곳
+- 견적이면 수량 × 단가를 직접 다시 계산해 금액 대조
+반환: 항목별 통과 / 실패, 실패 근거(파일 · 줄), 고칠 점</code></pre></div><div data-file="CLAUDE_추가.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md 끝에 덧붙임</span></div><pre><code>## 여러 건 · 큰 작업 (멀티에이전트)
+- 문서가 10건을 넘으면 직접 다 읽지 않는다. 10건씩 나눠 `extractor` Sub Agent 여러 개에 **동시에** 맡긴다 (문서 경로 목록 · 해당 Skill 이름 · 반환 형식 전달)
+- 모인 결과를 `verifier` Sub Agent에 넘겨 원본과 대조 · 금액 재계산을 맡긴다
+- verifier가 틀렸다고 한 문서만 extractor에게 한 번 더 맡긴다
+- 합계는 감독(메인)이 마지막에 직접 계산해 out/&lt;과제&gt;/ 에 저장한다
+- 몇 건 안 되는 짧은 일은 나누지 않는다 (나누는 비용이 더 큼)</code></pre></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="실습 5-2 진행">
@@ -2255,8 +2429,7 @@ model: haiku
   <div class="eyebrow"><span class="tag">Ch5</span></div>
   <h2 class="s-title sm">실습 5-2 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/work_harness/workspace</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 단일 하네스</span></div><pre><code>inputs/T7 사양서 40건 견적 내 줘. 사양서별 금액과 전체 합계까지.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 채점</span></div><pre><code>python3 ../grade.py . --task T7 을 실행해서 점수 보여 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 멀티에이전트 입히기</span></div><pre><code>../harness_multi/.claude/agents 를 이 폴더 .claude/agents 로 복사하고
-../harness_multi/CLAUDE.md 내용을 이 폴더 CLAUDE.md 끝에 덧붙여 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ out/T7 지우고 /clear 후 ①② 다시</span></div><pre><code>단일 vs 멀티 점수 · 시간 · 토큰을 표로 정리해 줘</code></pre></div></div><div class="dbnote"><span>참고</span> 시간 · 토큰은 Agent Watch 화면에서 · ③은 앞 장 요청문이나 부록 ①⑤ 「파일로 저장」으로도</div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs/work_harness/workspace</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit wide"><div class="kdo"><span>① 단일 하네스 완성</span><p>2-3 하네스에 앞 장 <b>spec-quote</b> Skill 추가</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 단일 하네스 · 실행</span></div><pre><code>inputs/T7 사양서 40건 견적 내 줘. 사양서별 금액과 전체 합계까지.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 채점</span></div><pre><code>python3 ../grade.py . --task T7 을 실행해서 점수 보여 줘</code></pre></div><div class="kdo"><span>④ 멀티에이전트 만들기</span><p>앞 장 extractor · verifier 파일 만들기 · CLAUDE.md 끝에 덧붙임 내용 붙여 넣기</p></div><div class="kdo"><span>⑤ 멀티에이전트 · 실행</span><p>out/T7 지우기 → Claude Code 새로 열기 → ②③ 그대로</p></div><div class="kdo"><span>⑥ 비교</span><p>점수 · 시간 · 토큰 · 레인 수 (Agent Watch 화면)</p></div></div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="다음: 토큰 경제학">
@@ -2417,7 +2590,7 @@ model: haiku
   <h2 class="s-title sm">토큰 절감 실측</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>레버를 하나씩 켜며 토큰 · 품질 비교</p><div class="lf">사용 파일 · <a class="dl" href="dl/lab6_tokens.zip" download>lab6_tokens.zip</a></div><div class="mine"><span>내 업무 적용</span>내 업무 1회 토큰 예상 · 쓸 레버 하나</div></div>
+    <div class="lc goal"><div class="lh">목표</div><p>레버를 하나씩 켜며 토큰 · 품질 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/lab6_tokens</code></div><div class="mine"><span>내 업무 적용</span>내 업무 1회 토큰 예상 · 쓸 레버 하나</div></div>
     <div class="lc steps"><div class="lh">단계</div><ol><li>quiz.md로 먼저 예상</li><li>기준선 5개 과제 실행 (bench.py)</li><li>레버 켜기: 간결 지시 · caveman · 모델 나누기 · Sub Agent</li><li>토큰 · 정확도 함께 비교 → 남길 레버 고르기</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>레버별 토큰 · 정확도 표</li><li>품질이 떨어진 레버는 제외</li></ul></div>
   </div></div>
@@ -2428,9 +2601,9 @@ model: haiku
   <div class="eyebrow"><span class="tag">Ch6</span></div>
   <h2 class="s-title sm">실습 6-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 기준선</span></div><pre><code>lab6_tokens/bench.py --levers baseline,brief 를 실행하고
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 기준선</span></div><pre><code>lab6_tokens/bench.py --levers baseline,brief 를 실행하고
 과제별 토큰 · 정답 여부를 표로</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 모델 나누기</span></div><pre><code>bench.py --levers haiku,sonnet,opus 실행 → 과제별 토큰 · 정답 비교</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 캐시 · Sub Agent</span></div><pre><code>bench.py --levers cache,subagent 실행 → 기준선 대비 변화</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 고르기</span></div><pre><code>세 결과를 합쳐 품질이 떨어지지 않은 레버만 골라
-내 업무에 쓸 순서로 추천해 줘</code></pre></div></div><div class="kf"><div data-file="quiz.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">quiz.md</span></div><pre><code># 몇 토큰일까? (Lab 6)
+내 업무에 쓸 순서로 추천해 줘</code></pre></div></div><div class="kf"><div data-file="quiz.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">quiz.md · 먼저 예상</span></div><pre><code># 몇 토큰일까? (Lab 6)
 
 `bench.py` 를 돌리기 **전에** 카드마다 예상값을 적는다. 돌린 뒤 `python lab6_tokens/quiz.py` 가 정답을 계산해 준다.
 가장 가깝게 맞힌 사람이 이긴다. 틀린 이유를 한 줄씩 말해 본다.
@@ -2453,7 +2626,7 @@ model: haiku
 - 1·3번: 한 단어 답에도 Claude Code 기본 시스템 프롬프트와 도구 설명이 따라 들어간다. 그래서 「질문 길이」보다 「하네스 크기」가 비용을 좌우한다.
 - 6번: 캐시는 **앞부분이 글자 하나까지 같아야** 맞는다. 앞부분에 날짜·시각을 넣으면 깨진다.
 - 5번: 모델 라우팅은 토큰을 줄이는 게 아니라 **토큰당 값**을 줄인다. 구독 요금제에서도 큰 모델일수록 사용 한도가 빨리 줄어든다.
-- 7번: 서브에이전트는 메인 컨텍스트를 아끼지만 전체 토큰을 줄여 주지는 않는다.</code></pre></div></div></div><div class="dbnote"><span>참고</span> ① 전에 quiz.md에 예상값부터</div></div></div>
+- 7번: 서브에이전트는 메인 컨텍스트를 아끼지만 전체 토큰을 줄여 주지는 않는다.</code></pre></div></div></div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="다음: 평가 · 회귀 테스트">
@@ -2643,7 +2816,7 @@ python compare.py results/before.json results/after.json
   <h2 class="s-title sm">평가셋 + 회귀 테스트</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>하네스를 고칠 때마다 자동으로 재는 장치</p><div class="lf">사용 파일 · <a class="dl" href="dl/lab7_eval_regression.zip" download>lab7_eval_regression.zip</a></div><div class="mine"><span>내 업무 적용</span>내 업무 평가 문항 다섯 개 · 엣지 케이스 두 개</div></div>
+    <div class="lc goal"><div class="lh">목표</div><p>하네스를 고칠 때마다 자동으로 재는 장치</p><div class="lf">사용 파일 · <code class="lfold">labs/lab7_eval_regression</code></div><div class="mine"><span>내 업무 적용</span>내 업무 평가 문항 다섯 개 · 엣지 케이스 두 개</div></div>
     <div class="lc steps"><div class="lh">단계</div><ol><li>대표 10건 + 엣지 케이스 + 합성 10건</li><li>judge 기준 → 사람 10건과 일치도</li><li>기준선 실행 → 하네스 수정 → 재실행</li><li>일부러 나쁘게 고쳐 compare.py 실패 확인</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>평가셋 20건 이상</li><li>전후 비교표 · 나빠지면 실패로 끝남</li></ul></div>
   </div></div>
@@ -2654,7 +2827,7 @@ python compare.py results/before.json results/after.json
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">실습 7-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① judge 일치도</span></div><pre><code>lab7_eval_regression/agreement.py 를 실행해
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① judge 일치도</span></div><pre><code>lab7_eval_regression/agreement.py 를 실행해
 judge와 사람 채점 일치도를 설명해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 기준선</span></div><pre><code>lab7_eval_regression/run_suite.py -n 10 --k 3 실행 →
 결과 파일 경로와 점수 요약</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 일부러 나쁘게</span></div><pre><code>lab1_harness_vs_bare/harness/CLAUDE.md 에서
 환불 · 징계를 약속하지 않는다는 줄을 지우고 ②를 다시 실행해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 회귀 확인</span></div><pre><code>lab7_eval_regression/compare.py 로 ②③ 결과를 비교해
@@ -2749,7 +2922,7 @@ claude --plugin-dir ./my-harness        # 불러서 실행
   <h2 class="s-title sm">내 업무 하네스 플러그인</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>내 하네스 설계표를 설치해 쓰는 하네스로 · 숫자로 증명</p><div class="lf">사용 파일 · <a class="dl" href="dl/lab8_final_plugin.zip" download>lab8_final_plugin.zip</a></div><div class="mine"><span>내 업무 적용</span>설계표 → 내 업무용 하네스 · 하네스 미적용과 비교</div></div>
+    <div class="lc goal"><div class="lh">목표</div><p>내 하네스 설계표를 설치해 쓰는 하네스로 · 숫자로 증명</p><div class="lf">사용 파일 · <code class="lfold">labs/lab8_final_plugin</code></div><div class="mine"><span>내 업무 적용</span>설계표 → 내 업무용 하네스 · 하네스 미적용과 비교</div></div>
     <div class="lc steps"><div class="lh">단계</div><ol><li>설계표를 Claude에 주고 CLAUDE.md · Skill · Hook · 평가 문항 초안 생성</li><li>my-harness 템플릿에 넣기 · claude plugin validate</li><li>평가 문항으로 하네스 미적용 vs 내 하네스 비교 (Agent Watch로 흐름 확인)</li><li>README에 설계표 요약 · 비교표</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>내 업무 플러그인 설치 · 실행</li><li>비교표 (정답 · 토큰 · 시간) · 막은 것 목록</li></ul></div>
   </div></div>
@@ -2760,12 +2933,12 @@ claude --plugin-dir ./my-harness        # 불러서 실행
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">실습 8-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 Claude Code 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 설계표 → 하네스</span></div><pre><code>my_work_spec/내_하네스_설계표.md 를 읽고
+  <div class="body"><div class="mid"><div class="kithead"><span>실습 폴더</span><code>labs</code><em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 설계표 → 하네스</span></div><pre><code>my_work_spec/내_하네스_설계표.md 를 읽고
 lab8_final_plugin/my-harness 의 TODO(실습) 를 채워 줘.
 - skills/ 에 내 업무 Skill · agents/verifier.md 확인 항목
 - hooks/guard_rules.py 막을 것 · eval/dataset.jsonl 평가 5개
 설계표에 없는 규칙은 지어내지 말고 TODO로</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 검사</span></div><pre><code>claude plugin validate ./lab8_final_plugin/my-harness 를 실행하고
-오류가 있으면 고쳐 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 터미널에서 불러오기</span></div><pre><code>claude --plugin-dir ./lab8_final_plugin/my-harness</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 비교</span></div><pre><code>eval/dataset.jsonl 문항으로 하네스 미적용 vs 내 하네스를 비교해
+오류가 있으면 고쳐 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 터미널에서 불러오기</span></div><pre><code>claude --plugin-dir ./lab8_final_plugin/my-harness</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 하네스 미적용 vs 적용</span></div><pre><code>eval/dataset.jsonl 문항으로 하네스 미적용 vs 내 하네스를 비교해
 정답 · 토큰 · 시간 표를 my-harness/README.md 에 넣어 줘</code></pre></div></div><div class="kf"><div data-file="plugin.json" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">plugin.json</span></div><pre><code>{
   "name": "my-harness",
   "version": "0.1.0",
@@ -2829,7 +3002,7 @@ options = ClaudeAgentOptions(
                                         tools=['Read'])},
     hooks={'PreToolUse': [HookMatcher(matcher='Bash', hooks=[guard])]},
     max_turns=8,
-)</code></pre></div><div class="dbnote"><span>자료</span> <a class="dl" href="dl/sdk_optional.zip" download>sdk_optional.zip</a></div></div></div>
+)</code></pre></div><div class="dbnote"><span>자료</span> <code class="lfold">labs/sdk_optional</code></div></div></div>
 </section>
 
 <section class="slide lt" data-title="심화 트랙">
@@ -2837,7 +3010,7 @@ options = ClaudeAgentOptions(
   <div class="eyebrow"><span class="tag">심화</span></div>
   <h2 class="s-title sm">심화 트랙</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kcards c3"><div class="kcard"><h4>자동 리뷰 Agent</h4><p>변경 사항을 읽기 전용 Agent가 기준대로 점검</p></div><div class="kcard"><h4>설계 ↔ 리뷰 루프</h4><p>통과할 때까지 반복 · 횟수 상한</p></div><div class="kcard"><h4>장기 세션 관리</h4><p>resume · 요약 · 상태 파일로 며칠짜리 작업</p></div></div><div class="dbnote"><span>자료</span> <a class="dl" href="dl/sdk_optional.zip" download>sdk_optional.zip</a></div></div></div>
+  <div class="body"><div class="mid"><div class="kcards c3"><div class="kcard"><h4>자동 리뷰 Agent</h4><p>변경 사항을 읽기 전용 Agent가 기준대로 점검</p></div><div class="kcard"><h4>설계 ↔ 리뷰 루프</h4><p>통과할 때까지 반복 · 횟수 상한</p></div><div class="kcard"><h4>장기 세션 관리</h4><p>resume · 요약 · 상태 파일로 며칠짜리 작업</p></div></div><div class="dbnote"><span>자료</span> <code class="lfold">labs/sdk_optional</code></div></div></div>
 </section>
 
 <section class="slide dk divider" data-title="[부록] 하네스 재료">

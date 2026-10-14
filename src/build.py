@@ -22,10 +22,12 @@ SKIP = {"runs", "logs", "__pycache__", ".venv", "out", ".DS_Store", "old"}
 def make_downloads():
     """실습 장표에서 가리킨 자료를 docs/dl/ 에 zip · 파일로 (GitHub 없이 덱 폴더만으로)."""
     import shutil
+    import unicodedata
     import zipfile
     import subprocess
     labs, dl = ROOT / "labs", ROOT / "docs" / "dl"
-    tracked = set(subprocess.run(["git", "ls-files", "labs"], cwd=ROOT, capture_output=True, text=True).stdout.split("\n"))
+    tracked = set(subprocess.run(["git", "ls-files", "-z", "labs"], cwd=ROOT, capture_output=True, text=True).stdout.split("\0"))
+    tracked = {unicodedata.normalize("NFC", x) for x in tracked}
     if dl.exists():
         shutil.rmtree(dl)
     dl.mkdir(parents=True)
@@ -33,7 +35,7 @@ def make_downloads():
     def add(z, folder):
         for f in sorted(folder.rglob("*")):
             rel = f.relative_to(labs)
-            if f.is_file() and not (set(rel.parts) & SKIP) and f.suffix not in (".db", ".pyc") and f"labs/{rel}" in tracked:
+            if f.is_file() and not (set(rel.parts) & SKIP) and f.suffix not in (".db", ".pyc") and unicodedata.normalize("NFC", f"labs/{rel}") in tracked:
                 z.write(f, Path("labs") / rel)
     for name in sorted(hx.LAB_FILES):
         if name == "labs":

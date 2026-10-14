@@ -25,7 +25,7 @@ for f in (proj / ".claude" / "settings.json", proj / ".claude" / "settings.local
                 if h.get("type") == "command":
                     hooks.append((g.get("matcher", "*"), h["command"]))
 if not hooks:
-    raise SystemExit(f"PreToolUse Hook이 없다: {proj}/.claude/settings.json")
+    print(f"PreToolUse Hook 없음 (하네스 미적용): {proj}/.claude/settings.json\n")
 
 
 def matches(matcher, tool):

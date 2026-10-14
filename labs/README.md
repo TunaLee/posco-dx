@@ -2,6 +2,30 @@
 
 > ※ 모든 회사(「한빛스틸」)·인물·문서·단가는 실습용 가상 자료입니다.
 
+## 진행 방법
+
+1. 강의 첫 시간에 `labs.zip` 을 받아 압축을 푼다.
+2. 실습마다 강의 장표 「실습 N 진행」이 가리키는 폴더를 VS Code로 열고 Claude Code 를 켠다.
+3. **하네스 미적용**으로 먼저 실행 → 장표에 있는 하네스 파일(CLAUDE.md · Skill · Hook …)을 같은 경로로 직접 만든다 → **하네스 적용**으로 같은 요청 → 비교.
+4. 요청문은 장표에서 「복사」해 붙여 넣는다. 코드는 직접 쓰지 않는다.
+
+| 장표 | 실습 폴더 | 하네스 (장표에 있음) |
+|---|---|---|
+| 1-1 같은 질문 열 번 | `lab1_1_same_question/` | CLAUDE.md |
+| 1-2 확정 정보가 폴더 밖에 있을 때 | `lab1_2_confirmed_policy/` | CLAUDE.md |
+| 준비 내 업무에 가까운 예시 | `my_work_spec/` | — |
+| 2-1 하네스 부품 | `lab2_1_parts/` | Skill · Sub Agent · Hook 파일 네 개 |
+| 2-2 Claude로 Hook 만들기 | `lab2_hook_by_claude/project/` | Hook 요청문 |
+| 2-3 업무 처리 하네스 | `work_harness/workspace/` | CLAUDE.md · Skill 두 개 |
+| 3-1 컨텍스트 | `lab3_context/` | — |
+| 4-1 공개 하네스 | `lab4_public_harness/` | — |
+| 5-1 · 5-2 멀티에이전트 | `lab5_multiagent/` · `work_harness/workspace/` | extractor · verifier · 나누기 규칙 |
+| 6-1 토큰 | `lab6_tokens/` | — |
+| 7-1 평가 · 회귀 | `lab7_eval_regression/` | — |
+| 8-1 내 하네스 플러그인 | `lab8_final_plugin/` | — |
+
+## 강사용 참고
+
 코드는 이미 다 들어 있다. 실습에서는 **프롬프트·설정·규칙 파일만** 바꾸고 결과가 어떻게 달라지는지 잰다. 고칠 곳에는 `TODO(실습)` 표시가 있다. 코드를 고쳐야 할 일이 생기면 직접 쓰지 말고 Claude Code 에게 시킨다.
 
 실행 엔진은 **Claude Code 헤드리스 모드**(`claude -p`)다. API 키 없이 회사 Business(Team) 계정 로그인으로 돈다. 토큰은 결과 JSON 의 `usage` 로 잰다.
