@@ -5,11 +5,6 @@ files: (저장 이름, 화면 경로, 원본) · 원본이 @로 시작하면 src
 """
 
 KITS = {
-    "준비": dict(folder="my_work_spec", steps=[
-        ("① 예시 고르기", "p", "my_work_spec/내_하네스_설계표.md 의 다섯 유형 중\n내 업무 〈한 줄 설명〉 과 가장 비슷한 것을 골라 이유와 함께 알려 줘"),
-        ("② 내 업무 값으로", "p", "고른 유형의 예시 값을 내 업무 값으로 바꿔 my_work_spec/내_하네스_설계표.md 를 채워 줘.\n모르는 칸은 예시 그대로 두고 TODO · 고객명 · 실제 수치는 가상 값으로"),
-    ], files=[("내_하네스_설계표.md", "my_work_spec/내_하네스_설계표.md", "my_work_spec/내_하네스_설계표.md")]),
-
     "1-1": dict(folder="lab1_1_same_question", steps=[
         ("① 하네스 미적용 · 10번", "p", "lab1_1_same_question 폴더 안에서 질문.txt 의 질문을\nclaude -p --setting-sources \"\" --tools \"\" 로 10번 실행해\n답을 labs 바로 아래 runs/1-1/미적용_01.txt ~ 10.txt 로 저장해 줘"),
         ("② 하네스 만들기", "do", "탐색기에서 새 파일 <b>lab1_1_same_question/CLAUDE.md</b> → 오른쪽 「복사」 → 붙여 넣기 → 저장"),
