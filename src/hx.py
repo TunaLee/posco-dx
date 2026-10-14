@@ -68,6 +68,10 @@ D_PTC = ("Anthropic 문서 · Programmatic tool calling", "https://platform.clau
 D_CCSKILLS = ("Claude Code Skills 문서", "https://code.claude.com/docs/en/skills")
 OAI_MA = ("OpenAI 문서 · Responses multi-agent", "https://developers.openai.com/api/docs/guides/responses-multi-agent")
 OAI_SUB = ("OpenAI Codex 문서 · Subagents", "https://learn.chatgpt.com/docs/agent-configuration/subagents")
+INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
+INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
+INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
+TRIFECTA = ("Simon Willison · The lethal trifecta 2025.6", "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/")
 INC_POCKET = ("Decrypt · PocketOS 2026.4", "https://decrypt.co/365897/ai-agent-deletes-startup-database-9-seconds-founder-says")
 INC_OPENCLAW = ("SF Standard · OpenClaw 2026.2", "https://sfstandard.com/2026/02/25/openclaw-goes-rogue/")
 INC_CC_PUSH = ("Claude Code GitHub 이슈 #33402 2026.3", "https://github.com/anthropics/claude-code/issues/33402")
@@ -714,6 +718,17 @@ def ch2():
                     ("GPT-6 Astra", 8.5, True, "8.5%")], top=10, title="간접 프롬프트 주입 성공률 · 15번 시도 · 같은 공격 세트 (Anthropic 측정)")
              + note("하네스로", "외부 문서 · 웹 · 메일은 읽기 전용 Agent에 · 쓰기 · 전송은 Hook으로 막기"),
              SC_HAIKU55, SC_GPT6),
+        stat("메일 Agent 프롬프트 주입 사례", "Ch2",
+             flow([("공격자 메일", "흰 글씨 · 숨은 지시"), ("Agent가 메일을 읽음", "요약 · 분류 중"), ("지시를 따름", "다른 메일 · 파일 검색"),
+                   ("밖으로 전송", "이미지 URL · 폼 · 링크")], hl=3)
+             + table(["사례", "무슨 일", "결과"], [
+                 ["<b>Superhuman AI</b> (2026.1)", "받은 메일 속 숨은 지시 → 다른 민감 메일 수십 통 내용을 공격자 구글 폼으로", "고위험 판정 · 수정"],
+                 ["<b>OpenAI Codex</b> (2026.4)", "메일 정리 중 외부 메일의 주입 → 연결된 데이터 유출", "제보 후 수정"],
+                 ["<b>Microsoft 365 Copilot</b> (2025.6)", "메일 한 통으로 클릭 없이 · 나중에 다른 질문을 해도 내부 데이터를 이미지 URL에 실어 전송 (EchoLeak)", "CVSS 9.3 · 패치"],
+             ])
+             + note("치명적 3요소", "비공개 데이터 접근 + 외부 입력 + 밖으로 보내는 통로 → 셋이 만나면 유출")
+             + note("하네스로", "하나를 끊기 · 외부 메일은 읽기 전용 Agent · 외부 전송은 Hook 차단 · 발송은 사람"),
+             INC_SUPERHUMAN, INC_CODEXMAIL, INC_ECHOLEAK, TRIFECTA),
         stat("안전장치 유무별 공격 성공률", "Ch2",
              hbars([("Opus 5.5 · 모델만", 54.6, False, "54.6%"), ("Opus 5.5 · 탐지기 추가", 11.1, True, "11.1%")], top=60,
                    title="코딩 Agent 대상 적응형 공격 성공률 (200번 × 40개 시나리오)")
