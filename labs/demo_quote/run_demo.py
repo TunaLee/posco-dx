@@ -8,6 +8,8 @@
 
 사용
   python3 run_demo.py --cond bare harness --k 3            # 실제 실행 (계정 사용량 소모)
+  python3 run_demo.py --variant ext --cond bare harness     # 확정 정책이 저장소 밖(하네스 안)에만 있을 때
+  python3 run_demo.py --watch ...                           # Agent Watch(../agent_watch)로 실시간 보기
   python3 run_demo.py --show-cmd --cond harness            # 명령만 보기
   python3 dashboard.py                                     # runs/ 결과를 대시보드 HTML로
 """
@@ -28,42 +30,53 @@ RUNS = HERE / "runs"
 SUPERPOWERS = Path.home() / ".claude/plugins/cache/superpowers-marketplace/superpowers/5.1.0"
 TOOLS = "Read,Grep,Glob,Edit,Write,MultiEdit,TodoWrite,Task,Agent,Skill,Bash(python3:*),Bash(ls:*),Bash(cat:*)"
 TEST_CMD = [sys.executable, "-m", "unittest"]
+MODEL = "claude-sonnet-5-5"
+# 별칭(sonnet · haiku · opus)도 5.5 세대로 고정 — Sub Agent(Explore=haiku 등)까지
+ALIASES = {"ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-5-5",
+           "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-5-5",
+           "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-5-5"}
+MINUTES = "docs/wiki/회의록_2026-09-02_단가정책확정.md"
+WATCH = HERE.parent / "agent_watch"
 
 
 def sha(p):
     return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
-def prepare(cond, name):
+def prepare(cond, name, variant, watch):
     wd = RUNS / name / "work"
     shutil.copytree(HERE / "project", wd)
+    if variant == "ext":                      # 확정 내용이 저장소에 없다 (하네스에만)
+        (wd / MINUTES).unlink()
     if cond == "harness":
         shutil.copytree(HERE / "harness", wd, dirs_exist_ok=True)
+    if watch:
+        subprocess.run([sys.executable, str(WATCH / "install.py"), str(wd)], check=True, capture_output=True)
     return wd
 
 
-def command(cond, model):
+def command(cond, model, watch=False):
     cmd = ["claude", "-p", (HERE / "task.md").read_text(encoding="utf-8"),
            "--model", model, "--output-format", "stream-json", "--verbose",
            "--permission-mode", "acceptEdits", "--allowedTools", TOOLS]
-    if cond == "harness":
-        cmd += ["--setting-sources", "project"]
-    else:
-        cmd += ["--setting-sources", ""]
+    src = ["project"] if cond == "harness" else []
+    if watch:
+        src.append("local")                   # Agent Watch Hook (settings.local.json)
+    cmd += ["--setting-sources", ",".join(src)]
     if cond == "superpowers":
         cmd += ["--plugin-dir", str(SUPERPOWERS)]
     return cmd
 
 
-def run_agent(cond, name, model, timeout):
-    wd = prepare(cond, name)
-    env = dict(os.environ)
+def run_agent(cond, name, model, timeout, variant, watch):
+    wd = prepare(cond, name, variant, watch)
+    env = dict(os.environ, **ALIASES)
     env.pop("ANTHROPIC_API_KEY", None)          # 구독(Business · Max) 계정으로
     env["CLAUDE_PROJECT_DIR"] = str(wd)
     t0 = time.time()
     events = []
     with open(RUNS / name / "events.jsonl", "w", encoding="utf-8") as log:
-        p = subprocess.Popen(command(cond, model), cwd=wd, env=env, stdout=subprocess.PIPE,
+        p = subprocess.Popen(command(cond, model, watch), cwd=wd, env=env, stdout=subprocess.PIPE,
                              stderr=subprocess.DEVNULL, text=True)
         try:
             for line in p.stdout:
@@ -143,16 +156,17 @@ def grade(wd, name):
             if (root / rel).exists():
                 return root / rel
     m["files_changed"] = sorted(str(p.relative_to(wd)) for p in wd.rglob("*")
-                                if p.is_file() and "__pycache__" not in p.parts
+                                if p.is_file() and "__pycache__" not in p.parts and p.name != "settings.local.json"
                                 and (base(p.relative_to(wd)) is None or sha(p) != sha(base(p.relative_to(wd)))))
     return m
 
 
-def one(cond, i, model, timeout, stamp):
-    name = f"{stamp}_{cond}_{i}"
+def one(cond, i, model, timeout, stamp, variant, watch):
+    name = f"{stamp}_{variant}_{cond}_{i}"
     (RUNS / name).mkdir(parents=True)
-    wd, events, wall = run_agent(cond, name, model, timeout)
-    res = {"name": name, "cond": cond, "model": model, "wall_s": wall, **analyse(events), **grade(wd, name)}
+    wd, events, wall = run_agent(cond, name, model, timeout, variant, watch)
+    res = {"name": name, "cond": cond, "variant": variant, "model": model, "wall_s": wall, **analyse(events), **grade(wd, name)}
+    res["models_used"] = sorted((res.get("model_usage") or {}).keys())
     (RUNS / name / "result.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
     return res
 
@@ -161,22 +175,24 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cond", nargs="+", default=["bare", "harness"], choices=["bare", "harness", "superpowers"])
     ap.add_argument("--k", type=int, default=1)
-    ap.add_argument("--model", default="sonnet")
+    ap.add_argument("--model", default=MODEL)
+    ap.add_argument("--variant", default="repo", choices=["repo", "ext"], help="repo: 정보가 저장소에 다 있음 · ext: 확정 회의록이 저장소에 없음")
+    ap.add_argument("--watch", action="store_true", help="Agent Watch Hook 켜기 (서버를 먼저 켠다)")
     ap.add_argument("--parallel", type=int, default=3)
     ap.add_argument("--timeout", type=int, default=1500)
     ap.add_argument("--show-cmd", action="store_true")
     a = ap.parse_args()
     if a.show_cmd:
         for c in a.cond:
-            print(c, ":", " ".join(repr(x) if " " in x or not x else x for x in command(c, a.model)))
+            print(c, ":", " ".join(repr(x) if " " in x or not x else x for x in command(c, a.model, a.watch)))
         return
     stamp = time.strftime("%m%d-%H%M%S")
     jobs = [(c, i) for i in range(1, a.k + 1) for c in a.cond]
     with cf.ThreadPoolExecutor(a.parallel) as ex:
-        futs = {ex.submit(one, c, i, a.model, a.timeout, stamp): (c, i) for c, i in jobs}
+        futs = {ex.submit(one, c, i, a.model, a.timeout, stamp, a.variant, a.watch): (c, i) for c, i in jobs}
         for f in cf.as_completed(futs):
             r = f.result()
-            print(f"{r['name']:<28} 숨은 테스트 {r['hidden_pass']:>2}/15  회귀 {r['regression_pass']}/5  "
+            print(f"{r['name']:<34} {','.join(r['models_used'])}  숨은 테스트 {r['hidden_pass']:>2}/15  회귀 {r['regression_pass']}/5  "
                   f"Sub Agent {len(r['sub_agents'])}  Skill {len(r['skills'])}  차단 {r['blocked']}  "
                   f"턴 {r.get('turns')}  {r['wall_s']}s  출력 {r.get('output')}  "
                   f"읽음: 2025 {'O' if r['read_2025'] else '-'} 초안 {'O' if r['read_draft'] else '-'} 회의록 {'O' if r['read_minutes'] else '-'} 확정본 {'O' if r['read_reference'] else '-'}", flush=True)

@@ -2,7 +2,7 @@
 name: verifier
 description: 견적 계산 변경을 정책 문서와 코딩 규칙에 대조해 검증한다. 코드는 고치지 않는다.
 tools: Read, Grep, Glob, Bash
-model: sonnet
+model: claude-sonnet-5-5
 ---
 
 너는 검증 담당이다. 파일을 고치지 않는다.

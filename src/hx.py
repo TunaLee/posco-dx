@@ -66,7 +66,7 @@ D_PTC = ("Anthropic 문서 · Programmatic tool calling", "https://platform.clau
 D_CCSKILLS = ("Claude Code Skills 문서", "https://code.claude.com/docs/en/skills")
 OAI_MA = ("OpenAI 문서 · Responses multi-agent", "https://developers.openai.com/api/docs/guides/responses-multi-agent")
 OAI_SUB = ("OpenAI Codex 문서 · Subagents", "https://learn.chatgpt.com/docs/agent-configuration/subagents")
-OWN = ("직접 실측 2026.10 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
+OWN = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 
 code = explain.prompt
 REPO = "https://github.com/TunaLee/posco-dx/tree/main/labs"
@@ -528,12 +528,19 @@ def ch4():
             ["<b>토큰</b>", "상시 로드되는 Skill · 지침 양"],
             ["<b>사내 규정</b>", "외부 저장소 설치 허용 여부"],
         ]) + note("원칙", "공개 하네스도 내 평가셋으로 잰 뒤에 쓴다"), "Ch4"),
-        stat("실측: 같은 과제, 세 조건 (Sonnet)", "Ch4",
-             hbars([("맨몸 ×3", 15, False, "15 · 15 · 15"), ("내 하네스 ×3", 15, False, "15 · 15 · 15"), ("Superpowers ×1", 0.2, True, "0 (질문하고 멈춤)")], top=15,
-                   title="숨은 인수 테스트 통과 (15개 중) · 견적 할인 · 할증 과제")
-             + hbars([("맨몸", 165, False, "165초 · 52만"), ("내 하네스", 289, True, "289초 · 72만"), ("Superpowers", 90, False, "90초 · 29만")], top=300,
-                     title="평균 시간 (막대) · 전체 토큰 (캐시 포함)")
-             + note("배운 점", "정보가 저장소에 다 있으면 Sonnet은 맨몸으로도 맞춤 · 하네스는 절차를 고정하지만 비용이 듦 · 대화형 하네스는 자동 실행에서 멈춤"),
+        stat("실측 ①: 정보가 저장소에 다 있을 때", "Ch4",
+             hbars([("맨몸 ×5", 15, False, "15 · 15 · 15 · 15 · 15"), ("내 하네스 ×5", 15, False, "15 · 15 · 15 · 15 · 15"),
+                    ("Superpowers ×3", 0.2, True, "0 · 0 · 0 (질문하고 멈춤)")], top=15,
+                   title="Claude Sonnet 5.5 · 견적 할인 · 할증 과제 · 숨은 인수 테스트 (15개 중)")
+             + hbars([("맨몸", 31, False, "31만 토큰 · 43초"), ("내 하네스", 52, True, "52만 토큰 · 92초"), ("Superpowers", 20, False, "20만 토큰 · 29초")], top=60,
+                     title="실행 1회 평균 토큰 (캐시 포함) · 시간 (중앙값)")
+             + note("배운 점", "답이 저장소에 있으면 Sonnet 5.5는 맨몸으로도 맞춘다 · 하네스는 절차를 고정하는 대신 토큰 1.7배 · 대화형 하네스는 자동 실행에서 멈춘다"),
+             OWN),
+        stat("실측 ②: 확정 정보가 저장소 밖에 있을 때", "Ch4",
+             hbars([("맨몸 ×3", 7.7, False, "5 · 13 · 5"), ("내 하네스 ×3", 15, True, "15 · 15 · 15")], top=15,
+                   title="같은 과제 · 확정 회의록만 저장소에서 뺌 (확정본은 하네스 Skill에만)")
+             + quote("2026Q3 개정안은 「검토 중」인 초안이라 쓰지 않았습니다. 2025 시행본을 적용했습니다", "맨몸 Sonnet 5.5의 작업 보고 (3회 중 2회)")
+             + note("배운 점", "모델은 신중했고 가정도 밝혔지만, 회사가 확정한 사실은 모른다 → 그 지식을 넣는 것이 하네스"),
              OWN),
         lab("4-1", "같은 과제, 네 가지 하네스", "Ch4",
             "맨몸 · 내 하네스 · Superpowers · gstack 비교",

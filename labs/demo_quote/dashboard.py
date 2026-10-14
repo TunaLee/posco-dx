@@ -12,8 +12,11 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 RUNS = HERE / "runs"
 N, G, O, L = "#1F3A5F", "#9AA5B1", "#F28C28", "#EEF1F5"
-LABEL = {"bare": "하네스 없음", "harness": "내 하네스", "superpowers": "Superpowers"}
-ORDER = ["bare", "harness", "superpowers"]
+LABEL = {"bare": "하네스 없음", "harness": "내 하네스", "superpowers": "Superpowers",
+         "repo:bare": "저장소 · 맨몸", "repo:harness": "저장소 · 내 하네스", "repo:superpowers": "저장소 · Superpowers",
+         "ext:bare": "저장소 밖 · 맨몸", "ext:harness": "저장소 밖 · 내 하네스", "ext:superpowers": "저장소 밖 · Superpowers"}
+ORDER = [f"{v}:{c}" for v in ("repo", "ext") for c in ("bare", "harness", "superpowers")]
+CLS = lambda k: k.split(":")[-1]
 
 
 def total_tokens(r):
@@ -30,13 +33,18 @@ def avg(xs):
 
 
 def bars(title, unit, rows, fmt="{:,.0f}", better="high"):
-    mx = max([v for _, v in rows] + [1e-9])
+    """rows: (조건, 평균[, 최소, 최대])"""
+    rows = [(r[0], r[1], r[2] if len(r) > 2 else None, r[3] if len(r) > 3 else None) for r in rows]
+    mx = max([(r[3] if r[3] is not None else r[1]) for r in rows] + [1e-9])
     out = f'<div class="card"><h3>{title} <small>{ {"high": "높을수록 좋음", "low": "낮을수록 좋음"}.get(better, "")}</small></h3>'
-    for name, v in rows:
+    for name, v, lo, hi in rows:
         w = 100 * v / mx
+        rng = (f'<span class="rng" style="left:{100 * lo / mx:.1f}%;width:{max(.6, 100 * (hi - lo) / mx):.1f}%"></span>'
+               if lo is not None and hi is not None and hi > lo else "")
+        spread = f'<small> ({fmt.format(lo)}~{fmt.format(hi)})</small>' if rng else ""
         out += (f'<div class="bar"><span class="bl">{LABEL.get(name, name)}</span>'
-                f'<span class="track"><span class="fill {name}" style="width:{w:.1f}%"></span></span>'
-                f'<span class="bv">{fmt.format(v)}{unit}</span></div>')
+                f'<span class="track"><span class="fill {CLS(name)}" style="width:{w:.1f}%"></span>{rng}</span>'
+                f'<span class="bv">{fmt.format(v)}{unit}{spread}</span></div>')
     return out + "</div>"
 
 
@@ -94,11 +102,18 @@ def main():
             rs.append(r)
     if not rs:
         raise SystemExit("runs/ 에 결과가 없다. 먼저 run_demo.py 를 돌린다.")
-    conds = [c for c in ORDER if any(r["cond"] == c for r in rs)]
-    by = {c: [r for r in rs if r["cond"] == c] for c in conds}
-    agg = lambda f: [(c, avg([f(r) for r in by[c]])) for c in conds]
+    key = lambda r: f'{r.get("variant", "repo")}:{r["cond"]}'
+    conds = [c for c in ORDER if any(key(r) == c for r in rs)]
+    by = {c: [r for r in rs if key(r) == c] for c in conds}
+
+    def agg(f):
+        out = []
+        for c in conds:
+            xs = [f(r) for r in by[c] if f(r) is not None]
+            out.append((c, avg(xs), min(xs) if xs else 0, max(xs) if xs else 0))
+        return out
     head = "".join(
-        f'<div class="kpi {c}"><b>{LABEL[c]}</b><span>{len(by[c])}회</span>'
+        f'<div class="kpi {CLS(c)}"><b>{LABEL[c]}</b><span>{len(by[c])}회 · {", ".join(sorted({m.replace("claude-", "") for r in by[c] for m in r.get("models_used", [])}))}</span>'
         f'<em>{avg([r["hidden_pass"] for r in by[c]]):.1f}<small>/15</small></em><i>숨은 테스트 평균</i></div>' for c in conds)
     grid = (bars("숨은 테스트 통과", "/15", agg(lambda r: r["hidden_pass"]), "{:.1f}")
             + bars("회귀 테스트", "/5", agg(lambda r: r["regression_pass"]), "{:.1f}")
@@ -111,12 +126,12 @@ def main():
     rows = ""
     for r in rs:
         rows += ("<tr>" + "".join(f"<td>{x}</td>" for x in [
-            r["name"], LABEL.get(r["cond"]), f'{r["hidden_pass"]}/15', f'{r["regression_pass"]}/5',
+            r["name"], LABEL.get(key(r)), f'{r["hidden_pass"]}/15', f'{r["regression_pass"]}/5',
             "O" if r["regression_file_unchanged"] else "<b class=o>수정됨</b>",
             f"{total_tokens(r):,}", f'{r.get("output", 0):,}', r["wall_s"], r.get("turns"),
             ", ".join(r["sub_agents"]) or "-", ", ".join(r["skills"]) or "-", r["blocked"] + r["stop_blocked"],
             " · ".join(n for n, k in (("2025", "read_2025"), ("초안", "read_draft"), ("회의록", "read_minutes"), ("확정본", "read_reference")) if r.get(k)) or "-", r["rule_violations"]]) + "</tr>")
-    tls = "".join(f'<div class="card"><h3>{r["name"]} · {LABEL.get(r["cond"])} · 숨은 테스트 {r["hidden_pass"]}/15</h3>{timeline(r["name"])}</div>'
+    tls = "".join(f'<div class="card"><h3>{r["name"]} · {LABEL.get(key(r))} · 숨은 테스트 {r["hidden_pass"]}/15</h3>{timeline(r["name"])}</div>'
                   for r in rs)
     page = f"""<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>하네스 비교 대시보드</title>
@@ -130,15 +145,17 @@ h1{{margin:0 0 4px;font-size:26px}} .sub{{color:#6B7785;margin-bottom:20px}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:14px;margin-bottom:18px}}
 .card{{background:#fff;border-radius:12px;padding:16px 18px;margin-bottom:14px}} .card h3{{margin:0 0 12px;font-size:15px}}
 .card h3 small{{color:#9AA5B1;font-weight:500;margin-left:6px}}
-.bar{{display:grid;grid-template-columns:110px 1fr 90px;align-items:center;gap:10px;margin:7px 0;font-size:13px}}
-.track{{background:{L};height:16px;border-radius:8px;overflow:hidden}} .fill{{display:block;height:100%;background:{G}}}
+.bar{{display:grid;grid-template-columns:150px 1fr 170px;align-items:center;gap:10px;margin:7px 0;font-size:13px}}
+.track{{background:{L};height:16px;border-radius:8px;overflow:hidden;position:relative}}
+.rng{{position:absolute;top:6px;height:4px;background:{N};opacity:.55;border-radius:2px}}
+.bv small{{color:#9AA5B1;font-weight:500}} .fill{{display:block;height:100%;background:{G}}}
 .fill.harness{{background:{O}}} .fill.superpowers{{background:{N}}} .bv{{text-align:right;font-weight:700}}
 table{{border-collapse:collapse;width:100%;font-size:12.5px;background:#fff}} th,td{{padding:7px 8px;border-bottom:1px solid {L};text-align:left}}
 th{{background:{N};color:#fff;font-weight:600}} .o{{color:{O}}}
 .tl{{width:100%;height:auto}} .ln{{font-size:12px;fill:{N};font-weight:700}} .ax{{font-size:11px;fill:#9AA5B1}}
 .legend span{{display:inline-flex;align-items:center;gap:6px;margin-right:16px;font-size:13px}} .legend i{{width:11px;height:11px;border-radius:50%;display:inline-block}}
 </style>
-<h1>하네스 비교 대시보드</h1><div class="sub">같은 과제 (QUOTE-231 할인 · 할증) · 모델 {rs[0]["model"]} · 숨은 인수 테스트 15개로 채점</div>
+<h1>하네스 비교 대시보드</h1><div class="sub">같은 과제 (QUOTE-231 할인 · 할증) · 메인 모델 {rs[0]["model"]} · 숨은 인수 테스트 15개로 채점 · 막대 = 평균, 짙은 선 = 최소~최대</div>
 <div class="kpis">{head}</div><div class="grid">{grid}</div>
 <div class="card"><h3>실행별 상세</h3><table><tr><th>실행</th><th>조건</th><th>숨은 테스트</th><th>회귀</th><th>회귀 파일</th><th>전체 토큰</th><th>출력</th><th>초</th><th>턴</th><th>Sub Agent</th><th>Skill</th><th>차단</th><th>읽은 정책</th><th>규칙 위반</th></tr>{rows}</table></div>
 <div class="card legend"><h3>타임라인</h3><span><i style="background:{O}"></i>Sub Agent · Skill · Hook 차단</span><span><i style="background:{N}"></i>파일 수정</span><span><i style="background:{G}"></i>읽기 · 검색 · 실행</span></div>

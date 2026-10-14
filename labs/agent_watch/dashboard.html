@@ -101,6 +101,8 @@ function pickSession(){
   const sel = document.getElementById("sel");
   const opts = ids.map(id => `<option value="${id}">${new Date((S[id].started||0)*1000).toLocaleTimeString("ko-KR")} · ${esc((S[id].cwd||"").split("/").pop())} · ${esc(S[id].status||"")}</option>`).join("");
   if (sel.dataset.o !== opts) { sel.innerHTML = opts; sel.dataset.o = opts; }
+  const want = new URLSearchParams(location.search).get("session");   // ?session=앞부분 으로 고정
+  if (want && !cur) { cur = ids.find(id => id.startsWith(want) || (S[id].cwd || "").includes(want)) || null; if (cur) document.getElementById("follow").checked = false; }
   if (document.getElementById("follow").checked || !cur || !S[cur]) cur = ids[0];
   sel.value = cur;
   return S[cur];
