@@ -637,6 +637,18 @@ def ch2():
              "    print('차단: 위험 명령 · 비밀 파일', file=sys.stderr)\n"
              "    sys.exit(2)                     # 2 = 막고 이유를 Claude에게")
     return chapter("Ch2", "Claude Code 하네스 분해", {"Skill · 명령", "Hook · 권한", "Tool · MCP"}, "Skill · 명령 · Hook · 도구") + [
+        light("프로젝트 폴더 구조 · .claude/", two(
+            '<div class="ctree">' + code("폴더 구조", '내-프로젝트/\n├── CLAUDE.md                 공통 원칙\n├── .mcp.json                 MCP 서버\n└── .claude/\n    ├── settings.json         권한 · Hook 등록 (팀 공유)\n    ├── settings.local.json   내 PC 전용 (git 제외)\n    ├── skills/\n    │   └── spec-quote/\n    │       ├── SKILL.md      절차\n    │       └── 단가표.md      참고 자료\n    ├── agents/\n    │   └── verifier.md       Sub Agent 하나 = 파일 하나\n    ├── commands/\n    │   └── triage.md         /triage 로 부름\n    └── hooks/\n        └── guard.py          Hook 스크립트') + "</div>",
+            table(["위치", "들어가는 것", "언제 쓰임"], [
+                ["<b>CLAUDE.md</b>", "모든 작업 공통 원칙", "세션 시작 때 항상"],
+                ["<b>skills/이름/SKILL.md</b>", "업무 절차 · 판단 기준 · 양식 (같은 폴더에 참고 파일)", "요청이 description과 맞을 때"],
+                ["<b>agents/이름.md</b>", "Sub Agent 역할 · 쓸 도구 · 모델", "메인이 위임할 때"],
+                ["<b>commands/이름.md</b>", "사람이 부르는 /명령", "/이름 입력 때"],
+                ["<b>hooks/</b>", "Hook 스크립트 (등록은 settings.json)", "도구 실행 전후마다"],
+                ["<b>settings.json</b>", "권한 허용 · 거부 · Hook 등록", "항상 · git으로 팀 공유"],
+                ["<b>settings.local.json</b>", "내 PC에서만 쓰는 설정", "항상 · git에 안 올림"],
+            ]))
+              + note("~/.claude/", "같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용"), "Ch2"),
         light("부품별 로드 · 실행 시점", table(["요소", "언제 로드 · 실행", "성격"], [
             ["<b>CLAUDE.md</b>", "세션 시작 때 항상", "부탁 (따르려고 읽는 컨텍스트)"],
             ["<b>Skill</b>", "설명만 상시 · 본문은 호출될 때", "절차 (필요할 때만)"],
@@ -1368,6 +1380,7 @@ CSS = '''
   .kgrid .code code{font-size:11.5px; line-height:1.45; white-space:pre-wrap;}
   .kgrid .code .bar{padding:6px 12px;}
   .lfold{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:2px 8px; border-radius:6px;}
+  .ctree .code pre{padding:10px 16px;} .ctree .code code{font-size:13px; line-height:1.4;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
