@@ -204,6 +204,51 @@ def photo(src, cap, sub=""):
             f'{f"<span>{sub}</span>" if sub else ""}</figcaption></figure>')
 
 
+# METR Time Horizon 1.1 — 당시 최고 성능(SOTA) 모델 · (출시일, 50% 길이 분, 80% 길이 분, 이름표)
+METR_SOTA = [
+    ("2023-03-14", 4.0, 0.9, "GPT-4"), ("2024-05-13", 7.0, 1.3, ""), ("2024-06-20", 11.4, 1.7, ""),
+    ("2024-09-12", 20.3, 4.4, ""), ("2024-12-05", 38.8, 7.1, "o1"), ("2025-02-24", 60.4, 12.1, ""),
+    ("2025-04-16", 119.7, 30.0, "o3"), ("2025-08-07", 203.0, 38.3, "GPT-5"), ("2025-11-18", 224.3, 54.1, ""),
+    ("2025-11-24", 293.0, 49.4, ""), ("2025-12-11", 352.2, 66.0, ""), ("2026-02-05", 718.8, 69.9, "Claude Opus 4.6"),
+    ("2026-04-07", 1044.8, 185.9, "Mythos Preview"),
+]
+
+
+def metr_chart():
+    import math
+    from datetime import date
+    W, H, X0, X1, Y0, Y1 = 760, 380, 70, 740, 340, 20
+    t0, t1 = date(2023, 1, 1).toordinal(), date(2026, 7, 1).toordinal()
+    lo, hi = math.log2(0.5), math.log2(32 * 60)
+    X = lambda d: X0 + (X1 - X0) * (date.fromisoformat(d).toordinal() - t0) / (t1 - t0)
+    Y = lambda m: Y0 - (Y0 - Y1) * (math.log2(m) - lo) / (hi - lo)
+    g = ""
+    for m, lab in ((1, "1분"), (4, "4분"), (15, "15분"), (60, "1시간"), (240, "4시간"), (960, "16시간")):
+        g += (f'<line x1="{X0}" x2="{X1}" y1="{Y(m):.1f}" y2="{Y(m):.1f}" stroke="#EEF1F5" stroke-width="1.5"/>'
+              f'<text x="{X0 - 8}" y="{Y(m) + 4:.1f}" text-anchor="end" font-size="13" fill="#8A94A3">{lab}</text>')
+    for yr in (2023, 2024, 2025, 2026):
+        x = X(f"{yr}-01-01")
+        g += f'<text x="{x:.1f}" y="{Y0 + 22}" text-anchor="middle" font-size="13" fill="#8A94A3">{yr}</text>'
+    band = " ".join(f"{X(d):.1f},{Y(a):.1f}" for d, a, b, _ in METR_SOTA) + " " + \
+        " ".join(f"{X(d):.1f},{Y(b):.1f}" for d, a, b, _ in reversed(METR_SOTA))
+    g += f'<polygon points="{band}" fill="#F28C28" fill-opacity=".10"/>'
+    for idx, col in ((1, "#F28C28"), (2, "#1F3A5F")):
+        pts = " L".join(f"{X(r[0]):.1f} {Y(r[idx]):.1f}" for r in METR_SOTA)
+        g += f'<path d="M{pts}" fill="none" stroke="{col}" stroke-width="4" stroke-linejoin="round" class="mline"/>'
+        for r in METR_SOTA:
+            g += f'<circle cx="{X(r[0]):.1f}" cy="{Y(r[idx]):.1f}" r="4.5" fill="{col}"/>'
+    for d, a, b, lab in METR_SOTA:
+        if lab:
+            g += f'<text x="{X(d) - 6:.1f}" y="{Y(a) - 10:.1f}" text-anchor="end" font-size="12.5" font-weight="700" fill="#1F3A5F">{lab}</text>'
+    g += (f'<line x1="{X0}" x2="{X1}" y1="{Y(960):.1f}" y2="{Y(960):.1f}" stroke="#D64545" stroke-dasharray="5 5" stroke-width="1.5"/>'
+          f'<text x="{X0 + 6}" y="{Y(960) - 6:.1f}" font-size="12" fill="#D64545">16시간 넘는 측정은 신뢰 낮음</text>')
+    lx, ly = X0 + 420, Y0 - 56
+    g += (f'<rect x="{lx}" y="{ly - 10}" width="14" height="4" fill="#F28C28"/><text x="{lx + 20}" y="{ly - 4}" font-size="13" fill="#1F3A5F" font-weight="700">절반(50%) 성공하는 작업 길이</text>'
+          f'<rect x="{lx}" y="{ly + 10}" width="14" height="4" fill="#1F3A5F"/><text x="{lx + 20}" y="{ly + 16}" font-size="13" fill="#1F3A5F" font-weight="700">80% 성공하는 작업 길이</text>'
+          f'<text x="{lx + 20}" y="{ly + 36}" font-size="12.5" fill="#E07A12">가운데 띠 = 믿고 맡기기까지의 차이</text>')
+    return f'<svg class="mchart" viewBox="0 0 {W} {H}">{g}</svg>'
+
+
 def labdir(d):
     return f'<a class="dl" href="{REPO}/{d}">{d}</a>'
 
@@ -349,11 +394,13 @@ def ch1():
              hbars([("채팅", 13, False, "13번 주고받음"), ("Claude Code", 1, True, "지시 1번")], top=14, title="블로그 글 하나 완성까지 (중앙값)")
              + big([("86", "%", "일이 빨라짐"), ("82", "%", "맡는 일의 범위가 넓어짐"), ("69", "%", "품질이 좋아짐")]),
              A_ECON26),
-        stat("에이전트 작업 길이 추세", "Ch1",
-             big([("105", "일", "해낼 수 있는 작업 길이가 2배 되는 주기", True),
-                  ("5.7", "시간", "GPT-5.4 · 성공률 50% 기준 작업 길이"),
-                  ("54", "분", "같은 모델 · 성공률 80% 기준")])
-             + note("믿을 만하게 맡기려면", "성공률 기준을 올리면 맡길 수 있는 길이가 6분의 1로 · 그 사이를 하네스 · 검증이 메운다"),
+        stat("AI가 맡을 수 있는 작업 길이 (METR)", "Ch1",
+             '<div class="mwrap">' + metr_chart() + '<div class="mcards">'
+             + '<div class="bn hl"><div class="bv">105<small>일</small></div><div class="bl">작업 길이가 2배 되는 기간 (2024년 이후)</div></div>'
+             + '<div class="bn"><div class="bv">약 2<small>년</small></div><div class="bl">무어의 법칙 · 칩 성능 2배 주기</div></div>'
+             + '<div class="bn"><div class="bv">5.7<small>시간</small> → 54<small>분</small></div><div class="bl">GPT-5.4 · 50% 기준 vs 80% 기준</div></div>'
+             + '</div></div>'
+             + note("읽는 법", "작업 길이 = 사람이 하면 걸리는 시간 · 법칙이 아닌 측정 추세 · 두 선 사이를 하네스가 메움"),
              METR_FRR, METR_TH),
         light("하네스가 필요해진 이유", table(["위임형 작업의 문제", "필요해진 것", "하네스 부품"], [
             ["<b>같은 일을 반복</b>", "매번 같은 형식 · 같은 기준", "지침 · Skill · 평가"],
@@ -1167,6 +1214,13 @@ CSS = '''
   .phmap{display:grid; grid-template-columns:430px 1fr; gap:22px; align-items:center;}
   .phmap .ph img{height:auto; object-fit:contain; background:#fff;}
   .phwide .ph img{height:360px;}
+  .mwrap{display:grid; grid-template-columns:1fr 300px; gap:18px; align-items:center;}
+  .mchart{width:100%; height:auto;}
+  .mchart .mline{stroke-dasharray:2000; animation:mdraw 1.8s ease-out both;}
+  @keyframes mdraw{from{stroke-dashoffset:2000}}
+  @media print{.mchart .mline{animation:none}}
+  .mcards{display:grid; gap:10px;}
+  .mcards .bn{padding:14px 16px;} .mcards .bn .bv{font-size:34px;} .mcards .bn .bl{font-size:14.5px; margin-top:6px;}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
