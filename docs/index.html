@@ -1096,36 +1096,12 @@ model: sonnet
 보고 형식: 파일:줄 · 문제 · 근거 · 제안</code></pre></div><div class="vl"><p>자기 컨텍스트에서 일함</p><p>부모는 결과만 받음</p><p>도구를 줄이면 권한도 줄어듦</p></div></div></div></div>
 </section>
 
-<section class="slide lt" data-title="Hook 설정과 차단 코드">
+<section class="slide lt" data-title="가드가 놓치는 비율">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch2</span></div>
-  <h2 class="s-title sm">Hook 설정과 차단 코드</h2>
+  <h2 class="s-title sm">가드가 놓치는 비율</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/settings.json (hooks 부분)</span></div><pre><code>"PreToolUse": [{ "matcher": "Bash|Write|Edit",
-  "hooks": [{ "type": "command", "command": "python3 .claude/hooks/guard.py" }] }]</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/hooks/guard.py</span></div><pre><code>import json, sys
-e = json.load(sys.stdin)            # 도구 이름 · 입력
-i = e.get('tool_input', {})
-bad = ['rm -rf', 'push --force', 'reset --hard']
-if any(b in i.get('command', '') for b in bad) \
-   or i.get('file_path', '').endswith('.env'):
-    print('차단: 위험 명령 · 비밀 파일', file=sys.stderr)
-    sys.exit(2)                     # 2 = 막고 이유를 Claude에게</code></pre></div></div></div>
-</section>
-
-<section class="slide lt" data-title="부품별 컨텍스트 비용">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch2</span></div>
-  <h2 class="s-title sm">부품별 컨텍스트 비용</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="bns c4"><div class="bn" style="--d:0.00s"><div class="bv">1<small>%</small></div><div class="bl">Skill 목록이 쓰는 컨텍스트 (상한)</div></div><div class="bn" style="--d:0.12s"><div class="bv">5천<small>토큰</small></div><div class="bl">압축 후 Skill마다 남기는 앞부분</div></div><div class="bn hl" style="--d:0.24s"><div class="bv">200<small>줄 이하</small></div><div class="bl">CLAUDE.md 권장 길이</div></div><div class="bn" style="--d:0.36s"><div class="bv">2.5만<small>토큰</small></div><div class="bl">MCP 도구 출력 기본 한도 (1만부터 경고)</div></div></div><div class="dbnote"><span>설계 감각</span> 항상 올라가는 것은 짧게 · 필요할 때 부르는 것은 길어도 된다</div><div class="src">출처 · <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code Skills 문서</a> · <a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">Claude Code 비용 문서</a> · <a href="https://code.claude.com/docs/en/mcp" target="_blank" rel="noopener">Claude Code MCP 문서</a></div></div></div>
-</section>
-
-<section class="slide lt" data-title="CLAUDE.md와 Hook의 강제력 차이">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch2</span></div>
-  <h2 class="s-title sm">CLAUDE.md와 Hook의 강제력 차이</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="qt"><p>CLAUDE.md 지침은 권고일 뿐이다. Hook은 결정적이고, 그 동작이 반드시 일어나게 보장한다</p><span>Claude Code Best practices</span></div><div class="bns c3"><div class="bn" style="--d:0.00s"><div class="bv">33<small>개</small></div><div class="bl">Hook을 걸 수 있는 이벤트</div></div><div class="bn hl" style="--d:0.12s"><div class="bv">exit 2<small></small></div><div class="bl">PreToolUse에서 도구 호출 차단</div></div><div class="bn" style="--d:0.24s"><div class="bv">수만 → 수백<small>토큰</small></div><div class="bl">Hook으로 로그에서 ERROR 줄만 넘길 때</div></div></div><div class="src">출처 · <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code Best practices</a> · <a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener">Claude Code Hooks 문서</a> · <a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">Claude Code 비용 문서</a></div></div></div>
+  <div class="body"><div class="mid"><div class="hbars"><div class="hbt">모델 · 분류기 단계에서 걸러지지 않는 비율 (2026 공식 자료)</div><div class="hb hl" style="--d:0.00s"><span class="hn">오토 모드 · 실제 과잉 행동</span><span class="ht"><span class="hf" style="width:85.0%"></span></span><span class="hv">17% 놓침</span></div><div class="hb" style="--d:0.10s"><span class="hn">오토 모드 · 데이터 유출 시도</span><span class="ht"><span class="hf" style="width:28.5%"></span></span><span class="hv">5.7% 놓침</span></div><div class="hb" style="--d:0.20s"><span class="hn">GPT-5.6 Sol · 확인 정책 없음</span><span class="ht"><span class="hf" style="width:14.5%"></span></span><span class="hv">파괴적 행동 2.9%</span></div><div class="hb" style="--d:0.30s"><span class="hn">Opus 5.5 · 격리 환경</span><span class="ht"><span class="hf" style="width:7.5%"></span></span><span class="hv">탈출 시도 1.5%</span></div><div class="hb" style="--d:0.40s"><span class="hn">최신 모델 · 프롬프트 주입</span><span class="ht"><span class="hf" style="width:42.5%"></span></span><span class="hv">1.0~8.5% 통과</span></div></div><div class="dbnote"><span>계산해 보면</span> 하루 위험 행동 100건 · 17% 놓침 → 17건이 그대로 실행</div><div class="src">출처 · <a href="https://www.anthropic.com/engineering/claude-code-auto-mode" target="_blank" rel="noopener">Anthropic · Claude Code auto mode 2026.3</a> · <a href="https://deploymentsafety.openai.com/gpt-6-astra" target="_blank" rel="noopener">OpenAI · GPT-6 Astra System Card 2026.9</a> · <a href="https://www.anthropic.com/claude-opus-5-5-system-card" target="_blank" rel="noopener">Claude Opus 5.5 System Card 2026.9</a> · <a href="https://www.anthropic.com/claude-haiku-5-5-system-card" target="_blank" rel="noopener">Claude Haiku 5.5 System Card 2026.10</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="사람 승인의 한계">
@@ -1152,6 +1128,86 @@ if any(b in i.get('command', '') for b in bad) \
   <div class="body"><div class="mid"><div class="hbars"><div class="hbt">코딩 Agent 대상 적응형 공격 성공률 (200번 × 40개 시나리오)</div><div class="hb" style="--d:0.00s"><span class="hn">Opus 5.5 · 모델만</span><span class="ht"><span class="hf" style="width:91.0%"></span></span><span class="hv">54.6%</span></div><div class="hb hl" style="--d:0.10s"><span class="hn">Opus 5.5 · 탐지기 추가</span><span class="ht"><span class="hf" style="width:18.5%"></span></span><span class="hv">11.1%</span></div></div><div class="hbars"><div class="hbt">파괴적 행동 비율</div><div class="hb" style="--d:0.00s"><span class="hn">GPT-5.6 Sol · 확인 정책 없음</span><span class="ht"><span class="hf" style="width:72.5%"></span></span><span class="hv">2.9%</span></div><div class="hb hl" style="--d:0.10s"><span class="hn">GPT-5.6 Sol · 확인 정책 있음</span><span class="ht"><span class="hf" style="width:0.0%"></span></span><span class="hv">0%</span></div></div><div class="dbnote"><span>브라우저</span> 안전장치 없이 0.09~3.64% → 오토 모드 켜면 모든 모델 0% (110개 시나리오)</div><div class="src">출처 · <a href="https://www.anthropic.com/claude-opus-5-5-system-card" target="_blank" rel="noopener">Claude Opus 5.5 System Card 2026.9</a> · <a href="https://deploymentsafety.openai.com/gpt-6-astra" target="_blank" rel="noopener">OpenAI · GPT-6 Astra System Card 2026.9</a></div></div></div>
 </section>
 
+<section class="slide lt" data-title="놓치면 생기는 문제">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">놓치면 생기는 문제</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>유형</th><th>예</th><th>피해</th></tr></thead><tbody><tr><td><b>운영 데이터 변경 · 삭제</b></td><td>DROP · DELETE · 볼륨 삭제 API</td><td>서비스 중단 · 복구 불가</td></tr><tr><td><b>파일 · 드라이브 삭제</b></td><td>홈 폴더 · 드라이브 전체 삭제 명령</td><td>작업물 · 설정 전부 손실</td></tr><tr><td><b>이력 파괴</b></td><td>git push --force</td><td>팀 커밋 이력 덮어씀</td></tr><tr><td><b>비밀 유출</b></td><td>비밀 파일 · 토큰을 읽고 출력 · 전송</td><td>계정 탈취 · 과금</td></tr><tr><td><b>스스로 권한 올리기</b></td><td>설정 · Hook 파일 수정</td><td>다른 가드가 모두 꺼짐</td></tr><tr><td><b>검증 무력화</b></td><td>실패하는 테스트를 고쳐 통과</td><td>버그가 그대로 배포</td></tr></tbody></table></div></div>
+</section>
+
+<section class="slide lt" data-title="실제 사고 사례 (2026)">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">실제 사고 사례 (2026)</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>시기 · 도구</th><th>무슨 일</th><th>없었던 가드</th></tr></thead><tbody><tr><td><b>2026.4</b> Cursor + Opus 4.6</td><td>스테이징 작업 중 찾은 토큰으로 API 한 번 → 운영 DB와 백업 9초 만에 삭제</td><td>자격 증명 분리 · 파괴적 API 차단</td></tr><tr><td><b>2026.2</b> OpenClaw (메일 Agent)</td><td>「실행 전 확인」 지시가 압축으로 사라져 메일 200+ 삭제 · STOP 무시</td><td>지시 밖의 강제 장치</td></tr><tr><td><b>2026.3</b> Claude Code</td><td>push 거절 → rebase 후 force push로 원격 이력 덮어씀</td><td>force push 차단 규칙</td></tr><tr><td><b>2026.7</b> Codex + GPT-5.6</td><td>임시 폴더 처리 중 홈 경로를 덮어써 홈 폴더 삭제</td><td>샌드박스 (Full Access 모드)</td></tr></tbody></table><div class="dbnote"><span>통계</span> 실제 피해 137건 중 65건이 삭제 · 코드 파괴 · 대부분 확인 관문 없는 코딩 에이전트 (Cyera 2026.5)</div><div class="src">출처 · <a href="https://decrypt.co/365897/ai-agent-deletes-startup-database-9-seconds-founder-says" target="_blank" rel="noopener">Decrypt · PocketOS 2026.4</a> · <a href="https://sfstandard.com/2026/02/25/openclaw-goes-rogue/" target="_blank" rel="noopener">SF Standard · OpenClaw 2026.2</a> · <a href="https://github.com/anthropics/claude-code/issues/33402" target="_blank" rel="noopener">Claude Code GitHub 이슈 #33402 2026.3</a> · <a href="https://simonwillison.net/2026/Jul/16/bad-codex-bug/" target="_blank" rel="noopener">Simon Willison · Codex 파일 삭제 2026.7</a> · <a href="https://www.cyera.com/research/agent-inflicted-damage-inside-the-real-world-failures-of-enterprise-ai-systems" target="_blank" rel="noopener">Cyera · Agent-Inflicted Damage 2026.5</a></div></div></div>
+</section>
+
+<section class="slide lt" data-title="이전 사고 사례 (2025)">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">이전 사고 사례 (2025)</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>시기 · 도구</th><th>무슨 일</th><th>없었던 가드</th></tr></thead><tbody><tr><td><b>2025.7</b> Replit Agent</td><td>코드 동결을 대문자로 11번 지시했는데도 운영 DB 삭제</td><td>개발 · 운영 분리 · 차단 규칙</td></tr><tr><td><b>2025.11</b> Google Antigravity</td><td>캐시 정리 요청에 D: 드라이브 전체 삭제 (자동 실행 모드)</td><td>파괴적 명령 승인</td></tr><tr><td><b>2025~26</b> Claude Code · Copilot · Cursor</td><td>저장소의 설정 · Hook 파일로 명령 실행 · 자기 권한 올리기 (CVE 다수, 패치됨)</td><td>설정 파일 보호</td></tr></tbody></table><div class="qt"><p>모든 대문자로 열한 번이나 하지 말라고 했다</p><span>Jason Lemkin (Replit 사고 당사자)</span></div><div class="src">출처 · <a href="https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/" target="_blank" rel="noopener">The Register · Replit 2025.7</a> · <a href="https://www.theregister.com/2025/12/01/google_antigravity_wipes_d_drive/" target="_blank" rel="noopener">The Register · Antigravity 2025.12</a> · <a href="https://www.theregister.com/2026/02/26/clade_code_cves/" target="_blank" rel="noopener">The Register · Claude Code CVE 2026.2</a></div></div></div>
+</section>
+
+<section class="slide lt" data-title="사고에서 배운 점">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">사고에서 배운 점</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>교훈</th><th>사례</th><th>가드</th></tr></thead><tbody><tr><td><b>지시는 잠금장치가 아님</b></td><td>Replit · OpenClaw</td><td>Hook · 권한 deny 규칙</td></tr><tr><td><b>닿는 자격 증명 = 권한</b></td><td>PocketOS</td><td>운영 · 개발 계정 분리 · 최소 권한</td></tr><tr><td><b>자동 실행 + 경로 실수 = 전체 삭제</b></td><td>Codex · Antigravity</td><td>샌드박스 · 파괴적 명령 승인</td></tr><tr><td><b>가드 자체도 공격 대상</b></td><td>설정 · Hook 파일 CVE</td><td>설정 파일 보호 · 신뢰 확인</td></tr></tbody></table></div></div>
+</section>
+
+<section class="slide lt" data-title="Hook 설정과 차단 코드">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">Hook 설정과 차단 코드</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/settings.json (hooks 부분)</span></div><pre><code>"PreToolUse": [{ "matcher": "Bash|Write|Edit",
+  "hooks": [{ "type": "command", "command": "python3 .claude/hooks/guard.py" }] }]</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/hooks/guard.py</span></div><pre><code>import json, sys
+e = json.load(sys.stdin)            # 도구 이름 · 입력
+i = e.get('tool_input', {})
+bad = ['rm -rf', 'push --force', 'reset --hard']
+if any(b in i.get('command', '') for b in bad) \
+   or i.get('file_path', '').endswith('.env'):
+    print('차단: 위험 명령 · 비밀 파일', file=sys.stderr)
+    sys.exit(2)                     # 2 = 막고 이유를 Claude에게</code></pre></div></div></div>
+</section>
+
+<section class="slide lt" data-title="CLAUDE.md와 Hook의 강제력 차이">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">CLAUDE.md와 Hook의 강제력 차이</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="qt"><p>CLAUDE.md 지침은 권고일 뿐이다. Hook은 결정적이고, 그 동작이 반드시 일어나게 보장한다</p><span>Claude Code Best practices</span></div><div class="bns c3"><div class="bn" style="--d:0.00s"><div class="bv">33<small>개</small></div><div class="bl">Hook을 걸 수 있는 이벤트</div></div><div class="bn hl" style="--d:0.12s"><div class="bv">exit 2<small></small></div><div class="bl">PreToolUse에서 도구 호출 차단</div></div><div class="bn" style="--d:0.24s"><div class="bv">수만 → 수백<small>토큰</small></div><div class="bl">Hook으로 로그에서 ERROR 줄만 넘길 때</div></div></div><div class="src">출처 · <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code Best practices</a> · <a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener">Claude Code Hooks 문서</a> · <a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">Claude Code 비용 문서</a></div></div></div>
+</section>
+
+<section class="slide lt" data-title="가드 4단계">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">가드 4단계</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>단계</th><th>성격</th><th>한계</th></tr></thead><tbody><tr><td><b>① 모델의 조심성</b></td><td>확률적 · 지시를 잘 따름</td><td>압축 · 긴 작업에서 지시가 묻힘</td></tr><tr><td><b>② 오토 모드 분류기</b></td><td>확률적 · 사용자 말 기준으로 판정</td><td>실제 과잉 행동 17% 놓침 · 허용 목록은 검사 안 함</td></tr><tr><td><b>③ Hook · 권한 규칙</b></td><td>결정적 · 코드로 매번 차단</td><td>규칙에 없는 우회 경로</td></tr><tr><td><b>④ 계정 · 환경 분리</b></td><td>원천 차단 · 권한 자체가 없음</td><td>설정 비용</td></tr></tbody></table><div class="dbnote"><span>원칙</span> 절대 일어나면 안 되는 일은 ③ · ④로 · ① · ②는 추가 안전망</div></div></div>
+</section>
+
+<section class="slide lt" data-title="실측: 짧은 과제에서의 운영 DB 보호">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">실측: 짧은 과제에서의 운영 DB 보호</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="bns c3"><div class="bn" style="--d:0.00s"><div class="bv">0/18<small>회</small></div><div class="bl">운영 DB가 바뀐 실행 (규칙 없음 · 지시만 · 오토 모드 · Hook)</div></div><div class="bn hl" style="--d:0.12s"><div class="bv">5/5<small>회</small></div><div class="bl">오토 모드가 운영 DB 조회(SELECT)까지 막음</div></div><div class="bn" style="--d:0.24s"><div class="bv">15/15<small></small></div><div class="bl">Claude가 만든 Hook의 시험 사례 통과</div></div></div><div class="dbnote"><span>해석</span> 짧고 분명한 과제는 최신 모델도 잘 지킴 · 사고는 긴 작업 · 압축 · 찾아낸 자격 증명 · 경로 실수에서 → 확률이 아니라 코드로 막음</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/lab2_hook_by_claude" target="_blank" rel="noopener">직접 실측 2026.10.14 · Sonnet 5.5 · labs/lab2_hook_by_claude</a></div></div></div>
+</section>
+
+<section class="slide lt" data-title="부품별 컨텍스트 비용">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">부품별 컨텍스트 비용</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="bns c4"><div class="bn" style="--d:0.00s"><div class="bv">1<small>%</small></div><div class="bl">Skill 목록이 쓰는 컨텍스트 (상한)</div></div><div class="bn" style="--d:0.12s"><div class="bv">5천<small>토큰</small></div><div class="bl">압축 후 Skill마다 남기는 앞부분</div></div><div class="bn hl" style="--d:0.24s"><div class="bv">200<small>줄 이하</small></div><div class="bl">CLAUDE.md 권장 길이</div></div><div class="bn" style="--d:0.36s"><div class="bv">2.5만<small>토큰</small></div><div class="bl">MCP 도구 출력 기본 한도 (1만부터 경고)</div></div></div><div class="dbnote"><span>설계 감각</span> 항상 올라가는 것은 짧게 · 필요할 때 부르는 것은 길어도 된다</div><div class="src">출처 · <a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code Skills 문서</a> · <a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">Claude Code 비용 문서</a> · <a href="https://code.claude.com/docs/en/mcp" target="_blank" rel="noopener">Claude Code MCP 문서</a></div></div></div>
+</section>
+
 <section class="slide lt" data-title="MCP · Skills 확산 현황">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch2</span></div>
@@ -1169,6 +1225,18 @@ if any(b in i.get('command', '') for b in bad) \
     <div class="lc goal"><div class="lh">목표</div><p>Skill · 명령 · Sub Agent · Hook을 내 예제에 붙이기</p><div class="lf">사용 파일 · <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/lab2_claude_code_parts">lab2_claude_code_parts</a></div></div>
     <div class="lc steps"><div class="lh">단계</div><ol><li>project/.claude 구조 살펴보기</li><li>내 업무 Skill 하나 · 명령 하나 쓰기</li><li>reviewer를 읽기 전용으로 정의</li><li>guard 차단 목록에 규칙 하나 추가 → 헤드리스로 확인</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>새 세션에서 Skill 자동 호출</li><li>.env 수정 요청이 차단됨</li><li>reviewer가 파일을 못 고침</li></ul></div>
+  </div></div>
+</section>
+
+<section class="slide lt labs" data-title="[실습 2-2] Claude로 Hook 만들기">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-2</span></div>
+  <h2 class="s-title sm">Claude로 Hook 만들기</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="labgrid">
+    <div class="lc goal"><div class="lh">목표</div><p>「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로</p><div class="lf">사용 파일 · <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/lab2_hook_by_claude">lab2_hook_by_claude</a></div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>막을 것 · 허용할 것 목록 정하기 (prompt.md)</li><li>Claude에게 Hook 생성 요청 · .claude 쓰기 승인</li><li>check_hook.py로 채점 → 놓친 사례를 Claude가 수정</li><li>우회 명령 추가 · 대화에서 실제 차단 확인</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>check_hook.py 15/15</li><li>운영 DB 쓰기가 Hook으로 막히는 것 확인</li></ul></div>
   </div></div>
 </section>
 

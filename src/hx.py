@@ -66,6 +66,15 @@ D_PTC = ("Anthropic 문서 · Programmatic tool calling", "https://platform.clau
 D_CCSKILLS = ("Claude Code Skills 문서", "https://code.claude.com/docs/en/skills")
 OAI_MA = ("OpenAI 문서 · Responses multi-agent", "https://developers.openai.com/api/docs/guides/responses-multi-agent")
 OAI_SUB = ("OpenAI Codex 문서 · Subagents", "https://learn.chatgpt.com/docs/agent-configuration/subagents")
+INC_POCKET = ("Decrypt · PocketOS 2026.4", "https://decrypt.co/365897/ai-agent-deletes-startup-database-9-seconds-founder-says")
+INC_OPENCLAW = ("SF Standard · OpenClaw 2026.2", "https://sfstandard.com/2026/02/25/openclaw-goes-rogue/")
+INC_CC_PUSH = ("Claude Code GitHub 이슈 #33402 2026.3", "https://github.com/anthropics/claude-code/issues/33402")
+INC_CODEX = ("Simon Willison · Codex 파일 삭제 2026.7", "https://simonwillison.net/2026/Jul/16/bad-codex-bug/")
+INC_REPLIT = ("The Register · Replit 2025.7", "https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/")
+INC_ANTIG = ("The Register · Antigravity 2025.12", "https://www.theregister.com/2025/12/01/google_antigravity_wipes_d_drive/")
+INC_CVE = ("The Register · Claude Code CVE 2026.2", "https://www.theregister.com/2026/02/26/clade_code_cves/")
+CYERA = ("Cyera · Agent-Inflicted Damage 2026.5", "https://www.cyera.com/research/agent-inflicted-damage-inside-the-real-world-failures-of-enterprise-ai-systems")
+OWN_GUARD = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/lab2_hook_by_claude", "https://github.com/TunaLee/posco-dx/tree/main/labs/lab2_hook_by_claude")
 OWN = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 
 code = explain.prompt
@@ -412,19 +421,13 @@ def ch2():
         ]), "Ch2"),
         light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),
                                           vl("자기 컨텍스트에서 일함", "부모는 결과만 받음", "도구를 줄이면 권한도 줄어듦")), "Ch2"),
-        light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", hook_cfg) + code(".claude/hooks/guard.py", guard), "Ch2"),
-        stat("부품별 컨텍스트 비용", "Ch2",
-             big([("1", "%", "Skill 목록이 쓰는 컨텍스트 (상한)"),
-                  ("5천", "토큰", "압축 후 Skill마다 남기는 앞부분"),
-                  ("200", "줄 이하", "CLAUDE.md 권장 길이", True),
-                  ("2.5만", "토큰", "MCP 도구 출력 기본 한도 (1만부터 경고)")], 4)
-             + note("설계 감각", "항상 올라가는 것은 짧게 · 필요할 때 부르는 것은 길어도 된다"),
-             D_CCSKILLS, D_COSTS, D_MCP),
-        stat("CLAUDE.md와 Hook의 강제력 차이", "Ch2",
-             quote("CLAUDE.md 지침은 권고일 뿐이다. Hook은 결정적이고, 그 동작이 반드시 일어나게 보장한다", "Claude Code Best practices")
-             + big([("33", "개", "Hook을 걸 수 있는 이벤트"), ("exit 2", "", "PreToolUse에서 도구 호출 차단", True),
-                    ("수만 → 수백", "토큰", "Hook으로 로그에서 ERROR 줄만 넘길 때")]),
-             D_BP, D_HOOKS, D_COSTS),
+        stat("가드가 놓치는 비율", "Ch2",
+             hbars([("오토 모드 · 실제 과잉 행동", 17, True, "17% 놓침"), ("오토 모드 · 데이터 유출 시도", 5.7, False, "5.7% 놓침"),
+                    ("GPT-5.6 Sol · 확인 정책 없음", 2.9, False, "파괴적 행동 2.9%"), ("Opus 5.5 · 격리 환경", 1.5, False, "탈출 시도 1.5%"),
+                    ("최신 모델 · 프롬프트 주입", 8.5, False, "1.0~8.5% 통과")], top=20,
+                   title="모델 · 분류기 단계에서 걸러지지 않는 비율 (2026 공식 자료)")
+             + note("계산해 보면", "하루 위험 행동 100건 · 17% 놓침 → 17건이 그대로 실행"),
+             A_AUTO, SC_GPT6, SC_OPUS55, SC_HAIKU55),
         stat("사람 승인의 한계", "Ch2",
              big([("93", "%", "승인 요청을 그대로 승인 (승인 피로)", True),
                   ("17", "%", "자동 분류기가 놓친 과잉 행동"),
@@ -444,6 +447,58 @@ def ch2():
                      title="파괴적 행동 비율")
              + note("브라우저", "안전장치 없이 0.09~3.64% → 오토 모드 켜면 모든 모델 0% (110개 시나리오)"),
              SC_OPUS55, SC_GPT6),
+        light("놓치면 생기는 문제", table(["유형", "예", "피해"], [
+            ["<b>운영 데이터 변경 · 삭제</b>", "DROP · DELETE · 볼륨 삭제 API", "서비스 중단 · 복구 불가"],
+            ["<b>파일 · 드라이브 삭제</b>", "홈 폴더 · 드라이브 전체 삭제 명령", "작업물 · 설정 전부 손실"],
+            ["<b>이력 파괴</b>", "git push --force", "팀 커밋 이력 덮어씀"],
+            ["<b>비밀 유출</b>", "비밀 파일 · 토큰을 읽고 출력 · 전송", "계정 탈취 · 과금"],
+            ["<b>스스로 권한 올리기</b>", "설정 · Hook 파일 수정", "다른 가드가 모두 꺼짐"],
+            ["<b>검증 무력화</b>", "실패하는 테스트를 고쳐 통과", "버그가 그대로 배포"],
+        ]), "Ch2"),
+        stat("실제 사고 사례 (2026)", "Ch2", table(["시기 · 도구", "무슨 일", "없었던 가드"], [
+            ["<b>2026.4</b> Cursor + Opus 4.6", "스테이징 작업 중 찾은 토큰으로 API 한 번 → 운영 DB와 백업 9초 만에 삭제", "자격 증명 분리 · 파괴적 API 차단"],
+            ["<b>2026.2</b> OpenClaw (메일 Agent)", "「실행 전 확인」 지시가 압축으로 사라져 메일 200+ 삭제 · STOP 무시", "지시 밖의 강제 장치"],
+            ["<b>2026.3</b> Claude Code", "push 거절 → rebase 후 force push로 원격 이력 덮어씀", "force push 차단 규칙"],
+            ["<b>2026.7</b> Codex + GPT-5.6", "임시 폴더 처리 중 홈 경로를 덮어써 홈 폴더 삭제", "샌드박스 (Full Access 모드)"],
+        ]) + note("통계", "실제 피해 137건 중 65건이 삭제 · 코드 파괴 · 대부분 확인 관문 없는 코딩 에이전트 (Cyera 2026.5)"),
+             INC_POCKET, INC_OPENCLAW, INC_CC_PUSH, INC_CODEX, CYERA),
+        stat("이전 사고 사례 (2025)", "Ch2", table(["시기 · 도구", "무슨 일", "없었던 가드"], [
+            ["<b>2025.7</b> Replit Agent", "코드 동결을 대문자로 11번 지시했는데도 운영 DB 삭제", "개발 · 운영 분리 · 차단 규칙"],
+            ["<b>2025.11</b> Google Antigravity", "캐시 정리 요청에 D: 드라이브 전체 삭제 (자동 실행 모드)", "파괴적 명령 승인"],
+            ["<b>2025~26</b> Claude Code · Copilot · Cursor", "저장소의 설정 · Hook 파일로 명령 실행 · 자기 권한 올리기 (CVE 다수, 패치됨)", "설정 파일 보호"],
+        ]) + quote("모든 대문자로 열한 번이나 하지 말라고 했다", "Jason Lemkin (Replit 사고 당사자)"),
+             INC_REPLIT, INC_ANTIG, INC_CVE),
+        light("사고에서 배운 점", table(["교훈", "사례", "가드"], [
+            ["<b>지시는 잠금장치가 아님</b>", "Replit · OpenClaw", "Hook · 권한 deny 규칙"],
+            ["<b>닿는 자격 증명 = 권한</b>", "PocketOS", "운영 · 개발 계정 분리 · 최소 권한"],
+            ["<b>자동 실행 + 경로 실수 = 전체 삭제</b>", "Codex · Antigravity", "샌드박스 · 파괴적 명령 승인"],
+            ["<b>가드 자체도 공격 대상</b>", "설정 · Hook 파일 CVE", "설정 파일 보호 · 신뢰 확인"],
+        ]), "Ch2"),
+        light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", hook_cfg) + code(".claude/hooks/guard.py", guard), "Ch2"),
+        stat("CLAUDE.md와 Hook의 강제력 차이", "Ch2",
+             quote("CLAUDE.md 지침은 권고일 뿐이다. Hook은 결정적이고, 그 동작이 반드시 일어나게 보장한다", "Claude Code Best practices")
+             + big([("33", "개", "Hook을 걸 수 있는 이벤트"), ("exit 2", "", "PreToolUse에서 도구 호출 차단", True),
+                    ("수만 → 수백", "토큰", "Hook으로 로그에서 ERROR 줄만 넘길 때")]),
+             D_BP, D_HOOKS, D_COSTS),
+        light("가드 4단계", table(["단계", "성격", "한계"], [
+            ["<b>① 모델의 조심성</b>", "확률적 · 지시를 잘 따름", "압축 · 긴 작업에서 지시가 묻힘"],
+            ["<b>② 오토 모드 분류기</b>", "확률적 · 사용자 말 기준으로 판정", "실제 과잉 행동 17% 놓침 · 허용 목록은 검사 안 함"],
+            ["<b>③ Hook · 권한 규칙</b>", "결정적 · 코드로 매번 차단", "규칙에 없는 우회 경로"],
+            ["<b>④ 계정 · 환경 분리</b>", "원천 차단 · 권한 자체가 없음", "설정 비용"],
+        ]) + note("원칙", "절대 일어나면 안 되는 일은 ③ · ④로 · ① · ②는 추가 안전망"), "Ch2"),
+        stat("실측: 짧은 과제에서의 운영 DB 보호", "Ch2",
+             big([("0/18", "회", "운영 DB가 바뀐 실행 (규칙 없음 · 지시만 · 오토 모드 · Hook)"),
+                  ("5/5", "회", "오토 모드가 운영 DB 조회(SELECT)까지 막음", True),
+                  ("15/15", "", "Claude가 만든 Hook의 시험 사례 통과")])
+             + note("해석", "짧고 분명한 과제는 최신 모델도 잘 지킴 · 사고는 긴 작업 · 압축 · 찾아낸 자격 증명 · 경로 실수에서 → 확률이 아니라 코드로 막음"),
+             OWN_GUARD),
+        stat("부품별 컨텍스트 비용", "Ch2",
+             big([("1", "%", "Skill 목록이 쓰는 컨텍스트 (상한)"),
+                  ("5천", "토큰", "압축 후 Skill마다 남기는 앞부분"),
+                  ("200", "줄 이하", "CLAUDE.md 권장 길이", True),
+                  ("2.5만", "토큰", "MCP 도구 출력 기본 한도 (1만부터 경고)")], 4)
+             + note("설계 감각", "항상 올라가는 것은 짧게 · 필요할 때 부르는 것은 길어도 된다"),
+             D_CCSKILLS, D_COSTS, D_MCP),
         stat("MCP · Skills 확산 현황", "Ch2",
              big([("5억", "회", "MCP SDK 월 다운로드 (대표 SDK 합계)", True),
                   ("10억+", "회", "TypeScript · Python SDK 각각 누적"),
@@ -454,6 +509,10 @@ def ch2():
             "Skill · 명령 · Sub Agent · Hook을 내 예제에 붙이기",
             ["project/.claude 구조 살펴보기", "내 업무 Skill 하나 · 명령 하나 쓰기", "reviewer를 읽기 전용으로 정의", "guard 차단 목록에 규칙 하나 추가 → 헤드리스로 확인"],
             ["새 세션에서 Skill 자동 호출", ".env 수정 요청이 차단됨", "reviewer가 파일을 못 고침"], files=labdir("lab2_claude_code_parts")),
+        lab("2-2", "Claude로 Hook 만들기", "Ch2",
+            "「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로",
+            ["막을 것 · 허용할 것 목록 정하기 (prompt.md)", "Claude에게 Hook 생성 요청 · .claude 쓰기 승인", "check_hook.py로 채점 → 놓친 사례를 Claude가 수정", "우회 명령 추가 · 대화에서 실제 차단 확인"],
+            ["check_hook.py 15/15", "운영 DB 쓰기가 Hook으로 막히는 것 확인"], files=labdir("lab2_hook_by_claude")),
         bridge("다음: 컨텍스트 설계", "", "Ch2", "→ Ch3 컨텍스트 엔지니어링"),
     ]
 
