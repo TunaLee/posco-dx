@@ -62,17 +62,17 @@ claude --plugin-dir ./lab8_final_plugin/my-harness               # 이번 세션
 - [ ] **공개 하네스 대비 표** — Lab 4 `compare.md` (맨몸 · 내 하네스 · Superpowers · gstack)
 - [ ] **README** — `my-harness/README.md`: 무엇을 · 어떤 규칙으로 · 어떻게 검증하나, 쓰는 법, 알려진 한계
 
-## 내 업무 명세서로 시작하기
+## 내 하네스 설계표로 시작하기
 
-강의 시작에 쓴 `../my_work_spec/업무명세서.md`를 이 폴더에 복사하고 Claude Code에 요청한다.
+강의 시작에 고른 `../my_work_spec/내_하네스_설계표.md`를 이 폴더에 복사하고 Claude Code에 요청한다.
 
 ```
-업무명세서.md를 읽고 이 업무용 하네스 초안을 my-harness/에 만들어 줘.
+내_하네스_설계표.md를 읽고 이 업무용 하네스 초안을 my-harness/에 만들어 줘.
 CLAUDE.md · Skill 1개 · Hook 규칙 · 평가 문항 5개 (엣지 케이스 2개 포함).
-명세서에 없는 규칙은 지어내지 말고 TODO로 남겨.
+설계표에 없는 규칙은 지어내지 말고 TODO로 남겨.
 ```
 
-| 명세서 항목 | 하네스 파일 |
+| 설계표 칸 | 하네스 파일 |
 |---|---|
 | 출력 · 형식 | `CLAUDE.md` |
 | 판단 기준 · 사내 규칙 | `skills/<업무>/SKILL.md` + 참고 자료 |

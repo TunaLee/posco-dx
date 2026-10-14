@@ -28,7 +28,7 @@ Claude Code는 코드 작업만 하는 도구가 아니다. 파일을 읽고 · 
 1. **맨몸으로 먼저** — `workspace/`를 그대로 열고 과제 2개를 요청 → `python3 grade.py workspace --task T3 T4`
 2. **하네스 입히기** — `harness/` 안의 `CLAUDE.md`와 `.claude/`를 `workspace/`에 복사 → 새 대화로 같은 과제 요청 → 다시 채점
 3. **비교** — 점수 · 결과 위치(`out/T3/…`) · 근거 표기 · 원본 보존을 맨몸과 비교. Agent Watch로 Skill · verifier 흐름 확인
-4. **내 업무로** — 내 업무 명세서에서 업무 하나를 골라 Skill 하나를 추가하고(Claude에게 요청) 같은 방식으로 처리
+4. **내 업무로** — 내 하네스 설계표(`../my_work_spec`)에서 고른 유형의 Skill을 복사해 내 업무 값으로 바꾸고(Claude에게 요청) 같은 방식으로 처리
 
 다시 할 때는 `workspace/out/`을 지우고, `inputs/`는 저장소에서 다시 받는다.
 
