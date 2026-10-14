@@ -83,7 +83,6 @@ PH_WILD = ("사진 · U.S. Fish and Wildlife Service (퍼블릭 도메인)", "ht
 PH_HARNESS = ("사진 · Jude, CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Clydesdale_wagon.jpg")
 PH_PARTS = ("그림 · Nouveau Larousse illustré 1898 (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:Parts_of_horse_harness_(in_French,_1898).jpg")
 PH_TEAM = ("사진 · Bernard Spragg (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:The_draft_horse_team._(51174500032).jpg")
-OWN_LAB12 = ("직접 실측 2026.10.15 · Sonnet 5.5 · 실습 1-2 요청문 그대로 · 각 3회", "https://github.com/TunaLee/posco-dx")
 OWN = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 
 code = explain.prompt
@@ -562,19 +561,6 @@ def ch1():
             ["하네스 미적용 상태로 같은 질문 10번", "장표의 CLAUDE.md를 직접 만들기", "하네스 적용 상태로 같은 질문 10번", "답 종류 · 형식 · 약속 여부 비교"],
             ["형식이 같은 답 10 / 10", "비교표를 최종 산출물 폴더에 저장"], files=labdir("lab1_1_same_question"), mine="내 업무의 답 형식 · 규칙을 CLAUDE.md 세 줄로"),
         *labkit('1-1', 'Ch1'),
-        lab("1-2", "확정 정보가 폴더 밖에 있을 때", "Ch1",
-            "모델이 모르는 회사 결정을 하네스로 전달",
-            ["하네스 미적용 상태로 견적 3번 (docs/에는 2025 정책 · 초안만)", "확정 회의 결과를 CLAUDE.md로 직접 만들기", "하네스 적용 상태로 견적 3번", "최종 금액 · 기준 문서 · 토큰 비교"],
-            ["하네스 적용 3 / 3 확정 금액", "하네스 미적용 쪽이 고른 기준 문서 기록"], files=labdir("lab1_2_confirmed_policy"), mine="내 업무에서 문서로 남지 않은 확정 사항 하나"),
-        *labkit('1-2', 'Ch1'),
-        stat("실측: 회사 확정 정보의 전달", "Ch1",
-             hbars([("하네스 미적용 ×3 · 2025 시행본", 0, False, "364,000,000원 · 0 / 3"),
-                    ("하네스 적용 ×3 · 9월 확정본", 100, True, "359,100,000원 · 3 / 3")], top=100,
-                   title="회사 확정 기준과 일치한 횟수 · 강판 350톤 · A 등급 · 긴급 · Claude Sonnet 5.5")
-             + note("해석", "하네스 미적용도 계산 오류는 아님 · 폴더 안 시행본을 고른 합리적 판단 · 차이는 모델 능력이 아니라 회사만 아는 확정 정보의 전달 여부")
-             + note("확정 기준", "300톤 이상 4.5% + A 1%p → 상한 5% · 할인 17,500,000 · 할증 26,600,000 · 최종 359,100,000원")
-             + note("토큰", "CLAUDE.md 한 장은 거의 같음 (10.1만 vs 10.2만) · Skill · 검증 Agent · 테스트까지 붙이면 약 1.7배"),
-             OWN_LAB12),
         light("하네스로 만들기 좋은 업무 · 맞지 않는 업무", two(
             table(["만들기 좋은 업무", "이유"], [
                 ["<b>자주 반복</b>", "한 번 만든 지침 · Skill · Hook을 계속 재사용"],

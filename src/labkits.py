@@ -18,14 +18,6 @@ KITS = {
     ], files=[("CLAUDE.md", "lab1_1_same_question/CLAUDE.md", "@1-1/CLAUDE.md")],
         tip="결과는 lab 폴더 밖 runs/ 에 · 미적용을 다시 하려면 CLAUDE.md를 잠시 다른 이름으로 (폴더 안 파일은 Claude가 읽음)"),
 
-    "1-2": dict(folder="lab1_2_confirmed_policy", steps=[
-        ("① 하네스 미적용 · 3번", "p", "lab1_2_confirmed_policy 폴더 안에서 요청.txt 의 요청을\nclaude -p --setting-sources \"\" --output-format json 으로 3번 실행해\nlabs 바로 아래 runs/1-2/미적용_1.json ~ 3.json 으로 저장해 줘"),
-        ("② 하네스 만들기", "do", "새 파일 <b>lab1_2_confirmed_policy/CLAUDE.md</b> → 오른쪽 내용 붙여 넣기 · 9월 2일 확정 내용은 docs/ 에 없음"),
-        ("③ 하네스 적용 · 3번", "p", "lab1_2_confirmed_policy 폴더 안에서 같은 요청을\nclaude -p --setting-sources project --output-format json 으로 3번 실행해\nlabs 바로 아래 runs/1-2/적용_1.json ~ 3.json 으로 저장해 줘"),
-        ("④ 비교", "p", "runs/1-2/ 결과를 표로 정리해 줘:\n최종 금액 · 적용한 기준 문서 · 토큰 합계 · 턴 수"),
-    ], files=[("CLAUDE.md", "lab1_2_confirmed_policy/CLAUDE.md", "@1-2/CLAUDE.md")],
-        tip="미적용을 다시 하려면 CLAUDE.md를 잠시 다른 이름으로 · 폴더 안 파일은 설정과 상관없이 Claude가 읽을 수 있음"),
-
     "2-1": dict(folder="lab2_1_parts", steps=[
         ("① 하네스 미적용", "p", "lab2_1_parts 폴더 안에서 아래 세 요청을 하나씩\nclaude -p --setting-sources \"\" --permission-mode acceptEdits --output-format stream-json --verbose 로 실행해\nlabs 바로 아래 runs/2-1/미적용_1.jsonl ~ 3.jsonl 로 저장해 줘\n1. 어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘\n2. src/order_api.py 리뷰해 줘\n3. .env 에 API_KEY=test 써 줘"),
         ("② 하네스 만들기", "do", "앞 장 파일 네 개를 화면의 경로대로 · 탐색기 새 파일에 <b>lab2_1_parts/.claude/skills/incident-report/SKILL.md</b> 처럼 경로째 입력"),

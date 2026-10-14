@@ -1085,50 +1085,6 @@ JSON 밖에 다른 글이나 코드 블록 표시를 쓰지 않는다.
 - 모르는 규정 번호 · 날짜 · 연락처는 지어내지 않는다</code></pre></div></div></div><div class="dbnote"><span>참고</span> 결과는 lab 폴더 밖 runs/ 에 · 미적용을 다시 하려면 CLAUDE.md를 잠시 다른 이름으로 (폴더 안 파일은 Claude가 읽음)</div></div></div>
 </section>
 
-<section class="slide lt labs" data-title="[실습 1-2] 확정 정보가 폴더 밖에 있을 때">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch1</span><span class="labtag">실습 1-2</span></div>
-  <h2 class="s-title sm">확정 정보가 폴더 밖에 있을 때</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>모델이 모르는 회사 결정을 하네스로 전달</p><div class="lf">사용 파일 · <code class="lfold">labs/lab1_2_confirmed_policy</code></div><div class="mine"><span>내 업무 적용</span>내 업무에서 문서로 남지 않은 확정 사항 하나</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 견적 3번 (docs/에는 2025 정책 · 초안만)</li><li>확정 회의 결과를 CLAUDE.md로 직접 만들기</li><li>하네스 적용 상태로 견적 3번</li><li>최종 금액 · 기준 문서 · 토큰 비교</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>하네스 적용 3 / 3 확정 금액</li><li>하네스 미적용 쪽이 고른 기준 문서 기록</li></ul></div>
-  </div></div>
-</section>
-
-<section class="slide lt" data-title="실습 1-2 진행">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch1</span></div>
-  <h2 class="s-title sm">실습 1-2 진행</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>lab1_2_confirmed_policy/</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 3번</span></div><pre><code>lab1_2_confirmed_policy 폴더 안에서 요청.txt 의 요청을
-claude -p --setting-sources "" --output-format json 으로 3번 실행해
-labs 바로 아래 runs/1-2/미적용_1.json ~ 3.json 으로 저장해 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>새 파일 <b>lab1_2_confirmed_policy/CLAUDE.md</b> → 오른쪽 내용 붙여 넣기 · 9월 2일 확정 내용은 docs/ 에 없음</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 하네스 적용 · 3번</span></div><pre><code>lab1_2_confirmed_policy 폴더 안에서 같은 요청을
-claude -p --setting-sources project --output-format json 으로 3번 실행해
-labs 바로 아래 runs/1-2/적용_1.json ~ 3.json 으로 저장해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 비교</span></div><pre><code>runs/1-2/ 결과를 표로 정리해 줘:
-최종 금액 · 적용한 기준 문서 · 토큰 합계 · 턴 수</code></pre></div></div><div class="kf"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">lab1_2_confirmed_policy/CLAUDE.md</span></div><pre><code># 견적 담당
-
-## 확정 정책 (2026-09-02 회의 확정 · 시행 2026-09-15)
-- 3분기 초안을 기준으로 아래 세 가지만 바뀜
-  1. 300톤 이상 물량 할인 5% → 4.5%
-  2. 물량 + 등급 할인 합계 상한 5%
-  3. 등급이 A · B가 아니면 견적을 내지 않는다
-- 2025 정책 · 초안 단독으로 계산하지 않는다
-
-## 답 형식
-- 적용한 기준 문서 · 할인율 · 할인액 · 할증액 · 최종 금액
-- 끝내기 전에 계산을 한 번 더 검산한다</code></pre></div></div></div><div class="dbnote"><span>참고</span> 미적용을 다시 하려면 CLAUDE.md를 잠시 다른 이름으로 · 폴더 안 파일은 설정과 상관없이 Claude가 읽을 수 있음</div></div></div>
-</section>
-
-<section class="slide lt" data-title="실측: 회사 확정 정보의 전달">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch1</span></div>
-  <h2 class="s-title sm">실측: 회사 확정 정보의 전달</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="hbars"><div class="hbt">회사 확정 기준과 일치한 횟수 · 강판 350톤 · A 등급 · 긴급 · Claude Sonnet 5.5</div><div class="hb" style="--d:0.00s"><span class="hn">하네스 미적용 ×3 · 2025 시행본</span><span class="ht"><span class="hf" style="width:0.0%"></span></span><span class="hv">364,000,000원 · 0 / 3</span></div><div class="hb hl" style="--d:0.10s"><span class="hn">하네스 적용 ×3 · 9월 확정본</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">359,100,000원 · 3 / 3</span></div></div><div class="dbnote"><span>해석</span> 하네스 미적용도 계산 오류는 아님 · 폴더 안 시행본을 고른 합리적 판단 · 차이는 모델 능력이 아니라 회사만 아는 확정 정보의 전달 여부</div><div class="dbnote"><span>확정 기준</span> 300톤 이상 4.5% + A 1%p → 상한 5% · 할인 17,500,000 · 할증 26,600,000 · 최종 359,100,000원</div><div class="dbnote"><span>토큰</span> CLAUDE.md 한 장은 거의 같음 (10.1만 vs 10.2만) · Skill · 검증 Agent · 테스트까지 붙이면 약 1.7배</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx" target="_blank" rel="noopener">직접 실측 2026.10.15 · Sonnet 5.5 · 실습 1-2 요청문 그대로 · 각 3회</a></div></div></div>
-</section>
-
 <section class="slide lt" data-title="하네스로 만들기 좋은 업무 · 맞지 않는 업무">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch1</span></div>
