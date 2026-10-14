@@ -98,6 +98,29 @@ def viz(name):
         return f'<div class="capbox">도해 준비 중 · {name}</div>'
 
 
+EVO = [
+    ("챗봇", "2022~", "질문 하나에 답 하나", "더 잘 묻기", "프롬프트 엔지니어링"),
+    ("긴 입력 · 검색", "2023~", "문서를 함께 읽고 답", "무엇을 보여 줄지", "컨텍스트 엔지니어링 · RAG"),
+    ("도구 호출", "2023~24", "조회 · 계산 · 실행", "시스템 연결 방식 통일", "함수 호출 · MCP"),
+    ("에이전트", "2025~", "계획 · 실행 · 확인을 스스로 반복", "반복해도 같은 품질 · 안전 · 비용", "하네스 엔지니어링"),
+    ("멀티에이전트", "2026~", "여러 Agent가 나눠 동시에", "지휘 · 검증 · 측정", "오케스트레이션 · 평가"),
+]
+
+
+def evolution(hl=3):
+    """모델 발전 단계별 — 할 수 있게 된 것 · 새 요구 · 대응."""
+    rows = ["할 수 있게 된 것", "새로 생긴 요구", "대응"]
+    head = '<div class="ev-rl"></div>' + "".join(
+        f'<div class="ev-h{" hl" if i == hl else ""}" style="--d:{i * .18:.2f}s"><b>{n}</b><span>{y}</span></div>'
+        for i, (n, y, *_) in enumerate(EVO))
+    body = ""
+    for r, label in enumerate(rows):
+        body += f'<div class="ev-rl">{label}</div>' + "".join(
+            f'<div class="ev-c r{r}{" hl" if i == hl else ""}" style="--d:{i * .18 + .1:.2f}s">{e[2 + r]}</div>'
+            for i, e in enumerate(EVO))
+    return f'<div class="evo">{head}{body}</div>'
+
+
 def labdir(d):
     return f'<a class="dl" href="{REPO}/{d}">{d}</a>'
 
@@ -195,10 +218,6 @@ def opening():
              + quote("설문 결과가 반드시 현실에 근거한 것은 아니다", "METR, 2026 사용 설문")
              + note("그래서", "느낌 대신 우리 과제 · 우리 평가셋으로 잰다"),
              METR26S, METR26),
-        stat("채팅과 Claude Code의 작업 방식 차이", "시작",
-             hbars([("채팅", 13, False, "13번 주고받음"), ("Claude Code", 1, True, "지시 1번")], top=14, title="블로그 글 하나 완성까지 (중앙값)")
-             + big([("86", "%", "일이 빨라짐"), ("82", "%", "맡는 일의 범위가 넓어짐"), ("69", "%", "품질이 좋아짐")]),
-             A_ECON26),
         light("최종 산출물", table(["산출물", "내용"], [
             ["<b>내 하네스 플러그인</b>", "CLAUDE.md · Skill · Sub Agent · Hook · 명령을 한 묶음으로"],
             ["<b>평가셋 · 회귀 테스트</b>", "대표 과제 20건 + 엣지 케이스 · 자동 비교"],
@@ -221,15 +240,51 @@ def opening():
             cards([("문의 대응 라우팅", "사내 문의 → 의도 분류 → 전문 Sub Agent → 검증 · 문의 30건 · FAQ 5개", [])], 2),
             cards([("사양서 추출 · 견적", "사양서 → JSON 추출 → 견적 → 검증 · 사양서 10건 · 정답 JSON · 단가표", [])], 2))
               + note("데이터", "모두 가상 자료 · 엣지 케이스 포함"), "시작"),
-        hx_map(),
     ]
 
 
 # ── Ch1 하네스 개념 ─────────────────────────────────────
 def ch1():
-    return chapter("Ch1", "하네스 엔지니어링 개념", {"지침 · 컨텍스트"}, "모델과 계층 설계") + [
+    return [divider("Ch1", "하네스 엔지니어링 개념", "")] + [
+        light("모델 발전과 요구의 변화", evolution(), "Ch1"),
+        light("대화형 작업과 위임형 작업", two(
+            cards([("대화형", "질문 → 답 → 사람이 읽고 다음 질문", []),
+                   ("사람의 역할", "매 답을 확인 · 실수는 다음 턴에 바로잡음", [])], 1),
+            cards([("위임형", "지시 1번 → 도구 수십 번 → 결과 보고", []),
+                   ("사람의 역할", "최종 결과만 확인 · 같은 일을 매일 반복", [])], 1))
+              + note("달라진 점", "중간 과정을 사람이 보지 않음 → 품질 · 안전을 확인하는 장치가 작업 안에 있어야 함"), "Ch1"),
+        stat("채팅과 Claude Code의 작업 방식 차이", "Ch1",
+             hbars([("채팅", 13, False, "13번 주고받음"), ("Claude Code", 1, True, "지시 1번")], top=14, title="블로그 글 하나 완성까지 (중앙값)")
+             + big([("86", "%", "일이 빨라짐"), ("82", "%", "맡는 일의 범위가 넓어짐"), ("69", "%", "품질이 좋아짐")]),
+             A_ECON26),
+        stat("에이전트 작업 길이 추세", "Ch1",
+             big([("105", "일", "해낼 수 있는 작업 길이가 2배 되는 주기", True),
+                  ("5.7", "시간", "GPT-5.4 · 성공률 50% 기준 작업 길이"),
+                  ("54", "분", "같은 모델 · 성공률 80% 기준")])
+             + note("믿을 만하게 맡기려면", "성공률 기준을 올리면 맡길 수 있는 길이가 6분의 1로 · 그 사이를 하네스 · 검증이 메운다"),
+             METR_FRR, METR_TH),
+        light("하네스가 필요해진 이유", table(["위임형 작업의 문제", "필요해진 것", "하네스 부품"], [
+            ["<b>같은 일을 반복</b>", "매번 같은 형식 · 같은 기준", "지침 · Skill · 평가"],
+            ["<b>사람이 중간을 안 봄</b>", "위험한 실행은 강제로 차단", "Hook · 권한"],
+            ["<b>길어진 작업</b>", "컨텍스트 · 토큰 관리", "Sub Agent · 압축 · 측정"],
+            ["<b>회사만 아는 사실</b>", "확정된 규칙 · 자료 제공", "Skill 참고 자료 · 도구"],
+        ]), "Ch1"),
         ill("scenes_more", "harness_rig", "left40", "하네스의 정의",
             ["모델: 답을 만드는 엔진", "하네스: 모델을 감싼 나머지 전부"]),
+        hx_map(None, "하네스 지도", "하네스를 이루는 여섯 부품"),
+        light("프롬프트 · 컨텍스트 · 하네스 선택 기준", '''<div class="tline t4">
+  <div class="tl"><b>프롬프트</b><span>한 번의 질문을 잘 쓰기</span></div>
+  <div class="tl"><b>컨텍스트</b><span>무엇을 보여 줄지 고르기</span></div>
+  <div class="tl"><b>하네스</b><span>도구 · 권한 · 평가까지 환경 전체</span></div>
+  <div class="tl hl"><b>루프</b><span>하네스를 재고 고치는 반복</span></div>
+</div>''' + note("실무 기준", "한 번 쓰고 끝 → 프롬프트 · 매번 같은 자료 → 컨텍스트 · 반복 · 위험 · 여러 사람 → 하네스"), "Ch1"),
+        light("하네스의 다섯 계층", table(["계층", "담는 것", "설계 결정"], [
+            ["<b>모델</b>", "추론 엔진", "어떤 모델 · effort · 한도"],
+            ["<b>컨텍스트</b>", "지침 · 참고 자료 · 대화 이력", "항상 넣을 것 vs 필요할 때만"],
+            ["<b>도구</b>", "조회 · 계산 · 실행", "이름 · 설명 · 입력 형식 · 개수"],
+            ["<b>권한</b>", "허용 · 금지 · 승인", "자동 허용 범위 · 사람 승인 지점"],
+            ["<b>평가</b>", "지표 · 평가셋 · 로그", "무엇을 성공으로 볼지"],
+        ]), "Ch1"),
         stat("같은 모델의 하네스별 점수", "Ch1",
              hbars([("GPT-5.4 · Codex CLI", 77.3, True, "77.3%"), ("GPT-5.4 · Terminus 2", 54.8, False, "54.8%"),
                     ("GPT-5.4 mini · Codex CLI", 66.1, True, "66.1%"), ("GPT-5.4 mini · Terminus 2", 36.9, False, "36.9%"),
@@ -249,31 +304,12 @@ def ch1():
              + big([("7", "%", "약한 모델: 하네스를 바꾸면 남는 정답", True), ("6", "점", "서버 자원 설정만 바꿔 생긴 점수 차"),
                     ("8.8", "점", "같은 모델(Sonnet 5.5), 측정 환경만 다름")]),
              HARBOR, A_NOISE, SC_SONNET55, TBLB),
-        stat("에이전트 작업 길이 추세", "Ch1",
-             big([("105", "일", "해낼 수 있는 작업 길이가 2배 되는 주기", True),
-                  ("5.7", "시간", "GPT-5.4 · 성공률 50% 기준 작업 길이"),
-                  ("54", "분", "같은 모델 · 성공률 80% 기준")])
-             + note("믿을 만하게 맡기려면", "성공률 기준을 올리면 맡길 수 있는 길이가 6분의 1로 · 그 사이를 하네스 · 검증이 메운다"),
-             METR_FRR, METR_TH),
         stat("모델 발전과 하네스 규모", "Ch1",
              quote("예전 Claude 모델은 포켓몬을 하려면 복잡한 도우미 하네스가 필요했다. Claude Fable 5는 화면만 보고 게임을 끝냈다", "Anthropic, Claude Fable 5 발표 2026.6")
              + hbars([("Mythos 5 · 단일 Agent", 88.0, False, "88.0%"), ("Mythos 5 · 멀티에이전트", 93.3, True, "93.3%")], top=100,
                      title="BrowseComp · 같은 모델, 구성만 다름")
              + note("그래서", "하네스는 한 번 만들고 끝이 아니라, 모델이 바뀔 때마다 재고 덜어 낸다"),
              A_FABLE5, SC_FABLE5),
-        light("하네스의 다섯 계층", table(["계층", "담는 것", "설계 결정"], [
-            ["<b>모델</b>", "추론 엔진", "어떤 모델 · effort · 한도"],
-            ["<b>컨텍스트</b>", "지침 · 참고 자료 · 대화 이력", "항상 넣을 것 vs 필요할 때만"],
-            ["<b>도구</b>", "조회 · 계산 · 실행", "이름 · 설명 · 입력 형식 · 개수"],
-            ["<b>권한</b>", "허용 · 금지 · 승인", "자동 허용 범위 · 사람 승인 지점"],
-            ["<b>평가</b>", "지표 · 평가셋 · 로그", "무엇을 성공으로 볼지"],
-        ]), "Ch1"),
-        light("프롬프트 → 컨텍스트 → 하네스 → 루프", '''<div class="tline t4">
-  <div class="tl"><b>프롬프트</b><span>한 번의 질문을 잘 쓰기</span></div>
-  <div class="tl"><b>컨텍스트</b><span>무엇을 보여 줄지 고르기</span></div>
-  <div class="tl"><b>하네스</b><span>도구 · 권한 · 평가까지 환경 전체</span></div>
-  <div class="tl hl"><b>루프</b><span>하네스를 재고 고치는 반복</span></div>
-</div>''' + note("실무 기준", "한 번 쓰고 끝 → 프롬프트 · 매번 같은 자료 → 컨텍스트 · 반복 · 위험 · 여러 사람 → 하네스"), "Ch1"),
         light("같은 모델, 다른 하네스", table(["차이", "하네스 A", "하네스 B"], [
             ["<b>도구 설계</b>", "「검색」 하나 · 설명 한 줄", "「FAQ 조회」 「규정 조회」 분리 · 입력 예시"],
             ["<b>컨텍스트</b>", "대화 이력 전부 누적", "핵심만 남기고 Sub Agent로 분리"],
@@ -840,6 +876,16 @@ CSS = '''
   .ucurve .udraw{stroke-dasharray:1400; animation:udraw 1.6s ease-out both;}
   @keyframes udraw{from{stroke-dashoffset:1400}}
   @media print{.ucurve .udraw{animation:none}}
+  .evo{display:grid; grid-template-columns:140px repeat(5, 1fr); gap:14px 16px; margin:4px 0 6px;}
+  .evo .ev-rl{font-size:16px; font-weight:700; color:#6B7785; display:flex; align-items:center;}
+  .evo .ev-h{background:#1F3A5F; color:#fff; border-radius:12px; padding:16px 16px; position:relative; animation:bnIn .6s both; animation-delay:var(--d);}
+  .evo .ev-h b{display:block; font-size:22px;} .evo .ev-h span{font-size:15px; opacity:.75;}
+  .evo .ev-h:not(:nth-child(6))::after{content:"→"; position:absolute; right:-14px; top:50%; transform:translateY(-50%); color:#9AA5B1; font-weight:800;}
+  .evo .ev-h.hl{background:#F28C28;}
+  .evo .ev-c{background:#fff; border:1px solid #E1E5EB; border-radius:10px; padding:16px 16px; font-size:18px; line-height:1.4; min-height:84px; color:#1F2A37; font-weight:600; animation:bnIn .6s both; animation-delay:var(--d);}
+  .evo .ev-c.r2{background:#F6F8FA; color:#1F3A5F; font-weight:800;}
+  .evo .ev-c.hl{border-color:#F28C28; background:#FFF8F1;} .evo .ev-c.r2.hl{background:#F28C28; color:#fff;}
+  @media print{.evo .ev-h,.evo .ev-c{animation:none}}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
