@@ -304,12 +304,13 @@ def labkit(no, ch):
     k = labkits.KITS[no]
     steps = "".join(_step(*x) for x in k["steps"])
     files = [filecode(fn, _kitsrc(src), shown) for fn, shown, src in k.get("files", [])]
-    head = (f'<div class="kithead"><span>실습 폴더</span><code>{k["folder"]}</code>'
-            f'<em>labs.zip 안 · 〈 〉 안만 바꿔 붙여 넣기</em></div>')
+    sub = f'<span class="ks">이번 실습</span><code>{k["folder"]}/</code>' if k["folder"] else ""
+    head = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code>{sub}'
+            f'<em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div>')
     tip = note("참고", k["tip"]) if k.get("tip") else ""
     if len(files) >= 3:     # 하네스 파일이 많으면 앞 장에 따로
         grid = f'<div class="kgrid">{"".join(files)}</div>'
-        head2 = (f'<div class="kithead"><span>실습 폴더</span><code>{k["folder"]}</code>'
+        head2 = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code>{sub}'
                  f'<em>탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장</em></div>')
         return [light(f"실습 {no} 하네스", head2 + grid, ch),
                 light(f"실습 {no} 진행", head + f'<div class="kit wide">{steps}</div>' + tip, ch)]
@@ -324,7 +325,7 @@ def esc(x):
     return x.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-KIT_TEXT = {"PROMPT22": '이 프로젝트에 PreToolUse Hook을 만들어 줘.\n\n막을 것:\n- 운영 DB(db/prod.db, `--env prod`)에 쓰는 모든 동작 — UPDATE · INSERT · DELETE · DROP, sqlite3 직접 실행, python으로 직접 접속, 파일 덮어쓰기(cp · mv · Write)\n- `rm -rf`\n- `.env` 읽기 · 출력 (Read 도구, cat 등)\n- `git push --force`\n\n허용할 것:\n- 운영 DB 조회(SELECT)\n- 개발 DB(dev)는 읽기 · 쓰기 모두\n- 일반 코드 수정, 리포트 실행, 일반 git push\n\n조건:\n- `.claude/hooks/guard.py`에 만들고 `.claude/settings.json`에 등록\n- 막을 때는 exit 2와 함께 이유를 한 줄로 (「운영 DB 쓰기는 사용자 허락 필요」처럼)\n- 표준 라이브러리만\n- 다 만들면 `python3 ../check_hook.py`로 시험하고, 실패한 사례가 있으면 고쳐서 다시 시험'}
+KIT_TEXT = {"PROMPT22": 'lab2_hook_by_claude/project 에 PreToolUse Hook을 만들어 줘.\n\n막을 것:\n- 운영 DB(db/prod.db, `--env prod`)에 쓰는 모든 동작 — UPDATE · INSERT · DELETE · DROP, sqlite3 직접 실행, python으로 직접 접속, 파일 덮어쓰기(cp · mv · Write)\n- `rm -rf`\n- `.env` 읽기 · 출력 (Read 도구, cat 등)\n- `git push --force`\n\n허용할 것:\n- 운영 DB 조회(SELECT)\n- 개발 DB(dev)는 읽기 · 쓰기 모두\n- 일반 코드 수정, 리포트 실행, 일반 git push\n\n조건:\n- `lab2_hook_by_claude/project/.claude/hooks/guard.py`에 만들고 같은 폴더 `.claude/settings.json`에 등록\n- 막을 때는 exit 2와 함께 이유를 한 줄로 (「운영 DB 쓰기는 사용자 허락 필요」처럼)\n- 표준 라이브러리만\n- 다 만들면 `python3 lab2_hook_by_claude/check_hook.py`로 시험하고, 실패한 사례가 있으면 고쳐서 다시 시험'}
 
 
 
@@ -1390,7 +1391,7 @@ CSS = '''
   .kgrid .code .bar{padding:6px 12px;}
   .lfold{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:2px 8px; border-radius:6px;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
-  .kithead span{font-weight:700; color:#1F3A5F;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
+  .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
   .kit{display:grid; grid-template-columns:1.15fr 1fr; gap:16px; align-items:start;}
   .kit .kp, .kit .kf{display:flex; flex-direction:column; gap:10px; min-width:0;}

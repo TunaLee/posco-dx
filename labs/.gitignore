@@ -11,3 +11,4 @@ lab7_eval_regression/judge_scores.csv
 lab7_eval_regression/synthetic_*.jsonl
 sdk_optional/sandbox/*
 !sdk_optional/sandbox/.gitkeep
+runs/
