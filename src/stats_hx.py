@@ -101,7 +101,7 @@ CSS = r"""
 
   .hbars{display:grid; gap:12px; margin:4px 0 16px;}
   .hbt{font-size:15px; color:#6B7785; font-weight:700; margin-bottom:2px;}
-  .hb{display:grid; grid-template-columns:260px 1fr 150px; align-items:center; gap:14px; font-size:18px;}
+  .hb{display:grid; grid-template-columns:280px 1fr 200px; align-items:center; gap:14px; font-size:18px;}
   .hb .hn{font-weight:700; color:#1F3A5F; text-align:right;}
   .hb .ht{height:30px; background:#EEF1F5; border-radius:8px; overflow:hidden;}
   .hb .hf{display:block; height:100%; background:#9AA5B1; border-radius:8px; transform-origin:left;
