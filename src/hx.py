@@ -299,16 +299,10 @@ def opening():
         ]), "시작"),
         light("실습 환경", table(["도구", "용도"], [
             ["<b>Claude Code (비즈니스 계정)</b>", "하네스 만들기 · 대화형 실습"],
-            ["<b>헤드리스</b> <code>claude -p</code>", "같은 작업 N번 자동 실행 · 토큰 측정"],
             ["<b>VS Code · Python 3.10+</b>", "실습 스크립트 · 데이터"],
+            ["<b>Agent Watch</b>", "에이전트 실행 흐름 · 토큰 대시보드"],
             ["<b>Git · GitHub</b>", "하네스 버전 관리 · 공유"],
         ]) + note("실습 저장소", labdir("")), "시작"),
-        light("헤드리스 실행 (claude -p)", code("터미널", 'claude -p "VPN이 안 붙어요" --output-format json\n\n'
-                                                  '{ "result": "...", "num_turns": 2, "duration_ms": 8120,\n'
-                                                  '  "usage": { "input_tokens": 3812, "output_tokens": 241,\n'
-                                                  '             "cache_read_input_tokens": 3402 },\n'
-                                                  '  "session_id": "...", "total_cost_usd": ... }')
-              + note("쓰임", "같은 질문 50번 · 평가셋 자동 실행 · 토큰 비교 (비즈니스 요금제는 비용보다 토큰으로 비교)"), "시작"),
         light("공통 예제 두 가지 · 하나 선택", two(
             cards([("문의 대응 라우팅", "사내 문의 → 의도 분류 → 전문 Sub Agent → 검증 · 문의 30건 · FAQ 5개", [])], 2),
             cards([("사양서 추출 · 견적", "사양서 → JSON 추출 → 견적 → 검증 · 사양서 10건 · 정답 JSON · 단가표", [])], 2))
@@ -454,7 +448,7 @@ def ch1():
            "CLAUDE.md\n역할: 사양서 추출 담당\n출력: JSON {품목, 규격, 재질, 수량, 단위, 비고}\n규칙: 원문에 없는 숫자는 쓰지 않음, 없으면 null\n\n→ 10회 모두 같은 JSON"),
         lab("1-1", "같은 질문 열 번", "Ch1",
             "맨몸 vs CLAUDE.md 한 장의 차이를 숫자로",
-            ["맨몸으로 헤드리스 10회 실행", "harness/CLAUDE.md에 역할 · 출력 형식 · 규칙 쓰기", "같은 입력 10회 다시 실행", "답 종류 수 · JSON 유효율 · 토큰 비교표"],
+            ["맨몸으로 같은 질문 10회 자동 실행 (run.py)", "harness/CLAUDE.md에 역할 · 출력 형식 · 규칙 쓰기", "같은 입력 10회 다시 실행", "답 종류 수 · JSON 유효율 · 토큰 비교표"],
             ["답 종류 1~2종", "비교표를 최종 산출물 폴더에 저장"], files=labdir("lab1_harness_vs_bare"), mine="내 업무의 답 형식 · 규칙을 CLAUDE.md 세 줄로"),
         bridge("다음: Claude Code 하네스 구조", "", "Ch1", "→ Ch2"),
     ]
@@ -611,7 +605,7 @@ def ch2():
              MCP26, MCPRM, SKILLSIO),
         lab("2-1", "하네스 부품 네 개", "Ch2",
             "Skill · 명령 · Sub Agent · Hook을 내 예제에 붙이기",
-            ["project/.claude 구조 살펴보기", "내 업무 Skill 하나 · 명령 하나 쓰기", "reviewer를 읽기 전용으로 정의", "guard 차단 목록에 규칙 하나 추가 → 헤드리스로 확인"],
+            ["project/.claude 구조 살펴보기", "내 업무 Skill 하나 · 명령 하나 쓰기", "reviewer를 읽기 전용으로 정의", "guard 차단 목록에 규칙 하나 추가 → check.py로 확인"],
             ["새 세션에서 Skill 자동 호출", ".env 수정 요청이 차단됨", "reviewer가 파일을 못 고침"], files=labdir("lab2_claude_code_parts"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
         lab("2-2", "Claude로 Hook 만들기", "Ch2",
             "「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로",
@@ -803,7 +797,7 @@ def ch5():
             flow([("분류", "classifier"), ("응대", "domain"), ("검증", "verifier"), ("통과 → 답", "")], hl=2),
             flow([("추출", "extractor"), ("견적", "estimator"), ("검증", "verifier"), ("통과 → 결과", "")], hl=2))
               + note("verifier", "읽기 전용 · 근거 · 숫자 · 정책만 판정 · 고치지 않음"), "Ch5"),
-        light("실행 타임라인", viz("timeline_lanes") + note("만드는 법", "헤드리스 stream-json 이벤트 → visualize.py → 타임라인 HTML"), "Ch5"),
+        light("실행 타임라인", viz("timeline_lanes") + note("만드는 법", "실행 기록 → visualize.py → 타임라인 HTML · 실시간은 Agent Watch"), "Ch5"),
         light("실시간 대시보드: Agent Watch", '<img class="shot" src="img/agent_watch.png" alt="Agent Watch 화면">'
               + note("구성", "Hook → 로컬 서버 → 브라우저 · 메인 · Sub Agent 레인 · 에이전트별 토큰 · 효율 점검 · " + labdir("agent_watch")), "Ch5"),
         light("위임문 4요소", table(["요소", "빠지면"], [
@@ -814,7 +808,7 @@ def ch5():
         ]), "Ch5"),
         lab("5-1", "Supervisor + Sub Agent + 검증", "Ch5",
             "예제 하나를 멀티에이전트로 · 실행을 시각화",
-            ["예제 고르기 (라우팅 · 추출)", ".claude/agents 역할 · 도구 · 반환 형식 손보기", "run.py로 실행 (stream-json 저장)", "visualize.py → 타임라인에서 병목 · 실패 찾기"],
+            ["예제 고르기 (라우팅 · 추출)", ".claude/agents 역할 · 도구 · 반환 형식 손보기", "run.py로 실행 · 실행 기록 저장", "visualize.py → 타임라인에서 병목 · 실패 찾기"],
             ["verifier가 오답 1건 이상 차단", "타임라인 HTML · 레인별 토큰"], files=labdir("lab5_multiagent"), mine="내 업무를 나눌 Agent 역할 (나눌 필요 없으면 「단일」)"),
         bridge("다음: 토큰 경제학", "", "Ch5", "→ Ch6 토큰 경제학"),
     ]
@@ -904,9 +898,9 @@ def ch7():
              "- 근거 충실도: 근거에 없는 내용을 만들었는가 (만들면 1점)\n"
              "- 정책: 약속하면 안 되는 것 · 형식 위반\n"
              '{"accuracy": n, "grounded": n, "policy": n, "reason": "..."}')
-    compare = ("python run_suite.py --engine headless --k 3 --out results/before.json\n"
+    compare = ("python run_suite.py --k 3 --out results/before.json\n"
                "# 하네스 수정\n"
-               "python run_suite.py --engine headless --k 3 --out results/after.json\n"
+               "python run_suite.py --k 3 --out results/after.json\n"
                "python compare.py results/before.json results/after.json\n\n"
                "정확도      0.72 → 0.90   ▲\n"
                "일관성      0.60 → 0.95   ▲\n"
