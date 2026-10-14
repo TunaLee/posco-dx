@@ -4,8 +4,8 @@
 
 | 트랙 | 순서 (스킬이 강제) | 서브에이전트 (`project/.claude/agents/`) |
 |---|---|---|
-| pangyo | classifier → responder-<분야> → verifier-pangyo | `classifier`(haiku) · `responder-it/buy/hr/sec/general`(sonnet, Read·Grep) · `verifier-pangyo`(haiku) |
-| pohang | extractor → estimator → verifier-pohang | `extractor`(sonnet) · `estimator`(haiku, Grep 으로 단가표) · `verifier-pohang`(haiku) |
+| pangyo | classifier → responder-<분야> → verifier-inquiry | `classifier`(haiku) · `responder-it/buy/hr/sec/general`(sonnet, Read·Grep) · `verifier-inquiry`(haiku) |
+| pohang | extractor → estimator → verifier-quote | `extractor`(sonnet) · `estimator`(haiku, Grep 으로 단가표) · `verifier-quote`(haiku) |
 
 지휘 절차는 `project/.claude/skills/orchestrate-<track>/SKILL.md`. 검증 실패 시 한 번만 다시, 그래도 실패면 `needs_human`.
 
@@ -23,12 +23,12 @@ python lab5_multiagent/visualize.py lab5_multiagent/sample_events.jsonl -o lab5_
 - 콘솔에는 줄별 토큰, 위임 순서와 기대 순서 일치 여부, 코드 검증(`common/checks.py`) 결과가 나온다.
 - `sample_timeline.html` 을 브라우저로 연다. 막대에 마우스를 올리면 도구 입력·결과가 보인다.
 
-대화형으로: `cd <작업 폴더> && claude` → `/agents` 로 목록 확인 → 「orchestrate-pangyo 로 처리: 납품 부품 불량인데 환불해 주실 거죠?」.
+대화형으로: `cd <작업 폴더> && claude` → `/agents` 로 목록 확인 → 「orchestrate-inquiry 로 처리: 납품 부품 불량인데 환불해 주실 거죠?」.
 
 ## 해 볼 것
 
 1. `SKILL.md` 에서 3번(검증) 단계를 지운다 → 타임라인에서 verifier 줄이 사라지고, `EXPECTED` 순서 확인이 X.
-2. `verifier-pangyo.md` 의 `model` 을 `sonnet` 으로 → 줄별 토큰과 시간 변화.
+2. `verifier-inquiry.md` 의 `model` 을 `sonnet` 으로 → 줄별 토큰과 시간 변화.
 3. `responder-buy.md` 에서 「환불 약속 금지」 줄을 지우고 Q10 → verifier 가 잡는가, 재시도가 일어나는가.
 4. 판교 `Q26`(프롬프트 주입), 포항 `S07`(수량 누락)을 넣어 본다.
 5. 서브에이전트 줄의 토큰 합과 메인 토큰을 비교 — 「메인 컨텍스트는 작게, 전체 비용은?」

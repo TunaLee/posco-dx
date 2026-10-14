@@ -57,13 +57,27 @@ KITS = {
     ], files=[("task.md", "과제 카드", "lab4_public_harness/task.md")],
         tip="플러그인 설치가 막혀 있으면 bare · mine 두 가지만"),
 
-    "5-1": dict(folder="", steps=[
+    "5-1": dict(folder="lab5_multiagent", split=True, harness_note="이미 들어 있는 파일 · VS Code 탐색기에서 열어 확인", tree=("lab5_multiagent/project/ 구조",
+        "lab5_multiagent/project/\n"
+        "├── CLAUDE.md                     「지휘 Skill 순서대로 · 메인은 직접 답 안 씀」\n"
+        "└── .claude/\n"
+        "    ├── skills/\n"
+        "    │   ├── orchestrate-inquiry/\n"
+        "    │   │   └── SKILL.md          지휘: 분류 → 응대 → 검증\n"
+        "    │   └── orchestrate-quote/\n"
+        "    │       └── SKILL.md          지휘: 추출 → 견적 → 검증\n"
+        "    └── agents/                   Sub Agent 하나 = 파일 하나\n"
+        "        ├── classifier.md         분류 (haiku)\n"
+        "        ├── responder-it.md 외 4개  분야별 응대 (Read · Grep)\n"
+        "        ├── verifier-inquiry.md   문의 답 검증 (읽기 전용)\n"
+        "        ├── extractor.md · estimator.md\n"
+        "        └── verifier-quote.md     견적 검증 (읽기 전용)"), steps=[
         ("① 실행", "p", "lab5_multiagent/run.py --ids Q10 을 실행하고\n위임 순서 · 줄별 토큰 · 검증 결과를 정리해 줘"),
-        ("② 타임라인", "p", "방금 저장된 runs/ 기록으로 lab5_multiagent/visualize.py 를 돌려\n타임라인 HTML을 만들고 열어 줘"),
-        ("③ 검증 빼 보기", "p", "lab5_multiagent/project 의 지휘 Skill 에서 검증 단계를 지우고\nlab5_multiagent/run.py --ids Q10 을 다시 실행해 타임라인을 비교해 줘 · 끝나면 되돌려 줘"),
-        ("④ 까다로운 입력", "p", "run.py 를 --ids Q26 (프롬프트 주입) 로도 돌려\nverifier가 막았는지 알려 줘"),
-    ], files=[("SKILL.md", "지휘 Skill", "lab5_multiagent/project/.claude/skills/orchestrate-pangyo/SKILL.md"),
-              ("verifier.md", "검증 Agent", "lab5_multiagent/project/.claude/agents/verifier-pangyo.md")]),
+        ("② 타임라인", "p", "방금 저장된 lab5_multiagent/runs/ 기록으로 lab5_multiagent/visualize.py 를 돌려\n타임라인 HTML을 만들고 열어 줘"),
+        ("③ 검증 빼 보기", "p", "lab5_multiagent/project/.claude/skills/orchestrate-inquiry/SKILL.md 에서 검증 단계를 지우고\nlab5_multiagent/run.py --ids Q10 을 다시 실행해 타임라인을 비교해 줘 · 끝나면 되돌려 줘"),
+        ("④ 까다로운 입력", "p", "lab5_multiagent/run.py --ids Q26 (프롬프트 주입) 을 실행해\nverifier-inquiry 가 막았는지 알려 줘"),
+    ], files=[("SKILL.md", "lab5_multiagent/project/.claude/skills/orchestrate-inquiry/SKILL.md", "lab5_multiagent/project/.claude/skills/orchestrate-inquiry/SKILL.md"),
+              ("verifier-inquiry.md", "lab5_multiagent/project/.claude/agents/verifier-inquiry.md", "lab5_multiagent/project/.claude/agents/verifier-inquiry.md")]),
 
     "5-2": dict(folder="work_harness/workspace", steps=[
         ("① 단일 하네스 완성", "do", "2-3 하네스에 앞 장 <b>spec-quote</b> Skill 추가"),

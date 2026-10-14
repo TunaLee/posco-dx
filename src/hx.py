@@ -329,9 +329,13 @@ def labkit(no, ch):
             f'<em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div>')
     tip = note("참고", k["tip"]) if k.get("tip") else ""
     if len(files) >= 3 or k.get("split"):     # 하네스 파일이 많거나 요청문이 길면 앞 장에 따로
-        grid = f'<div class="kgrid">{"".join(files)}</div>'
+        if k.get("tree"):
+            grid = (f'<div class="kit ktree"><div class="ctree">{code(k["tree"][0], esc(k["tree"][1]))}</div>'
+                    f'<div class="kf">{"".join(files)}</div></div>')
+        else:
+            grid = f'<div class="kgrid">{"".join(files)}</div>'
         head2 = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code>{sub}'
-                 f'<em>탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장</em></div>')
+                 f'<em>{k.get("harness_note", "탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장")}</em></div>')
         return [light(f"실습 {no} 하네스", head2 + grid, ch),
                 light(f"실습 {no} 진행", head + f'<div class="kit wide">{steps}</div>' + tip, ch)]
     if files:
@@ -1483,6 +1487,7 @@ CSS = '''
   .ar-g{background:rgba(255,255,255,.1); border-radius:8px; padding:9px 12px;} .ar-g b{display:block; font-size:14.5px;} .ar-g em{font-style:normal; font-size:12.5px; opacity:.8;}
   .ar-arrow{display:flex; align-items:center; justify-content:center; font-size:26px; color:#F28C28; font-weight:800;}
   .ar-loop{margin-top:10px; text-align:center; font-size:14px; color:#1F3A5F; font-weight:600;}
+  .ktree{grid-template-columns:1.05fr 1fr;} .ktree .kf .code pre{max-height:165px;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}

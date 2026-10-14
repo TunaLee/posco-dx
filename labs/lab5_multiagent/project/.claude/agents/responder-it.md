@@ -1,6 +1,6 @@
 ---
 name: responder-it
-description: (판교) IT 분야 문의의 답변 초안 작성 전담. classifier 가 「IT」로 분류한 문의를 받는다.
+description: (사내 문의) IT 분야 문의의 답변 초안 작성 전담. classifier 가 「IT」로 분류한 문의를 받는다.
 tools: Read, Grep
 model: sonnet
 ---

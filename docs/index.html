@@ -663,6 +663,7 @@
   .ar-g{background:rgba(255,255,255,.1); border-radius:8px; padding:9px 12px;} .ar-g b{display:block; font-size:14.5px;} .ar-g em{font-style:normal; font-size:12.5px; opacity:.8;}
   .ar-arrow{display:flex; align-items:center; justify-content:center; font-size:26px; color:#F28C28; font-weight:800;}
   .ar-loop{margin-top:10px; text-align:center; font-size:14px; color:#1F3A5F; font-weight:600;}
+  .ktree{grid-template-columns:1.05fr 1fr;} .ktree .kf .code pre{max-height:165px;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
@@ -2104,18 +2105,27 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
   </div></div>
 </section>
 
-<section class="slide lt" data-title="실습 5-1 진행">
+<section class="slide lt" data-title="실습 5-1 하네스">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch5</span></div>
-  <h2 class="s-title sm">실습 5-1 진행</h2>
+  <h2 class="s-title sm">실습 5-1 하네스</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 실행</span></div><pre><code>lab5_multiagent/run.py --ids Q10 을 실행하고
-위임 순서 · 줄별 토큰 · 검증 결과를 정리해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 타임라인</span></div><pre><code>방금 저장된 runs/ 기록으로 lab5_multiagent/visualize.py 를 돌려
-타임라인 HTML을 만들고 열어 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 검증 빼 보기</span></div><pre><code>lab5_multiagent/project 의 지휘 Skill 에서 검증 단계를 지우고
-lab5_multiagent/run.py --ids Q10 을 다시 실행해 타임라인을 비교해 줘 · 끝나면 되돌려 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 까다로운 입력</span></div><pre><code>run.py 를 --ids Q26 (프롬프트 주입) 로도 돌려
-verifier가 막았는지 알려 줘</code></pre></div></div><div class="kf"><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">지휘 Skill</span></div><pre><code>---
-name: orchestrate-pangyo
-description: 판교 사내 문의를 classifier → responder-&lt;분야&gt; → verifier-pangyo 순서로 처리하는 지휘 절차. 사내 문의 처리 요청이면 쓴다.
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>lab5_multiagent/</code><em>이미 들어 있는 파일 · VS Code 탐색기에서 열어 확인</em></div><div class="kit ktree"><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">lab5_multiagent/project/ 구조</span></div><pre><code>lab5_multiagent/project/
+├── CLAUDE.md                     「지휘 Skill 순서대로 · 메인은 직접 답 안 씀」
+└── .claude/
+    ├── skills/
+    │   ├── orchestrate-inquiry/
+    │   │   └── SKILL.md          지휘: 분류 → 응대 → 검증
+    │   └── orchestrate-quote/
+    │       └── SKILL.md          지휘: 추출 → 견적 → 검증
+    └── agents/                   Sub Agent 하나 = 파일 하나
+        ├── classifier.md         분류 (haiku)
+        ├── responder-it.md 외 4개  분야별 응대 (Read · Grep)
+        ├── verifier-inquiry.md   문의 답 검증 (읽기 전용)
+        ├── extractor.md · estimator.md
+        └── verifier-quote.md     견적 검증 (읽기 전용)</code></pre></div></div><div class="kf"><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">lab5_multiagent/project/.claude/skills/orchestrate-inquiry/SKILL.md</span></div><pre><code>---
+name: orchestrate-inquiry
+description: 사내 문의를 classifier → responder-&lt;분야&gt; → verifier-inquiry 순서로 처리하는 지휘 절차. 사내 문의 처리 요청이면 쓴다.
 ---
 
 # 사내 문의 처리 순서 (건너뛰지 않는다)
@@ -2124,16 +2134,16 @@ description: 판교 사내 문의를 classifier → responder-&lt;분야&gt; →
 
 1. `classifier` 에게 문의 원문을 그대로 넘긴다 → 라벨.
 2. 라벨에 맞는 담당에게 문의 원문을 넘긴다: IT→`responder-it`, 구매→`responder-buy`, 인사→`responder-hr`, 보안→`responder-sec`, 기타→`responder-general`.
-3. `verifier-pangyo` 에게 문의 원문 + 초안 + 근거 ID 를 넘긴다.
+3. `verifier-inquiry` 에게 문의 원문 + 초안 + 근거 ID 를 넘긴다.
 4. verdict 가 fail 이면 문제를 붙여 2번을 **한 번만** 다시 하고 3번을 다시 한다. 그래도 fail 이면 needs_human true.
 5. 메인은 직접 답을 쓰거나 조항을 찾지 않는다. 결과를 모아 아래 JSON 하나만 출력한다.
 
 ```json
 {"intent": "구매", "reply": "답변 3문장 이내", "citations": ["BUY-4"], "needs_human": true,
- "verdict": "pass", "reason": "검증 메모", "trace": ["classifier", "responder-buy", "verifier-pangyo"]}
-```</code></pre></div><div data-file="verifier.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">검증 Agent</span></div><pre><code>---
-name: verifier-pangyo
-description: (판교) 답변 초안 검증 전담. 초안과 근거 조항 ID 를 받아 조항 원문과 대조한다. 고치지 않고 판정만 한다.
+ "verdict": "pass", "reason": "검증 메모", "trace": ["classifier", "responder-buy", "verifier-inquiry"]}
+```</code></pre></div><div data-file="verifier-inquiry.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">lab5_multiagent/project/.claude/agents/verifier-inquiry.md</span></div><pre><code>---
+name: verifier-inquiry
+description: (사내 문의) 답변 초안 검증 전담. 초안과 근거 조항 ID 를 받아 조항 원문과 대조한다. 고치지 않고 판정만 한다.
 tools: Read, Grep
 model: haiku
 ---
@@ -2147,6 +2157,18 @@ model: haiku
 4. 사람이 판단해야 하는 일(사고·고충·환불·정보 부족·욕설)인가
 
 출력: `verdict: pass|fail` / `문제: …(없으면 없음)` / `needs_human: true|false`</code></pre></div></div></div></div></div>
+</section>
+
+<section class="slide lt" data-title="실습 5-1 진행">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch5</span></div>
+  <h2 class="s-title sm">실습 5-1 진행</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>lab5_multiagent/</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 실행</span></div><pre><code>lab5_multiagent/run.py --ids Q10 을 실행하고
+위임 순서 · 줄별 토큰 · 검증 결과를 정리해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 타임라인</span></div><pre><code>방금 저장된 lab5_multiagent/runs/ 기록으로 lab5_multiagent/visualize.py 를 돌려
+타임라인 HTML을 만들고 열어 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 검증 빼 보기</span></div><pre><code>lab5_multiagent/project/.claude/skills/orchestrate-inquiry/SKILL.md 에서 검증 단계를 지우고
+lab5_multiagent/run.py --ids Q10 을 다시 실행해 타임라인을 비교해 줘 · 끝나면 되돌려 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 까다로운 입력</span></div><pre><code>lab5_multiagent/run.py --ids Q26 (프롬프트 주입) 을 실행해
+verifier-inquiry 가 막았는지 알려 줘</code></pre></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="멀티에이전트의 효과와 한계">

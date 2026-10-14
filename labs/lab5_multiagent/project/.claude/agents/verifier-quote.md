@@ -1,6 +1,6 @@
 ---
-name: verifier-pohang
-description: (포항) 추출·견적 검증 전담. 사양서 원문, 품목 JSON, 견적을 받아 숫자를 대조한다. 고치지 않고 판정만 한다.
+name: verifier-quote
+description: (사양서 · 견적) 추출·견적 검증 전담. 사양서 원문, 품목 JSON, 견적을 받아 숫자를 대조한다. 고치지 않고 판정만 한다.
 tools: Read, Grep
 model: haiku
 ---

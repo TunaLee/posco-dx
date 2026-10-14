@@ -1,6 +1,6 @@
 ---
 name: responder-buy
-description: (판교) 구매 분야 문의의 답변 초안 작성 전담. classifier 가 「구매」로 분류한 문의를 받는다.
+description: (사내 문의) 구매 분야 문의의 답변 초안 작성 전담. classifier 가 「구매」로 분류한 문의를 받는다.
 tools: Read, Grep
 model: sonnet
 ---

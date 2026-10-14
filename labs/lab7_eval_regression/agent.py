@@ -19,8 +19,8 @@ ASK_SINGLE = {
     "pohang": "[pohang] 다음 사양서에서 품목·규격·재질·수량·단위·비고를 뽑고 견적을 내 주세요.\n\n{x}",
 }
 ASK_MULTI = {
-    "pangyo": "orchestrate-pangyo 스킬 순서대로 다음 사내 문의를 처리해 줘.\n\n문의: {x}",
-    "pohang": "orchestrate-pohang 스킬 순서대로 다음 사양서를 처리해 줘.\n\n{x}",
+    "pangyo": "orchestrate-inquiry 스킬 순서대로 다음 사내 문의를 처리해 줘.\n\n문의: {x}",
+    "pohang": "orchestrate-quote 스킬 순서대로 다음 사양서를 처리해 줘.\n\n{x}",
 }
 _ws = {}
 

@@ -1,6 +1,6 @@
 ---
 name: estimator
-description: (포항) 견적 계산 전담. 품목 JSON 을 받아 단가표에서 단가를 찾고 금액·합계를 계산한다.
+description: (사양서 · 견적) 견적 계산 전담. 품목 JSON 을 받아 단가표에서 단가를 찾고 금액·합계를 계산한다.
 tools: Read, Grep
 model: haiku
 ---

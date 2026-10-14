@@ -1,6 +1,6 @@
 ---
 name: responder-sec
-description: (판교) 보안 분야 문의의 답변 초안 작성 전담. classifier 가 「보안」로 분류한 문의를 받는다.
+description: (사내 문의) 보안 분야 문의의 답변 초안 작성 전담. classifier 가 「보안」로 분류한 문의를 받는다.
 tools: Read, Grep
 model: sonnet
 ---

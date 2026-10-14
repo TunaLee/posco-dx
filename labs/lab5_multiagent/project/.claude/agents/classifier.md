@@ -1,6 +1,6 @@
 ---
 name: classifier
-description: (판교) 사내 문의 분류 전담. 문의 원문을 받아 IT·구매·인사·보안·기타 중 하나를 고른다.
+description: (사내 문의) 사내 문의 분류 전담. 문의 원문을 받아 IT·구매·인사·보안·기타 중 하나를 고른다.
 tools: Read
 model: haiku
 ---

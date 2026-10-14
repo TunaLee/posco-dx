@@ -1,6 +1,6 @@
 ---
-name: verifier-pangyo
-description: (판교) 답변 초안 검증 전담. 초안과 근거 조항 ID 를 받아 조항 원문과 대조한다. 고치지 않고 판정만 한다.
+name: verifier-inquiry
+description: (사내 문의) 답변 초안 검증 전담. 초안과 근거 조항 ID 를 받아 조항 원문과 대조한다. 고치지 않고 판정만 한다.
 tools: Read, Grep
 model: haiku
 ---

@@ -1,6 +1,6 @@
 ---
 name: extractor
-description: (포항) 사양서 추출 전담. 사양서 원문을 받아 품목 JSON 배열을 만든다.
+description: (사양서 · 견적) 사양서 추출 전담. 사양서 원문을 받아 품목 JSON 배열을 만든다.
 tools: Read
 model: sonnet
 ---

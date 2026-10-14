@@ -25,10 +25,10 @@ from common.parse import extract_json
 from visualize import analyze, delegations, lane_rows, render
 
 # TODO(실습): 지켜야 할 위임 순서. 스킬에서 단계를 바꾸면 여기도 맞춘다.
-EXPECTED = {"pangyo": ["classifier", "responder-*", "verifier-pangyo"],
-            "pohang": ["extractor", "estimator", "verifier-pohang"]}
-ASK = {"pangyo": "orchestrate-pangyo 스킬 순서대로 다음 사내 문의를 처리해 줘.\n\n문의: {x}",
-       "pohang": "orchestrate-pohang 스킬 순서대로 다음 사양서를 처리해 줘.\n\n{x}"}
+EXPECTED = {"pangyo": ["classifier", "responder-*", "verifier-inquiry"],
+            "pohang": ["extractor", "estimator", "verifier-quote"]}
+ASK = {"pangyo": "orchestrate-inquiry 스킬 순서대로 다음 사내 문의를 처리해 줘.\n\n문의: {x}",
+       "pohang": "orchestrate-quote 스킬 순서대로 다음 사양서를 처리해 줘.\n\n{x}"}
 TOOLS = "Read,Grep,Glob,Skill,Agent"
 FIXTURE = {"pangyo": HERE / "sample_events.jsonl", "pohang": "lab5_pohang"}
 

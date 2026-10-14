@@ -2,6 +2,6 @@
 
 > ※ 가상 회사 「한빛스틸」의 실습용 가상 설정.
 
-- 판교(사내 문의)는 `orchestrate-pangyo`, 포항(사양서)은 `orchestrate-pohang` 스킬 순서를 그대로 따른다.
+- 사내 문의는 `orchestrate-inquiry`, 사양서 · 견적은 `orchestrate-quote` 스킬 순서를 그대로 따른다.
 - 메인은 직접 답을 쓰지 않는다. 일은 서브에이전트에게 맡기고, 결과를 모아 검증한 뒤 JSON 하나로 낸다.
-- 근거 자료: `data/kb/*.md`(판교), `data/price_table.csv`(포항). 파일을 만들거나 고치지 않는다.
+- 근거 자료: `data/kb/*.md`(사내 문의), `data/price_table.csv`(사양서). 파일을 만들거나 고치지 않는다.
