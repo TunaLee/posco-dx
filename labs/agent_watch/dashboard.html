@@ -79,11 +79,23 @@ function merge(sid, ev){
   if (ev.event === "SessionEnd") { s.status = "종료"; s.agents.main.status = "종료"; }
 }
 
+// 파일을 직접 열었거나(file://) 다른 미리보기 서버에서 열어도 로컬 서버에 붙는다
+const API = location.port === (new URLSearchParams(location.search).get("port") || "7777") && location.protocol.startsWith("http")
+  ? "" : `http://127.0.0.1:${new URLSearchParams(location.search).get("port") || "7777"}`;
+
 async function boot(){
-  const st = await (await fetch("/state")).json();
+  let st;
+  try { st = await (await fetch(API + "/state")).json(); }
+  catch (e) {
+    document.getElementById("app").innerHTML = `<div class="empty"><b>Agent Watch 서버에 연결되지 않음</b><br><br>
+      터미널에서 <code>cd labs/agent_watch && python3 server.py</code> 실행 후<br>
+      브라우저로 <code>http://127.0.0.1:7777</code> 을 연다 (파일을 직접 여는 것보다 이 주소가 확실하다)</div>`;
+    setTimeout(boot, 3000);
+    return;
+  }
   Object.assign(S, st);
   if (location.search.includes("static")) { render(); return; }   // 화면 캡처 · 기록 보기용
-  const es = new EventSource("/stream");
+  const es = new EventSource(API + "/stream");
   es.onopen = () => document.getElementById("live").classList.add("on");
   es.onerror = () => document.getElementById("live").classList.remove("on");
   es.onmessage = m => {

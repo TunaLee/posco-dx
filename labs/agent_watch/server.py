@@ -200,11 +200,13 @@ class H(BaseHTTPRequestHandler):
             body = json.dumps(snapshot(), ensure_ascii=False).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
+            self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
             self.wfile.write(body)
         elif self.path == "/stream":
             self.send_response(200)
             self.send_header("Content-Type", "text/event-stream")
+            self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Cache-Control", "no-cache")
             self.end_headers()
             q = queue.Queue()
