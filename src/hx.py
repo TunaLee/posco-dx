@@ -75,6 +75,7 @@ INC_ANTIG = ("The Register · Antigravity 2025.12", "https://www.theregister.com
 INC_CVE = ("The Register · Claude Code CVE 2026.2", "https://www.theregister.com/2026/02/26/clade_code_cves/")
 CYERA = ("Cyera · Agent-Inflicted Damage 2026.5", "https://www.cyera.com/research/agent-inflicted-damage-inside-the-real-world-failures-of-enterprise-ai-systems")
 OWN_GUARD = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/lab2_hook_by_claude", "https://github.com/TunaLee/posco-dx/tree/main/labs/lab2_hook_by_claude")
+OWN_TOK = ("직접 실측 2026.10.14 · Sonnet 5.5 · Claude Code 세션 기록", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 OWN = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 
 code = explain.prompt
@@ -128,6 +129,62 @@ def evolution(hl=3):
             f'<div class="ev-c r{r}{" hl" if i == hl else ""}" style="--d:{i * .18 + .1:.2f}s">{e[2 + r]}</div>'
             for i, e in enumerate(EVO))
     return f'<div class="evo">{head}{body}</div>'
+
+
+def pages_grid(n=72, per=10):
+    """A4 쪽수를 작은 종이로 — 한 칸 = per쪽."""
+    cells = "".join(f'<i style="--d:{i * .02:.2f}s"></i>' for i in range(n))
+    return f'<div class="pgrid">{cells}</div><div class="pgcap">▯ 한 칸 = A4 {per}쪽</div>'
+
+
+# 실제 세션(견적 과제 · 내 하네스 · Sonnet 5.5) — 호출마다 컨텍스트 크기에서 계산
+CTX_STEPS = [
+    ("fix", "시스템 프롬프트", "Claude Code 기본 지침", 8.7),
+    ("fix", "내장 도구 정의", "Read · Edit · Bash · Agent …", 22.2),
+    ("fix", "하네스", "CLAUDE.md · Skill 목록 · Agent 정의", 0.7),
+    ("mcp", "MCP 서버 5개 (연결했다면)", "도구 정의만 · 이번 세션엔 없음", 55.0),
+    ("talk", "사용자 요청", "「할인 · 할증 반영해 주세요」 + 시작 정보", 2.6),
+    ("tool", "Skill 본문 · 정책 확정본", "Skill 호출 → 참고 파일 읽기", 1.2),
+    ("tool", "파일 6개 읽기", "코드 4 · 테스트 · 코딩 규칙", 4.4),
+    ("out", "테스트 파일 작성", "Claude가 쓴 내용도 그대로 쌓임", 3.0),
+    ("out", "코드 수정 2곳", "models.py · pricing.py", 3.1),
+    ("tool", "테스트 실행 결과", "통과 · 실패 출력", 1.4),
+    ("sub", "verifier 보고", "Sub Agent는 따로 21.8만 토큰 · 요약만 돌아옴", 0.5),
+    ("tool", "검증 스크립트 · 재실행", "명령 출력", 4.3),
+    ("out", "최종 보고", "", 1.7),
+]
+CTX_COL = {"fix": "#1F3A5F", "mcp": "#C9D1DB", "talk": "#9AA5B1", "tool": "#F28C28", "out": "#4B5D73", "sub": "#F6B26B"}
+CTX_LABEL = {"fix": "시작 전부터", "mcp": "연결하면", "talk": "대화", "tool": "도구 결과", "out": "Claude 출력", "sub": "Sub Agent"}
+
+
+def ctx_stack():
+    rows, blocks, total, H, top = "", "", 0.0, 340, 60.0
+    y = H
+    for i, (k, name, desc, v) in enumerate(CTX_STEPS):
+        d = f"{i * .45:.2f}s"
+        ghost = k == "mcp"
+        if not ghost:
+            total += v
+        rows += (f'<div class="cs-row{" ghost" if ghost else ""}" style="--d:{d}"><span class="cs-dot" style="background:{CTX_COL[k]}"></span>'
+                 f'<b>{name}</b><em>{desc}</em><span class="cs-v">{"+" if i else ""}{(f"{v / 10:g}만") if v >= 10 else f"{v:g}천"}</span>'
+                 f'<span class="cs-t">{"" if ghost else f"{total:.1f}천"}</span></div>')
+        if not ghost:
+            h = H * v / top
+            y -= h
+            blocks += (f'<rect class="cs-b" x="40" y="{y:.1f}" width="150" height="{max(h, 2):.1f}" fill="{CTX_COL[k]}" '
+                       f'stroke="#fff" stroke-width="1.5" style="--d:{d}"/>')
+    mcp_h = H * 55.0 / top
+    ghost = (f'<rect class="cs-b" x="210" y="{H - mcp_h:.1f}" width="70" height="{mcp_h:.1f}" fill="none" stroke="#9AA5B1" '
+             f'stroke-width="2" stroke-dasharray="6 5" style="--d:{3 * .45:.2f}s"/>'
+             f'<text x="245" y="{H - mcp_h - 8:.1f}" text-anchor="middle" font-size="13" fill="#6B7785">MCP 5개</text>'
+             f'<text x="245" y="{H - mcp_h + 18:.1f}" text-anchor="middle" font-size="13" fill="#6B7785">+5.5만</text>')
+    ticks = "".join(f'<line x1="34" x2="40" y1="{H - H * t / top:.1f}" y2="{H - H * t / top:.1f}" stroke="#9AA5B1"/>'
+                    f'<text x="30" y="{H - H * t / top + 4:.1f}" text-anchor="end" font-size="12" fill="#8A94A3">{t}천</text>'
+                    for t in (0, 20, 40, 60))
+    svg = (f'<svg class="cs-svg" viewBox="0 -16 300 {H + 56}">{ticks}{blocks}{ghost}'
+           f'<text x="115" y="{H + 26}" text-anchor="middle" font-size="14" font-weight="800" fill="#1F3A5F">메인 Agent 컨텍스트</text></svg>')
+    leg = "".join(f'<span><i style="background:{CTX_COL[k]}"></i>{v}</span>' for k, v in CTX_LABEL.items())
+    return f'<div class="cs"><div class="cs-list">{rows}</div><div class="cs-side">{svg}<div class="cs-leg">{leg}</div></div></div>'
 
 
 def labdir(d):
@@ -521,6 +578,17 @@ def ch2():
 def ch3():
     return chapter("Ch3", "컨텍스트 엔지니어링", {"지침 · 컨텍스트", "Sub Agent · 팀"}, "컨텍스트") + [
         light("컨텍스트 창의 구성", viz("context_window") + note("원칙", "책상에 올린 만큼 매번 다시 읽는다 · 올린 것이 많을수록 흐려진다"), "Ch3"),
+        stat("1M 토큰의 분량", "Ch3",
+             big([("55.5만", "단어", "영어 (Anthropic 공식)"),
+                  ("129만", "자", "한국어 (실측 0.77토큰/자)", True),
+                  ("2.9만", "줄", "파이썬 코드 (실측 34토큰/줄)"),
+                  ("18", "번", "실습 세션 1번 = 5.4만 토큰")], 4)
+             + pages_grid(72, 10)
+             + note("한국어로", "A4 한 장 1,800자로 잡으면 약 720쪽 · 책 2~3권"),
+             D_MODELS, OWN_TOK),
+        stat("컨텍스트에 실제로 쌓이는 것", "Ch3", ctx_stack()
+             + note("포인트", "말 한마디 하기 전에 이미 3만+ · 대화보다 도구 결과 · Claude 출력이 더 많이 쌓임 · MCP를 붙이면 시작부터 수만"),
+             OWN_TOK, D_TOOLSEARCH),
         stat("입력 길이별 정확도 (GraphWalks)", "Ch3",
              hbars([("Gemini 4 Argon", 84.2, False, "99.7 → 84.2"), ("GPT-6 Astra", 71.8, False, "98.7 → 71.8"),
                     ("Claude Opus 5.5", 66.8, True, "90.6 → 66.8"), ("Claude Fable 5.1", 65.0, False, "91.4 → 65.0")], top=100,
@@ -945,6 +1013,24 @@ CSS = '''
   .evo .ev-c.r2{background:#F6F8FA; color:#1F3A5F; font-weight:800;}
   .evo .ev-c.hl{border-color:#F28C28; background:#FFF8F1;} .evo .ev-c.r2.hl{background:#F28C28; color:#fff;}
   @media print{.evo .ev-h,.evo .ev-c{animation:none}}
+  .pgrid{display:grid; grid-template-columns:repeat(36, 1fr); gap:4px; margin:2px 0 4px; max-width:1000px;}
+  .pgrid i{display:block; aspect-ratio:1/1.414; background:#fff; border:1.5px solid #9AA5B1; border-radius:2px; max-height:34px; animation:bnIn .4s both; animation-delay:var(--d);}
+  .pgcap{font-size:13px; color:#8A94A3; margin-bottom:10px;}
+  .cs{display:grid; grid-template-columns:1fr 300px; gap:22px; align-items:end;}
+  .cs-list{display:grid; gap:4px;}
+  .cs-row{display:grid; grid-template-columns:14px 190px 1fr 70px 70px; gap:10px; align-items:center; font-size:14px; padding:3px 10px;
+          background:#fff; border:1px solid #E1E5EB; border-radius:8px; animation:bnIn .45s both; animation-delay:var(--d);}
+  .cs-row.ghost{border-style:dashed; background:#F6F8FA; color:#8A94A3;}
+  .cs-dot{width:12px; height:12px; border-radius:3px;}
+  .cs-row b{color:#1F3A5F;} .cs-row.ghost b{color:#8A94A3;}
+  .cs-row em{font-style:normal; color:#6B7785; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .cs-v{font-weight:800; color:#E07A12; text-align:right;} .cs-t{font-weight:800; color:#1F3A5F; text-align:right;}
+  .cs-svg{width:100%; height:auto;}
+  .cs-b{transform-box:fill-box; transform-origin:bottom; animation:csGrow .45s both; animation-delay:var(--d);}
+  @keyframes csGrow{from{transform:scaleY(0); opacity:0} to{transform:scaleY(1); opacity:1}}
+  .cs-leg{display:flex; flex-wrap:wrap; gap:6px 12px; font-size:12px; color:#6B7785; justify-content:center;}
+  .cs-leg i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:-1px;}
+  @media print{.pgrid i,.cs-row,.cs-b{animation:none}}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
