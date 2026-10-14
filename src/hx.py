@@ -1041,19 +1041,14 @@ def ch6():
                   ("84", "%", "실제 에이전트 입력 중 캐시 읽기 (중앙값)")])
              + note("Claude Code 기본값", "도구 검색 켜짐 · 정의가 컨텍스트 10%를 넘으면 지연 로딩 · 새로 시작이면 /clear는 비용 0"),
              D_TOOLSEARCH, D_MCP, D_OPT, D_COSTS),
-        stat("effort 설정별 점수", "Ch6",
-             hbars([("low", 34.9, False, "34.9%"), ("medium", 44.9, False, "44.9%"), ("high", 50.3, False, "50.3%"),
-                    ("max", 51.8, False, "51.8%"), ("xhigh", 53.9, True, "53.9%")], top=60,
-                   title="Claude Opus 5 · Claude Code · Terminal-Bench 4.0 · effort 설정만 다름")
-             + note("많이 생각시킨다고 늘 좋진 않다", "Sonnet 5.5: max 46.2% < xhigh 52.1% · Sub Agent를 남발해 시간 초과 · 범위 밖 수정 (FrontierCode)"),
-             TBLB, A_SON55),
         stat("effort별 비용과 점수", "Ch6",
              hbars([("low", 33, False, "비용 ⅓ · −8점"), ("medium (기본)", 70, False, "비용 70% · −2.5점"),
                     ("high", 100, False, "기준"), ("xhigh", 250, False, "비용 2.5배 · +1.4점")], top=260,
                    title="Opus 5.5 · SWE-bench Pro · high 대비 비용과 점수")
              + hbars([("전부 high", 29, False, "95.3% · $0.29"), ("low 먼저 → 실패만 high", 17, True, "약 97% · $0.17")], top=32,
-                     title="과제 1건당 비용 · 통과율"),
-             D_OPT, D_EFFORT),
+                     title="과제 1건당 비용 · 통과율")
+             + note("많이 생각시킨다고 늘 좋진 않다", "Sonnet 5.5: max 46.2% < xhigh 52.1% · Sub Agent 남발 · 범위 밖 수정"),
+             D_OPT, D_EFFORT, A_SON55),
         light("출력 줄이기: caveman", two(
             code("설치", "/plugin marketplace add JuliusBrussee/caveman\n/plugin install caveman@caveman"),
             ba_like2("좋은 질문이에요! 이 문제는 여러 가지 원인이 있을 수 있는데요, 우선 VPN 클라이언트가…", "원인: 인증서 만료. 조치: 재발급 (IT-3).")), "Ch6"),
