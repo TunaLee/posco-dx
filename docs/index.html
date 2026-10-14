@@ -1722,7 +1722,7 @@ python3 work_harness/grade.py work_harness/workspace --task T3 T4 로 채점해 
   <div class="eyebrow"><span class="tag">Ch3</span></div>
   <h2 class="s-title sm">네 가지 전략</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kcards c4"><div class="kcard"><h4>쓰기</h4><p>필요한 걸 밖에 적어 둠 · 메모 · 상태 파일</p></div><div class="kcard"><h4>고르기</h4><p>필요한 것만 · 검색 · 부분 읽기</p></div><div class="kcard"><h4>줄이기</h4><p>/compact · 요약 · 오래된 도구 결과 정리</p></div><div class="kcard"><h4>나누기</h4><p>Sub Agent에 따로 맡기고 결과만</p></div></div></div></div>
+  <div class="body"><div class="mid"><div class="kcards c4"><div class="kcard"><h4>쓰기</h4><p>필요한 걸 밖에 적어 둠 · 메모 · 상태 파일</p></div><div class="kcard"><h4>고르기</h4><p>필요한 것만 · 검색 · RAG · 부분 읽기</p></div><div class="kcard"><h4>줄이기</h4><p>/compact · 요약 · 오래된 도구 결과 정리</p></div><div class="kcard"><h4>나누기</h4><p>Sub Agent에 위임 · 결과 요약만 받음</p></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="CLAUDE.md와 Skill의 역할 분리">
@@ -1751,6 +1751,14 @@ python3 work_harness/grade.py work_harness/workspace --task T3 T4 로 채점해 
   <div class="arr">→</div>
   <div class="a"><div class="lab">찾아서</div><div class="q">「FAQ에서 VPN 조항만 찾아 읽어」<br/>→ 조항 한 개만 책상에</div></div>
 </div></div></div>
+</section>
+
+<section class="slide lt" data-title="외부 지식 · 위임으로 덜어내기">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span></div>
+  <h2 class="s-title sm">외부 지식 · 위임으로 덜어내기</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="twocol"><div><div class="flow"><div class="fs"><b>질문</b><span>VPN 규정?</span></div><div class="fa">→</div><div class="fs"><b>검색</b><span>문서 · DB</span></div><div class="fa">→</div><div class="fs hl"><b>조각만</b><span>3~5개</span></div><div class="fa">→</div><div class="fs"><b>답</b><span>+ 근거</span></div></div><table class="dbt"><thead><tr><th>RAG (검색 증강 생성)</th><th></th></tr></thead><tbody><tr><td><b>방식</b></td><td>문서 전체 대신 질문에 맞는 조각만 찾아 넣음</td></tr><tr><td><b>도구</b></td><td>Grep · 사내 검색 MCP · 벡터 검색</td></tr><tr><td><b>주의</b></td><td>검색이 틀리면 답도 틀림 · 근거 표기로 확인</td></tr></tbody></table></div><div><div class="flow"><div class="fs"><b>메인</b><span>로그 50개 조사</span></div><div class="fa">→</div><div class="fs"><b>조사 담당</b><span>Sub Agent · 다 읽음</span></div><div class="fa">→</div><div class="fs hl"><b>요약만</b><span>수천 토큰</span></div><div class="fa">→</div><div class="fs"><b>메인</b><span>가벼운 채로</span></div></div><table class="dbt"><thead><tr><th>Sub Agent 위임</th><th></th></tr></thead><tbody><tr><td><b>방식</b></td><td>많이 읽어야 하는 일을 따로 맡기고 결과만 받음</td></tr><tr><td><b>도구</b></td><td>.claude/agents/ · 읽기 전용 조사 담당</td></tr><tr><td><b>주의</b></td><td>전체 토큰은 비슷하거나 더 큼 · 메인만 가벼워짐</td></tr></tbody></table></div></div><div class="dbnote"><span>공통</span> 책상(메인 컨텍스트)에는 지금 필요한 것만 · 나머지는 밖에 두고 필요할 때 찾거나 맡긴다</div></div></div>
 </section>
 
 <section class="slide lt" data-title="압축의 비용과 손실">
