@@ -324,7 +324,7 @@ def labkit(no, ch):
     head = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>{k.get("open", "labs")}</code>{sub}'
             f'<em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div>')
     tip = note("참고", k["tip"]) if k.get("tip") else ""
-    if len(files) >= 3:     # 하네스 파일이 많으면 앞 장에 따로
+    if len(files) >= 3 or k.get("split"):     # 하네스 파일이 많거나 요청문이 길면 앞 장에 따로
         grid = f'<div class="kgrid">{"".join(files)}</div>'
         head2 = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code>{sub}'
                  f'<em>탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장</em></div>')
