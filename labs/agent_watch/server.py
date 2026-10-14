@@ -114,7 +114,7 @@ def read_usage(s):
                 continue
             u = m["usage"]
             s["_msgs"][(ag, m.get("id"))] = {
-                "agent": ag, "model": m.get("model", "?"),
+                "agent": ag, "model": m.get("model", "?"), "ts": iso(r.get("timestamp")),
                 "in": u.get("input_tokens", 0) or 0, "out": u.get("output_tokens", 0) or 0,
                 "cr": u.get("cache_read_input_tokens", 0) or 0, "cw": u.get("cache_creation_input_tokens", 0) or 0}
             changed = True
@@ -127,7 +127,24 @@ def read_usage(s):
             a["calls"] += 1
             a["model"] = v["model"]
         s["usage"] = agg
+        # 시간에 따른 누적 토큰 (에이전트별) — 그래프용
+        series, run = [], {}
+        for v in sorted(s["_msgs"].values(), key=lambda x: x["ts"] or 0):
+            run[v["agent"]] = run.get(v["agent"], 0) + v["in"] + v["out"] + v["cr"] + v["cw"]
+            series.append([v["ts"], v["agent"], run[v["agent"]]])
+        s["usage_series"] = series
     return changed
+
+
+def iso(t):
+    """transcript 시각 (ISO, UTC) → epoch 초."""
+    if not t:
+        return None
+    from datetime import datetime
+    try:
+        return datetime.fromisoformat(t.replace("Z", "+00:00")).timestamp()
+    except ValueError:
+        return None
 
 
 def poll_usage():
@@ -140,9 +157,9 @@ def poll_usage():
                 continue
             with LOCK:
                 ch = read_usage(s)
-                usage = s["usage"]
+                usage, series = s["usage"], s.get("usage_series", [])
             if ch:
-                broadcast({"kind": "usage", "session": sid, "usage": usage})
+                broadcast({"kind": "usage", "session": sid, "usage": usage, "series": series})
 
 
 def snapshot():

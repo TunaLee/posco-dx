@@ -22,7 +22,8 @@
   .kpi span{font-size:12px;color:var(--m)}
   .kpi.warn{border-top-color:var(--o)}
   .row{display:grid;grid-template-columns:2fr 1fr;gap:14px}
-  @media (max-width:1000px){.row{grid-template-columns:1fr}}
+  .row.even{grid-template-columns:3fr 2fr}
+  @media (max-width:1000px){.row,.row.even{grid-template-columns:1fr}}
   .card{background:var(--card);border-radius:12px;padding:14px 16px;margin-bottom:14px;min-width:0}
   .card h3{margin:0 0 10px;font-size:14px;color:var(--n)}
   svg{width:100%;height:auto;display:block}
@@ -41,6 +42,10 @@
   .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--m);margin-top:6px}
   .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
   .empty{color:var(--m);padding:40px;text-align:center}
+  .mix{display:grid;grid-template-columns:110px 1fr 90px;gap:10px;align-items:center;margin:9px 0;font-size:13px}
+  .mix b{color:var(--n);text-align:right} .mix i{font-style:normal;color:var(--m)} .mix em{color:var(--r);font-style:normal}
+  .mbar{display:flex;height:22px;border-radius:6px;overflow:hidden;gap:2px}
+  .mbar span{display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;min-width:4px}
 </style>
 </head>
 <body>
@@ -84,7 +89,7 @@ async function boot(){
   es.onmessage = m => {
     const d = JSON.parse(m.data);
     if (d.kind === "event") merge(d.session, d.event);
-    if (d.kind === "usage") (S[d.session] ||= {id:d.session, events:[], agents:{main:{id:"main",type:"메인"}}, usage:{}}).usage = d.usage;
+    if (d.kind === "usage") { const x = (S[d.session] ||= {id:d.session, events:[], agents:{main:{id:"main",type:"메인"}}, usage:{}}); x.usage = d.usage; x.usage_series = d.series; }
     dirty = true;
   };
   setInterval(() => { dirty = true; }, 1000);          // 경과 시간 갱신
@@ -152,6 +157,10 @@ function render(){
     `<div class="kpis">${kpis}</div>
      <div class="card"><h3>에이전트 타임라인</h3>${timeline(s, A)}
        <div class="legend"><span><i style="background:${C.g}"></i>읽기 · 검색</span><span><i style="background:${C.n}"></i>수정</span><span><i style="background:${C.b}"></i>명령 실행</span><span><i style="background:${C.o}"></i>위임 · Skill</span><span><i style="background:${C.r}"></i>실패 · 응답 없음(차단 가능)</span></div></div>
+     <div class="row even">
+       <div class="card"><h3>누적 토큰 (에이전트별 · 캐시 포함)</h3>${tokenChart(s, A)}</div>
+       <div class="card"><h3>도구 호출 구성</h3>${toolMix(s, A)}</div>
+     </div>
      <div class="row">
        <div class="card"><h3>에이전트별 토큰</h3>${agentTable(s, A)}</div>
        <div class="card tips"><h3>효율 점검</h3>${tips(s, A)}</div>
@@ -188,6 +197,50 @@ function timeline(s, A){
   if (A.running) g += `<line x1="${x(t1)}" x2="${x(t1)}" y1="2" y2="${H-24}" stroke="${C.o}" stroke-width="2"/>`;
   g += `<text x="${X0}" y="${H-6}" class="ax">0초</text><text x="${W-14}" y="${H-6}" text-anchor="end" class="ax">${sec(t1-t0)}</text>`;
   return `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+
+const LANE_COL = ["#1F3A5F", "#F28C28", "#4B5D73", "#E0A45C", "#7D8DA3", "#B5651D", "#2F6690"];
+function agentColor(s, id){ const ids = Object.keys(s.agents); return LANE_COL[Math.max(0, ids.indexOf(id)) % LANE_COL.length]; }
+
+function tokenChart(s, A){
+  const ser = s.usage_series || [];
+  if (!ser.length) return '<div class="empty" style="padding:20px">토큰 기록을 기다리는 중</div>';
+  const W = 760, H = 240, X0 = 64, Y0 = 210;
+  const t0 = s.started, t1 = Math.max(A.running ? Date.now()/1000 : A.last, t0 + 5);
+  const total = {}; let mx = 1;
+  for (const [, a, v] of ser) { total[a] = v; mx = Math.max(mx, v); }
+  const x = t => X0 + (W - X0 - 16) * Math.min(1, Math.max(0, ((t || t0) - t0) / (t1 - t0)));
+  const y = v => Y0 - (Y0 - 14) * v / mx;
+  let g = "";
+  for (const f of [0, .5, 1]) g += `<line x1="${X0}" x2="${W-16}" y1="${y(mx*f)}" y2="${y(mx*f)}" stroke="#EEF1F5" stroke-width="2"/><text x="${X0-8}" y="${y(mx*f)+4}" text-anchor="end" class="ax">${fmt(Math.round(mx*f/1000))}k</text>`;
+  const by = {};
+  for (const [t, a, v] of ser) (by[a] ||= []).push([t, v]);
+  for (const [a, pts] of Object.entries(by)) {
+    const col = agentColor(s, a);
+    let d = `M${x(pts[0][0])} ${y(0)}`;
+    for (const [t, v] of pts) d += ` L${x(t)} ${y(v)}`;
+    if (A.running || s.agents[a]?.status !== "완료") d += ` L${x(t1)} ${y(pts[pts.length-1][1])}`;
+    g += `<path d="${d}" fill="none" stroke="${col}" stroke-width="3.5" stroke-linejoin="round"/>`;
+    const [lt, lv] = pts[pts.length-1];
+    const name = a === "main" ? "메인" : (s.agents[a]?.type || "Sub");
+    g += `<text x="${Math.min(x(lt) + 6, W - 120)}" y="${y(lv) - 6}" font-size="12" font-weight="700" fill="${col}">${esc(name)} ${fmt(Math.round(lv/1000))}k</text>`;
+  }
+  g += `<text x="${X0}" y="${H-6}" class="ax">0초</text><text x="${W-16}" y="${H-6}" text-anchor="end" class="ax">${sec(t1-t0)}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+
+function toolMix(s, A){
+  const cat = t => DELEG.has(t) ? "위임 · Skill" : EDIT.has(t) ? "수정" : READ.has(t) ? "읽기 · 검색" : "명령 · 기타";
+  const cols = {"읽기 · 검색": C.g, "수정": C.n, "명령 · 기타": C.b, "위임 · Skill": C.o};
+  const rows = Object.values(s.agents).map(a => {
+    const cnt = {}; let n = 0;
+    for (const e of A.tools) if (e.agent === a.id) { const c = cat(e.tool); cnt[c] = (cnt[c]||0) + 1; n++; }
+    const fail = A.fails.filter(e => e.agent === a.id).length;
+    const segs = Object.keys(cols).filter(c => cnt[c]).map(c => `<span title="${c} ${cnt[c]}" style="flex:${cnt[c]};background:${cols[c]}">${cnt[c] > 1 ? cnt[c] : ""}</span>`).join("");
+    return `<div class="mix"><b>${esc(a.id==="main"?"메인":a.type)}</b><div class="mbar">${segs || '<span style="flex:1;background:#EEF1F5"></span>'}</div><i>${n}회${fail?` · <em>실패 ${fail}</em>`:""}</i></div>`;
+  }).join("");
+  const leg = Object.entries(cols).map(([k,v]) => `<span><i style="background:${v}"></i>${k}</span>`).join("");
+  return rows + `<div class="legend">${leg}</div>`;
 }
 
 function agentTable(s, A){

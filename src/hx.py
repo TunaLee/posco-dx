@@ -10,6 +10,53 @@ import deck
 import explain
 import intro
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
+from stats_hx import big, hbars, passk, quote, rings, stat
+
+# 출처 (2026-10-14 확인)
+A_SWE = ("Anthropic · SWE-bench Verified 2025.1", "https://www.anthropic.com/research/swe-bench-sonnet")
+A_BEA = ("Anthropic · Building effective agents 2024.12", "https://www.anthropic.com/engineering/building-effective-agents")
+A_LRH = ("Anthropic · Effective harnesses for long-running agents 2025.11", "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents")
+EPOCH = ("Epoch AI · Why benchmarking is hard 2025.12", "https://epoch.ai/gradient-updates/why-benchmarking-is-hard")
+METR1 = ("METR 2025.3", "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/")
+METR2 = ("METR Time Horizon 1.1 2026.1", "https://metr.org/blog/2026-1-29-time-horizon-1-1/")
+A_CTX = ("Anthropic · Effective context engineering 2025.9", "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents")
+CHROMA = ("Chroma · Context Rot 2025.7", "https://www.trychroma.com/research/context-rot")
+LITM = ("Liu et al. · Lost in the Middle (TACL)", "https://arxiv.org/abs/2307.03172")
+A_CM = ("Anthropic · Managing context 2025.9", "https://claude.com/blog/context-management")
+D_MODELS = ("Claude 모델 문서", "https://platform.claude.com/docs/en/about-claude/models/overview")
+D_MODELCFG = ("Claude Code 모델 설정 문서", "https://code.claude.com/docs/en/model-config")
+D_BP = ("Claude Code Best practices", "https://code.claude.com/docs/en/best-practices")
+D_COSTS = ("Claude Code 비용 문서", "https://code.claude.com/docs/en/costs")
+D_SKILLS = ("Agent Skills 문서", "https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview")
+D_SUB = ("Claude Code Sub Agent 문서", "https://code.claude.com/docs/en/sub-agents")
+D_TEAMS = ("Claude Code Agent Teams 문서", "https://code.claude.com/docs/en/agent-teams")
+D_MCP = ("Claude Code MCP 문서", "https://code.claude.com/docs/en/mcp")
+A_MAR = ("Anthropic · Multi-agent research system 2025.6", "https://www.anthropic.com/engineering/multi-agent-research-system")
+A_CEMCP = ("Anthropic · Code execution with MCP 2025.11", "https://www.anthropic.com/engineering/code-execution-with-mcp")
+A_ATU = ("Anthropic · Advanced tool use 2025.11", "https://www.anthropic.com/engineering/advanced-tool-use")
+A_TOOLS = ("Anthropic · Writing tools for agents 2025.9", "https://www.anthropic.com/engineering/writing-tools-for-agents")
+A_AAIF = ("Anthropic · MCP 기부 · AAIF 2025.12", "https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation")
+SO26 = ("Stack Overflow 개발자 설문 2026", "https://survey.stackoverflow.co/2026/ai")
+SO25 = ("Stack Overflow 개발자 설문 2025", "https://survey.stackoverflow.co/2025/ai")
+DORA = ("Google DORA 2025", "https://cloud.google.com/blog/products/ai-machine-learning/announcing-the-2025-dora-report")
+DORA2 = ("DORA 2025 보고서", "https://dora.dev/research/2025/dora-report/")
+METR_RCT = ("METR 2025.7 무작위 대조 실험", "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/")
+A_ECON = ("Anthropic Economic Index 2025.4", "https://www.anthropic.com/research/impact-software-development")
+D_PRICE = ("Claude 가격 문서", "https://platform.claude.com/docs/en/about-claude/pricing")
+D_CACHE = ("프롬프트 캐싱 문서", "https://platform.claude.com/docs/en/build-with-claude/prompt-caching")
+A_OPUS45 = ("Anthropic · Claude Opus 4.5 2025.11", "https://www.anthropic.com/news/claude-opus-4-5")
+A_EVALS = ("Anthropic · Demystifying evals for AI agents 2026.1", "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents")
+TAU = ("Yao et al. · τ-bench 2024", "https://arxiv.org/abs/2406.12045")
+MTB = ("Zheng et al. · LLM-as-a-Judge (MT-Bench) 2023", "https://arxiv.org/abs/2306.05685")
+D_SUCCESS = ("Anthropic · 성공 기준 정하기 문서", "https://platform.claude.com/docs/en/test-and-evaluate/define-success")
+OPUS5 = ("Claude Opus 5 System Card 2026.7", "https://www.anthropic.com/transparency")
+A_SANDBOX = ("Anthropic · Claude Code sandboxing 2025.10", "https://www.anthropic.com/engineering/claude-code-sandboxing")
+A_AUTO = ("Anthropic · Claude Code auto mode 2026.3", "https://www.anthropic.com/engineering/claude-code-auto-mode")
+A_CONTAIN = ("Anthropic · How we contain Claude 2026.5", "https://www.anthropic.com/engineering/how-we-contain-claude")
+A_PI = ("Anthropic · 브라우저 프롬프트 주입 방어 2025.11", "https://www.anthropic.com/research/prompt-injection-defenses")
+D_HOOKS = ("Claude Code Hooks 문서", "https://code.claude.com/docs/en/hooks")
+MCP1Y = ("MCP 블로그 · One Year of MCP 2025.11", "https://blog.modelcontextprotocol.io/posts/2025-11-25-first-mcp-anniversary/")
+OWN = ("직접 실측 2026.10 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 
 code = explain.prompt
 REPO = "https://github.com/TunaLee/posco-dx/tree/main/labs"
@@ -39,6 +86,24 @@ def viz(name):
         return getattr(importlib.import_module("viz_hx"), name)()
     except (ImportError, AttributeError):
         return f'<div class="capbox">도해 준비 중 · {name}</div>'
+
+
+def u_curve():
+    """Lost in the Middle — 위치별 정확도 개념도 (U자)."""
+    pts = [(0, 92), (1, 70), (2, 52), (3, 47), (4, 52), (5, 64), (6, 80)]
+    X = lambda i: 120 + i * 150
+    Y = lambda v: 330 - (v - 30) * 4
+    d = "M" + " L".join(f"{X(i)} {Y(v)}" for i, v in pts)
+    y56 = Y(56)
+    return f'''<svg class="ucurve" viewBox="0 0 1160 400">
+  <line x1="100" y1="{y56}" x2="1060" y2="{y56}" stroke="#9AA5B1" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="1064" y="{y56 + 5}" font-size="17" fill="#6B7785">문서 없이 답할 때 56.1%</text>
+  <path d="{d}" fill="none" stroke="#F28C28" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" class="udraw"/>
+  <text x="{X(0)}" y="{Y(92) - 18}" text-anchor="middle" font-size="18" font-weight="800" fill="#1F3A5F">맨 앞</text>
+  <text x="{X(3)}" y="{Y(47) + 40}" text-anchor="middle" font-size="18" font-weight="800" fill="#E07A12">가운데 · 20%↓ 이상</text>
+  <text x="{X(6)}" y="{Y(80) - 18}" text-anchor="middle" font-size="18" font-weight="800" fill="#1F3A5F">맨 뒤</text>
+  <text x="580" y="392" text-anchor="middle" font-size="16" fill="#8A94A3">필요한 정보의 위치 → (개념도 · GPT-3.5-Turbo 다문서 QA)</text>
+</svg>''' + note("하네스로", "중요한 지침은 앞에 · 긴 자료는 찾아서 필요한 부분만")
 
 
 def labdir(d):
@@ -122,6 +187,21 @@ def opening():
         cover(),
         intro.speaker(),
         agenda(),
+        stat("개발자는 이미 매일 쓴다", "시작",
+             big([("73", "%", "코딩 도구 · 에이전트를 매일 사용", True),
+                  ("90", "%", "업무에 AI 사용 (DORA)"),
+                  ("66", "%", "코딩 에이전트 사용 1위: Claude Code")])
+             + note("맡기는 방식", "Claude Code 대화의 79%가 「자동화」 (Claude.ai는 49%)"),
+             SO26, DORA, A_ECON),
+        stat("그런데 믿지는 못한다", "시작",
+             rings([(66, "「거의 맞지만 틀린」 답이<br>가장 큰 불만"), (46, "정확도를<br>믿지 않음", False), (3, "높게 신뢰", False)])
+             + note("2026 설문", "쉽게 검증할 수 있을 때만 믿는다 48% · DORA: AI 코드 거의 · 전혀 못 믿음 30%"),
+             SO25, SO26, DORA),
+        stat("체감과 실제는 다르다", "시작",
+             hbars([("시작 전 예상", 24, False, "24% 빠름"), ("끝난 뒤 체감", 20, False, "20% 빠름"),
+                    ("실제 측정", 19, True, "19% 느림")], top=30, title="숙련 오픈소스 개발자 16명 · 실제 이슈 246건 · 무작위 대조")
+             + quote("AI는 증폭기다. 조직의 강점도 약점도 키운다", "DORA 2025"),
+             METR_RCT, DORA2),
         light("최종 산출물", table(["산출물", "내용"], [
             ["<b>내 하네스 플러그인</b>", "CLAUDE.md · Skill · Sub Agent · Hook · 명령을 한 묶음으로"],
             ["<b>평가셋 · 회귀 테스트</b>", "대표 과제 20건 + 엣지 케이스 · 자동 비교"],
@@ -153,6 +233,23 @@ def ch1():
     return chapter("Ch1", "하네스 엔지니어링 개념", {"지침 · 컨텍스트"}, "모델과 계층 설계") + [
         ill("scenes_more", "harness_rig", "left40", "하네스: 모델에 채우는 장비",
             ["모델: 답을 만드는 엔진", "하네스: 모델을 감싼 나머지 전부"]),
+        stat("같은 모델, 하네스만 바꿔도", "Ch1",
+             big([("15", "%", "스캐폴드만 바꿔 생긴 점수 차 (같은 모델)", True),
+                  ("11", "%", "GPT-5에서 같은 실험"),
+                  ("1위", "", "성능을 가장 크게 좌우한 요인: 스캐폴드")])
+             + quote("전체 성능에 가장 큰 영향을 주는 것은 스캐폴드 선택이다", "Epoch AI, 2025"),
+             EPOCH),
+        stat("프롬프트 + 도구 두 개로 SWE-bench 49%", "Ch1",
+             hbars([("Claude 3 Opus", 22), ("Claude 3.5 Sonnet (구)", 33), ("Claude 3.5 Sonnet (신)", 49, True)], "%", 60,
+                   "같은 하네스 (프롬프트 · Bash · Edit) · SWE-bench Verified")
+             + quote("프롬프트보다 도구를 다듬는 데 더 많은 시간을 썼다", "Anthropic, Building effective agents")
+             + note("당시 최고", "45% → 단순한 하네스로 49%"), A_SWE, A_BEA),
+        stat("에이전트가 맡는 일은 계속 길어진다", "Ch1",
+             big([("7", "개월", "작업 길이가 2배 되는 주기 (2019~)"),
+                  ("89", "일", "2024년 이후 2배 주기", True),
+                  ("5.3", "시간", "Opus 4.5가 50% 성공하는 작업 길이 (사람 기준)")])
+             + note("긴 작업의 흔한 실패", "너무 일찍 「다 했다」 선언 → 기능 목록 · 진행 기록 · 검증을 하네스로"),
+             METR1, METR2, A_LRH),
         light("하네스의 다섯 계층", table(["계층", "담는 것", "설계 결정"], [
             ["<b>모델</b>", "추론 엔진", "어떤 모델 · effort · 한도"],
             ["<b>컨텍스트</b>", "지침 · 참고 자료 · 대화 이력", "항상 넣을 것 vs 필요할 때만"],
@@ -269,6 +366,36 @@ def ch2():
         light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),
                                           vl("자기 컨텍스트에서 일함", "부모는 결과만 받음", "도구를 줄이면 권한도 줄어듦")), "Ch2"),
         light("Hook: 막는 건 코드가", code(".claude/settings.json (hooks 부분)", hook_cfg) + code(".claude/hooks/guard.py", guard), "Ch2"),
+        stat("부품마다 드는 비용", "Ch2",
+             big([("~100", "토큰", "Skill 하나가 항상 차지하는 설명"),
+                  ("5천", "토큰 미만", "Skill 본문 (부를 때만)"),
+                  ("200", "줄 이하", "CLAUDE.md 권장 길이", True),
+                  ("2.5만", "토큰", "MCP 도구 출력 기본 한도 (1만부터 경고)")], 4)
+             + note("설계 감각", "항상 올라가는 것은 짧게 · 필요할 때 부르는 것은 길어도 된다"),
+             D_SKILLS, D_COSTS, D_MCP),
+        stat("CLAUDE.md는 권고, Hook은 강제", "Ch2",
+             quote("CLAUDE.md 지침은 권고일 뿐이다. Hook은 결정적이고, 그 동작이 반드시 일어나게 보장한다", "Claude Code Best practices")
+             + big([("33", "개", "Hook을 걸 수 있는 이벤트"), ("exit 2", "", "PreToolUse에서 도구 호출 차단", True),
+                    ("수만 → 수백", "토큰", "Hook으로 로그에서 ERROR 줄만 넘길 때")]),
+             D_BP, D_HOOKS, D_COSTS),
+        stat("사람 승인만으로는 부족하다", "Ch2",
+             big([("93", "%", "승인 요청을 그대로 승인 (승인 피로)", True),
+                  ("84", "%", "샌드박스로 줄어든 승인 요청"),
+                  ("17", "%", "자동 모드가 놓친 과잉 행동 · 오차단은 0.4%")])
+             + note("설계", "막을 것은 Hook · 권한 · 샌드박스로 강제 · 사람은 정말 중요한 곳만 승인"),
+             A_AUTO, A_SANDBOX),
+        stat("프롬프트 주입: 0이 되지 않는다", "Ch2",
+             hbars([("1회 시도", 0.1, False, "0.1%"), ("100회 반복 시도", 5.5, True, "5~6%")], top=8,
+                   title="최신 모델 대상 프롬프트 주입 성공률 (Opus 4.7, Anthropic 측정)")
+             + quote("공격 성공률 1%도 여전히 의미 있는 위험이다", "Anthropic, 브라우저 사용 방어 연구")
+             + note("하네스로", "외부 문서 · 웹 · 메일은 읽기 전용 Agent에 · 쓰기 · 전송은 Hook으로 막기"),
+             A_CONTAIN, A_PI),
+        stat("도구 연결의 표준이 된 MCP", "Ch2",
+             big([("1만+", "개", "운영 중인 공개 MCP 서버", True),
+                  ("9,700만+", "", "Python · TypeScript SDK 월간 다운로드"),
+                  ("407", "%", "레지스트리 등록 증가 (출시 후 2개월)")])
+             + note("2025.12", "Anthropic이 MCP를 리눅스 재단 산하 Agentic AI Foundation에 기부"),
+             A_AAIF, MCP1Y),
         lab("2-1", "하네스 부품 네 개", "Ch2",
             "Skill · 명령 · Sub Agent · Hook을 내 예제에 붙이기",
             ["project/.claude 구조 살펴보기", "내 업무 Skill 하나 · 명령 하나 쓰기", "reviewer를 읽기 전용으로 정의", "guard 차단 목록에 규칙 하나 추가 → 헤드리스로 확인"],
@@ -281,6 +408,13 @@ def ch2():
 def ch3():
     return chapter("Ch3", "컨텍스트 엔지니어링", {"지침 · 컨텍스트", "Sub Agent · 팀"}, "컨텍스트") + [
         light("컨텍스트 창 = 책상", viz("context_window") + note("원칙", "책상에 올린 만큼 매번 다시 읽는다 · 올린 것이 많을수록 흐려진다"), "Ch3"),
+        stat("길어질수록 흐려진다", "Ch3",
+             big([("18", "개", "실험한 모델 · 전부 입력이 길수록 성능 하락", True),
+                  ("1", "문장", "방해 문장 하나로도 정확도 하락"),
+                  ("n²", "", "토큰 n개 → 주의를 나눌 관계 n² 개")])
+             + quote("컨텍스트 창의 토큰이 늘수록, 그 안의 정보를 정확히 떠올리는 능력은 떨어진다", "Anthropic, Effective context engineering"),
+             CHROMA, A_CTX),
+        stat("가운데에 둔 정보는 잘 못 찾는다", "Ch3", u_curve(), LITM),
         light("책상에 오르는 것들", table(["항목", "언제", "크기를 좌우하는 것"], [
             ["<b>시스템 · 도구 목록</b>", "항상", "MCP · 도구 개수"],
             ["<b>CLAUDE.md</b>", "항상", "길이 · 중복"],
@@ -299,6 +433,18 @@ def ch3():
             code("좋은 예 · CLAUDE.md 30줄", "# 역할 · 출력 형식 · 금지 규칙\n# 자세한 절차는 Skill:\n#   incident-report, quote-rules\n\n→ 필요할 때만 Skill 본문 로드")), "Ch3"),
         light("통째로 읽지 말고 찾아서 읽기", ba_like("「data 폴더 다 읽고 답해 줘」\n→ 문의 30건 + FAQ 전부가 책상에", "「FAQ에서 VPN 조항만 찾아 읽어」\n→ 조항 한 개만 책상에"), "Ch3"),
         light("Sub Agent로 책상 나누기", viz("subagent_fanout"), "Ch3"),
+        stat("정리하면 좋아지고 싸진다", "Ch3",
+             hbars([("메모리 + 컨텍스트 편집", 39, True, "+39%"), ("컨텍스트 편집만", 29, False, "+29%")], top=50,
+                   title="에이전트 검색 과제 성능 향상 (Anthropic 내부 평가)")
+             + hbars([("100턴 작업 토큰 절감", 84, True, "−84%")], top=100)
+             + note("Sub Agent", "수만 토큰을 탐색하고 1~2천 토큰으로 요약해 돌려준다"),
+             A_CM, A_CTX),
+        stat("Claude Code의 책상 크기", "Ch3",
+             big([("100만", "토큰", "현재 모델 컨텍스트 창"),
+                  ("96.7만", "토큰", "자동 압축이 시작되는 지점", True),
+                  ("5", "개", "압축 후 남기는 최근 파일 (+ 요약)")])
+             + quote("컨텍스트 창은 빨리 차고, 찰수록 성능이 떨어진다", "Claude Code Best practices"),
+             D_MODELS, D_MODELCFG, A_CTX, D_BP),
         light("긴 세션의 함정", table(["증상", "원인", "처방"], [
             ["<b>앞 지시를 잊음</b>", "이력이 길어 중요한 줄이 묻힘", "새 작업 = 새 세션"],
             ["<b>엉뚱한 파일 수정</b>", "예전 작업의 흔적이 남음", "/clear 또는 세션 분리"],
@@ -360,6 +506,13 @@ def ch4():
             ["<b>토큰</b>", "상시 로드되는 Skill · 지침 양"],
             ["<b>사내 규정</b>", "외부 저장소 설치 허용 여부"],
         ]) + note("원칙", "공개 하네스도 내 평가셋으로 잰 뒤에 쓴다"), "Ch4"),
+        stat("실측: 같은 과제, 세 조건 (Sonnet)", "Ch4",
+             hbars([("맨몸 ×3", 15, False, "15 · 15 · 15"), ("내 하네스 ×3", 15, False, "15 · 15 · 15"), ("Superpowers ×1", 0.2, True, "0 (질문하고 멈춤)")], top=15,
+                   title="숨은 인수 테스트 통과 (15개 중) · 견적 할인 · 할증 과제")
+             + hbars([("맨몸", 165, False, "165초 · 52만"), ("내 하네스", 289, True, "289초 · 72만"), ("Superpowers", 90, False, "90초 · 29만")], top=300,
+                     title="평균 시간 (막대) · 전체 토큰 (캐시 포함)")
+             + note("배운 점", "정보가 저장소에 다 있으면 Sonnet은 맨몸으로도 맞춤 · 하네스는 절차를 고정하지만 비용이 듦 · 대화형 하네스는 자동 실행에서 멈춤"),
+             OWN),
         lab("4-1", "같은 과제, 네 가지 하네스", "Ch4",
             "맨몸 · 내 하네스 · Superpowers · gstack 비교",
             ["sample_app 과제 카드 읽기 (버그 2개)", "맨몸으로 해결 → 기록", "Superpowers · gstack 각각 설치 후 해결", "토큰 · 시간 · 테스트 통과 · 건너뛴 단계 비교"],
@@ -376,6 +529,24 @@ def ch5():
             ["<b>자기 검증</b>", "자기가 쓴 답을 자기가 채점 → 관대함"],
             ["<b>순차 처리</b>", "독립 작업도 하나씩"],
         ]), "Ch5"),
+        stat("멀티에이전트는 얼마나 나은가", "Ch5",
+             big([("90.2", "%", "단일 Agent(Opus 4) 대비 성능 향상", True),
+                  ("90", "%", "병렬 위임으로 줄인 조사 시간 (최대)"),
+                  ("80", "%", "성능 차이를 토큰 사용량 하나로 설명")])
+             + note("구성", "Opus 4 지휘 + Sonnet 4 Sub Agent 3~5개 병렬 · Anthropic 내부 리서치 평가"),
+             A_MAR),
+        stat("그만큼 토큰을 쓴다", "Ch5",
+             hbars([("채팅", 1, False, "1×"), ("Agent", 4, False, "4×"), ("멀티에이전트", 15, True, "15×")], top=16,
+                   title="채팅 대비 토큰 사용량")
+             + note("Agent Teams", "일반 세션의 약 7배 (팀원이 plan 모드일 때) · 값어치 있는 일에만"),
+             A_MAR, D_COSTS),
+        stat("규모는 일의 크기에 맞춘다", "Ch5", table(["상황", "권장 · 한계"], [
+            ["<b>단순 사실 찾기</b>", "Agent 1개 · 도구 호출 3~10번"],
+            ["<b>복잡한 조사</b>", "Sub Agent 10개 이상 · 역할 분담"],
+            ["<b>초기 실패 사례</b>", "단순 질문에 Sub Agent 50개 생성"],
+            ["<b>Agent Teams</b>", "팀원 3~5명 · 1인당 작업 5~6개"],
+            ["<b>Claude Code 한도</b>", "Sub Agent 동시 20개 · 3단계까지 중첩"],
+        ]), A_MAR, D_TEAMS, D_SUB),
         light("오케스트레이션 패턴", viz("orchestration_patterns"), "Ch5"),
         light("Sub Agent: 위임하고 결과만 받기", viz("subagent_fanout"), "Ch5"),
         light("Agent Teams: 서로 말하는 팀", viz("agent_teams") + note("상태", "실험 기능 · 환경 변수로 켬 · 위임으로 충분하면 Sub Agent"), "Ch5"),
@@ -392,6 +563,8 @@ def ch5():
             flow([("추출", "extractor"), ("견적", "estimator"), ("검증", "verifier"), ("통과 → 결과", "")], hl=2))
               + note("verifier", "읽기 전용 · 근거 · 숫자 · 정책만 판정 · 고치지 않음"), "Ch5"),
         light("실행을 눈으로 보기", viz("timeline_lanes") + note("만드는 법", "헤드리스 stream-json 이벤트 → visualize.py → 타임라인 HTML"), "Ch5"),
+        light("실시간 대시보드: Agent Watch", '<img class="shot" src="img/agent_watch.png" alt="Agent Watch 화면">'
+              + note("구성", "Hook → 로컬 서버 → 브라우저 · 메인 · Sub Agent 레인 · 에이전트별 토큰 · 효율 점검 · " + labdir("agent_watch")), "Ch5"),
         light("위임문 4요소", table(["요소", "빠지면"], [
             ["<b>목표 · 완료 기준</b>", "어디서 멈출지 모름"],
             ["<b>입력 범위</b>", "필요 없는 것까지 읽음"],
@@ -414,8 +587,33 @@ def ch6():
             ("CLAUDE.md 600줄", "매 요청마다 몇 토큰이 더 붙나?", []),
             ("파일 하나 통째 읽기", "출력의 몇 배?", []),
         ]) + note("퀴즈", "먼저 맞혀 보고 실습에서 실측"), "Ch6"),
+        stat("출력은 입력의 5배 가격", "Ch6",
+             hbars([("Haiku 5.5", 0.5, False, "$0.10 → $0.50"), ("Sonnet 5.5", 10, False, "$2 → $10"),
+                    ("Opus 5.5", 20, False, "$4 → $20"), ("Fable 5.1", 50, True, "$10 → $50")], top=55,
+                   title="100만 토큰당 가격 · 입력 → 출력 (막대 = 출력)")
+             + note("Claude Code 실제 비용", "개발자 1인 하루 평균 약 $13 · 월 $150~250 · 90%는 하루 $30 미만"),
+             D_PRICE, D_COSTS),
+        stat("캐시와 배치: 할인 규칙", "Ch6",
+             big([("1.25", "배", "캐시 쓰기 (5분 · 1시간은 2배)"),
+                  ("0.1", "배", "캐시 읽기 (Opus · Sonnet 5.5는 0.05배)", True),
+                  ("1", "번", "한 번만 다시 읽어도 캐시가 이득"),
+                  ("50", "%", "배치 API 할인 (입력 · 출력 모두)")], 4)
+             + note("기억할 것", "캐시 기본 수명 5분 · 쓸 때마다 갱신 · 앞부분이 1글자라도 바뀌면 새로 씀"),
+             D_CACHE, D_PRICE),
+        stat("공식 사례로 본 절감 폭", "Ch6",
+             hbars([("MCP를 코드로 호출", 98.7, True, "−98.7%"), ("도구 검색 (Tool Search)", 85, False, "−85%"),
+                    ("컨텍스트 편집 (100턴)", 84, False, "−84%"), ("effort 낮추기 (같은 점수)", 76, False, "출력 −76%"),
+                    ("도구 호출을 코드로 묶기", 37, False, "−37%")], top=100, title="토큰 절감률")
+             + note("도구 정의만으로", "도구 58개 = 대화 시작 전 약 5.5만 토큰 · Anthropic 내부는 13.4만 토큰까지"),
+             A_CEMCP, A_ATU, A_CM, A_OPUS45),
         light("토큰은 어디서 새나", viz("token_levers"), "Ch6"),
         light("캐싱: 앞부분이 같으면 싸다", viz("cache_prefix") + note("규칙", "고정 지침 · 도구 목록은 앞에, 바뀌는 입력은 뒤에 · 시간 · ID를 앞에 넣지 않기"), "Ch6"),
+        stat("도구 결과가 책상을 채운다", "Ch6",
+             big([("2.5만", "토큰", "Claude Code 도구 응답 기본 한도"),
+                  ("⅓", "", "「간결」 응답 형식이 쓰는 토큰", True),
+                  ("40", "%", "도구 설명만 고쳐 줄인 작업 시간")])
+             + note("세션 정리", "/compact도 큰 요청 한 번 · 새로 시작이면 /clear는 비용 0"),
+             A_TOOLS, A_MAR, D_COSTS),
         light("레버 다섯 개", table(["레버", "방법", "주의"], [
             ["<b>① 입력 줄이기</b>", "짧은 CLAUDE.md · 찾아서 읽기 · Sub Agent 분리", "가장 큰 절감"],
             ["<b>② 출력 줄이기</b>", "「간결하게 · JSON으로」 · caveman", "설명이 필요한 곳은 예외"],
@@ -468,6 +666,24 @@ def ch7():
                "입력 토큰   12.4k → 8.1k  ▼\n"
                "결과: 통과")
     return chapter("Ch7", "평가 · 회귀 테스트", {"평가 · 비용"}, "평가") + [
+        stat("한 번 성공 ≠ 매번 성공", "Ch7", passk(0.75, 10)
+             + note("τ-bench", "GPT-4o 소매 상담: 8번 연속 성공률 25% 미만"), A_EVALS, TAU),
+        stat("평가셋은 작게, 실패에서 시작", "Ch7",
+             big([("20~50", "개", "실제 실패에서 뽑은 첫 평가 과제", True),
+                  ("~20", "개", "Anthropic 멀티에이전트 첫 평가셋"),
+                  ("F1 ≥ 0.85", "", "성공 기준은 숫자로 (공식 예)")])
+             + quote("손으로 채점한 적은 문항보다, 자동 채점한 많은 문항이 낫다", "Anthropic 문서, 성공 기준 정하기"),
+             A_EVALS, A_MAR, D_SUCCESS),
+        stat("채점기도 검증한다", "Ch7",
+             big([("80+", "%", "LLM 심판과 사람의 일치율 = 사람끼리 일치율"),
+                  ("42 → 95", "%", "채점 버그만 고쳤더니 바뀐 점수 (CORE-Bench)", True)], 2)
+             + note("원칙", "점수가 이상하면 모델보다 채점기 · 과제부터 의심"),
+             MTB, A_EVALS),
+        stat("공개 벤치마크는 금방 찬다", "Ch7",
+             hbars([("1년 전", 40, False, "40%"), ("1년 뒤", 80, False, "80%+"), ("Claude Opus 5", 96, True, "96.0%")], top=100,
+                   title="SWE-bench Verified")
+             + note("그래서", "남의 점수보다 우리 업무 평가셋 · 우리 회귀 테스트"),
+             A_EVALS, OPUS5),
         ill("scenes_extra", "calculator_test", "left40", "답을 아는 문제로 먼저 시험", ["평가셋 = 정답 · 허용 범위가 있는 대표 과제"]),
         light("과업마다 다른 가중치", table(["지표", "분류 · 라우팅", "생성 (답변)", "추출 · 계산"], [
             ["<b>정확도</b>", "40", "25", "40"], ["<b>근거 충실도</b>", "—", "30", "30"],
@@ -573,6 +789,11 @@ def slides():
 CSS = '''
   .hubtxt{font-size:30px; font-weight:800; color:#1F3A5F;}
   .lt :not(pre) > code{font-family:var(--mono); font-size:.92em; background:#EEF1F5; border-radius:4px; padding:1px 5px;}
+  .shot{display:block; width:100%; max-height:400px; object-fit:cover; object-position:top; border-radius:12px; border:1px solid #E1E5EB; box-shadow:0 8px 24px rgba(31,58,95,.12); margin-bottom:14px;}
+  .ucurve{width:100%; height:auto; margin-bottom:8px;}
+  .ucurve .udraw{stroke-dasharray:1400; animation:udraw 1.6s ease-out both;}
+  @keyframes udraw{from{stroke-dashoffset:1400}}
+  @media print{.ucurve .udraw{animation:none}}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
