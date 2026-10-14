@@ -1309,6 +1309,22 @@ if any(b in i.get('command', '') for b in bad) \
 └── inputs/T1 ~ T6         # 업무 자료 (원본)</code></pre></div></div></div>
 </section>
 
+<section class="slide lt" data-title="하네스 만드는 순서">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">하네스 만드는 순서</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 업무 명세서</b><span>입력 · 출력 · 기준 · 금지</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (맨몸 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (맨몸은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>112/114 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
+</section>
+
+<section class="slide lt" data-title="내용별 넣을 위치">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">내용별 넣을 위치</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>이런 내용이면</th><th>여기에</th><th>예</th></tr></thead><tbody><tr><td><b>모든 업무에 해당</b></td><td>CLAUDE.md</td><td>결과 위치 · 근거 표기 · 확정 아닌 건 표시</td></tr><tr><td><b>특정 업무의 방법 · 양식 · 판단 기준</b></td><td>Skill (긴 원본은 참고 파일)</td><td>견적 절차 · 메일 필수 요소 · 점검 기준</td></tr><tr><td><b>어기면 사고</b></td><td>Hook · 권한</td><td>원본 수정 · 메일 발송 · 운영 DB 쓰기</td></tr><tr><td><b>결과를 한 번 더 따져 봐야 함</b></td><td>검증 Sub Agent</td><td>금액 · 날짜 · 고객 발송물</td></tr><tr><td><b>좋아졌는지 알아야 함</b></td><td>평가 문항 · 채점</td><td>과거 사례 · 엣지 케이스</td></tr></tbody></table><div class="dbnote"><span>시작은 작게</span> Skill 하나로 시작 → 사고 날 지점은 Hook → 확인은 평가 · Skill의 description에 「언제 쓰는지」를 분명히</div></div></div>
+</section>
+
 <section class="slide lt" data-title="실무 과제 여섯 가지">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch2</span></div>
