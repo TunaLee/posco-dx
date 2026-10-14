@@ -5,6 +5,7 @@ Ch1 개념 · Ch2 Claude Code 분해 · Ch3 컨텍스트 엔지니어링 · Ch4 
 Ch6 토큰 경제학 · Ch7 평가 · 회귀 테스트 · Ch8 내 하네스 플러그인 · 심화
 """
 import importlib
+from pathlib import Path
 
 import deck
 import explain
@@ -253,8 +254,31 @@ PROMPTS_HX = {'CLAUDE.md': '이 프로젝트의 CLAUDE.md를 만들어 줘. 모�
 PROMPT_FULL = '〈내_하네스_설계표.md〉 를 읽고 이 업무용 하네스를 만들어 줘.\n- CLAUDE.md (공통 원칙 30줄 이내)\n- Skill 1개 (절차 · 판단 기준 · 결과 양식)\n- Hook (설계표의 「막을 것」만 차단)\n- 평가 문항 5개 (엣지 케이스 2개 포함) + 채점 스크립트\n설계표에 없는 규칙은 지어내지 말고 TODO로 남겨.\n끝나면 평가를 한 번 돌려 점수를 보여 줘.'
 
 
+LAB_FILES = set()   # build.py가 docs/dl/ 에 zip · 파일로 만든다
+
+
 def labdir(d):
-    return f'<a class="dl" href="{REPO}/{d}">{d}</a>'
+    """실습 자료 — 덱과 같은 폴더의 dl/ 에서 내려받기 (GitHub 없이)."""
+    if not d:
+        LAB_FILES.add("labs")
+        return '<a class="dl" href="dl/labs.zip" download>전체 실습 자료 labs.zip</a>'
+    LAB_FILES.add(d)
+    if "." in d:
+        return f'<a class="dl" href="dl/{d}" download>{d}</a>'
+    return f'<a class="dl" href="dl/{d}.zip" download>{d}.zip</a>'
+
+
+def filecode(fname, text, label=None):
+    """복사 + 「파일로 저장」 버튼이 붙는 템플릿 블록."""
+    html = code(label or fname, text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+    return html.replace('<div class="code', f'<div data-file="{fname}" class="code', 1)
+
+
+LABS_DIR = Path(__file__).resolve().parent.parent / "labs"
+
+
+def labfile(rel):
+    return (LABS_DIR / rel).read_text(encoding="utf-8").rstrip()
 
 
 # ── 하네스 지도 ──────────────────────────────────────────
@@ -361,7 +385,7 @@ def opening():
             ["<b>VS Code · Python 3.10+</b>", "실습 스크립트 · 데이터"],
             ["<b>Agent Watch</b>", "에이전트 실행 흐름 · 토큰 대시보드"],
             ["<b>Git · GitHub</b>", "하네스 버전 관리 · 공유"],
-        ]) + note("실습 저장소", labdir("")), "시작"),
+        ]) + note("실습 자료", labdir("") + " · 장마다 실습 장표의 「사용 파일」에서도 내려받기"), "시작"),
     ]
 
 
@@ -1191,8 +1215,33 @@ def advanced():
     ]
 
 
+
+# ── 부록: 하네스 재료 (복사 · 파일로 저장) ─────────────────
+def materials():
+    W = "work_harness/harness/"
+    M = "work_harness/harness_multi/"
+    sk = lambda n: labfile(W + f".claude/skills/{n}/SKILL.md")
+    css = '<div class="pgrid2 mat">'
+    return [divider("부록", "하네스 재료", "")] + [
+        light("부록 ① CLAUDE.md · 공통 원칙", css + filecode("CLAUDE.md", labfile(W + "CLAUDE.md")) +
+              filecode("CLAUDE_멀티에이전트_추가.md", labfile(M + "CLAUDE.md"), "CLAUDE.md 에 덧붙임 · 멀티에이전트 (Ch5)") + "</div>"
+              + note("쓰는 법", "「파일로 저장」 → 내 작업 폴더에 CLAUDE.md로 · 〈업무 종류 → Skill〉 표만 내 업무로"), "부록"),
+        light("부록 ② Skill 지침서 · 문의 응대 · 견적", css + filecode("SKILL.md", sk("inquiry-answer"), ".claude/skills/inquiry-answer/SKILL.md")
+              + filecode("SKILL.md", sk("spec-quote"), ".claude/skills/spec-quote/SKILL.md") + "</div>"
+              + note("위치", ".claude/skills/〈이름〉/SKILL.md · name · description 줄은 그대로 두고 본문만 내 업무로"), "부록"),
+        light("부록 ③ Skill 지침서 · 회의록 · 보고서", css + filecode("SKILL.md", sk("meeting-actions"), ".claude/skills/meeting-actions/SKILL.md")
+              + filecode("SKILL.md", sk("weekly-report"), ".claude/skills/weekly-report/SKILL.md") + "</div>", "부록"),
+        light("부록 ④ Skill 지침서 · 문서 비교 · 메일", css + filecode("SKILL.md", sk("doc-diff"), ".claude/skills/doc-diff/SKILL.md")
+              + filecode("SKILL.md", sk("mail-draft"), ".claude/skills/mail-draft/SKILL.md") + "</div>", "부록"),
+        light("부록 ⑤ Sub Agent · 검증 · 추출", css + filecode("verifier.md", labfile(M + ".claude/agents/verifier.md"), ".claude/agents/verifier.md")
+              + filecode("extractor.md", labfile(M + ".claude/agents/extractor.md"), ".claude/agents/extractor.md") + "</div>", "부록"),
+        light("부록 ⑥ Hook · 원본 보호 · 외부 전송 차단", css + filecode("settings.json", labfile(W + ".claude/settings.json"), ".claude/settings.json")
+              + filecode("guard.py", labfile(W + ".claude/hooks/guard.py"), ".claude/hooks/guard.py") + "</div>"
+              + note("주의", "막을 것 목록은 내 업무에 맞게 · 직접 고치기 어려우면 Ch2 요청문 ②로 Claude에게"), "부록"),
+    ]
+
 def slides():
-    return opening() + ch1() + ch2() + ch3() + ch4() + ch5() + ch6() + ch7() + ch8() + advanced()
+    return opening() + ch1() + ch2() + ch3() + ch4() + ch5() + ch6() + ch7() + ch8() + advanced() + materials()
 
 
 CSS = '''
@@ -1254,6 +1303,7 @@ CSS = '''
   .mcards .bn{padding:14px 16px;} .mcards .bn .bv{font-size:34px;} .mcards .bn .bl{font-size:14.5px; margin-top:6px;}
   .pgrid2 .code pre, .pgrid2 .code code{white-space:pre-wrap !important; overflow-wrap:anywhere; word-break:keep-all; font-size:13px; line-height:1.55;}
   .pgrid2 .code{min-width:0;}
+  .pgrid2.mat .code pre, .pgrid2.mat .code code{font-size:11.5px; line-height:1.45; max-height:370px; overflow:auto;}
   .pgrid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}

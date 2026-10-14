@@ -16,6 +16,47 @@ import stats_hx
 ROOT = Path(__file__).resolve().parent.parent
 
 
+SKIP = {"runs", "logs", "__pycache__", ".venv", "out", ".DS_Store", "old"}
+
+
+def make_downloads():
+    """실습 장표에서 가리킨 자료를 docs/dl/ 에 zip · 파일로 (GitHub 없이 덱 폴더만으로)."""
+    import shutil
+    import zipfile
+    import subprocess
+    labs, dl = ROOT / "labs", ROOT / "docs" / "dl"
+    tracked = set(subprocess.run(["git", "ls-files", "labs"], cwd=ROOT, capture_output=True, text=True).stdout.split("\n"))
+    if dl.exists():
+        shutil.rmtree(dl)
+    dl.mkdir(parents=True)
+
+    def add(z, folder):
+        for f in sorted(folder.rglob("*")):
+            rel = f.relative_to(labs)
+            if f.is_file() and not (set(rel.parts) & SKIP) and f.suffix not in (".db", ".pyc") and f"labs/{rel}" in tracked:
+                z.write(f, Path("labs") / rel)
+    for name in sorted(hx.LAB_FILES):
+        if name == "labs":
+            with zipfile.ZipFile(dl / "labs.zip", "w", zipfile.ZIP_DEFLATED) as z:
+                for top in sorted(labs.iterdir()):
+                    if top.is_dir():
+                        add(z, top)
+                    elif top.is_file() and f"labs/{top.name}" in tracked:
+                        z.write(top, Path("labs") / top.name)
+        elif "." in name:
+            shutil.copy(labs / name, dl / name)
+        else:
+            with zipfile.ZipFile(dl / f"{name}.zip", "w", zipfile.ZIP_DEFLATED) as z:
+                for extra in ("common", "data", name):      # 공통 모듈 · 데이터 함께
+                    if (labs / extra).is_dir():
+                        add(z, labs / extra)
+                for top in ("README.md", "requirements.txt"):
+                    if (labs / top).exists():
+                        z.write(labs / top, Path("labs") / top)
+    total = sum(f.stat().st_size for f in dl.iterdir())
+    print("dl/", len(list(dl.iterdir())), "개", f"{total / 1e6:.1f}MB")
+
+
 def build():
     parts = [art.DEFS] + hx.slides()
     tpl = (ROOT / "src" / "template.html").read_text()
@@ -25,6 +66,7 @@ def build():
     out = ROOT / "docs" / "index.html"
     out.write_text(html)
     print(out, len(parts) - 1, "장")
+    make_downloads()
 
 
 if __name__ == "__main__":

@@ -128,6 +128,8 @@
   .code .bar .r{background:#FF6058;} .code .bar .y{background:#FFC130;} .code .bar .g{background:#28CA42;}
   .code .bar .copybtn{margin-left:auto; font:600 12px var(--sans, sans-serif); color:#fff; background:#F28C28; border:0; border-radius:6px; padding:4px 10px; cursor:pointer;}
   .code .bar .copybtn.done{background:#28CA42;}
+  .code .bar .savebtn{margin-left:6px; font:600 12px var(--sans, sans-serif); color:#1F3A5F; background:#fff; border:0; border-radius:6px; padding:4px 10px; cursor:pointer;}
+  @media print{.code .bar .savebtn{display:none}}
   @media print{.code .bar .copybtn{display:none}}
   .code .bar .fn{margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--code-dim);}
   .code pre{margin:0; padding:16px 18px; overflow:auto;}
@@ -499,6 +501,17 @@ document.querySelectorAll('.code').forEach(function (box) {
     else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} ta.remove(); }
   });
   bar.appendChild(b);
+  if (box.dataset.file) {                       // 템플릿은 파일로 바로 저장
+    var sv = document.createElement('button');
+    sv.className = 'savebtn'; sv.type = 'button'; sv.textContent = '파일로 저장';
+    sv.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      var blob = new Blob([code.innerText.replace(/\n$/, '') + '\n'], {type: 'text/plain;charset=utf-8'});
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = box.dataset.file;
+      document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    });
+    bar.appendChild(sv);
+  }
 });
 </script>
 
