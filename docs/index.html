@@ -944,12 +944,24 @@
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>업무</th><th>지침 · Skill</th><th>Sub Agent · 도구</th><th>Hook · 권한</th><th>평가</th></tr></thead><tbody><tr><td><b>장애 · 문의 1차 분류와 답변 초안</b></td><td>답변 형식 · 분류 기준 · FAQ</td><td>분류 → 응대 → 검증</td><td>외부 발송 차단</td><td>지난 문의 50건 · 분류 정확도</td></tr><tr><td><b>코드 리뷰</b></td><td>팀 리뷰 기준 Skill</td><td>reviewer (읽기 전용)</td><td>끝내기 전 테스트 · force push 차단</td><td>지난 PR 지적 사항 재현률</td></tr><tr><td><b>주간 운영 · 점검 보고서</b></td><td>보고 양식 · 이상치 기준</td><td>DB 조회 (읽기 전용)</td><td>운영 DB 쓰기 차단</td><td>수치가 원본과 일치</td></tr><tr><td><b>사양서 · 도면 수량 · 스펙 추출</b></td><td>JSON 형식 · 단위 · 규격 규칙</td><td>추출 → 견적 → 검증</td><td>원본 파일 수정 차단</td><td>정답셋 10건 · 필드 F1</td></tr><tr><td><b>배포 전 점검</b></td><td>점검 목록 Skill</td><td>설정 · 보안 검사 Agent</td><td>운영 환경 명령 승인</td><td>놓친 점검 항목 0건</td></tr></tbody></table></div></div>
 </section>
 
-<section class="slide lt" data-title="작성: 내 업무 명세서">
+<section class="slide lt labs" data-title="[실습 준비] 내 업무 명세서 쓰기">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span><span class="labtag">실습 준비</span></div>
+  <h2 class="s-title sm">내 업무 명세서 쓰기</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="labgrid">
+    <div class="lc goal"><div class="lh">목표</div><p>오늘 실습 내내 대입할 내 업무 하나를 한 장으로 정리</p><div class="lf">사용 파일 · <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/my_work_spec">my_work_spec</a></div><div class="mine"><span>내 업무 적용</span>Ch8 마지막 실습에서 이 명세서로 내 업무 하네스를 만든다</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>내 업무 중 하나 고르기 — 앞 장 다섯 가지 질문에 4개 이상 「예」인 것</li><li>양식 9칸을 한 줄씩 채우기 — 입력 · 출력 · 판단 기준 · 하면 안 되는 것 · 잘했다의 기준 …</li><li>고객명 · 실제 수치 · 시스템 주소는 가리기</li><li>실습이 끝날 때마다 「내 업무 적용」 칸에 한 줄 추가</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>9칸 채움 (모르면 「모름」도 OK)</li><li>고른 업무가 다섯 질문 중 4개 이상 「예」</li></ul></div>
+  </div></div>
+</section>
+
+<section class="slide lt" data-title="명세서 예시: 주간 설비 점검 보고서">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch1</span></div>
-  <h2 class="s-title sm">작성: 내 업무 명세서</h2>
+  <h2 class="s-title sm">명세서 예시: 주간 설비 점검 보고서</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>항목</th><th>예 (가상)</th><th>연결되는 장</th></tr></thead><tbody><tr><td><b>업무 이름 · 빈도</b></td><td>주간 설비 점검 보고서 · 매주</td><td>Ch1</td></tr><tr><td><b>입력</b></td><td>점검 체크리스트 엑셀 · 지난 보고서</td><td>Ch3 컨텍스트</td></tr><tr><td><b>출력 · 형식</b></td><td>정해진 양식 보고서 1장</td><td>Ch2 지침 · Skill</td></tr><tr><td><b>판단 기준 · 사내 규칙</b></td><td>이상치 기준 · 보고 양식 규정</td><td>Ch2 Skill 참고 자료</td></tr><tr><td><b>쓰는 시스템 · 도구</b></td><td>사내 DB 조회 · 메일</td><td>Ch2 도구</td></tr><tr><td><b>절대 하면 안 되는 것</b></td><td>운영 DB 수정 · 외부 전송</td><td>Ch2 Hook · 권한</td></tr><tr><td><b>사람 확인 지점</b></td><td>최종 발송 전 팀장 확인</td><td>Ch2 승인</td></tr><tr><td><b>잘했다의 기준</b></td><td>누락 0건 · 수치 원본 일치</td><td>Ch7 평가셋</td></tr><tr><td><b>자주 나는 실수 · 예외</b></td><td>단위 혼동 · 빈 칸</td><td>Ch7 엣지 케이스</td></tr></tbody></table><div class="dbnote"><span>양식</span> <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/my_work_spec">my_work_spec</a> · 고객명 · 수치 · 시스템 주소는 가려서 작성 · 장마다 「내 업무 적용」 한 줄 추가</div></div></div>
+  <div class="body"><div class="mid"><div class="twocol"><table class="dbt"><thead><tr><th>항목</th><th>예시 (가상)</th></tr></thead><tbody><tr><td><b>업무 · 빈도</b></td><td>주간 설비 점검 보고서 · 매주 월요일</td></tr><tr><td><b>입력</b></td><td>점검 기록 엑셀 · 지난주 보고서</td></tr><tr><td><b>출력 · 형식</b></td><td>보고서 1장 (요약 3줄 · 경고 · 정비 요청)</td></tr><tr><td><b>판단 기준</b></td><td>진동 7.1 초과 경고 · 이틀 연속이면 정비 요청</td></tr><tr><td><b>쓰는 도구</b></td><td>설비 DB 조회 (읽기만)</td></tr></tbody></table><table class="dbt"><thead><tr><th>항목</th><th>예시 (가상)</th></tr></thead><tbody><tr><td><b>하면 안 되는 것</b></td><td>원본 기록 수정 · 외부 메일 발송</td></tr><tr><td><b>사람 확인</b></td><td>발송 전 팀장 확인</td></tr><tr><td><b>잘했다의 기준</b></td><td>누락 0건 · 수치가 원본과 일치</td></tr><tr><td><b>자주 나는 실수</b></td><td>빈 값을 0으로 처리 · 경계값 7.1</td></tr></tbody></table></div><div class="flow"><div class="fs"><b>명세서</b><span>지금 15분</span></div><div class="fa">→</div><div class="fs"><b>Skill · Hook</b><span>Ch2 · 판단 기준 → Skill · 금지 → Hook</span></div><div class="fa">→</div><div class="fs"><b>평가 문항</b><span>Ch7 · 잘했다의 기준 · 실수 → 채점</span></div><div class="fa">→</div><div class="fs hl"><b>내 하네스</b><span>Ch8 · Claude가 초안 생성</span></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="하네스의 다섯 계층">
