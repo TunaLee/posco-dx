@@ -14,15 +14,12 @@ KITS = {
         tip="결과는 lab 폴더 밖 runs/ 에 · 미적용을 다시 하려면 CLAUDE.md를 잠시 다른 이름으로 (폴더 안 파일은 Claude가 읽음)"),
 
     "2-1": dict(folder="lab2_1_parts", steps=[
-        ("① 하네스 미적용", "p", "lab2_1_parts 폴더 안에서 아래 세 요청을 하나씩\nclaude -p --setting-sources \"\" --permission-mode acceptEdits --output-format stream-json --verbose 로 실행해\nlabs 바로 아래 runs/2-1/미적용_1.jsonl ~ 3.jsonl 로 저장해 줘\n1. 어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘\n2. src/order_api.py 리뷰해 줘\n3. .env 에 API_KEY=test 써 줘"),
-        ("② 하네스 만들기", "do", "앞 장 파일 네 개를 화면의 경로대로 · 탐색기 새 파일에 <b>lab2_1_parts/.claude/skills/incident-report/SKILL.md</b> 처럼 경로째 입력"),
-        ("③ 하네스 적용", "p", "lab2_1_parts/.env 가 생겼으면 지우고, ①의 세 요청을 --setting-sources project 로 바꿔\n같은 방법으로 실행해 labs 바로 아래 runs/2-1/적용_1.jsonl ~ 3.jsonl 로 저장해 줘"),
-        ("④ 비교", "p", "runs/2-1/ 의 미적용 · 적용 기록을 비교해 표로 정리해 줘:\n보고서 양식 · 「(확인 필요)」 표시 · Skill 호출 · reviewer 위임 · .env 생성 여부 · Hook 차단 메시지"),
+        ("① 하네스 미적용", "p", "lab2_1_parts 폴더 안에서 아래 두 요청을 하나씩\nclaude -p --setting-sources \"\" --output-format stream-json --verbose 로 실행해\nlabs 바로 아래 runs/2-1/미적용_1.jsonl · 2.jsonl 로 저장해 줘\n1. 어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘\n2. src/order_api.py 리뷰해 줘"),
+        ("② 하네스 만들기", "do", "오른쪽 파일 두 개를 화면의 경로대로 · 탐색기 새 파일에 <b>lab2_1_parts/.claude/skills/incident-report/SKILL.md</b> 처럼 경로째 입력"),
+        ("③ 하네스 적용", "p", "①의 두 요청을 --setting-sources project 로 바꿔 같은 방법으로 실행해\nlabs 바로 아래 runs/2-1/적용_1.jsonl · 2.jsonl 로 저장해 줘"),
+        ("④ 비교", "p", "runs/2-1/ 의 미적용 · 적용 기록을 비교해 표로 정리해 줘:\n보고서 양식 · 「(확인 필요)」 표시 · Skill 호출 여부 · reviewer 위임 여부 · 파일 수정 여부"),
     ], files=[("SKILL.md", "lab2_1_parts/.claude/skills/incident-report/SKILL.md", "@2-1/SKILL.md"),
-              ("reviewer.md", "lab2_1_parts/.claude/agents/reviewer.md", "@2-1/reviewer.md"),
-              ("settings.json", "lab2_1_parts/.claude/settings.json", "@2-1/settings.json"),
-              ("guard.py", "lab2_1_parts/.claude/hooks/guard.py", "@2-1/guard.py")],
-        tip="Windows에서 python3가 안 잡히면 settings.json의 python3 → python"),
+              ("reviewer.md", "lab2_1_parts/.claude/agents/reviewer.md", "@2-1/reviewer.md")]),
 
     "2-2": dict(folder="lab2_hook_by_claude", steps=[
         ("① 준비", "p", "lab2_hook_by_claude/project 폴더에서 python3 tools/make_db.py 로 DB를 만들고\npython3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘"),

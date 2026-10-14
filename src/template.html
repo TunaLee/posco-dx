@@ -131,7 +131,8 @@
   .code .bar .savebtn{margin-left:6px; font:600 12px var(--sans, sans-serif); color:#1F3A5F; background:#fff; border:0; border-radius:6px; padding:4px 10px; cursor:pointer;}
   @media print{.code .bar .savebtn{display:none}}
   @media print{.code .bar .copybtn{display:none}}
-  .code .bar .fn{margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--code-dim);}
+  .code .bar .copybtn, .code .bar .savebtn{flex:none; white-space:nowrap;}
+  .code .bar .fn{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--code-dim);}
   .code pre{margin:0; padding:16px 18px; overflow:auto;}
   .code code{font-family:var(--mono); font-size:13px; line-height:1.6; color:var(--code-ink); white-space:pre;}
   .code.sm code{font-size:12px; line-height:1.55;}
