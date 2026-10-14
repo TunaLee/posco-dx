@@ -1328,6 +1328,8 @@ def ch8():
                 ["<b>⑥ 최종 판정</b>", "<b>사람</b> · 직접 써 보기", "합격 · 다시"],
             ]))
               + note("IT 팀 비유", "기획자(사람) → 팀장(메인) → 팀원 여럿(implementer · 각자 브랜치) → QA(reviewer) → 사람이 최종 판정"), "Ch8"),
+        light("개발 하네스 실행 타임라인", viz("dev_timeline")
+              + note("읽는 법", "주황 = 사람 (승인 · 판정) · 주황 테두리 = 실패하는 테스트 먼저 · 작업 A · B · C는 각자 워크트리에서 동시에"), "Ch8"),
         light("개발 하네스를 만드는 요청문", '<div class="ptall">' + code("final_dev_harness 에서 붙여 넣기", '이 폴더에 개발 멀티에이전트 하네스를 만들어 줘.\nNode.js · 외부 패키지 없음 · 테스트는 node --test\n\n1. CLAUDE.md — 순서를 건너뛰지 않는다:\n   브레인스토밍 → 구현 기획 → 사용자 승인 → 병렬 구현(TDD) → 통합 · 리뷰 → README\n2. .claude/skills/brainstorm/SKILL.md\n   질문은 한 번에 하나 · 최대 5개 → docs/brief.md\n3. .claude/skills/plan/SKILL.md\n   공통 약속(파일 · 함수 · 데이터 모양) + 서로 겹치지 않는 작업 2~4개\n   (작업마다 맡을 파일 · 테스트 사례 3개 이상 · 완료 기준) → docs/plan.md\n   → 요약을 보여 주고 멈춘다\n4. .claude/agents/implementer.md — isolation: worktree\n   테스트 먼저 → 구현 → node --test 통과 → 커밋 · 맡은 파일 밖은 고치지 않음\n5. .claude/agents/reviewer.md — 읽기 전용 · plan 대비 빠진 것 · 테스트 없는 분기\n6. .claude/hooks/plan_gate.mjs + .claude/settings.json (PreToolUse)\n   docs/APPROVED 가 없으면 src/ · test/ 쓰기 차단 · APPROVED 는 Claude가 만들지 못하게\n\n다 만들면 파일 목록과 역할을 표로 보여 줘.') + "</div>"
               + note("막히면", "부록 ⑦ ⑧의 파일 그대로 「파일로 저장」 · .claude 쓰기 · git · 워크트리 승인 요청은 읽고 승인"), "Ch8"),
         lab("8-1", "개발 멀티에이전트 하네스로 내 업무 툴", "Ch8",
