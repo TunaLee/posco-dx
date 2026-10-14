@@ -58,8 +58,8 @@ claude --plugin-dir ./lab8_final_plugin/my-harness               # 이번 세션
 
 - [ ] **하네스 구성** — `my-harness/` · `claude plugin validate --strict` 통과
 - [ ] **평가셋 20건** — `eval/dataset.jsonl` (까다로운 경우 8건 이상, 합성은 `reviewed: true` 만)
-- [ ] **전후 비교표** — 하네스 전(맨몸)·후의 정확도·환각·안전 위반·평균 토큰 (`run_suite.py` 결과 두 개 + `compare.py` 출력)
-- [ ] **공개 하네스 대비 표** — Lab 4 `compare.md` (맨몸 · 내 하네스 · Superpowers · gstack)
+- [ ] **전후 비교표** — 하네스 전(하네스 미적용)·후의 정확도·환각·안전 위반·평균 토큰 (`run_suite.py` 결과 두 개 + `compare.py` 출력)
+- [ ] **공개 하네스 대비 표** — Lab 4 `compare.md` (하네스 미적용 · 내 하네스 · Superpowers · gstack)
 - [ ] **README** — `my-harness/README.md`: 무엇을 · 어떤 규칙으로 · 어떻게 검증하나, 쓰는 법, 알려진 한계
 
 ## 내 하네스 설계표로 시작하기
@@ -81,4 +81,4 @@ CLAUDE.md · Skill 1개 · Hook 규칙 · 평가 문항 5개 (엣지 케이스 2
 | 사람 확인 지점 | 권한 ask 규칙 · 승인 단계 |
 | 잘했다의 기준 · 자주 나는 실수 | `eval/dataset.jsonl` · 엣지 케이스 |
 
-그다음 `claude plugin validate ./my-harness` → 평가 문항으로 맨몸 vs 내 하네스 비교 → README에 비교표.
+그다음 `claude plugin validate ./my-harness` → 평가 문항으로 하네스 미적용 vs 내 하네스 비교 → README에 비교표.

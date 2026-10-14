@@ -1,6 +1,6 @@
 # Lab 4 — 공개 하네스 써 보고 비교하기
 
-같은 과제(`task.md`)를 **맨몸 · 내 하네스 · Superpowers · gstack** 으로 풀고 `compare.md` 를 채운다.
+같은 과제(`task.md`)를 **하네스 미적용 · 내 하네스 · Superpowers · gstack** 으로 풀고 `compare.md` 를 채운다.
 
 ## 1. 설치
 

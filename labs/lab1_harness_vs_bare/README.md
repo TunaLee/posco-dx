@@ -1,10 +1,10 @@
-# Lab 1 — 맨몸 vs 하네스
+# Lab 1 — 하네스 미적용 vs 하네스
 
 같은 입력을 N번 넣는다. 바뀌는 것은 **작업 폴더**뿐이다.
 
 | | 작업 폴더 | 설정 | 도구 |
 |---|---|---|---|
-| (a) 맨몸 | 빈 임시 폴더 | `--setting-sources=` (내 PC 의 CLAUDE.md·설정 안 읽음) | `--tools ""` (없음) |
+| (a) 하네스 미적용 | 빈 임시 폴더 | `--setting-sources=` (내 PC 의 CLAUDE.md·설정 안 읽음) | `--tools ""` (없음) |
 | (b) 하네스 | `harness/CLAUDE.md` + `data/`(FAQ 또는 단가표) | `--setting-sources=project` | `Read,Grep,Glob` |
 
 Claude Code 기본 시스템 프롬프트는 양쪽 다 남아 있다. 빼는 것은 **우리가 붙인 하네스**뿐이다.
@@ -16,7 +16,7 @@ python lab1_harness_vs_bare/run.py --track pangyo -n 3 --dry-run     # 할당량
 ```
 
 ```
-=== (a) 맨몸 (5회) · 작업 폴더 /tmp/labs-ws/lab1-bare ===
+=== (a) 하네스 미적용 (5회) · 작업 폴더 /tmp/labs-ws/lab1-bare ===
  1. 라벨=IT(본문에서 추정) | in 3 + 캐시읽기 0 + 캐시쓰기 4,812 / out 318 = 5,133 | 턴 1 | 7421ms
  …
  → 서로 다른 라벨 2개 (최빈 'IT(본문에서 추정)' 3/5) | 서로 다른 답 5개 | JSON 형식 0/5 | 평균 토큰 …

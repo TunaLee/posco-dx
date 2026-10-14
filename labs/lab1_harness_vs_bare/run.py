@@ -1,4 +1,4 @@
-"""Lab 1 — 같은 입력을 N번: 맨몸 Claude Code vs 하네스(CLAUDE.md + 출력 형식 + 근거 자료)를 붙인 Claude Code.
+"""Lab 1 — 같은 입력을 N번: 하네스 미적용 Claude Code vs 하네스(CLAUDE.md + 출력 형식 + 근거 자료)를 붙인 Claude Code.
 
 실행:  python lab1_harness_vs_bare/run.py --track pangyo -n 5
        python lab1_harness_vs_bare/run.py --track pohang -n 3 --dry-run    (호출 없이 흐름만)
@@ -29,11 +29,11 @@ ASK = {
 
 
 def variants(track):
-    """(a) 맨몸: 빈 폴더 · 설정 안 읽음 · 도구 없음   (b) 하네스: CLAUDE.md + data/ · 읽기 도구만."""
+    """(a) 하네스 미적용: 빈 폴더 · 설정 안 읽음 · 도구 없음   (b) 하네스: CLAUDE.md + data/ · 읽기 도구만."""
     bare = workspace.build("lab1-bare")
     harness = workspace.build("lab1-harness", copy={"CLAUDE.md": HERE / "harness" / "CLAUDE.md"}, track=track)
     return [
-        ("(a) 맨몸", "bare", dict(cwd=bare, setting_sources="", tools="")),
+        ("(a) 하네스 미적용", "bare", dict(cwd=bare, setting_sources="", tools="")),
         ("(b) 하네스", "harness", dict(cwd=harness, setting_sources="project", tools="Read,Grep,Glob",
                                       allowed_tools="Read,Grep,Glob")),
     ]

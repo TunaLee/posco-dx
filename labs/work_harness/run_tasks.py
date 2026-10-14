@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""업무 과제를 맨몸 · 업무 하네스로 반복 실행하고 채점한다 (Claude Sonnet 5.5 · 계정 사용량 소모).
+"""업무 과제를 하네스 미적용 · 업무 하네스로 반복 실행하고 채점한다 (Claude Sonnet 5.5 · 계정 사용량 소모).
 
   python3 run_tasks.py --cond bare single --tasks T1 T2 T3 T4 T5 T6 --k 1
   python3 run_tasks.py --cond bare single multi --tasks T7 --k 2      # 단일 vs 멀티에이전트 하네스

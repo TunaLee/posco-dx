@@ -54,7 +54,7 @@ python lab1_harness_vs_bare/run.py --dry-run      # 호출 없이 흐름 확인 
 
 | Lab | 실행 | 바꿔 볼 것 | 보는 것 |
 |---|---|---|---|
-| 1. [맨몸 vs 하네스](lab1_harness_vs_bare/) | `python lab1_harness_vs_bare/run.py --track pangyo -n 5` | `harness/CLAUDE.md` | 같은 입력 N번 → 서로 다른 답 수, JSON 형식, 평균 토큰 |
+| 1. [하네스 미적용 vs 하네스](lab1_harness_vs_bare/) | `python lab1_harness_vs_bare/run.py --track pangyo -n 5` | `harness/CLAUDE.md` | 같은 입력 N번 → 서로 다른 답 수, JSON 형식, 평균 토큰 |
 | 2. [Claude Code 부품](lab2_claude_code_parts/) | 대화형 `cd lab2_claude_code_parts/project && claude` · `python lab2_claude_code_parts/check.py` | `SKILL.md`, `agents/reviewer.md`, `commands/*.md`, `guard_rules.py` | 스킬·서브에이전트·명령·훅이 실제로 작동하는지 (이벤트로 판정) |
 | 3. [컨텍스트 엔지니어링](lab3_context/) | `python lab3_context/run.py --exp a` (a·b·c·d·all) | 변형별 CLAUDE.md, `SKILL.md`, `agents.json` | 통째로 vs 스킬로 · 통째로 읽기 vs Grep · 직접 vs 서브에이전트 · 긴 세션 vs 새 세션 |
 | 4. [공개 하네스 비교](lab4_public_harness/) | `./lab4_public_harness/run_task.sh bare` (mine·superpowers·gstack) | `PREFIX`, 설치한 플러그인 | 같은 과제의 토큰·시간·테스트 통과·건너뛴 단계 → `compare.md` |
@@ -76,7 +76,7 @@ echo "질문" | claude -p --output-format json --model sonnet \
 | 옵션 | 이 실습에서 쓰는 곳 |
 |---|---|
 | `-p` · `--output-format json` / `stream-json --verbose` | 모든 실행 · 이벤트가 필요한 Lab 2·4·5 |
-| `--setting-sources=` / `=project` / `=user` | 맨몸 · 작업 폴더의 CLAUDE.md·.claude 만 · 설치한 플러그인 |
+| `--setting-sources=` / `=project` / `=user` | 하네스 미적용 · 작업 폴더의 CLAUDE.md·.claude 만 · 설치한 플러그인 |
 | `--tools` · `--allowedTools` · `--permission-mode` | 쓸 수 있는 도구 · 묻지 않고 허용할 도구 · 나머지는 거절(`dontAsk`) |
 | `--append-system-prompt` · `--system-prompt` | Lab 6 짧게 지시 · Lab 7 judge |
 | `--agents '<JSON>'` | Lab 3 c · Lab 6 서브에이전트 |

@@ -13,8 +13,8 @@ HERE = Path(__file__).resolve().parent
 RUNS = HERE / "runs"
 N, G, O, L = "#1F3A5F", "#9AA5B1", "#F28C28", "#EEF1F5"
 LABEL = {"bare": "하네스 없음", "harness": "내 하네스", "superpowers": "Superpowers",
-         "repo:bare": "저장소 · 맨몸", "repo:harness": "저장소 · 내 하네스", "repo:superpowers": "저장소 · Superpowers",
-         "ext:bare": "저장소 밖 · 맨몸", "ext:harness": "저장소 밖 · 내 하네스", "ext:superpowers": "저장소 밖 · Superpowers"}
+         "repo:bare": "저장소 · 하네스 미적용", "repo:harness": "저장소 · 내 하네스", "repo:superpowers": "저장소 · Superpowers",
+         "ext:bare": "저장소 밖 · 하네스 미적용", "ext:harness": "저장소 밖 · 내 하네스", "ext:superpowers": "저장소 밖 · Superpowers"}
 ORDER = [f"{v}:{c}" for v in ("repo", "ext") for c in ("bare", "harness", "superpowers")]
 CLS = lambda k: k.split(":")[-1]
 
