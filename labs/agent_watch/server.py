@@ -239,7 +239,11 @@ def main():
         for s in SESSIONS.values():
             read_usage(s)
     threading.Thread(target=poll_usage, daemon=True).start()
-    srv = ThreadingHTTPServer(("127.0.0.1", a.port), H)
+    try:
+        srv = ThreadingHTTPServer(("127.0.0.1", a.port), H)
+    except OSError:
+        raise SystemExit(f"포트 {a.port}을(를) 이미 쓰고 있다 — Agent Watch가 이미 켜져 있으면 브라우저로 http://127.0.0.1:{a.port} 만 열면 된다.\n"
+                         f"새로 켜려면: pkill -f server.py 후 다시 실행 · 다른 포트: python3 server.py --port 8000")
     print(f"agent_watch: http://127.0.0.1:{a.port}  (멈추기 Ctrl+C)")
     try:
         srv.serve_forever()
