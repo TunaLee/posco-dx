@@ -187,6 +187,13 @@ def ctx_stack():
     return f'<div class="cs"><div class="cs-list">{rows}</div><div class="cs-side">{svg}<div class="cs-leg">{leg}</div></div></div>'
 
 
+def checks(items, rule):
+    """번호 붙은 체크 질문 + 판정 규칙."""
+    li = "".join(f'<div class="ck" style="--d:{i * .12:.2f}s"><span>{i + 1}</span><b>{q}</b><em>{w}</em></div>'
+                 for i, (q, w) in enumerate(items))
+    return f'<div class="cks">{li}</div><div class="ckr">{rule}</div>'
+
+
 def labdir(d):
     return f'<a class="dl" href="{REPO}/{d}">{d}</a>'
 
@@ -344,6 +351,46 @@ def ch1():
   <div class="tl"><b>하네스</b><span>도구 · 권한 · 평가까지 환경 전체</span></div>
   <div class="tl hl"><b>루프</b><span>하네스를 재고 고치는 반복</span></div>
 </div>''' + note("실무 기준", "한 번 쓰고 끝 → 프롬프트 · 매번 같은 자료 → 컨텍스트 · 반복 · 위험 · 여러 사람 → 하네스"), "Ch1"),
+        light("하네스로 만들기 좋은 업무 · 덜 맞는 업무", two(
+            table(["잘 맞음", "이유"], [
+                ["<b>자주 반복</b>", "한 번 만든 지침 · Skill · Hook을 계속 재사용"],
+                ["<b>규칙 · 기준이 분명</b>", "「잘했다」를 정해야 지침으로 고정 가능"],
+                ["<b>결과 확인 가능</b>", "평가셋 · 검증 Agent · 테스트로 자동 확인"],
+                ["<b>회사만 아는 지식 필요</b>", "규정 · 양식 · 확정 사항을 넣어 줘야 함"],
+                ["<b>막아야 할 구간이 있음</b>", "Hook · 권한으로 강제"],
+            ]),
+            table(["덜 맞음", "이유"], [
+                ["<b>한 번 하고 끝</b>", "대화로 시키는 편이 빠름"],
+                ["<b>기준이 매번 다른 판단</b>", "기획 · 협상 · 아이디어"],
+                ["<b>확인할 방법이 없음</b>", "좋아졌는지 알 수 없음"],
+                ["<b>되돌릴 수 없고 확인 장치도 없음</b>", "결재 · 송금은 사람 승인이 기본"],
+            ]))
+              + note("근거", "하네스는 토큰 약 1.7배 (실측) → 반복해야 본전 · 회사 확정 정보가 저장소 밖이면 맨몸 5 · 13 · 5점 vs 하네스 15 · 15 · 15점"), "Ch1"),
+        light("업무 고르기: 다섯 가지 질문", checks([
+            ("한 달에 여러 번 하는가", "반복 → 만든 값을 함"),
+            ("입력 · 출력 형식이 대체로 정해져 있는가", "형식 → 지침 · Skill로 고정"),
+            ("「잘했다」를 숫자 · 체크리스트로 판단할 수 있는가", "기준 → 평가셋 · 검증 Agent"),
+            ("사내 규칙 · 양식 · 기준 문서가 있는가", "지식 → Skill 참고 자료"),
+            ("실수를 중간에 잡거나 막을 지점을 정할 수 있는가", "안전 → Hook · 권한 · 사람 확인"),
+        ], "4개 이상 「예」 → 하네스 후보 · 1순위는 「자주 하고, 기준이 있고, 확인할 수 있는 일」"), "Ch1"),
+        light("IT 업무 적용 사례", table(["업무", "지침 · Skill", "Sub Agent · 도구", "Hook · 권한", "평가"], [
+            ["<b>장애 · 문의 1차 분류와 답변 초안</b>", "답변 형식 · 분류 기준 · FAQ", "분류 → 응대 → 검증", "외부 발송 차단", "지난 문의 50건 · 분류 정확도"],
+            ["<b>코드 리뷰</b>", "팀 리뷰 기준 Skill", "reviewer (읽기 전용)", "끝내기 전 테스트 · force push 차단", "지난 PR 지적 사항 재현률"],
+            ["<b>주간 운영 · 점검 보고서</b>", "보고 양식 · 이상치 기준", "DB 조회 (읽기 전용)", "운영 DB 쓰기 차단", "수치가 원본과 일치"],
+            ["<b>사양서 · 도면 수량 · 스펙 추출</b>", "JSON 형식 · 단위 · 규격 규칙", "추출 → 견적 → 검증", "원본 파일 수정 차단", "정답셋 10건 · 필드 F1"],
+            ["<b>배포 전 점검</b>", "점검 목록 Skill", "설정 · 보안 검사 Agent", "운영 환경 명령 승인", "놓친 점검 항목 0건"],
+        ]), "Ch1"),
+        light("작성: 내 업무 명세서", table(["항목", "예 (가상)", "연결되는 장"], [
+            ["<b>업무 이름 · 빈도</b>", "주간 설비 점검 보고서 · 매주", "Ch1"],
+            ["<b>입력</b>", "점검 체크리스트 엑셀 · 지난 보고서", "Ch3 컨텍스트"],
+            ["<b>출력 · 형식</b>", "정해진 양식 보고서 1장", "Ch2 지침 · Skill"],
+            ["<b>판단 기준 · 사내 규칙</b>", "이상치 기준 · 보고 양식 규정", "Ch2 Skill 참고 자료"],
+            ["<b>쓰는 시스템 · 도구</b>", "사내 DB 조회 · 메일", "Ch2 도구"],
+            ["<b>절대 하면 안 되는 것</b>", "운영 DB 수정 · 외부 전송", "Ch2 Hook · 권한"],
+            ["<b>사람 확인 지점</b>", "최종 발송 전 팀장 확인", "Ch2 승인"],
+            ["<b>잘했다의 기준</b>", "누락 0건 · 수치 원본 일치", "Ch7 평가셋"],
+            ["<b>자주 나는 실수 · 예외</b>", "단위 혼동 · 빈 칸", "Ch7 엣지 케이스"],
+        ]) + note("양식", labdir("my_work_spec") + " · 고객명 · 수치 · 시스템 주소는 가려서 작성 · 장마다 「내 업무 적용」 한 줄 추가"), "Ch1"),
         light("하네스의 다섯 계층", table(["계층", "담는 것", "설계 결정"], [
             ["<b>모델</b>", "추론 엔진", "어떤 모델 · effort · 한도"],
             ["<b>컨텍스트</b>", "지침 · 참고 자료 · 대화 이력", "항상 넣을 것 vs 필요할 때만"],
@@ -1031,6 +1078,12 @@ CSS = '''
   .cs-leg{display:flex; flex-wrap:wrap; gap:6px 12px; font-size:12px; color:#6B7785; justify-content:center;}
   .cs-leg i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:-1px;}
   @media print{.pgrid i,.cs-row,.cs-b{animation:none}}
+  .cks{display:grid; gap:10px; margin:2px 0 14px;}
+  .ck{display:grid; grid-template-columns:44px 1fr 340px; gap:16px; align-items:center; background:#fff; border:1px solid #E1E5EB; border-radius:12px; padding:12px 18px; animation:bnIn .5s both; animation-delay:var(--d);}
+  .ck span{width:36px; height:36px; border-radius:50%; background:#1F3A5F; color:#fff; display:grid; place-items:center; font-weight:800; font-size:18px;}
+  .ck b{font-size:20px; color:#1F3A5F;} .ck em{font-style:normal; color:#6B7785; font-size:15px;}
+  .ckr{background:#F28C28; color:#fff; font-weight:800; font-size:19px; border-radius:12px; padding:12px 18px; text-align:center;}
+  @media print{.ck{animation:none}}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}

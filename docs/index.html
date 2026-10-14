@@ -609,6 +609,12 @@
   .cs-leg{display:flex; flex-wrap:wrap; gap:6px 12px; font-size:12px; color:#6B7785; justify-content:center;}
   .cs-leg i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:-1px;}
   @media print{.pgrid i,.cs-row,.cs-b{animation:none}}
+  .cks{display:grid; gap:10px; margin:2px 0 14px;}
+  .ck{display:grid; grid-template-columns:44px 1fr 340px; gap:16px; align-items:center; background:#fff; border:1px solid #E1E5EB; border-radius:12px; padding:12px 18px; animation:bnIn .5s both; animation-delay:var(--d);}
+  .ck span{width:36px; height:36px; border-radius:50%; background:#1F3A5F; color:#fff; display:grid; place-items:center; font-weight:800; font-size:18px;}
+  .ck b{font-size:20px; color:#1F3A5F;} .ck em{font-style:normal; color:#6B7785; font-size:15px;}
+  .ckr{background:#F28C28; color:#fff; font-weight:800; font-size:19px; border-radius:12px; padding:12px 18px; text-align:center;}
+  @media print{.ck{animation:none}}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
@@ -892,6 +898,38 @@
   <div class="tl"><b>하네스</b><span>도구 · 권한 · 평가까지 환경 전체</span></div>
   <div class="tl hl"><b>루프</b><span>하네스를 재고 고치는 반복</span></div>
 </div><div class="dbnote"><span>실무 기준</span> 한 번 쓰고 끝 → 프롬프트 · 매번 같은 자료 → 컨텍스트 · 반복 · 위험 · 여러 사람 → 하네스</div></div></div>
+</section>
+
+<section class="slide lt" data-title="하네스로 만들기 좋은 업무 · 덜 맞는 업무">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">하네스로 만들기 좋은 업무 · 덜 맞는 업무</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="twocol"><table class="dbt"><thead><tr><th>잘 맞음</th><th>이유</th></tr></thead><tbody><tr><td><b>자주 반복</b></td><td>한 번 만든 지침 · Skill · Hook을 계속 재사용</td></tr><tr><td><b>규칙 · 기준이 분명</b></td><td>「잘했다」를 정해야 지침으로 고정 가능</td></tr><tr><td><b>결과 확인 가능</b></td><td>평가셋 · 검증 Agent · 테스트로 자동 확인</td></tr><tr><td><b>회사만 아는 지식 필요</b></td><td>규정 · 양식 · 확정 사항을 넣어 줘야 함</td></tr><tr><td><b>막아야 할 구간이 있음</b></td><td>Hook · 권한으로 강제</td></tr></tbody></table><table class="dbt"><thead><tr><th>덜 맞음</th><th>이유</th></tr></thead><tbody><tr><td><b>한 번 하고 끝</b></td><td>대화로 시키는 편이 빠름</td></tr><tr><td><b>기준이 매번 다른 판단</b></td><td>기획 · 협상 · 아이디어</td></tr><tr><td><b>확인할 방법이 없음</b></td><td>좋아졌는지 알 수 없음</td></tr><tr><td><b>되돌릴 수 없고 확인 장치도 없음</b></td><td>결재 · 송금은 사람 승인이 기본</td></tr></tbody></table></div><div class="dbnote"><span>근거</span> 하네스는 토큰 약 1.7배 (실측) → 반복해야 본전 · 회사 확정 정보가 저장소 밖이면 맨몸 5 · 13 · 5점 vs 하네스 15 · 15 · 15점</div></div></div>
+</section>
+
+<section class="slide lt" data-title="업무 고르기: 다섯 가지 질문">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">업무 고르기: 다섯 가지 질문</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="cks"><div class="ck" style="--d:0.00s"><span>1</span><b>한 달에 여러 번 하는가</b><em>반복 → 만든 값을 함</em></div><div class="ck" style="--d:0.12s"><span>2</span><b>입력 · 출력 형식이 대체로 정해져 있는가</b><em>형식 → 지침 · Skill로 고정</em></div><div class="ck" style="--d:0.24s"><span>3</span><b>「잘했다」를 숫자 · 체크리스트로 판단할 수 있는가</b><em>기준 → 평가셋 · 검증 Agent</em></div><div class="ck" style="--d:0.36s"><span>4</span><b>사내 규칙 · 양식 · 기준 문서가 있는가</b><em>지식 → Skill 참고 자료</em></div><div class="ck" style="--d:0.48s"><span>5</span><b>실수를 중간에 잡거나 막을 지점을 정할 수 있는가</b><em>안전 → Hook · 권한 · 사람 확인</em></div></div><div class="ckr">4개 이상 「예」 → 하네스 후보 · 1순위는 「자주 하고, 기준이 있고, 확인할 수 있는 일」</div></div></div>
+</section>
+
+<section class="slide lt" data-title="IT 업무 적용 사례">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">IT 업무 적용 사례</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>업무</th><th>지침 · Skill</th><th>Sub Agent · 도구</th><th>Hook · 권한</th><th>평가</th></tr></thead><tbody><tr><td><b>장애 · 문의 1차 분류와 답변 초안</b></td><td>답변 형식 · 분류 기준 · FAQ</td><td>분류 → 응대 → 검증</td><td>외부 발송 차단</td><td>지난 문의 50건 · 분류 정확도</td></tr><tr><td><b>코드 리뷰</b></td><td>팀 리뷰 기준 Skill</td><td>reviewer (읽기 전용)</td><td>끝내기 전 테스트 · force push 차단</td><td>지난 PR 지적 사항 재현률</td></tr><tr><td><b>주간 운영 · 점검 보고서</b></td><td>보고 양식 · 이상치 기준</td><td>DB 조회 (읽기 전용)</td><td>운영 DB 쓰기 차단</td><td>수치가 원본과 일치</td></tr><tr><td><b>사양서 · 도면 수량 · 스펙 추출</b></td><td>JSON 형식 · 단위 · 규격 규칙</td><td>추출 → 견적 → 검증</td><td>원본 파일 수정 차단</td><td>정답셋 10건 · 필드 F1</td></tr><tr><td><b>배포 전 점검</b></td><td>점검 목록 Skill</td><td>설정 · 보안 검사 Agent</td><td>운영 환경 명령 승인</td><td>놓친 점검 항목 0건</td></tr></tbody></table></div></div>
+</section>
+
+<section class="slide lt" data-title="작성: 내 업무 명세서">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">작성: 내 업무 명세서</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>항목</th><th>예 (가상)</th><th>연결되는 장</th></tr></thead><tbody><tr><td><b>업무 이름 · 빈도</b></td><td>주간 설비 점검 보고서 · 매주</td><td>Ch1</td></tr><tr><td><b>입력</b></td><td>점검 체크리스트 엑셀 · 지난 보고서</td><td>Ch3 컨텍스트</td></tr><tr><td><b>출력 · 형식</b></td><td>정해진 양식 보고서 1장</td><td>Ch2 지침 · Skill</td></tr><tr><td><b>판단 기준 · 사내 규칙</b></td><td>이상치 기준 · 보고 양식 규정</td><td>Ch2 Skill 참고 자료</td></tr><tr><td><b>쓰는 시스템 · 도구</b></td><td>사내 DB 조회 · 메일</td><td>Ch2 도구</td></tr><tr><td><b>절대 하면 안 되는 것</b></td><td>운영 DB 수정 · 외부 전송</td><td>Ch2 Hook · 권한</td></tr><tr><td><b>사람 확인 지점</b></td><td>최종 발송 전 팀장 확인</td><td>Ch2 승인</td></tr><tr><td><b>잘했다의 기준</b></td><td>누락 0건 · 수치 원본 일치</td><td>Ch7 평가셋</td></tr><tr><td><b>자주 나는 실수 · 예외</b></td><td>단위 혼동 · 빈 칸</td><td>Ch7 엣지 케이스</td></tr></tbody></table><div class="dbnote"><span>양식</span> <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/my_work_spec">my_work_spec</a> · 고객명 · 수치 · 시스템 주소는 가려서 작성 · 장마다 「내 업무 적용」 한 줄 추가</div></div></div>
 </section>
 
 <section class="slide lt" data-title="하네스의 다섯 계층">
