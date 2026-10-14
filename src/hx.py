@@ -303,8 +303,8 @@ def labkit(no, ch):
     k = labkits.KITS[no]
     steps = "".join(_step(*x) for x in k["steps"])
     files = [filecode(fn, _kitsrc(src), shown) for fn, shown, src in k.get("files", [])]
-    sub = f'<span class="ks">이번 실습</span><code>{k["folder"]}/</code>' if k["folder"] else ""
-    head = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code>{sub}'
+    sub = f'<span class="ks">이번 실습</span><code>{k["folder"]}/</code>' if k["folder"] and not k.get("open") else ""
+    head = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>{k.get("open", "labs")}</code>{sub}'
             f'<em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div>')
     tip = note("참고", k["tip"]) if k.get("tip") else ""
     if len(files) >= 3:     # 하네스 파일이 많으면 앞 장에 따로
@@ -377,8 +377,8 @@ AGENDA = [
     ("Ch4", "공개 하네스 적용", "Superpowers · gstack 비교"),
     ("Ch5", "멀티에이전트 오케스트레이션", "Supervisor + Sub Agent · 실행 타임라인"),
     ("Ch6", "토큰 경제학", "토큰 절감 실측표"),
-    ("Ch7", "평가 · 회귀 테스트", "평가셋 · 자동 비교"),
-    ("Ch8", "내 하네스 플러그인", "최종 산출물 · GitHub"),
+    ("Ch7", "평가 · HITL", "사람 판정 기준 · 자동 비교"),
+    ("Ch8", "개발 멀티에이전트 하네스", "내 업무 툴 · 발표"),
 ]
 
 
@@ -422,10 +422,10 @@ def opening():
              + note("그래서", "느낌 대신 우리 과제 · 우리 평가셋으로 잰다"),
              METR26S, METR26),
         light("최종 산출물", table(["산출물", "내용"], [
-            ["<b>내 하네스 플러그인</b>", "CLAUDE.md · Skill · Sub Agent · Hook · 명령을 한 묶음으로"],
-            ["<b>평가셋 · 회귀 테스트</b>", "대표 과제 20건 + 엣지 케이스 · 자동 비교"],
-            ["<b>전후 비교표</b>", "하네스 미적용 vs 내 하네스 vs 공개 하네스 · 일관성 · 정확도 · 토큰"],
-            ["<b>GitHub 저장소</b>", "팀원이 설치해 쓸 수 있는 형태"],
+            ["<b>내 업무 하네스</b>", "CLAUDE.md · Skill · Hook · 검증 Agent · 하네스 미적용과 전후 비교"],
+            ["<b>개발 멀티에이전트 하네스</b>", "브레인스토밍 → 기획 → 사람 승인 → 병렬 TDD → 리뷰"],
+            ["<b>내 업무 툴</b>", "위 하네스로 만든 Node 툴 · 테스트 통과"],
+            ["<b>사람 판정 기록</b>", "내가 정한 합격 기준으로 직접 판정 · 2분 발표"],
         ]), "시작"),
         light("실습 환경", table(["도구", "용도"], [
             ["<b>Claude Code (비즈니스 계정)</b>", "하네스 만들기 · 대화형 실습"],
@@ -1085,7 +1085,7 @@ def ch6():
             ["quiz.md로 먼저 예상", "기준선 5개 과제 실행 (bench.py)", "레버 켜기: 간결 지시 · caveman · 모델 나누기 · Sub Agent", "토큰 · 정확도 함께 비교 → 남길 레버 고르기"],
             ["레버별 토큰 · 정확도 표", "품질이 떨어진 레버는 제외"], files=labdir("lab6_tokens"), mine="내 업무 1회 토큰 예상 · 쓸 레버 하나"),
         *labkit('6-1', 'Ch6'),
-        bridge("다음: 평가 · 회귀 테스트", "", "Ch6", "→ Ch7 평가 · 회귀 테스트"),
+        bridge("다음: 평가 · HITL", "", "Ch6", "→ Ch7 평가 · HITL"),
     ]
 
 
@@ -1114,7 +1114,23 @@ def ch7():
                "환각 건수      7 → 1      ▼\n"
                "입력 토큰   12.4k → 8.1k  ▼\n"
                "결과: 통과")
-    return chapter("Ch7", "평가 · 회귀 테스트", {"평가 · 비용"}, "평가") + [
+    return chapter("Ch7", "평가 · HITL", {"평가 · 비용"}, "평가") + [
+        light("HITL · 평가는 사람의 몫", flow([
+            ("사람", "잘한 것의 기준"), ("에이전트", "실행"), ("자동 확인", "테스트 · 채점 · judge"),
+            ("사람", "판정 · 승인"), ("사람", "기준 고치기")], hl=3)
+            + table(["", "사람이 하는 일", "자동으로 맡기는 일"], [
+                ["<b>기준</b>", "무엇이 잘한 것인지 · 합격선", "—"],
+                ["<b>채점</b>", "애매한 건 · 표본을 직접 읽기", "정답 비교 · 형식 · 숫자 대조"],
+                ["<b>판정</b>", "합격 · 불합격 · 배포 여부", "점수 · 차이 보고"],
+                ["<b>개선</b>", "무엇을 고칠지 결정", "회귀 테스트 다시 돌리기"],
+            ]) + note("원칙", "자동 채점은 사람이 볼 곳을 좁혀 주는 도구 · 최종 판정은 사람"), "Ch7"),
+        light("사람이 개입하는 지점", table(["지점", "사람이 하는 일", "하네스에서"], [
+            ["<b>시작 전</b>", "기준 · 합격선 정하기", "설계표 · 평가 문항"],
+            ["<b>계획 뒤</b>", "계획 승인 · 범위 조정", "승인 파일 없으면 Hook이 구현 차단 (Ch8)"],
+            ["<b>위험 행동 직전</b>", "허락 · 거절", "Hook · 권한 ask (Ch2)"],
+            ["<b>밖으로 나가기 전</b>", "발송 · 배포 확인", "초안까지만 · 발송은 사람"],
+            ["<b>끝난 뒤</b>", "결과 판정 · 다음 개선", "채점 결과를 보고 사람이 결정"],
+        ]) + note("HITL", "Human-in-the-loop · 사람이 흐름 안에서 확인 · 승인 · 판정"), "Ch7"),
         stat("공개 벤치마크의 포화와 결함", "Ch7",
              hbars([("Verified · 문제 있는 문항", 59.4, False, "59.4%"), ("Pro · 고장 난 과제", 30, False, "약 30%"),
                     ("Pro · Opus 5.5 점수", 89.9, True, "89.9%")], top=100, title="SWE-bench · OpenAI 감사 · Anthropic 시스템 카드 (2026)")
@@ -1173,11 +1189,67 @@ def ch7():
         ill("scenes_hx", "regression_gate", "top20", "회귀 테스트 구조", ["기준선보다 나빠지면 멈춤"]),
         light("하네스 전후 비교 (시연)", code("터미널", compare) + note("숫자", "예시 출력 · 실습에서 내 숫자로"), "Ch7"),
         lab("7-1", "평가셋 + 회귀 테스트", "Ch7",
-            "하네스를 고칠 때마다 자동으로 재는 장치",
+            "자동 채점은 보조 · 사람 판정과 맞춰 보고 최종 판정은 사람",
             ["대표 10건 + 엣지 케이스 + 합성 10건", "judge 기준 → 사람 10건과 일치도", "기준선 실행 → 하네스 수정 → 재실행", "일부러 나쁘게 고쳐 compare.py 실패 확인"],
-            ["평가셋 20건 이상", "전후 비교표 · 나빠지면 실패로 끝남"], files=labdir("lab7_eval_regression"), mine="내 업무 평가 문항 다섯 개 · 엣지 케이스 두 개"),
+            ["사람이 직접 판정한 10건과 judge 일치도", "전후 비교표 · 최종 판정은 사람이 기록"], files=labdir("lab7_eval_regression"), mine="내 업무 평가 문항 다섯 개 · 엣지 케이스 두 개"),
         *labkit('7-1', 'Ch7'),
-        bridge("다음: 내 하네스 플러그인", "", "Ch7", "→ Ch8 최종 산출물"),
+        light("예시를 내 업무로 바꾸기", table(["칸", "예시 · 주간 설비 점검 보고서", "내 업무 · 서버 장애 주간 보고 (가상)"], [
+            ["<b>Skill 이름 · 언제 쓰나</b>", "weekly-report · 점검 기록으로 보고서를 만들 때", "outage-report · 장애 기록으로 주간 보고를 만들 때"],
+            ["<b>입력</b>", "점검 기록 엑셀 · 점검 기준", "장애 티켓 목록 · 장애 등급 기준"],
+            ["<b>결과 양식</b>", "요약 3줄 · 정비 요청 · 경고 · 확인 필요", "요약 3줄 · 1등급 장애 · 재발 · 확인 필요"],
+            ["<b>판단 기준</b>", "진동 7.1 초과 경고 · 이틀 연속 → 정비 요청", "30분 넘는 중단 → 1등급 · 같은 원인 2회 → 재발"],
+            ["<b>막을 것 (Hook)</b>", "원본 수정 · 외부 메일 발송", "티켓 수정 · 외부 공유"],
+            ["<b>사람 확인</b>", "발송 전 팀장", "발송 전 운영 리드"],
+            ["<b>잘했다의 기준 (평가)</b>", "누락 0건 · 수치가 원본과 일치", "1등급 누락 0건 · 시간이 티켓과 일치"],
+            ["<b>자주 나는 실수</b>", "빈 값을 0으로 · 경계값 7.1", "종료 시각 빈 티켓 · 등급 경계 30분"],
+        ]) + note("방법", "가까운 예시 하나를 골라 칸마다 내 업무 값으로 → 다음 장 순서대로 하네스 파일로"), "Ch7"),
+        light("하네스 만드는 순서", flow([
+            ("① 가까운 예시", "유형 고르고 값 바꾸기"),
+            ("② CLAUDE.md", "모든 업무 공통 원칙 · 짧게"),
+            ("③ Skill", "업무 하나에 하나 · 절차 · 양식"),
+            ("④ Hook · 권한", "어기면 사고인 것만 차단"),
+            ("⑤ 검증 Agent", "숫자 · 발송 등 틀리면 곤란한 일"),
+            ("⑥ 평가 → 고치기", "과거 사례 5~10건으로 채점"),
+        ], hl=2) + table(["단계", "work_harness에서 한 일", "결과"], [
+            ["<b>② CLAUDE.md</b>", "결과는 out/과제/ · 원본 수정 금지 · 근거 표기", "파일로 남김 12/12 (하네스 미적용 2/12)"],
+            ["<b>③ Skill</b>", "spec-quote: 「수량 불일치면 견적 보류」", "회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)"],
+            ["<b>④ Hook</b>", "inputs/ 수정 · 메일 발송 · 외부 전송 차단", "원본 보존 12/12"],
+            ["<b>⑥ 평가</b>", "grade.py · 과제 6개 정답 검사", "과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께"],
+        ]) + note("하네스 ≠ Skill", "Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스"), "Ch7"),
+        light("설계표 → 하네스 파일", table(["설계표 칸", "하네스 파일", "부품"], [
+            ["<b>출력 · 형식</b>", "CLAUDE.md", "지침"],
+            ["<b>판단 기준 · 사내 규칙</b>", "skills/&lt;업무&gt;/SKILL.md + 참고 자료", "Skill"],
+            ["<b>쓰는 시스템 · 도구</b>", "읽기 전용 조회 스크립트 · 도구 정의", "Tool"],
+            ["<b>절대 하면 안 되는 것</b>", "hooks/guard.py · 권한 deny 규칙", "Hook · 권한"],
+            ["<b>사람 확인 지점</b>", "권한 ask 규칙 · 승인 단계", "권한"],
+            ["<b>잘했다의 기준 · 자주 나는 실수</b>", "eval/dataset.jsonl · 엣지 케이스", "평가"],
+        ]) + code("Claude Code에 요청", PROMPT_FULL), "Ch7"),
+        light("요청문 ① CLAUDE.md · Skill", '<div class="pgrid2">' + code("CLAUDE.md", PROMPTS_HX["CLAUDE.md"]) + code("Skill", PROMPTS_HX["Skill"]) + '</div>'
+              + note("쓰는 법", "〈 〉 안만 내 업무로 바꿔 Claude Code 대화창에 붙여 넣기 · 플러그인 없이 기본 기능만"), "Ch7"),
+        light("요청문 ② Hook · 검증 Agent", '<div class="pgrid2">' + code("Hook", PROMPTS_HX["Hook"]) + code("검증 Agent", PROMPTS_HX["검증 Agent"]) + '</div>'
+              + note(".claude 쓰기", "Hook · 설정 파일은 보호 경로라 승인 요청이 뜸 · 내용을 읽고 승인"), "Ch7"),
+        light("요청문 ③ 평가 · 고치기", '<div class="pgrid2">' + code("평가", PROMPTS_HX["평가"]) + code("고치기", PROMPTS_HX["고치기"]) + '</div>'
+              + note("한 번에", "설계표가 있으면 앞 장 「설계표 → 하네스」 요청문 하나로 전부 · 자료 " + labdir("harness_prompts.md")), "Ch7"),
+        lab("7-2", "내 업무 하네스 만들기", "Ch7",
+            "내 업무 하나에 하네스를 입히고 하네스 미적용과 비교 · 판정은 사람",
+            ["설계표를 내 업무 값으로 채우기", "가상 예시 입력 3~5개 준비", "하네스 미적용 상태로 실행", "설계표로 하네스 만들기 → 같은 입력 실행", "설계표의 「잘했다의 기준」으로 직접 판정"],
+            ["미적용 · 적용 결과 나란히", "사람이 판정한 O / X 표 · 고칠 점 하나"], files=labdir("my_work_harness"),
+            mine="실제 고객명 · 수치는 가상 값으로 바꿔서"),
+        *labkit('7-2', 'Ch7'),
+        light("운영: 실패 유형 정의", table(["실패", "판정", "대응"], [
+            ["<b>틀린 답</b>", "judge · 정답 비교", "평가셋에 추가"],
+            ["<b>근거 없는 답</b>", "숫자 · 조항 대조", "차단 · 사람에게"],
+            ["<b>정책 위반</b>", "금지 표현 · 권한", "Hook으로 즉시 차단"],
+            ["<b>멈춤 · 폭주</b>", "턴 · 토큰 한도", "중단 · 알림"],
+        ]), "Ch7"),
+        light("운영 장치", table(["장치", "방법"], [
+            ["<b>근거 로깅</b>", "PostToolUse · SubagentStop Hook으로 한 줄씩"],
+            ["<b>사람 확인 (HITL)</b>", "확신 낮음 · 되돌릴 수 없음 · 고위험 도메인"],
+            ["<b>롤백</b>", "하네스를 git으로 버전 관리 → 이전 태그로"],
+            ["<b>재시도</b>", "일시 오류만 · 최대 횟수 · 대기 늘리며"],
+            ["<b>단계적 배포</b>", "일부 사용자 → 지표 확인 → 전체"],
+        ]), "Ch7"),
+        bridge("다음: 개발 멀티에이전트 하네스", "", "Ch7", "→ Ch8 최종 과제"),
     ]
 
 
@@ -1194,65 +1266,37 @@ def ch8():
     load = ("claude plugin validate ./my-harness     # 구조 검사\n"
             "claude --plugin-dir ./my-harness        # 불러서 실행\n"
             "# 팀 공유: GitHub + marketplace.json → /plugin install")
-    return chapter("Ch8", "내 하네스 플러그인", {p[0] for p in PARTS}, "전체") + [
-        light("예시를 내 업무로 바꾸기", table(["칸", "예시 · 주간 설비 점검 보고서", "내 업무 · 서버 장애 주간 보고 (가상)"], [
-            ["<b>Skill 이름 · 언제 쓰나</b>", "weekly-report · 점검 기록으로 보고서를 만들 때", "outage-report · 장애 기록으로 주간 보고를 만들 때"],
-            ["<b>입력</b>", "점검 기록 엑셀 · 점검 기준", "장애 티켓 목록 · 장애 등급 기준"],
-            ["<b>결과 양식</b>", "요약 3줄 · 정비 요청 · 경고 · 확인 필요", "요약 3줄 · 1등급 장애 · 재발 · 확인 필요"],
-            ["<b>판단 기준</b>", "진동 7.1 초과 경고 · 이틀 연속 → 정비 요청", "30분 넘는 중단 → 1등급 · 같은 원인 2회 → 재발"],
-            ["<b>막을 것 (Hook)</b>", "원본 수정 · 외부 메일 발송", "티켓 수정 · 외부 공유"],
-            ["<b>사람 확인</b>", "발송 전 팀장", "발송 전 운영 리드"],
-            ["<b>잘했다의 기준 (평가)</b>", "누락 0건 · 수치가 원본과 일치", "1등급 누락 0건 · 시간이 티켓과 일치"],
-            ["<b>자주 나는 실수</b>", "빈 값을 0으로 · 경계값 7.1", "종료 시각 빈 티켓 · 등급 경계 30분"],
-        ]) + note("방법", "가까운 예시 하나를 골라 칸마다 내 업무 값으로 → 다음 장 순서대로 하네스 파일로"), "Ch8"),
-        light("하네스 만드는 순서", flow([
-            ("① 가까운 예시", "유형 고르고 값 바꾸기"),
-            ("② CLAUDE.md", "모든 업무 공통 원칙 · 짧게"),
-            ("③ Skill", "업무 하나에 하나 · 절차 · 양식"),
-            ("④ Hook · 권한", "어기면 사고인 것만 차단"),
-            ("⑤ 검증 Agent", "숫자 · 발송 등 틀리면 곤란한 일"),
-            ("⑥ 평가 → 고치기", "과거 사례 5~10건으로 채점"),
-        ], hl=2) + table(["단계", "work_harness에서 한 일", "결과"], [
-            ["<b>② CLAUDE.md</b>", "결과는 out/과제/ · 원본 수정 금지 · 근거 표기", "파일로 남김 12/12 (하네스 미적용 2/12)"],
-            ["<b>③ Skill</b>", "spec-quote: 「수량 불일치면 견적 보류」", "회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)"],
-            ["<b>④ Hook</b>", "inputs/ 수정 · 메일 발송 · 외부 전송 차단", "원본 보존 12/12"],
-            ["<b>⑥ 평가</b>", "grade.py · 과제 6개 정답 검사", "과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께"],
-        ]) + note("하네스 ≠ Skill", "Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스"), "Ch8"),
-        light("설계표 → 하네스 파일", table(["설계표 칸", "하네스 파일", "부품"], [
-            ["<b>출력 · 형식</b>", "CLAUDE.md", "지침"],
-            ["<b>판단 기준 · 사내 규칙</b>", "skills/&lt;업무&gt;/SKILL.md + 참고 자료", "Skill"],
-            ["<b>쓰는 시스템 · 도구</b>", "읽기 전용 조회 스크립트 · 도구 정의", "Tool"],
-            ["<b>절대 하면 안 되는 것</b>", "hooks/guard.py · 권한 deny 규칙", "Hook · 권한"],
-            ["<b>사람 확인 지점</b>", "권한 ask 규칙 · 승인 단계", "권한"],
-            ["<b>잘했다의 기준 · 자주 나는 실수</b>", "eval/dataset.jsonl · 엣지 케이스", "평가"],
-        ]) + code("Claude Code에 요청", PROMPT_FULL), "Ch8"),
-        light("요청문 ① CLAUDE.md · Skill", '<div class="pgrid2">' + code("CLAUDE.md", PROMPTS_HX["CLAUDE.md"]) + code("Skill", PROMPTS_HX["Skill"]) + '</div>'
-              + note("쓰는 법", "〈 〉 안만 내 업무로 바꿔 Claude Code 대화창에 붙여 넣기 · 플러그인 없이 기본 기능만"), "Ch8"),
-        light("요청문 ② Hook · 검증 Agent", '<div class="pgrid2">' + code("Hook", PROMPTS_HX["Hook"]) + code("검증 Agent", PROMPTS_HX["검증 Agent"]) + '</div>'
-              + note(".claude 쓰기", "Hook · 설정 파일은 보호 경로라 승인 요청이 뜸 · 내용을 읽고 승인"), "Ch8"),
-        light("요청문 ③ 평가 · 고치기", '<div class="pgrid2">' + code("평가", PROMPTS_HX["평가"]) + code("고치기", PROMPTS_HX["고치기"]) + '</div>'
-              + note("한 번에", "설계표가 있으면 앞 장 「설계표 → 하네스」 요청문 하나로 전부 · 자료 " + labdir("harness_prompts.md")), "Ch8"),
-        light("최종 산출물 구조", two(code("my-harness", tree), vl("오늘 만든 부품을 한 폴더로", "평가셋과 결과를 함께", "GitHub에 올려 팀이 설치")), "Ch8"),
-        light("불러오기 · 공유", code("터미널", load), "Ch8"),
-        lab("8-1", "내 업무 하네스 플러그인", "Ch8",
-            "내 하네스 설계표를 설치해 쓰는 하네스로 · 숫자로 증명",
-            ["설계표를 Claude에 주고 CLAUDE.md · Skill · Hook · 평가 문항 초안 생성", "my-harness 템플릿에 넣기 · claude plugin validate", "평가 문항으로 하네스 미적용 vs 내 하네스 비교 (Agent Watch로 흐름 확인)", "README에 설계표 요약 · 비교표"],
-            ["내 업무 플러그인 설치 · 실행", "비교표 (정답 · 토큰 · 시간) · 막은 것 목록"], files=labdir("lab8_final_plugin"), mine="설계표 → 내 업무용 하네스 · 하네스 미적용과 비교"),
+    return chapter("Ch8", "개발 멀티에이전트 하네스", {p[0] for p in PARTS}, "전체") + [
+        light("TDD (테스트 주도 개발)", two(
+            '<div>' + flow([("① 빨강", "실패하는 테스트 먼저"), ("② 초록", "통과할 만큼만 구현"), ("③ 정리", "테스트는 그대로 통과")], hl=0)
+            + table(["에이전트에게 좋은 이유", ""], [
+                ["<b>완료 기준이 코드</b>", "「다 됐다」를 테스트가 판정"],
+                ["<b>스스로 확인</b>", "고칠 때마다 node --test"],
+                ["<b>나눠도 안전</b>", "합칠 때 깨진 곳이 바로 보임"],
+                ["<b>사람은 사례를 검토</b>", "코드 대신 테스트 사례를 읽고 승인"],
+            ]) + '</div>',
+            '<div class="ctree">' + code("① 테스트 먼저 → 실패 · ② 구현 → 통과", '// test/calc.test.js\nimport { test } from "node:test";\nimport assert from "node:assert";\nimport { total } from "../src/calc.js";\n\ntest("총액은 10원 미만 절사", () => {\n  assert.equal(total(12345), 12340);\n});\n\n// src/calc.js\nexport const total = (n) =>\n  Math.floor(n / 10) * 10;') + '</div>'), "Ch8"),
+        light("개발 멀티에이전트 하네스 구조", two(
+            '<div class="ctree">' + code("폴더 구조", 'final_dev_harness/\n├── CLAUDE.md                  순서 · 원칙\n├── 아이디어.md                만들고 싶은 툴\n├── docs/\n│   ├── brief.md               브레인스토밍 결과\n│   ├── plan.md                구현 기획\n│   └── APPROVED               사람만 만듦\n├── src/ · test/\n└── .claude/\n    ├── settings.json          Hook 등록\n    ├── hooks/plan_gate.mjs    승인 전 구현 차단\n    ├── skills/brainstorm/     질문 → brief\n    ├── skills/plan/           작업 나누기 → plan\n    └── agents/\n        ├── implementer.md     워크트리 · TDD\n        └── reviewer.md        읽기 전용 검토') + "</div>",
+            table(["단계", "담당", "결과"], [
+                ["<b>① 브레인스토밍</b>", "메인 · 사람이 답함", "docs/brief.md"],
+                ["<b>② 구현 기획</b>", "메인 (plan Skill)", "docs/plan.md · 작업 2~4개"],
+                ["<b>③ 승인</b>", "<b>사람</b> · docs/APPROVED", "승인 전 구현은 Hook이 차단"],
+                ["<b>④ 병렬 구현</b>", "implementer × 작업 수", "각자 워크트리 · TDD · 커밋"],
+                ["<b>⑤ 통합 · 리뷰</b>", "메인 · reviewer", "병합 · 전체 테스트 · 지적 반영"],
+                ["<b>⑥ 최종 판정</b>", "<b>사람</b> · 직접 써 보기", "합격 · 다시"],
+            ]))
+              + note("IT 팀 비유", "기획자(사람) → 팀장(메인) → 팀원 여럿(implementer · 각자 브랜치) → QA(reviewer) → 사람이 최종 판정"), "Ch8"),
+        light("개발 하네스를 만드는 요청문", '<div class="ptall">' + code("final_dev_harness 에서 붙여 넣기", '이 폴더에 개발 멀티에이전트 하네스를 만들어 줘.\nNode.js · 외부 패키지 없음 · 테스트는 node --test\n\n1. CLAUDE.md — 순서를 건너뛰지 않는다:\n   브레인스토밍 → 구현 기획 → 사용자 승인 → 병렬 구현(TDD) → 통합 · 리뷰 → README\n2. .claude/skills/brainstorm/SKILL.md\n   질문은 한 번에 하나 · 최대 5개 → docs/brief.md\n3. .claude/skills/plan/SKILL.md\n   공통 약속(파일 · 함수 · 데이터 모양) + 서로 겹치지 않는 작업 2~4개\n   (작업마다 맡을 파일 · 테스트 사례 3개 이상 · 완료 기준) → docs/plan.md\n   → 요약을 보여 주고 멈춘다\n4. .claude/agents/implementer.md — isolation: worktree\n   테스트 먼저 → 구현 → node --test 통과 → 커밋 · 맡은 파일 밖은 고치지 않음\n5. .claude/agents/reviewer.md — 읽기 전용 · plan 대비 빠진 것 · 테스트 없는 분기\n6. .claude/hooks/plan_gate.mjs + .claude/settings.json (PreToolUse)\n   docs/APPROVED 가 없으면 src/ · test/ 쓰기 차단 · APPROVED 는 Claude가 만들지 못하게\n\n다 만들면 파일 목록과 역할을 표로 보여 줘.') + "</div>"
+              + note("막히면", "부록 ⑦ ⑧의 파일 그대로 「파일로 저장」 · .claude 쓰기 · git · 워크트리 승인 요청은 읽고 승인"), "Ch8"),
+        lab("8-1", "개발 멀티에이전트 하네스로 내 업무 툴", "Ch8",
+            "기획 → 사람 승인 → 병렬 TDD로 내가 쓸 툴 만들기 · 판정은 사람",
+            ["final_dev_harness를 git 저장소로 (첫 커밋)", "요청문으로 하네스 만들기 → 파일 확인 · 커밋", "아이디어.md → 브레인스토밍 · 구현 기획",
+             "plan.md 검토 → docs/APPROVED 직접 만들기 (사람 승인)", "병렬 TDD 구현 → 통합 · 리뷰", "직접 써 보고 판정 → 2분 발표"],
+            ["node --test 전부 통과", "내 합격 기준으로 직접 판정한 기록", "툴 시연 2분"], files=labdir("final_dev_harness"),
+            mine="평소 손으로 하던 업무 하나를 툴로"),
         *labkit('8-1', 'Ch8'),
-        light("운영: 실패 유형 정의", table(["실패", "판정", "대응"], [
-            ["<b>틀린 답</b>", "judge · 정답 비교", "평가셋에 추가"],
-            ["<b>근거 없는 답</b>", "숫자 · 조항 대조", "차단 · 사람에게"],
-            ["<b>정책 위반</b>", "금지 표현 · 권한", "Hook으로 즉시 차단"],
-            ["<b>멈춤 · 폭주</b>", "턴 · 토큰 한도", "중단 · 알림"],
-        ]), "Ch8"),
-        light("운영 장치", table(["장치", "방법"], [
-            ["<b>근거 로깅</b>", "PostToolUse · SubagentStop Hook으로 한 줄씩"],
-            ["<b>사람 확인 (HITL)</b>", "확신 낮음 · 되돌릴 수 없음 · 고위험 도메인"],
-            ["<b>롤백</b>", "하네스를 git으로 버전 관리 → 이전 태그로"],
-            ["<b>재시도</b>", "일시 오류만 · 최대 횟수 · 대기 늘리며"],
-            ["<b>단계적 배포</b>", "일부 사용자 → 지표 확인 → 전체"],
-        ]), "Ch8"),
-        light("발표 2분", flow([("문제", "무엇이 흔들렸나"), ("하네스", "무엇을 붙였나"), ("숫자", "전후 비교"), ("다음", "운영 계획")], hl=2), "Ch8"),
+        light("발표 2분", flow([("툴 시연", "무엇을 만들었나"), ("하네스", "단계 · 사람 승인 지점"), ("판정", "내 기준으로 합격인가"), ("다음", "더 맡길 일")], hl=2), "Ch8"),
         bridge("정리: 하네스 개선 루프", "", "Ch8", "다음 차수: 하네스 엔지니어링 심화"),
     ]
 
@@ -1300,7 +1344,14 @@ def materials():
               + filecode("extractor.md", labfile(M + ".claude/agents/extractor.md"), ".claude/agents/extractor.md") + "</div>", "부록"),
         light("부록 ⑥ Hook · 원본 보호 · 외부 전송 차단", css + filecode("settings.json", labfile(W + ".claude/settings.json"), ".claude/settings.json")
               + filecode("guard.py", labfile(W + ".claude/hooks/guard.py"), ".claude/hooks/guard.py") + "</div>"
-              + note("주의", "막을 것 목록은 내 업무에 맞게 · 직접 고치기 어려우면 Ch2 요청문 ②로 Claude에게"), "부록"),
+              + note("주의", "막을 것 목록은 내 업무에 맞게 · 직접 고치기 어려우면 Ch7 요청문 ②로 Claude에게"), "부록"),
+        light("부록 ⑦ 개발 하네스 · 순서 · Skill", '<div class="kgrid">' + filecode("CLAUDE.md", _kitsrc("@8-1/CLAUDE.md"), "CLAUDE.md")
+              + filecode("SKILL.md", _kitsrc("@8-1/skills/brainstorm/SKILL.md"), ".claude/skills/brainstorm/SKILL.md")
+              + filecode("SKILL.md", _kitsrc("@8-1/skills/plan/SKILL.md"), ".claude/skills/plan/SKILL.md") + "</div>", "부록"),
+        light("부록 ⑧ 개발 하네스 · Agent · Hook", '<div class="kgrid">' + filecode("implementer.md", _kitsrc("@8-1/agents/implementer.md"), ".claude/agents/implementer.md")
+              + filecode("reviewer.md", _kitsrc("@8-1/agents/reviewer.md"), ".claude/agents/reviewer.md")
+              + filecode("plan_gate.mjs", _kitsrc("@8-1/hooks/plan_gate.mjs"), ".claude/hooks/plan_gate.mjs")
+              + filecode("settings.json", _kitsrc("@8-1/settings.json"), ".claude/settings.json") + "</div>", "부록"),
     ]
 
 def slides():
@@ -1378,6 +1429,7 @@ CSS = '''
   .kgrid .code .bar{padding:6px 12px;}
   .lfold{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:2px 8px; border-radius:6px;}
   .ctree .code pre{padding:10px 16px;} .ctree .code code{font-size:13px; line-height:1.4;}
+  .ptall .code pre{padding:12px 18px;} .ptall .code code{font-size:12.5px; line-height:1.5; white-space:pre-wrap;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
