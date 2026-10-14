@@ -2702,12 +2702,20 @@ lab7_eval_regression/run_suite.py -n 10 --k 3 을 다시 실행해 결과 파일
 입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말</code></pre></div></div></div></div>
 </section>
 
+<section class="slide lt" data-title="하네스 브레인스토밍">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch7</span></div>
+  <h2 class="s-title sm">하네스 브레인스토밍</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>질문</th><th>왜 묻나</th><th>예 · 주간 설비 점검 보고서</th></tr></thead><tbody><tr><td><b>① 어떤 업무 · 얼마나 자주</b></td><td>반복되지 않으면 하네스보다 그때그때 요청</td><td>매주 월요일 · 팀장에게 보고</td></tr><tr><td><b>② 무엇이 들어오나</b></td><td>입력 형식이 Skill의 첫 단계</td><td>점검 기록 CSV · 점검 기준 문서</td></tr><tr><td><b>③ 무엇이 나가야 하나</b></td><td>결과 양식 · 위치 → CLAUDE.md · Skill</td><td>요약 3줄 · 정비 요청 · 경고 표</td></tr><tr><td><b>④ 판단 기준 · 사내 규칙</b></td><td>모델이 모르는 회사 기준 → Skill</td><td>7.0 초과면 경고 · 이틀 연속이면 정비 요청</td></tr><tr><td><b>⑤ 절대 하면 안 되는 것</b></td><td>어기면 사고 → Hook</td><td>원본 기록 수정 · 외부 메일 발송</td></tr><tr><td><b>⑥ 사람이 꼭 볼 곳</b></td><td>HITL 지점 → 승인 · 판정</td><td>발송 전 팀장 확인</td></tr><tr><td><b>⑦ 잘했다의 기준 · 자주 나는 실수</b></td><td>평가 문항 · 엣지 케이스</td><td>누락 0건 · 빈 값을 0으로 읽는 실수</td></tr></tbody></table><div class="dbnote"><span>다음</span> 답이 곧 하네스 재료 · 메타 하네스의 인터뷰가 이 질문을 대신 던진다</div></div></div>
+</section>
+
 <section class="slide lt" data-title="하네스 만드는 순서">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">하네스 만드는 순서</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 가까운 예시</b><span>유형 고르고 값 바꾸기</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (하네스 미적용 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 브레인스토밍</b><span>업무 · 막을 것 · 잘했다의 기준</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (하네스 미적용 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
 </section>
 
 <section class="slide lt" data-title="메타 하네스란">
