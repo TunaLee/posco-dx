@@ -46,6 +46,33 @@
   .mix b{color:var(--n);text-align:right} .mix i{font-style:normal;color:var(--m)} .mix em{color:var(--r);font-style:normal}
   .mbar{display:flex;height:22px;border-radius:6px;overflow:hidden;gap:2px}
   .mbar span{display:grid;place-items:center;color:#fff;font-size:11px;font-weight:700;min-width:4px}
+  .mode{margin-left:auto;font:inherit;font-size:13px;padding:7px 14px;border-radius:8px;border:1px solid #D5DBE3;background:#fff;color:var(--n);cursor:pointer}
+  .simple{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:16px}
+  @media (max-width:1000px){.simple{grid-template-columns:1fr}}
+  .big3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+  .big3 div{background:#fff;border-radius:12px;padding:14px 16px}
+  .big3 b{display:block;font-size:30px;color:var(--n);font-variant-numeric:tabular-nums}
+  .big3 span{font-size:13px;color:var(--m)}
+  .story{background:#fff;border-radius:12px;padding:16px 18px}
+  .story h3,.side h3{margin:0 0 12px;font-size:15px;color:var(--n)}
+  .st{display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:start;padding:7px 0;border-bottom:1px solid var(--l)}
+  .st time{font-size:12px;color:var(--g);padding-top:3px;font-variant-numeric:tabular-nums}
+  .st .tx{border-left:4px solid var(--n);padding:2px 0 2px 12px;font-size:15px;line-height:1.45}
+  .st.sub .tx{margin-left:22px;border-left-color:var(--o)}
+  .st .tx small{display:block;color:var(--m);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .st .who{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:10px;background:var(--l);color:var(--n);margin-right:6px}
+  .st.sub .who{background:#FFF1E3;color:#B5651D}
+  .st .bad{color:var(--r);font-weight:700;margin-left:6px}
+  .st.mark .tx{font-weight:700;color:var(--n)}
+  .subg summary{list-style:none;cursor:pointer} .subg summary::-webkit-details-marker{display:none}
+  .subg[open] summary small{color:var(--o)}
+  .subg .st:not(summary){padding-left:24px}
+  .side .ag{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:10px;border-left:5px solid var(--n)}
+  .side .ag.sub{border-left-color:var(--o)}
+  .side .ag b{font-size:16px;color:var(--n)} .side .ag span{float:right;color:var(--m);font-size:13px}
+  .side .ag .bar{height:8px;background:var(--l);border-radius:4px;margin:10px 0 4px;overflow:hidden}
+  .side .ag .bar i{display:block;height:100%;background:var(--n)} .side .ag.sub .bar i{background:var(--o)}
+  .side .ag em{font-style:normal;font-size:13px;color:var(--m)}
 </style>
 </head>
 <body>
@@ -53,13 +80,15 @@
   <span class="dot" id="live"></span><h1>Agent Watch</h1>
   <select id="sel"></select>
   <label><input type="checkbox" id="follow" checked> 최신 세션 따라가기</label>
+  <button id="mode" class="mode">자세히 보기</button>
 </header>
 <div class="prompt" id="prompt"></div>
 <div id="app"><div class="empty">Claude Code 세션을 기다리는 중 · Hook이 켜진 프로젝트에서 작업을 시작하면 바로 나타난다</div></div>
 
 <script>
 const S = {};            // session id → 상태
-let cur = null, dirty = true;
+let cur = null, dirty = true, detail = false;
+try { detail = localStorage.getItem("aw-detail") === "1"; } catch (e) {}
 const READ = new Set(["Read","Grep","Glob","LS","WebFetch","WebSearch","NotebookRead"]);
 const EDIT = new Set(["Edit","Write","MultiEdit","NotebookEdit"]);
 const DELEG = new Set(["Agent","Task","Skill"]);
@@ -111,7 +140,7 @@ async function boot(){
 function pickSession(){
   const ids = Object.keys(S).sort((a,b) => (S[b].updated||0) - (S[a].updated||0));
   const sel = document.getElementById("sel");
-  const opts = ids.map(id => `<option value="${id}">${new Date((S[id].started||0)*1000).toLocaleTimeString("ko-KR")} · ${esc((S[id].cwd||"").split("/").pop())} · ${esc(S[id].status||"")}</option>`).join("");
+  const opts = ids.map(id => `<option value="${id}">${new Date((S[id].started||0)*1000).toLocaleTimeString("ko-KR")} · ${esc((S[id].cwd||"").split("/").filter(x => x && x !== "work").pop())} · ${esc(S[id].status||"")}</option>`).join("");
   if (sel.dataset.o !== opts) { sel.innerHTML = opts; sel.dataset.o = opts; }
   const want = new URLSearchParams(location.search).get("session");   // ?session=앞부분 으로 고정
   if (want && !cur) { cur = ids.find(id => id.startsWith(want) || (S[id].cwd || "").includes(want)) || null; if (cur) document.getElementById("follow").checked = false; }
@@ -119,6 +148,10 @@ function pickSession(){
   sel.value = cur;
   return S[cur];
 }
+document.getElementById("mode").onclick = () => {
+  detail = !detail; try { localStorage.setItem("aw-detail", detail ? "1" : "0"); } catch (e) {}
+  dirty = true;
+};
 document.getElementById("sel").onchange = e => { cur = e.target.value; document.getElementById("follow").checked = false; dirty = true; };
 
 function analyse(s){
@@ -152,6 +185,8 @@ function render(){
   if (!s) return;
   const A = analyse(s);
   document.getElementById("prompt").textContent = s.prompt ? "요청: " + s.prompt : "";
+  document.getElementById("mode").textContent = detail ? "간단히 보기" : "자세히 보기";
+  if (!detail) { document.getElementById("app").innerHTML = simpleView(s, A); return; }
   const nSub = Object.keys(s.agents).length - 1;
   const avg = A.durs.length ? A.durs.reduce((a,b)=>a+b,0)/A.durs.length/1000 : 0;
   const k = (v, label, warn) => `<div class="kpi ${warn?"warn":""}"><b>${v}</b><span>${label}</span></div>`;
@@ -180,6 +215,96 @@ function render(){
        <div class="card tips"><h3>효율 점검</h3>${tips(s, A)}</div>
      </div>
      <div class="card"><h3>최근 활동</h3><div class="feed">${feed(s, A)}</div></div>`;
+}
+
+const base = p => String(p || "").split("/").pop();
+function cat(tool){
+  if (tool === "Agent" || tool === "Task") return "deleg";
+  if (tool === "Skill") return "skill";
+  if (tool === "TodoWrite") return "todo";
+  if (tool === "Read" || tool === "NotebookRead") return "read";
+  if (["Grep","Glob","LS","WebSearch","WebFetch"].includes(tool)) return "search";
+  if (EDIT.has(tool)) return "edit";
+  if (tool === "Bash") return "bash";
+  return "other";
+}
+function sentence(g){
+  const names = [...new Set(g.items.map(e => base(e.target)))].filter(Boolean);
+  const list = names.slice(0, 3).join(", ") + (names.length > 3 ? ` 외 ${names.length - 3}` : "");
+  switch (g.cat) {
+    case "deleg": return [`<b>${esc(g.items[0].target || "Sub Agent")}</b>에게 맡김`, ""];
+    case "skill": return [`Skill 사용 · <b>${esc(g.items[0].target)}</b>`, ""];
+    case "todo": return ["할 일 목록 정리", ""];
+    case "read": return [`파일 ${names.length || g.items.length}개 읽음`, list];
+    case "search": return [`검색 ${g.items.length}번`, list];
+    case "edit": return [`파일 ${names.length || g.items.length}개 수정`, list];
+    case "bash": return [`명령 ${g.items.length}번 실행`, String(g.items[0].target || "").split("\n")[0].slice(0, 90)];
+    default: return [`${esc(g.items[0].tool)} ${g.items.length}번`, ""];
+  }
+}
+function simpleView(s, A){
+  const name = id => id === "main" ? "메인" : ((s.agents[id] || {}).type || "Sub Agent");
+  const steps = [], open = {};
+  for (const e of s.events) {
+    if (e.event === "UserPromptSubmit") steps.push({mark: true, t: e.t, agent: "main", text: "요청 받음"});
+    if (e.event === "SubagentStart") steps.push({mark: true, t: e.t, agent: e.agent, text: `${esc(e.agent_type)} 작업 시작`});
+    if (e.event === "SubagentStop") {
+      const a = s.agents[e.agent] || {};
+      steps.push({mark: true, t: e.t, agent: e.agent, text: `${esc(e.agent_type)} 보고 완료 · ${sec((a.end || e.t) - (a.start || e.t))}`});
+    }
+    if (e.event === "Stop") steps.push({mark: true, t: e.t, agent: "main", text: "답변 완료"});
+    if (e.event !== "PreToolUse") continue;
+    const c = cat(e.tool), last = open[e.agent];
+    const p = A.post[e.id], bad = (p && p.event === "PostToolUseFailure") ? "fail" : A.stuck.includes(e) ? "stuck" : "";
+    if (last && last === steps[steps.length - 1] && last.cat === c && !["deleg","skill"].includes(c)) {
+      last.items.push(e); if (bad) last[bad] = (last[bad] || 0) + 1; continue;
+    }
+    const g = {t: e.t, agent: e.agent, cat: c, items: [e]}; if (bad) g[bad] = 1;
+    steps.push(g); open[e.agent] = g;
+  }
+  const rowOf = g => {
+    const sub = g.agent !== "main";
+    if (g.mark) return `<div class="st mark${sub ? " sub" : ""}"><time>${sec(g.t - s.started)}</time><div class="tx"><span class="who">${esc(name(g.agent))}</span>${g.text}</div></div>`;
+    const [main, detailTxt] = sentence(g);
+    const bad = (g.fail ? `<span class="bad">실패 ${g.fail}</span>` : "") + (g.stuck ? `<span class="bad">막힘 ${g.stuck}</span>` : "");
+    return `<div class="st${sub ? " sub" : ""}"><time>${sec(g.t - s.started)}</time><div class="tx"><span class="who">${esc(name(g.agent))}</span>${main}${bad}${detailTxt ? `<small>${esc(detailTxt)}</small>` : ""}</div></div>`;
+  };
+  // Sub Agent는 한 줄 요약 + 펼치기
+  const subSteps = {};
+  for (const g of steps) if (g.agent !== "main") (subSteps[g.agent] ||= []).push(g);
+  const summary = id => {
+    const gs = (subSteps[id] || []).filter(g => !g.mark), cnt = {};
+    let fail = 0, stuck = 0;
+    for (const g of gs) { cnt[g.cat] = (cnt[g.cat] || 0) + g.items.length; fail += g.fail || 0; stuck += g.stuck || 0; }
+    const lab = {read: "파일 읽기", search: "검색", edit: "파일 수정", bash: "명령", deleg: "위임", skill: "Skill", todo: "할 일", other: "기타"};
+    return Object.entries(cnt).map(([k, v]) => `${lab[k]} ${v}`).join(" · ")
+      + (fail ? ` <span class="bad">실패 ${fail}</span>` : "") + (stuck ? ` <span class="bad">막힘 ${stuck}</span>` : "");
+  };
+  const done = new Set(), out = [];
+  for (const g of steps) {
+    if (g.agent === "main") { out.push(rowOf(g)); continue; }
+    if (done.has(g.agent)) continue;
+    done.add(g.agent);
+    const a = s.agents[g.agent] || {};
+    const dur = sec((a.end || (A.running ? Date.now()/1000 : A.last)) - (a.start || g.t));
+    out.push(`<details class="subg"><summary class="st sub"><time>${sec(g.t - s.started)}</time><div class="tx"><span class="who">${esc(name(g.agent))}</span>
+      <b>${a.status === "완료" ? "작업 완료" : "작업 중"}</b> · ${dur}<small>${summary(g.agent)} · 펼치기 ▾</small></div></summary>
+      ${subSteps[g.agent].map(rowOf).join("")}</details>`);
+  }
+  const rows = out.join("");
+  const ags = Object.values(s.agents).map(a => {
+    const u = (s.usage || {})[a.id] || {in:0, out:0, cr:0, cw:0, model:"-"};
+    const tok = u.in + u.out + u.cr + u.cw, share = A.total ? tok / A.total * 100 : 0;
+    const dur = (a.end || (A.running ? Date.now()/1000 : A.last)) - (a.start || s.started);
+    return `<div class="ag${a.id === "main" ? "" : " sub"}"><b>${esc(name(a.id))}</b><span>${esc((u.model || "-").replace("claude-", ""))}</span>
+      <div class="bar"><i style="width:${share.toFixed(1)}%"></i></div><em>${fmt(Math.round(tok / 1000))}k 토큰 · ${share.toFixed(0)}% · ${sec(dur)}</em></div>`;
+  }).join("");
+  const warn = tips(s, A);
+  return `<div class="big3"><div><b>${sec(A.elapsed)}</b><span>걸린 시간 · ${esc(s.status)}</span></div>
+      <div><b>${fmt(Math.round(A.total / 1000))}k</b><span>전체 토큰</span></div>
+      <div><b>${A.tools.length}번</b><span>도구 사용${A.fails.length ? ` · 실패 ${A.fails.length}` : ""}</span></div></div>
+    <div class="simple"><div class="story"><h3>누가 무엇을 했나</h3>${rows || '<div class="empty">아직 활동 없음</div>'}</div>
+      <div class="side"><h3>에이전트</h3>${ags}<div class="card tips" style="margin-top:14px"><h3>주의할 점</h3>${warn}</div></div></div>`;
 }
 
 function color(tool){ return DELEG.has(tool) ? C.o : EDIT.has(tool) ? C.n : READ.has(tool) ? C.g : C.b; }
