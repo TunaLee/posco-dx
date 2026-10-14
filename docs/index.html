@@ -1285,6 +1285,58 @@ if any(b in i.get('command', '') for b in bad) \
   </div></div>
 </section>
 
+<section class="slide lt" data-title="Claude Code로 하는 두 종류의 일">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">Claude Code로 하는 두 종류의 일</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="twocol"><div class="kcards c1"><div class="kcard"><h4>코드 작업</h4><p>기능 구현 · 테스트 · 코드 리뷰 · 배포 전 점검</p></div></div><div class="kcards c1"><div class="kcard"><h4>업무 처리</h4><p>문의 답변 · 견적 · 회의록 정리 · 보고서 · 문서 비교 · 메일 초안</p></div></div></div><div class="dbnote"><span>공통</span> 같은 부품: 지침 · Skill · Sub Agent · Hook · 평가 → 파일을 읽고 규칙대로 결과물을 만드는 일이면 모두 대상</div><div class="bns c2"><div class="bn" style="--d:0.00s"><div class="bv">20<small>%</small></div><div class="bl">Codex 주간 사용자 중 개발자가 아닌 지식 노동자</div></div><div class="bn hl" style="--d:0.12s"><div class="bv">1<small>번</small></div><div class="bl">Claude Code로 블로그 글 하나 · 채팅은 13번 주고받음</div></div></div><div class="src">출처 · <a href="https://openai.com/index/codex-for-knowledge-work" target="_blank" rel="noopener">OpenAI · Codex for knowledge work 2026.6</a> · <a href="https://www.anthropic.com/research/economic-index-june-2026-report" target="_blank" rel="noopener">Anthropic Economic Index 2026.6</a></div></div></div>
+</section>
+
+<section class="slide lt" data-title="업무 처리 하네스 구성">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">업무 처리 하네스 구성</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">labs/work_harness</span></div><pre><code>workspace/
+├── CLAUDE.md              # 업무 원칙: 결과는 out/ · 원본 수정 금지 · 근거 표기 · 확정 아닌 건 표시
+├── .claude/
+│   ├── skills/            # 업무 종류마다 절차 · 결과 양식
+│   │   ├── inquiry-answer · spec-quote · meeting-actions
+│   │   └── weekly-report · doc-diff · mail-draft
+│   ├── agents/verifier.md # 원본과 대조 · 고치지 않음
+│   └── hooks/guard.py     # 원본(inputs/) 수정 · 메일 발송 · 외부 전송 차단
+└── inputs/T1 ~ T6         # 업무 자료 (원본)</code></pre></div></div></div>
+</section>
+
+<section class="slide lt" data-title="실무 과제 여섯 가지">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">실무 과제 여섯 가지</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>과제</th><th>요청 한마디</th><th>검증 포인트</th></tr></thead><tbody><tr><td><b>T1 문의 답변</b></td><td>「사내 문의 5건에 답변 초안 써 줘」</td><td>규정 조항 근거 · 환불 문의는 담당자에게</td></tr><tr><td><b>T2 사양서 견적</b></td><td>「사양서 두 건으로 견적 내 줘」</td><td>단가표 대조 · 수량 불일치 사양서는 보류</td></tr><tr><td><b>T3 회의록 → 할 일</b></td><td>「회의록에서 할 일 정리해 줘」</td><td>「다음 주 화요일」 → 날짜 · 취소 항목 제외</td></tr><tr><td><b>T4 점검 → 주간 보고서</b></td><td>「점검 기록으로 주간 보고서 만들어 줘」</td><td>「초과」 기준 · 빈 값 · 이틀 연속 → 정비 요청</td></tr><tr><td><b>T5 규정 개정 비교</b></td><td>「작년이랑 뭐가 달라졌는지 정리해 줘」</td><td>초안 + 확정 회의록 반영</td></tr><tr><td><b>T6 납기 지연 메일</b></td><td>「고객사에 납기 지연 안내 메일 초안」</td><td>확정 안 된 날짜 · 보상 약속 금지</td></tr></tbody></table><div class="dbnote"><span>자료</span> <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness">work_harness</a> · 모든 회사 · 인물 · 수치는 가상</div></div></div>
+</section>
+
+<section class="slide lt" data-title="실측: 맨몸 vs 업무 처리 하네스">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">실측: 맨몸 vs 업무 처리 하네스</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="hbars"><div class="hbt">Claude Sonnet 5.5 · 실무 과제 6개 × 2회</div><div class="hb" style="--d:0.00s"><span class="hn">맨몸 · 정답 검사</span><span class="ht"><span class="hf" style="width:97.4%"></span></span><span class="hv">111 / 114</span></div><div class="hb" style="--d:0.10s"><span class="hn">하네스 · 정답 검사</span><span class="ht"><span class="hf" style="width:98.2%"></span></span><span class="hv">112 / 114</span></div><div class="hb" style="--d:0.20s"><span class="hn">맨몸 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:16.7%"></span></span><span class="hv">2 / 12</span></div><div class="hb hl" style="--d:0.30s"><span class="hn">하네스 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">12 / 12 (out/과제/)</span></div></div><div class="dbnote"><span>차이가 난 곳</span> 수량 불일치 사양서: 맨몸은 「확인 필요」라면서도 견적 금액을 냄 (2/2) · 하네스는 회사 규칙대로 보류 · 대신 시간 2.5배 · 토큰 1.6배</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness" target="_blank" rel="noopener">직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness</a></div></div></div>
+</section>
+
+<section class="slide lt labs" data-title="[실습 2-3] 업무 처리 하네스로 실무 과제">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-3</span></div>
+  <h2 class="s-title sm">업무 처리 하네스로 실무 과제</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="labgrid">
+    <div class="lc goal"><div class="lh">목표</div><p>코드가 아닌 업무도 같은 하네스로 · 맨몸과 비교</p><div class="lf">사용 파일 · <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness">work_harness</a></div><div class="mine"><span>내 업무 적용</span>내 업무 하나를 이 하네스에 Skill로 추가</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>맨몸으로 과제 2개 요청 → grade.py로 채점</li><li>harness/의 CLAUDE.md · .claude를 workspace에 복사</li><li>새 대화로 같은 과제 → 채점 · 결과 위치 · 근거 비교 (Agent Watch)</li><li>내 업무용 Skill 하나를 Claude에게 만들게 하고 처리</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>과제 2개 이상 하네스로 처리 · 채점</li><li>내 업무 Skill 1개</li></ul></div>
+  </div></div>
+</section>
+
 <section class="slide dk bridge" data-title="다음: 컨텍스트 설계">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="kick">Ch2 정리</div>

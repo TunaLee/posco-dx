@@ -76,6 +76,7 @@ INC_CVE = ("The Register · Claude Code CVE 2026.2", "https://www.theregister.co
 CYERA = ("Cyera · Agent-Inflicted Damage 2026.5", "https://www.cyera.com/research/agent-inflicted-damage-inside-the-real-world-failures-of-enterprise-ai-systems")
 OWN_GUARD = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/lab2_hook_by_claude", "https://github.com/TunaLee/posco-dx/tree/main/labs/lab2_hook_by_claude")
 OWN_TOK = ("직접 실측 2026.10.14 · Sonnet 5.5 · Claude Code 세션 기록", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
+OWN_WORK = ("직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness", "https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness")
 OWN = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 
 code = explain.prompt
@@ -611,6 +612,32 @@ def ch2():
             "「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로",
             ["막을 것 · 허용할 것 목록 정하기 (prompt.md)", "Claude에게 Hook 생성 요청 · .claude 쓰기 승인", "check_hook.py로 채점 → 놓친 사례를 Claude가 수정", "우회 명령 추가 · 대화에서 실제 차단 확인"],
             ["check_hook.py 15/15", "운영 DB 쓰기가 Hook으로 막히는 것 확인"], files=labdir("lab2_hook_by_claude"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
+        stat("Claude Code로 하는 두 종류의 일", "Ch2", two(
+            cards([("코드 작업", "기능 구현 · 테스트 · 코드 리뷰 · 배포 전 점검", [])], 1),
+            cards([("업무 처리", "문의 답변 · 견적 · 회의록 정리 · 보고서 · 문서 비교 · 메일 초안", [])], 1))
+             + note("공통", "같은 부품: 지침 · Skill · Sub Agent · Hook · 평가 → 파일을 읽고 규칙대로 결과물을 만드는 일이면 모두 대상")
+             + big([("20", "%", "Codex 주간 사용자 중 개발자가 아닌 지식 노동자"), ("1", "번", "Claude Code로 블로그 글 하나 · 채팅은 13번 주고받음", True)], 2),
+             OAI_CODEX, A_ECON26),
+        light("업무 처리 하네스 구성", code("labs/work_harness", 'workspace/\n├── CLAUDE.md              # 업무 원칙: 결과는 out/ · 원본 수정 금지 · 근거 표기 · 확정 아닌 건 표시\n├── .claude/\n│   ├── skills/            # 업무 종류마다 절차 · 결과 양식\n│   │   ├── inquiry-answer · spec-quote · meeting-actions\n│   │   └── weekly-report · doc-diff · mail-draft\n│   ├── agents/verifier.md # 원본과 대조 · 고치지 않음\n│   └── hooks/guard.py     # 원본(inputs/) 수정 · 메일 발송 · 외부 전송 차단\n└── inputs/T1 ~ T6         # 업무 자료 (원본)'), "Ch2"),
+        light("실무 과제 여섯 가지", table(["과제", "요청 한마디", "검증 포인트"], [
+            ["<b>T1 문의 답변</b>", "「사내 문의 5건에 답변 초안 써 줘」", "규정 조항 근거 · 환불 문의는 담당자에게"],
+            ["<b>T2 사양서 견적</b>", "「사양서 두 건으로 견적 내 줘」", "단가표 대조 · 수량 불일치 사양서는 보류"],
+            ["<b>T3 회의록 → 할 일</b>", "「회의록에서 할 일 정리해 줘」", "「다음 주 화요일」 → 날짜 · 취소 항목 제외"],
+            ["<b>T4 점검 → 주간 보고서</b>", "「점검 기록으로 주간 보고서 만들어 줘」", "「초과」 기준 · 빈 값 · 이틀 연속 → 정비 요청"],
+            ["<b>T5 규정 개정 비교</b>", "「작년이랑 뭐가 달라졌는지 정리해 줘」", "초안 + 확정 회의록 반영"],
+            ["<b>T6 납기 지연 메일</b>", "「고객사에 납기 지연 안내 메일 초안」", "확정 안 된 날짜 · 보상 약속 금지"],
+        ]) + note("자료", labdir("work_harness") + " · 모든 회사 · 인물 · 수치는 가상"), "Ch2"),
+        stat("실측: 맨몸 vs 업무 처리 하네스", "Ch2",
+             hbars([("맨몸 · 정답 검사", 97.4, False, "111 / 114"), ("하네스 · 정답 검사", 98.2, False, "112 / 114"),
+                    ("맨몸 · 결과를 파일로 남김", 16.7, False, "2 / 12"), ("하네스 · 결과를 파일로 남김", 100, True, "12 / 12 (out/과제/)")], top=100,
+                   title="Claude Sonnet 5.5 · 실무 과제 6개 × 2회")
+             + note("차이가 난 곳", "수량 불일치 사양서: 맨몸은 「확인 필요」라면서도 견적 금액을 냄 (2/2) · 하네스는 회사 규칙대로 보류 · 대신 시간 2.5배 · 토큰 1.6배"),
+             OWN_WORK),
+        lab("2-3", "업무 처리 하네스로 실무 과제", "Ch2",
+            "코드가 아닌 업무도 같은 하네스로 · 맨몸과 비교",
+            ["맨몸으로 과제 2개 요청 → grade.py로 채점", "harness/의 CLAUDE.md · .claude를 workspace에 복사", "새 대화로 같은 과제 → 채점 · 결과 위치 · 근거 비교 (Agent Watch)", "내 업무용 Skill 하나를 Claude에게 만들게 하고 처리"],
+            ["과제 2개 이상 하네스로 처리 · 채점", "내 업무 Skill 1개"], files=labdir("work_harness"),
+            mine="내 업무 하나를 이 하네스에 Skill로 추가"),
         bridge("다음: 컨텍스트 설계", "", "Ch2", "→ Ch3 컨텍스트 엔지니어링"),
     ]
 
