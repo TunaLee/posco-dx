@@ -77,6 +77,10 @@ CYERA = ("Cyera · Agent-Inflicted Damage 2026.5", "https://www.cyera.com/resear
 OWN_GUARD = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/lab2_hook_by_claude", "https://github.com/TunaLee/posco-dx/tree/main/labs/lab2_hook_by_claude")
 OWN_TOK = ("직접 실측 2026.10.14 · Sonnet 5.5 · Claude Code 세션 기록", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 OWN_WORK = ("직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness", "https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness")
+PH_WILD = ("사진 · U.S. Fish and Wildlife Service (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:Running_wild_horse_-_DPLA_-_cf88630cfe76c58a265153acb3defd01.jpg")
+PH_HARNESS = ("사진 · Jude, CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Clydesdale_wagon.jpg")
+PH_PARTS = ("그림 · Nouveau Larousse illustré 1898 (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:Parts_of_horse_harness_(in_French,_1898).jpg")
+PH_TEAM = ("사진 · Bernard Spragg (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:The_draft_horse_team._(51174500032).jpg")
 OWN = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 
 code = explain.prompt
@@ -195,6 +199,11 @@ def checks(items, rule):
     return f'<div class="cks">{li}</div><div class="ckr">{rule}</div>'
 
 
+def photo(src, cap, sub=""):
+    return (f'<figure class="ph"><img src="img/{src}" alt="{cap}"><figcaption><b>{cap}</b>'
+            f'{f"<span>{sub}</span>" if sub else ""}</figcaption></figure>')
+
+
 def labdir(d):
     return f'<a class="dl" href="{REPO}/{d}">{d}</a>'
 
@@ -310,6 +319,25 @@ def opening():
 # ── Ch1 하네스 개념 ─────────────────────────────────────
 def ch1():
     return [divider("Ch1", "하네스 엔지니어링 개념", "")] + [
+        stat("Harness = 마구(馬具)", "Ch1",
+             '<div class="ph2">' + photo("horse_wild.jpg", "마구 없는 말", "힘은 세지만 어디로 갈지 · 언제 멈출지 모름")
+             + photo("horse_harness.jpg", "마구를 찬 말", "같은 힘이 수레를 끌고 · 마부가 방향을 잡음") + "</div>"
+             + note("비유", "말 = 모델 (힘 · 지능) · 마구 = 하네스 (그 힘을 원하는 일로 바꾸는 장비 전부)"),
+             PH_WILD, PH_HARNESS),
+        stat("마구와 하네스 부품", "Ch1",
+             '<div class="phmap">' + photo("harness_parts.jpg", "마구의 부품 (1898)")
+             + table(["마구", "하는 일", "하네스에서는"], [
+                 ["<b>굴레 · 고삐</b>", "방향을 정함", "지침 · CLAUDE.md"],
+                 ["<b>눈가리개</b>", "볼 것만 보게 함", "컨텍스트 설계"],
+                 ["<b>목사리 · 끄는 줄</b>", "힘을 수레에 전달", "도구 · Skill"],
+                 ["<b>재갈</b>", "넘으면 바로 멈춤", "Hook · 권한"],
+                 ["<b>마부</b>", "최종 판단 · 상태 확인", "사람 승인 · 평가"],
+             ]) + "</div>"
+             + note("말이 좋아질수록", "마구는 가벼워지지만 사라지지 않음 · 수레를 끄는 일이면 마구가 필요"),
+             PH_PARTS),
+        stat("여러 말, 한 마차", "Ch1",
+             '<div class="phwide">' + photo("horse_team.jpg", "여러 말을 한 마차에", "마구로 묶여야 한 방향으로 끈다 → 멀티에이전트 (Ch5)") + "</div>",
+             PH_TEAM),
         light("모델 발전과 요구의 변화", evolution(), "Ch1"),
         light("대화형 작업과 위임형 작업", two(
             cards([("대화형", "질문 → 답 → 사람이 읽고 다음 질문", []),
@@ -1131,6 +1159,14 @@ CSS = '''
   .ck b{font-size:20px; color:#1F3A5F;} .ck em{font-style:normal; color:#6B7785; font-size:15px;}
   .ckr{background:#F28C28; color:#fff; font-weight:800; font-size:19px; border-radius:12px; padding:12px 18px; text-align:center;}
   @media print{.ck{animation:none}}
+  .ph2{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:12px;}
+  .ph{margin:0; background:#fff; border:1px solid #E1E5EB; border-radius:14px; overflow:hidden;}
+  .ph img{display:block; width:100%; height:330px; object-fit:cover;}
+  .ph figcaption{padding:12px 16px;} .ph figcaption b{font-size:19px; color:#1F3A5F; display:block;}
+  .ph figcaption span{font-size:15px; color:#6B7785;}
+  .phmap{display:grid; grid-template-columns:430px 1fr; gap:22px; align-items:center;}
+  .phmap .ph img{height:auto; object-fit:contain; background:#fff;}
+  .phwide .ph img{height:360px;}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
