@@ -922,6 +922,17 @@ def ch5():
             ["<b>자기 검증</b>", "자기가 쓴 답을 자기가 채점 → 관대함"],
             ["<b>순차 처리</b>", "독립 작업도 하나씩"],
         ]), "Ch5"),
+        light("IT 팀에 비유한 멀티에이전트", flow([
+            ("기획자", "요구 · 완료 기준"), ("개발팀장", "일 나누기 · 맡기기 · 취합"),
+            ("개발팀원 여럿", "맡은 일만 · 각자 책상"), ("QA", "고치지 않고 판정"), ("팀장 보고", "결과 하나로")], hl=1)
+            + table(["IT 팀", "멀티에이전트", "Claude Code에서"], [
+                ["<b>기획자</b>", "사용자", "요청 · 완료 기준"],
+                ["<b>개발팀장</b>", "메인 Agent (Supervisor)", "CLAUDE.md 나누기 규칙 · 지휘 Skill"],
+                ["<b>개발팀원</b>", "Sub Agent", ".claude/agents/이름.md · 결과만 팀장에게"],
+                ["<b>QA</b>", "검증 Agent", "verifier.md · 읽기 전용"],
+                ["<b>업무 지시서</b>", "위임문", "목표 · 범위 · 반환 형식 · 완료 기준"],
+                ["<b>팀원끼리 회의</b>", "Agent Teams", "구성원끼리 직접 소통 · 실험 기능"],
+            ]), "Ch5"),
         light("오케스트레이션 패턴", viz("orchestration_patterns"), "Ch5"),
         light("Sub Agent 위임 구조", viz("subagent_fanout"), "Ch5"),
         light("Agent Teams 구조", viz("agent_teams") + note("상태", "실험 기능 · 환경 변수로 켬 · 위임으로 충분하면 Sub Agent"), "Ch5"),

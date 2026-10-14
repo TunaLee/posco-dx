@@ -1956,6 +1956,14 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>한계</th><th>증상</th></tr></thead><tbody><tr><td><b>컨텍스트 과부하</b></td><td>조사 · 구현 · 검증이 한 책상에 쌓임</td></tr><tr><td><b>자기 검증</b></td><td>자기가 쓴 답을 자기가 채점 → 관대함</td></tr><tr><td><b>순차 처리</b></td><td>독립 작업도 하나씩</td></tr></tbody></table></div></div>
 </section>
 
+<section class="slide lt" data-title="IT 팀에 비유한 멀티에이전트">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch5</span></div>
+  <h2 class="s-title sm">IT 팀에 비유한 멀티에이전트</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>기획자</b><span>요구 · 완료 기준</span></div><div class="fa">→</div><div class="fs hl"><b>개발팀장</b><span>일 나누기 · 맡기기 · 취합</span></div><div class="fa">→</div><div class="fs"><b>개발팀원 여럿</b><span>맡은 일만 · 각자 책상</span></div><div class="fa">→</div><div class="fs"><b>QA</b><span>고치지 않고 판정</span></div><div class="fa">→</div><div class="fs"><b>팀장 보고</b><span>결과 하나로</span></div></div><table class="dbt"><thead><tr><th>IT 팀</th><th>멀티에이전트</th><th>Claude Code에서</th></tr></thead><tbody><tr><td><b>기획자</b></td><td>사용자</td><td>요청 · 완료 기준</td></tr><tr><td><b>개발팀장</b></td><td>메인 Agent (Supervisor)</td><td>CLAUDE.md 나누기 규칙 · 지휘 Skill</td></tr><tr><td><b>개발팀원</b></td><td>Sub Agent</td><td>.claude/agents/이름.md · 결과만 팀장에게</td></tr><tr><td><b>QA</b></td><td>검증 Agent</td><td>verifier.md · 읽기 전용</td></tr><tr><td><b>업무 지시서</b></td><td>위임문</td><td>목표 · 범위 · 반환 형식 · 완료 기준</td></tr><tr><td><b>팀원끼리 회의</b></td><td>Agent Teams</td><td>구성원끼리 직접 소통 · 실험 기능</td></tr></tbody></table></div></div>
+</section>
+
 <section class="slide lt" data-title="오케스트레이션 패턴">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch5</span></div>
