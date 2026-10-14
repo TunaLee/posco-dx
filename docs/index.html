@@ -126,6 +126,9 @@
   .code .bar{display:flex; align-items:center; gap:7px; padding:10px 15px; border-bottom:1px solid #2A2548; background:#171430;}
   .code .bar .dot{width:11px;height:11px;border-radius:50%;}
   .code .bar .r{background:#FF6058;} .code .bar .y{background:#FFC130;} .code .bar .g{background:#28CA42;}
+  .code .bar .copybtn{margin-left:auto; font:600 12px var(--sans, sans-serif); color:#fff; background:#F28C28; border:0; border-radius:6px; padding:4px 10px; cursor:pointer;}
+  .code .bar .copybtn.done{background:#28CA42;}
+  @media print{.code .bar .copybtn{display:none}}
   .code .bar .fn{margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--code-dim);}
   .code pre{margin:0; padding:16px 18px; overflow:auto;}
   .code code{font-family:var(--mono); font-size:13px; line-height:1.6; color:var(--code-ink); white-space:pre;}
@@ -632,6 +635,9 @@
   @media print{.mchart .mline{animation:none}}
   .mcards{display:grid; gap:10px;}
   .mcards .bn{padding:14px 16px;} .mcards .bn .bv{font-size:34px;} .mcards .bn .bl{font-size:14.5px; margin-top:6px;}
+  .pgrid2 .code pre, .pgrid2 .code code{white-space:pre-wrap !important; overflow-wrap:anywhere; word-break:keep-all; font-size:13px; line-height:1.55;}
+  .pgrid2 .code{min-width:0;}
+  .pgrid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
@@ -1349,7 +1355,7 @@ if any(b in i.get('command', '') for b in bad) \
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">하네스 만드는 순서</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 가까운 예시</b><span>유형 고르고 값 바꾸기</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (맨몸 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (맨몸은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>112/114 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 가까운 예시</b><span>유형 고르고 값 바꾸기</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (맨몸 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (맨몸은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
 </section>
 
 <section class="slide lt" data-title="내용별 넣을 위치">
@@ -1358,6 +1364,58 @@ if any(b in i.get('command', '') for b in bad) \
   <h2 class="s-title sm">내용별 넣을 위치</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>이런 내용이면</th><th>여기에</th><th>예</th></tr></thead><tbody><tr><td><b>모든 업무에 해당</b></td><td>CLAUDE.md</td><td>결과 위치 · 근거 표기 · 확정 아닌 건 표시</td></tr><tr><td><b>특정 업무의 방법 · 양식 · 판단 기준</b></td><td>Skill (긴 원본은 참고 파일)</td><td>견적 절차 · 메일 필수 요소 · 점검 기준</td></tr><tr><td><b>어기면 사고</b></td><td>Hook · 권한</td><td>원본 수정 · 메일 발송 · 운영 DB 쓰기</td></tr><tr><td><b>결과를 한 번 더 따져 봐야 함</b></td><td>검증 Sub Agent</td><td>금액 · 날짜 · 고객 발송물</td></tr><tr><td><b>좋아졌는지 알아야 함</b></td><td>평가 문항 · 채점</td><td>과거 사례 · 엣지 케이스</td></tr></tbody></table><div class="dbnote"><span>시작은 작게</span> Skill 하나로 시작 → 사고 날 지점은 Hook → 확인은 평가 · Skill의 description에 「언제 쓰는지」를 분명히</div></div></div>
+</section>
+
+<section class="slide lt" data-title="요청문 ① CLAUDE.md · Skill">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">요청문 ① CLAUDE.md · Skill</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code>이 프로젝트의 CLAUDE.md를 만들어 줘. 모든 작업에 공통인 원칙만 30줄 이내로.
+- 결과는 〈out/작업명/〉 에 파일로 남긴다
+- 〈원본 폴더〉 는 수정하지 않는다
+- 숫자 · 이름 · 날짜는 원본에 있는 것만. 없거나 다르면 「확인 필요」
+- 근거(파일명 · 조항 번호)를 함께 적는다
+- 〈사람이 판단할 일: 승인 · 환불 · 외부 발송〉 은 담당자 확인으로 넘긴다
+작업별 절차는 여기 쓰지 말고 Skill로 분리한다.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Skill</span></div><pre><code>〈업무 이름〉 절차를 Skill로 만들어 줘.
+- 위치: .claude/skills/〈skill-이름〉/SKILL.md
+- description: 〈언제 쓰는지 한 줄〉
+- 본문: 단계(번호) · 판단 기준 〈기준〉 · 결과 양식 〈양식〉 · 하면 안 되는 것
+- 긴 규정 · 양식 원본은 같은 폴더의 참고 파일로 빼고 본문에서 가리킨다
+만든 뒤 예시 입력 하나로 시험하고 결과를 보여 줘.</code></pre></div></div><div class="dbnote"><span>쓰는 법</span> 〈 〉 안만 내 업무로 바꿔 Claude Code 대화창에 붙여 넣기 · 플러그인 없이 기본 기능만</div></div></div>
+</section>
+
+<section class="slide lt" data-title="요청문 ② Hook · 검증 Agent">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">요청문 ② Hook · 검증 Agent</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Hook</span></div><pre><code>PreToolUse Hook을 만들어 줘.
+막을 것: 〈운영 DB 쓰기 · 원본 폴더 수정 · 외부 전송 · 비밀 파일 읽기〉
+허용할 것: 〈조회 · 개발 환경 쓰기 · 일반 작업〉
+- .claude/hooks/guard.py 에 만들고 .claude/settings.json 에 등록
+- 막을 때는 exit 2 + 이유 한 줄
+- 표준 라이브러리만
+- 막아야 할 예 5개 · 허용해야 할 예 5개로 직접 시험해 결과를 표로</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">검증 Agent</span></div><pre><code>읽기 전용 검증 Sub Agent를 만들어 줘.
+- .claude/agents/verifier.md · 도구는 Read · Grep · Glob만
+- 할 일: 결과물을 원본과 대조 — 숫자 · 날짜 · 빠진 항목 · 지어낸 내용 · 확정 아닌 걸 확정처럼 쓴 곳
+- 고치지 않고 판정만 · 반환: 항목별 통과 / 실패 · 근거(파일:줄)
+CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.</code></pre></div></div><div class="dbnote"><span>.claude 쓰기</span> Hook · 설정 파일은 보호 경로라 승인 요청이 뜸 · 내용을 읽고 승인</div></div></div>
+</section>
+
+<section class="slide lt" data-title="요청문 ③ 평가 · 고치기">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">요청문 ③ 평가 · 고치기</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">평가</span></div><pre><code>이 업무의 평가셋과 채점 스크립트를 만들어 줘.
+- eval/cases.jsonl: 과거 사례 〈5〉건 + 엣지 케이스 〈2〉건
+  (입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말)
+- eval/grade.py: 결과 파일을 읽어 항목별 O / X와 점수 출력 (표준 라이브러리만)
+지금 하네스로 한 번 돌려 점수를 보여 줘.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">고치기</span></div><pre><code>방금 채점에서 틀린 항목을 보고 하네스를 고쳐 줘.
+- 원인이 절차면 Skill, 공통 원칙이면 CLAUDE.md, 꼭 막아야 할 것이면 Hook
+- 무엇을 왜 바꿨는지 한 줄씩 남기고
+- 다시 채점해 전후 점수를 비교해 줘</code></pre></div></div><div class="dbnote"><span>한 번에</span> 설계표가 있으면 Ch8의 「설계표 → 하네스」 요청문 하나로 전부 · 자료 <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/harness_prompts.md">harness_prompts.md</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="실무 과제 여섯 가지">
@@ -1373,7 +1431,7 @@ if any(b in i.get('command', '') for b in bad) \
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">실측: 맨몸 vs 업무 처리 하네스</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="hbars"><div class="hbt">Claude Sonnet 5.5 · 실무 과제 6개 × 2회</div><div class="hb" style="--d:0.00s"><span class="hn">맨몸 · 정답 검사</span><span class="ht"><span class="hf" style="width:97.4%"></span></span><span class="hv">111 / 114</span></div><div class="hb" style="--d:0.10s"><span class="hn">하네스 · 정답 검사</span><span class="ht"><span class="hf" style="width:98.2%"></span></span><span class="hv">112 / 114</span></div><div class="hb" style="--d:0.20s"><span class="hn">맨몸 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:16.7%"></span></span><span class="hv">2 / 12</span></div><div class="hb hl" style="--d:0.30s"><span class="hn">하네스 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">12 / 12 (out/과제/)</span></div></div><div class="dbnote"><span>차이가 난 곳</span> 수량 불일치 사양서: 맨몸은 「확인 필요」라면서도 견적 금액을 냄 (2/2) · 하네스는 회사 규칙대로 보류 · 대신 시간 2.5배 · 토큰 1.6배</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness" target="_blank" rel="noopener">직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness</a></div></div></div>
+  <div class="body"><div class="mid"><div class="hbars"><div class="hbt">Claude Sonnet 5.5 · 단일 Agent 하네스 · 각 2회</div><div class="hb" style="--d:0.00s"><span class="hn">맨몸 · 과제 6개</span><span class="ht"><span class="hf" style="width:97.4%"></span></span><span class="hv">111 / 114</span></div><div class="hb" style="--d:0.10s"><span class="hn">하네스 · 과제 6개</span><span class="ht"><span class="hf" style="width:96.5%"></span></span><span class="hv">110 / 114</span></div><div class="hb" style="--d:0.20s"><span class="hn">맨몸 · 사양서 40건 견적</span><span class="ht"><span class="hf" style="width:90.2%"></span></span><span class="hv">74 / 82</span></div><div class="hb hl" style="--d:0.30s"><span class="hn">하네스 · 사양서 40건 견적</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">82 / 82</span></div><div class="hb" style="--d:0.40s"><span class="hn">맨몸 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:16.7%"></span></span><span class="hv">2 / 12</span></div><div class="hb hl" style="--d:0.50s"><span class="hn">하네스 · 결과를 파일로 남김</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">12 / 12</span></div></div><div class="dbnote"><span>차이가 난 곳</span> 40건 중 수량 불일치 · 누락 4건을 맨몸은 견적에 넣음 (2/2) · 하네스는 규칙대로 보류 · 짧은 과제는 비슷 · 시간 1.3~1.7배</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness" target="_blank" rel="noopener">직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness</a></div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 2-3] 업무 처리 하네스로 실무 과제">
@@ -1846,6 +1904,39 @@ if any(b in i.get('command', '') for b in bad) \
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>요소</th><th>빠지면</th></tr></thead><tbody><tr><td><b>목표 · 완료 기준</b></td><td>어디서 멈출지 모름</td></tr><tr><td><b>입력 범위</b></td><td>필요 없는 것까지 읽음</td></tr><tr><td><b>허용 도구</b></td><td>권한 밖 작업</td></tr><tr><td><b>반환 형식</b></td><td>부모가 결과를 못 합침</td></tr></tbody></table></div></div>
 </section>
 
+<section class="slide lt" data-title="실측: 맨몸 → 단일 하네스 → 멀티에이전트">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch5</span></div>
+  <h2 class="s-title sm">실측: 맨몸 → 단일 하네스 → 멀티에이전트</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="hbars"><div class="hbt">사양서 40건 견적 (함정 17건) · Claude Sonnet 5.5 · 각 2회</div><div class="hb" style="--d:0.00s"><span class="hn">맨몸</span><span class="ht"><span class="hf" style="width:90.2%"></span></span><span class="hv">74 / 82 · 44초</span></div><div class="hb hl" style="--d:0.10s"><span class="hn">단일 Agent 하네스</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">82 / 82 · 75초</span></div><div class="hb" style="--d:0.20s"><span class="hn">멀티에이전트 하네스</span><span class="ht"><span class="hf" style="width:100.0%"></span></span><span class="hv">82 / 82 · 152초</span></div></div><div class="hbars"><div class="hbt">평균 토큰</div><div class="hb" style="--d:0.00s"><span class="hn">단일 Agent 하네스</span><span class="ht"><span class="hf" style="width:60.0%"></span></span><span class="hv">45만 토큰</span></div><div class="hb hl" style="--d:0.10s"><span class="hn">멀티에이전트 하네스</span><span class="ht"><span class="hf" style="width:93.3%"></span></span><span class="hv">70만 토큰 (1.55배)</span></div></div><div class="dbnote"><span>이 규모에선</span> 점수는 맨몸 → 단일 하네스에서 오름 · 40건은 한 Agent로 충분 → 나누면 시간 · 토큰만 늘어남</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness" target="_blank" rel="noopener">직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness</a> · <a href="https://www.anthropic.com/claude-opus-5-5-system-card" target="_blank" rel="noopener">Claude Opus 5.5 System Card 2026.9</a></div></div></div>
+</section>
+
+<section class="slide lt" data-title="멀티에이전트를 입히는 요청문">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch5</span></div>
+  <h2 class="s-title sm">멀티에이전트를 입히는 요청문</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">멀티에이전트 추가</span></div><pre><code>여러 건 처리용으로 이 하네스에 멀티에이전트를 추가해 줘.
+- .claude/agents/extractor.md: 맡은 문서만 읽고 Skill 절차대로 추출 · 계산 (Read · Grep · Glob)
+- .claude/agents/verifier.md: 원본과 대조 · 금액 재계산 · 고치지 않음
+- CLAUDE.md에 추가: 10건 넘으면 10건씩 나눠 extractor 여러 개에 동시에 → verifier 대조
+  → 틀린 것만 한 번 더 · 몇 건 안 되는 일은 나누지 않음
+끝나면 같은 과제를 단일 하네스와 비교해 점수 · 시간 · 토큰을 표로</code></pre></div><table class="dbt"><thead><tr><th>나눌 때</th><th>나누지 않을 때</th></tr></thead><tbody><tr><td>한 Agent 책상에 다 안 올라가는 양</td><td>몇십 건 · 짧은 문서</td></tr><tr><td>서로 독립이라 동시에 할 수 있는 일</td><td>앞 결과가 다음 단계에 필요한 한 줄기 일</td></tr><tr><td>만든 사람과 확인하는 사람을 꼭 나눠야 할 때</td><td>틀려도 바로 보이는 일</td></tr></tbody></table></div><div class="dbnote"><span>기준</span> 먼저 단일 하네스로 재고 · 시간 · 정확도가 부족할 때만 나눈다</div></div></div>
+</section>
+
+<section class="slide lt labs" data-title="[실습 5-2] 업무 하네스에 멀티에이전트 입히기">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch5</span><span class="labtag">실습 5-2</span></div>
+  <h2 class="s-title sm">업무 하네스에 멀티에이전트 입히기</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="labgrid">
+    <div class="lc goal"><div class="lh">목표</div><p>같은 과제를 단일 vs 멀티로 · 숫자로 고르기</p><div class="lf">사용 파일 · <a class="dl" href="https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness">work_harness</a></div><div class="mine"><span>내 업무 적용</span>내 업무 하네스를 나눌지 말지 · 이유</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>단일 하네스로 T7 (사양서 40건) 처리 → grade.py</li><li>요청문으로 extractor · verifier · 나누기 규칙 추가 (또는 harness_multi/ 복사)</li><li>같은 과제 다시 → 점수 · 시간 · 토큰 비교 (Agent Watch로 레인 확인)</li><li>내 업무는 어느 쪽이 맞는지 기록</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>비교표 (단일 vs 멀티)</li><li>고른 구성과 이유 한 줄</li></ul></div>
+  </div></div>
+</section>
+
 <section class="slide lt labs" data-title="[실습 5-1] Supervisor + Sub Agent + 검증">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch5</span><span class="labtag">실습 5-1</span></div>
@@ -2303,9 +2394,13 @@ claude --plugin-dir ./my-harness        # 불러서 실행
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">설계표 → 하네스 파일</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>설계표 칸</th><th>하네스 파일</th><th>부품</th></tr></thead><tbody><tr><td><b>출력 · 형식</b></td><td>CLAUDE.md</td><td>지침</td></tr><tr><td><b>판단 기준 · 사내 규칙</b></td><td>skills/&lt;업무&gt;/SKILL.md + 참고 자료</td><td>Skill</td></tr><tr><td><b>쓰는 시스템 · 도구</b></td><td>읽기 전용 조회 스크립트 · 도구 정의</td><td>Tool</td></tr><tr><td><b>절대 하면 안 되는 것</b></td><td>hooks/guard.py · 권한 deny 규칙</td><td>Hook · 권한</td></tr><tr><td><b>사람 확인 지점</b></td><td>권한 ask 규칙 · 승인 단계</td><td>권한</td></tr><tr><td><b>잘했다의 기준 · 자주 나는 실수</b></td><td>eval/dataset.jsonl · 엣지 케이스</td><td>평가</td></tr></tbody></table><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Claude Code에 요청</span></div><pre><code>내_하네스_설계표.md를 읽고 이 업무용 하네스 초안을 my-harness/에 만들어 줘.
-CLAUDE.md · Skill 1개 · Hook 규칙 · 평가 문항 5개 (엣지 케이스 2개 포함).
-설계표에 없는 규칙은 지어내지 말고 TODO로 남겨.</code></pre></div></div></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>설계표 칸</th><th>하네스 파일</th><th>부품</th></tr></thead><tbody><tr><td><b>출력 · 형식</b></td><td>CLAUDE.md</td><td>지침</td></tr><tr><td><b>판단 기준 · 사내 규칙</b></td><td>skills/&lt;업무&gt;/SKILL.md + 참고 자료</td><td>Skill</td></tr><tr><td><b>쓰는 시스템 · 도구</b></td><td>읽기 전용 조회 스크립트 · 도구 정의</td><td>Tool</td></tr><tr><td><b>절대 하면 안 되는 것</b></td><td>hooks/guard.py · 권한 deny 규칙</td><td>Hook · 권한</td></tr><tr><td><b>사람 확인 지점</b></td><td>권한 ask 규칙 · 승인 단계</td><td>권한</td></tr><tr><td><b>잘했다의 기준 · 자주 나는 실수</b></td><td>eval/dataset.jsonl · 엣지 케이스</td><td>평가</td></tr></tbody></table><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Claude Code에 요청</span></div><pre><code>〈내_하네스_설계표.md〉 를 읽고 이 업무용 하네스를 만들어 줘.
+- CLAUDE.md (공통 원칙 30줄 이내)
+- Skill 1개 (절차 · 판단 기준 · 결과 양식)
+- Hook (설계표의 「막을 것」만 차단)
+- 평가 문항 5개 (엣지 케이스 2개 포함) + 채점 스크립트
+설계표에 없는 규칙은 지어내지 말고 TODO로 남겨.
+끝나면 평가를 한 번 돌려 점수를 보여 줘.</code></pre></div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 8-1] 내 업무 하네스 플러그인">
@@ -2495,5 +2590,23 @@ options = ClaudeAgentOptions(
 
   applyScale(); go(0);
 </script>
+<script>
+// 코드 블록마다 「복사」 버튼
+document.querySelectorAll('.code').forEach(function (box) {
+  var bar = box.querySelector('.bar'), code = box.querySelector('pre');
+  if (!bar || !code) return;
+  var b = document.createElement('button');
+  b.className = 'copybtn'; b.type = 'button'; b.textContent = '복사';
+  b.addEventListener('click', function (ev) {
+    ev.stopPropagation();
+    var text = code.innerText.replace(/\n$/, '');
+    var ok = function () { b.textContent = '복사됨'; b.classList.add('done'); setTimeout(function () { b.textContent = '복사'; b.classList.remove('done'); }, 1500); };
+    if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(ok); }
+    else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} ta.remove(); }
+  });
+  bar.appendChild(b);
+});
+</script>
+
 </body>
 </html>

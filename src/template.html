@@ -126,6 +126,9 @@
   .code .bar{display:flex; align-items:center; gap:7px; padding:10px 15px; border-bottom:1px solid #2A2548; background:#171430;}
   .code .bar .dot{width:11px;height:11px;border-radius:50%;}
   .code .bar .r{background:#FF6058;} .code .bar .y{background:#FFC130;} .code .bar .g{background:#28CA42;}
+  .code .bar .copybtn{margin-left:auto; font:600 12px var(--sans, sans-serif); color:#fff; background:#F28C28; border:0; border-radius:6px; padding:4px 10px; cursor:pointer;}
+  .code .bar .copybtn.done{background:#28CA42;}
+  @media print{.code .bar .copybtn{display:none}}
   .code .bar .fn{margin-left:8px; font-family:var(--mono); font-size:12px; color:var(--code-dim);}
   .code pre{margin:0; padding:16px 18px; overflow:auto;}
   .code code{font-family:var(--mono); font-size:13px; line-height:1.6; color:var(--code-ink); white-space:pre;}
@@ -481,5 +484,23 @@
 
   applyScale(); go(0);
 </script>
+<script>
+// 코드 블록마다 「복사」 버튼
+document.querySelectorAll('.code').forEach(function (box) {
+  var bar = box.querySelector('.bar'), code = box.querySelector('pre');
+  if (!bar || !code) return;
+  var b = document.createElement('button');
+  b.className = 'copybtn'; b.type = 'button'; b.textContent = '복사';
+  b.addEventListener('click', function (ev) {
+    ev.stopPropagation();
+    var text = code.innerText.replace(/\n$/, '');
+    var ok = function () { b.textContent = '복사됨'; b.classList.add('done'); setTimeout(function () { b.textContent = '복사'; b.classList.remove('done'); }, 1500); };
+    if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(ok); }
+    else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} ta.remove(); }
+  });
+  bar.appendChild(b);
+});
+</script>
+
 </body>
 </html>

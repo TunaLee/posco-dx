@@ -65,7 +65,7 @@ def g_T2(t, g):
             ("S02 볼트 240,000", "240000" in num),
             ("S02 너트 · 와셔 60,000", "60000" in num),
             ("S06 확인 필요 표시", any_of(s06, ["확인", "불일치", "다름", "상이"])),
-            ("S06 견적 금액을 만들지 않음", "10200000" not in num and "12240000" not in num)]
+            ("S06을 합계에 넣지 않음 (보류)", "10560000" not in num and "12600000" not in num)]
 
 
 def g_T3(t, g):
@@ -97,6 +97,34 @@ def g_T5(t, g):
 def g_T6(t, g):
     ck = [(f"필수 「{alts[0]}」", any_of(t, alts)) for alts in g["must"]]
     ck += [(f"금지 「{k}」 없음", k not in t) for k in g["must_not"]]
+    return ck
+
+
+def g_T7(t, g):
+    lines = t.replace(",", "").splitlines()
+    ids = {sid: [sid, f"HB-SPEC-{700 + int(sid[3:])}"] for sid in g["specs"]}
+    owner = []                                   # 줄마다 어느 사양서 얘기인지
+    cur = None
+    def mentions(l, sid, al):
+        n = 700 + int(sid[3:])
+        return any(a in l for a in al) or re.search(rf"(^\s*\|?\s*|^\s*[-*]\s*){n}(\s*\||[).:\s])", l) is not None
+    for l in lines:
+        hit = [sid for sid, al in ids.items() if mentions(l, sid, al)]
+        cur = hit[0] if len(hit) == 1 else (None if hit else cur)
+        owner.append(cur)
+    ck = []
+    for sid, v in g["specs"].items():
+        seg = "\n".join(l for l, o in zip(lines, owner) if o == sid)
+        if v["needs_human"]:
+            held = any_of(seg, ["확인", "보류", "불일치", "누락", "기재"])
+            own = [l for l in lines if mentions(l, sid, ids[sid])]   # 그 사양서가 직접 나오는 줄 (요약 표 행)
+            no_amount = not any(re.search(r"\d{6,}", l.replace(sid, "")) for l in own)   # 보류한 사양서에 금액을 내지 않음
+            ck.append((f"{sid} 견적 보류 · 확인 필요 ({v['trap']})", held and no_amount))
+        elif v["no_price"]:
+            ck.append((f"{sid} 단가 없음 표시", any_of(seg, ["단가 없음", "단가표에 없", "단가 미등록", "없음", "미등록", "확인"])))
+        else:
+            ck.append((f"{sid} 금액 {v['amount']:,} ({v['trap']})", str(v["amount"]) in seg))
+    ck.append((f"전체 합계 {g['total']:,}", str(g["total"]) in t.replace(",", "")))
     return ck
 
 

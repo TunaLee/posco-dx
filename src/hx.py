@@ -249,6 +249,10 @@ def metr_chart():
     return f'<svg class="mchart" viewBox="0 0 {W} {H}">{g}</svg>'
 
 
+PROMPTS_HX = {'CLAUDE.md': '이 프로젝트의 CLAUDE.md를 만들어 줘. 모든 작업에 공통인 원칙만 30줄 이내로.\n- 결과는 〈out/작업명/〉 에 파일로 남긴다\n- 〈원본 폴더〉 는 수정하지 않는다\n- 숫자 · 이름 · 날짜는 원본에 있는 것만. 없거나 다르면 「확인 필요」\n- 근거(파일명 · 조항 번호)를 함께 적는다\n- 〈사람이 판단할 일: 승인 · 환불 · 외부 발송〉 은 담당자 확인으로 넘긴다\n작업별 절차는 여기 쓰지 말고 Skill로 분리한다.', 'Skill': '〈업무 이름〉 절차를 Skill로 만들어 줘.\n- 위치: .claude/skills/〈skill-이름〉/SKILL.md\n- description: 〈언제 쓰는지 한 줄〉\n- 본문: 단계(번호) · 판단 기준 〈기준〉 · 결과 양식 〈양식〉 · 하면 안 되는 것\n- 긴 규정 · 양식 원본은 같은 폴더의 참고 파일로 빼고 본문에서 가리킨다\n만든 뒤 예시 입력 하나로 시험하고 결과를 보여 줘.', 'Hook': 'PreToolUse Hook을 만들어 줘.\n막을 것: 〈운영 DB 쓰기 · 원본 폴더 수정 · 외부 전송 · 비밀 파일 읽기〉\n허용할 것: 〈조회 · 개발 환경 쓰기 · 일반 작업〉\n- .claude/hooks/guard.py 에 만들고 .claude/settings.json 에 등록\n- 막을 때는 exit 2 + 이유 한 줄\n- 표준 라이브러리만\n- 막아야 할 예 5개 · 허용해야 할 예 5개로 직접 시험해 결과를 표로', '검증 Agent': '읽기 전용 검증 Sub Agent를 만들어 줘.\n- .claude/agents/verifier.md · 도구는 Read · Grep · Glob만\n- 할 일: 결과물을 원본과 대조 — 숫자 · 날짜 · 빠진 항목 · 지어낸 내용 · 확정 아닌 걸 확정처럼 쓴 곳\n- 고치지 않고 판정만 · 반환: 항목별 통과 / 실패 · 근거(파일:줄)\nCLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.', '평가': '이 업무의 평가셋과 채점 스크립트를 만들어 줘.\n- eval/cases.jsonl: 과거 사례 〈5〉건 + 엣지 케이스 〈2〉건\n  (입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말)\n- eval/grade.py: 결과 파일을 읽어 항목별 O / X와 점수 출력 (표준 라이브러리만)\n지금 하네스로 한 번 돌려 점수를 보여 줘.', '고치기': '방금 채점에서 틀린 항목을 보고 하네스를 고쳐 줘.\n- 원인이 절차면 Skill, 공통 원칙이면 CLAUDE.md, 꼭 막아야 할 것이면 Hook\n- 무엇을 왜 바꿨는지 한 줄씩 남기고\n- 다시 채점해 전후 점수를 비교해 줘'}
+PROMPT_FULL = '〈내_하네스_설계표.md〉 를 읽고 이 업무용 하네스를 만들어 줘.\n- CLAUDE.md (공통 원칙 30줄 이내)\n- Skill 1개 (절차 · 판단 기준 · 결과 양식)\n- Hook (설계표의 「막을 것」만 차단)\n- 평가 문항 5개 (엣지 케이스 2개 포함) + 채점 스크립트\n설계표에 없는 규칙은 지어내지 말고 TODO로 남겨.\n끝나면 평가를 한 번 돌려 점수를 보여 줘.'
+
+
 def labdir(d):
     return f'<a class="dl" href="{REPO}/{d}">{d}</a>'
 
@@ -702,7 +706,7 @@ def ch2():
             ["<b>② CLAUDE.md</b>", "결과는 out/과제/ · 원본 수정 금지 · 근거 표기", "파일로 남김 12/12 (맨몸 2/12)"],
             ["<b>③ Skill</b>", "spec-quote: 「수량 불일치면 견적 보류」", "회사 규칙대로 보류 (맨몸은 금액 계산 2/2)"],
             ["<b>④ Hook</b>", "inputs/ 수정 · 메일 발송 · 외부 전송 차단", "원본 보존 12/12"],
-            ["<b>⑥ 평가</b>", "grade.py · 과제 6개 정답 검사", "112/114 · 시간 · 토큰도 함께"],
+            ["<b>⑥ 평가</b>", "grade.py · 과제 6개 정답 검사", "과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께"],
         ]) + note("하네스 ≠ Skill", "Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스"), "Ch2"),
         light("내용별 넣을 위치", table(["이런 내용이면", "여기에", "예"], [
             ["<b>모든 업무에 해당</b>", "CLAUDE.md", "결과 위치 · 근거 표기 · 확정 아닌 건 표시"],
@@ -711,6 +715,12 @@ def ch2():
             ["<b>결과를 한 번 더 따져 봐야 함</b>", "검증 Sub Agent", "금액 · 날짜 · 고객 발송물"],
             ["<b>좋아졌는지 알아야 함</b>", "평가 문항 · 채점", "과거 사례 · 엣지 케이스"],
         ]) + note("시작은 작게", "Skill 하나로 시작 → 사고 날 지점은 Hook → 확인은 평가 · Skill의 description에 「언제 쓰는지」를 분명히"), "Ch2"),
+        light("요청문 ① CLAUDE.md · Skill", '<div class="pgrid2">' + code("CLAUDE.md", PROMPTS_HX["CLAUDE.md"]) + code("Skill", PROMPTS_HX["Skill"]) + '</div>'
+              + note("쓰는 법", "〈 〉 안만 내 업무로 바꿔 Claude Code 대화창에 붙여 넣기 · 플러그인 없이 기본 기능만"), "Ch2"),
+        light("요청문 ② Hook · 검증 Agent", '<div class="pgrid2">' + code("Hook", PROMPTS_HX["Hook"]) + code("검증 Agent", PROMPTS_HX["검증 Agent"]) + '</div>'
+              + note(".claude 쓰기", "Hook · 설정 파일은 보호 경로라 승인 요청이 뜸 · 내용을 읽고 승인"), "Ch2"),
+        light("요청문 ③ 평가 · 고치기", '<div class="pgrid2">' + code("평가", PROMPTS_HX["평가"]) + code("고치기", PROMPTS_HX["고치기"]) + '</div>'
+              + note("한 번에", "설계표가 있으면 Ch8의 「설계표 → 하네스」 요청문 하나로 전부 · 자료 " + labdir("harness_prompts.md")), "Ch2"),
         light("실무 과제 여섯 가지", table(["과제", "요청 한마디", "검증 포인트"], [
             ["<b>T1 문의 답변</b>", "「사내 문의 5건에 답변 초안 써 줘」", "규정 조항 근거 · 환불 문의는 담당자에게"],
             ["<b>T2 사양서 견적</b>", "「사양서 두 건으로 견적 내 줘」", "단가표 대조 · 수량 불일치 사양서는 보류"],
@@ -720,10 +730,11 @@ def ch2():
             ["<b>T6 납기 지연 메일</b>", "「고객사에 납기 지연 안내 메일 초안」", "확정 안 된 날짜 · 보상 약속 금지"],
         ]) + note("자료", labdir("work_harness") + " · 모든 회사 · 인물 · 수치는 가상"), "Ch2"),
         stat("실측: 맨몸 vs 업무 처리 하네스", "Ch2",
-             hbars([("맨몸 · 정답 검사", 97.4, False, "111 / 114"), ("하네스 · 정답 검사", 98.2, False, "112 / 114"),
-                    ("맨몸 · 결과를 파일로 남김", 16.7, False, "2 / 12"), ("하네스 · 결과를 파일로 남김", 100, True, "12 / 12 (out/과제/)")], top=100,
-                   title="Claude Sonnet 5.5 · 실무 과제 6개 × 2회")
-             + note("차이가 난 곳", "수량 불일치 사양서: 맨몸은 「확인 필요」라면서도 견적 금액을 냄 (2/2) · 하네스는 회사 규칙대로 보류 · 대신 시간 2.5배 · 토큰 1.6배"),
+             hbars([("맨몸 · 과제 6개", 97.4, False, "111 / 114"), ("하네스 · 과제 6개", 96.5, False, "110 / 114"),
+                    ("맨몸 · 사양서 40건 견적", 90.2, False, "74 / 82"), ("하네스 · 사양서 40건 견적", 100, True, "82 / 82"),
+                    ("맨몸 · 결과를 파일로 남김", 16.7, False, "2 / 12"), ("하네스 · 결과를 파일로 남김", 100, True, "12 / 12")], top=100,
+                   title="Claude Sonnet 5.5 · 단일 Agent 하네스 · 각 2회")
+             + note("차이가 난 곳", "40건 중 수량 불일치 · 누락 4건을 맨몸은 견적에 넣음 (2/2) · 하네스는 규칙대로 보류 · 짧은 과제는 비슷 · 시간 1.3~1.7배"),
              OWN_WORK),
         lab("2-3", "업무 처리 하네스로 실무 과제", "Ch2",
             "코드가 아닌 업무도 같은 하네스로 · 맨몸과 비교",
@@ -925,6 +936,25 @@ def ch5():
             ["<b>허용 도구</b>", "권한 밖 작업"],
             ["<b>반환 형식</b>", "부모가 결과를 못 합침"],
         ]), "Ch5"),
+        stat("실측: 맨몸 → 단일 하네스 → 멀티에이전트", "Ch5",
+             hbars([("맨몸", 90.2, False, "74 / 82 · 44초"), ("단일 Agent 하네스", 100, True, "82 / 82 · 75초"),
+                    ("멀티에이전트 하네스", 100, False, "82 / 82 · 152초")], top=100,
+                   title="사양서 40건 견적 (함정 17건) · Claude Sonnet 5.5 · 각 2회")
+             + hbars([("단일 Agent 하네스", 45, False, "45만 토큰"), ("멀티에이전트 하네스", 70, True, "70만 토큰 (1.55배)")], top=75,
+                     title="평균 토큰")
+             + note("이 규모에선", "점수는 맨몸 → 단일 하네스에서 오름 · 40건은 한 Agent로 충분 → 나누면 시간 · 토큰만 늘어남"),
+             OWN_WORK, SC_OPUS55),
+        light("멀티에이전트를 입히는 요청문", '<div class="pgrid2">' + code("멀티에이전트 추가", '여러 건 처리용으로 이 하네스에 멀티에이전트를 추가해 줘.\n- .claude/agents/extractor.md: 맡은 문서만 읽고 Skill 절차대로 추출 · 계산 (Read · Grep · Glob)\n- .claude/agents/verifier.md: 원본과 대조 · 금액 재계산 · 고치지 않음\n- CLAUDE.md에 추가: 10건 넘으면 10건씩 나눠 extractor 여러 개에 동시에 → verifier 대조\n  → 틀린 것만 한 번 더 · 몇 건 안 되는 일은 나누지 않음\n끝나면 같은 과제를 단일 하네스와 비교해 점수 · 시간 · 토큰을 표로')
+              + table(["나눌 때", "나누지 않을 때"], [
+                  ["한 Agent 책상에 다 안 올라가는 양", "몇십 건 · 짧은 문서"],
+                  ["서로 독립이라 동시에 할 수 있는 일", "앞 결과가 다음 단계에 필요한 한 줄기 일"],
+                  ["만든 사람과 확인하는 사람을 꼭 나눠야 할 때", "틀려도 바로 보이는 일"],
+              ]) + '</div>' + note("기준", "먼저 단일 하네스로 재고 · 시간 · 정확도가 부족할 때만 나눈다"), "Ch5"),
+        lab("5-2", "업무 하네스에 멀티에이전트 입히기", "Ch5",
+            "같은 과제를 단일 vs 멀티로 · 숫자로 고르기",
+            ["단일 하네스로 T7 (사양서 40건) 처리 → grade.py", "요청문으로 extractor · verifier · 나누기 규칙 추가 (또는 harness_multi/ 복사)", "같은 과제 다시 → 점수 · 시간 · 토큰 비교 (Agent Watch로 레인 확인)", "내 업무는 어느 쪽이 맞는지 기록"],
+            ["비교표 (단일 vs 멀티)", "고른 구성과 이유 한 줄"], files=labdir("work_harness"),
+            mine="내 업무 하네스를 나눌지 말지 · 이유"),
         lab("5-1", "Supervisor + Sub Agent + 검증", "Ch5",
             "예제 하나를 멀티에이전트로 · 실행을 시각화",
             ["예제 고르기 (라우팅 · 추출)", ".claude/agents 역할 · 도구 · 반환 형식 손보기", "run.py로 실행 · 실행 기록 저장", "visualize.py → 타임라인에서 병목 · 실패 찾기"],
@@ -1128,9 +1158,7 @@ def ch8():
             ["<b>절대 하면 안 되는 것</b>", "hooks/guard.py · 권한 deny 규칙", "Hook · 권한"],
             ["<b>사람 확인 지점</b>", "권한 ask 규칙 · 승인 단계", "권한"],
             ["<b>잘했다의 기준 · 자주 나는 실수</b>", "eval/dataset.jsonl · 엣지 케이스", "평가"],
-        ]) + code("Claude Code에 요청", "내_하네스_설계표.md를 읽고 이 업무용 하네스 초안을 my-harness/에 만들어 줘.\n"
-                  "CLAUDE.md · Skill 1개 · Hook 규칙 · 평가 문항 5개 (엣지 케이스 2개 포함).\n"
-                  "설계표에 없는 규칙은 지어내지 말고 TODO로 남겨."), "Ch8"),
+        ]) + code("Claude Code에 요청", PROMPT_FULL), "Ch8"),
         lab("8-1", "내 업무 하네스 플러그인", "Ch8",
             "내 하네스 설계표를 설치해 쓰는 하네스로 · 숫자로 증명",
             ["설계표를 Claude에 주고 CLAUDE.md · Skill · Hook · 평가 문항 초안 생성", "my-harness 템플릿에 넣기 · claude plugin validate", "평가 문항으로 맨몸 vs 내 하네스 비교 (Agent Watch로 흐름 확인)", "README에 설계표 요약 · 비교표"],
@@ -1222,6 +1250,9 @@ CSS = '''
   @media print{.mchart .mline{animation:none}}
   .mcards{display:grid; gap:10px;}
   .mcards .bn{padding:14px 16px;} .mcards .bn .bv{font-size:34px;} .mcards .bn .bl{font-size:14.5px; margin-top:6px;}
+  .pgrid2 .code pre, .pgrid2 .code code{white-space:pre-wrap !important; overflow-wrap:anywhere; word-break:keep-all; font-size:13px; line-height:1.55;}
+  .pgrid2 .code{min-width:0;}
+  .pgrid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
   .days.two{grid-template-columns:1fr; max-width:900px;}
   .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}

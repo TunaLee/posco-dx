@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """업무 과제를 맨몸 · 업무 하네스로 반복 실행하고 채점한다 (Claude Sonnet 5.5 · 계정 사용량 소모).
 
-  python3 run_tasks.py --cond bare harness --tasks T1 T2 T3 T4 T5 T6 --k 1
+  python3 run_tasks.py --cond bare single --tasks T1 T2 T3 T4 T5 T6 --k 1
+  python3 run_tasks.py --cond bare single multi --tasks T7 --k 2      # 단일 vs 멀티에이전트 하네스
   python3 run_tasks.py --watch ...      # ../agent_watch 로 실시간 보기 (서버 먼저)
 
 과제마다 새 작업 폴더(runs/…)를 만들어 workspace/를 복사하고, harness 조건이면 harness/를 덮어쓴다.
@@ -29,12 +30,16 @@ TOOLS = "Read,Grep,Glob,Edit,Write,MultiEdit,TodoWrite,Task,Agent,Skill,Bash(pyt
 def one(cond, task, i, stamp, watch, timeout):
     wd = RUNS / f"{stamp}_{task}_{cond}_{i}"
     shutil.copytree(HERE / "workspace", wd)
-    if cond == "harness":
+    if cond in ("harness", "single", "multi"):
         shutil.copytree(HERE / "harness", wd, dirs_exist_ok=True)
+    if cond == "multi":                               # 단일 하네스 + Sub Agent · 오케스트레이션 규칙
+        shutil.copytree(HERE / "harness_multi" / ".claude", wd / ".claude", dirs_exist_ok=True)
+        with open(wd / "CLAUDE.md", "a", encoding="utf-8") as f:
+            f.write("\n" + (HERE / "harness_multi" / "CLAUDE.md").read_text(encoding="utf-8"))
     if watch:
         subprocess.run([sys.executable, str(HERE.parent / "agent_watch" / "install.py"), str(wd)], capture_output=True)
     prompt = json.loads((HERE / "tasks.json").read_text(encoding="utf-8"))[task]
-    src = (["project"] if cond == "harness" else []) + (["local"] if watch else [])
+    src = (["project"] if cond != "bare" else []) + (["local"] if watch else [])
     cmd = ["claude", "-p", prompt, "--model", MODEL, "--output-format", "json", "--permission-mode", "acceptEdits",
            "--allowedTools", TOOLS, "--setting-sources", ",".join(src)]
     env = dict(os.environ, **ALIASES, CLAUDE_PROJECT_DIR=str(wd))
@@ -56,8 +61,8 @@ def one(cond, task, i, stamp, watch, timeout):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--cond", nargs="+", default=["bare", "harness"], choices=["bare", "harness"])
-    ap.add_argument("--tasks", nargs="+", default=["T1", "T2", "T3", "T4", "T5", "T6"])
+    ap.add_argument("--cond", nargs="+", default=["bare", "harness"], choices=["bare", "single", "multi", "harness"])
+    ap.add_argument("--tasks", nargs="+", default=["T1", "T2", "T3", "T4", "T5", "T6", "T7"])
     ap.add_argument("--k", type=int, default=1)
     ap.add_argument("--parallel", type=int, default=4)
     ap.add_argument("--timeout", type=int, default=900)
