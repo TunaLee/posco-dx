@@ -653,6 +653,16 @@
   .lfold{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:2px 8px; border-radius:6px;}
   .ctree .code pre{padding:10px 16px;} .ctree .code code{font-size:13px; line-height:1.4;}
   .ptall .code pre{padding:12px 18px;} .ptall .code code{font-size:12.5px; line-height:1.5; white-space:pre-wrap;}
+  .arch{display:grid; grid-template-columns:1.15fr 34px 1fr 34px 1.1fr; gap:6px; align-items:stretch;}
+  .ar-col{border-radius:14px; padding:12px 14px; display:flex; flex-direction:column; gap:7px;}
+  .ar-ctx{background:#EEF2F8;} .ar-model{background:#FFF4E8; justify-content:center;} .ar-gate{background:#1F3A5F; color:#fff;}
+  .ar-h{font-weight:800; font-size:14px; margin-bottom:4px; color:#1F3A5F;} .ar-gate .ar-h{color:#fff;}
+  .ar-it{display:flex; justify-content:space-between; gap:8px; background:#fff; border-radius:8px; padding:6px 10px; font-size:13.5px;}
+  .ar-it em{font-style:normal; color:#8A8FA0; font-size:12.5px; white-space:nowrap;}
+  .ar-act{background:#fff; border:1.5px solid #F28C28; border-radius:8px; padding:9px 12px; font-size:14px; font-weight:600; text-align:center;}
+  .ar-g{background:rgba(255,255,255,.1); border-radius:8px; padding:9px 12px;} .ar-g b{display:block; font-size:14.5px;} .ar-g em{font-style:normal; font-size:12.5px; opacity:.8;}
+  .ar-arrow{display:flex; align-items:center; justify-content:center; font-size:26px; color:#F28C28; font-weight:800;}
+  .ar-loop{margin-top:10px; text-align:center; font-size:14px; color:#1F3A5F; font-weight:600;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
@@ -1106,6 +1116,14 @@ JSON 밖에 다른 글이나 코드 블록 표시를 쓰지 않는다.
   <div class="hub hubtxt" style="left:566px; top:356px">모델</div>
 </section>
 
+<section class="slide lt" data-title="Claude가 작업할 때 참고하는 것">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">Claude가 작업할 때 참고하는 것</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="arch"><div class="ar-col ar-ctx"><div class="ar-h">① 모델이 읽는 것 · 컨텍스트</div><div class="ar-it"><b>Claude Code 기본 지침</b><em>항상</em></div><div class="ar-it"><b>도구 정의 (내장 + MCP)</b><em>항상</em></div><div class="ar-it"><b>CLAUDE.md</b><em>항상</em></div><div class="ar-it"><b>Skill 목록</b><em>이름 · 설명만</em></div><div class="ar-it"><b>Sub Agent 목록</b><em>이름 · 설명만</em></div><div class="ar-it"><b>대화 · 도구 결과</b><em>쌓임</em></div><div class="ar-it"><b>새 요청 · /command 본문</b><em>이번 요청</em></div></div><div class="ar-arrow">→</div><div class="ar-col ar-model"><div class="ar-h">② Claude가 고르는 것</div><div class="ar-act">답하기</div><div class="ar-act">도구 쓰기 (Read · Bash · MCP …)</div><div class="ar-act">Skill 본문 불러오기</div><div class="ar-act">Sub Agent에게 위임</div></div><div class="ar-arrow">→</div><div class="ar-col ar-gate"><div class="ar-h">③ 모델 밖에서 작동 · 코드</div><div class="ar-g"><b>권한</b><em>settings.json 허용 · 거부 · 승인 요청</em></div><div class="ar-g"><b>Hook</b><em>실행 전후 검사 · 차단 (exit 2)</em></div><div class="ar-g"><b>실행</b><em>파일 · 명령 · 외부 시스템</em></div></div></div><div class="ar-loop">↺ 실행 결과는 다시 ①로 쌓이고, 끝날 때까지 반복</div><div class="dbnote"><span>구분</span> ①은 부탁 · 참고 (모델이 따르려 함) · ③은 강제 (모델이 우회 못 함) · Skill · Agent는 설명만 상시, 본문은 쓸 때만</div></div></div>
+</section>
+
 <section class="slide lt" data-title="프로젝트 폴더 구조 · .claude/">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch2</span></div>
@@ -1191,6 +1209,14 @@ argument-hint: [문의 내용]
 1. 의도 분류 (classifier 에게 위임)
 2. 해당 영역 응대 Agent 에게 위임
 3. verifier 통과 전에는 답하지 않는다</code></pre></div><div class="dbnote"><span>호출</span> /handle VPN이 안 붙어요</div></div></div>
+</section>
+
+<section class="slide lt" data-title="Skill과 command의 차이">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">Skill과 command의 차이</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th></th><th>command</th><th>Skill</th></tr></thead><tbody><tr><td><b>누가 부르나</b></td><td>사람이 /이름 입력</td><td>Claude가 description을 보고 스스로 · 사람도 /이름으로 가능</td></tr><tr><td><b>형태</b></td><td>.claude/commands/이름.md 한 파일</td><td>.claude/skills/이름/ 폴더 (SKILL.md + 참고 자료)</td></tr><tr><td><b>입력</b></td><td>$ARGUMENTS 로 뒤의 말</td><td>대화 내용 그대로</td></tr><tr><td><b>맞는 일</b></td><td>사람이 시작해야 하는 일 · 배포 · 발송</td><td>업무 절차 · 판단 기준 · 양식</td></tr><tr><td><b>비유</b></td><td>버튼</td><td>업무 매뉴얼</td></tr></tbody></table><div class="dbnote"><span>최근</span> command는 Skill로 합쳐진 예전 방식 · 둘 다 /이름을 만들고 똑같이 동작 · 새로 만들 땐 Skill</div><div class="dbnote"><span>자동 호출 끄기</span> SKILL.md에 disable-model-invocation: true → 사람만 /이름으로 부름 (배포 · 발송처럼 사람이 시작할 일)</div></div></div>
 </section>
 
 <section class="slide lt" data-title="Sub Agent 경계 설계">

@@ -194,6 +194,23 @@ def ctx_stack():
     return f'<div class="cs"><div class="cs-list">{rows}</div><div class="cs-side">{svg}<div class="cs-leg">{leg}</div></div></div>'
 
 
+
+def arch():
+    """Claude Code 한 번의 작업 흐름 — 모델이 읽는 것 / 모델 / 모델 밖에서 작동하는 것."""
+    ctx = [("Claude Code 기본 지침", "항상"), ("도구 정의 (내장 + MCP)", "항상"), ("CLAUDE.md", "항상"),
+           ("Skill 목록", "이름 · 설명만"), ("Sub Agent 목록", "이름 · 설명만"), ("대화 · 도구 결과", "쌓임"), ("새 요청 · /command 본문", "이번 요청")]
+    left = "".join(f'<div class="ar-it"><b>{a}</b><em>{b}</em></div>' for a, b in ctx)
+    acts = ["답하기", "도구 쓰기 (Read · Bash · MCP …)", "Skill 본문 불러오기", "Sub Agent에게 위임"]
+    mid = "".join(f'<div class="ar-act">{a}</div>' for a in acts)
+    gate = [("권한", "settings.json 허용 · 거부 · 승인 요청"), ("Hook", "실행 전후 검사 · 차단 (exit 2)"), ("실행", "파일 · 명령 · 외부 시스템")]
+    right = "".join(f'<div class="ar-g"><b>{a}</b><em>{b}</em></div>' for a, b in gate)
+    return (f'<div class="arch"><div class="ar-col ar-ctx"><div class="ar-h">① 모델이 읽는 것 · 컨텍스트</div>{left}</div>'
+            f'<div class="ar-arrow">→</div>'
+            f'<div class="ar-col ar-model"><div class="ar-h">② Claude가 고르는 것</div>{mid}</div>'
+            f'<div class="ar-arrow">→</div>'
+            f'<div class="ar-col ar-gate"><div class="ar-h">③ 모델 밖에서 작동 · 코드</div>{right}</div></div>'
+            f'<div class="ar-loop">↺ 실행 결과는 다시 ①로 쌓이고, 끝날 때까지 반복</div>')
+
 def checks(items, rule):
     """번호 붙은 체크 질문 + 판정 규칙."""
     li = "".join(f'<div class="ck" style="--d:{i * .12:.2f}s"><span>{i + 1}</span><b>{q}</b><em>{w}</em></div>'
@@ -585,6 +602,8 @@ def ch2():
              "    print('차단: 위험 명령 · 비밀 파일', file=sys.stderr)\n"
              "    sys.exit(2)                     # 2 = 막고 이유를 Claude에게")
     return chapter("Ch2", "Claude Code 하네스 분해", {"Skill · 명령", "Hook · 권한", "Tool · MCP"}, "Skill · 명령 · Hook · 도구") + [
+        light("Claude가 작업할 때 참고하는 것", arch()
+              + note("구분", "①은 부탁 · 참고 (모델이 따르려 함) · ③은 강제 (모델이 우회 못 함) · Skill · Agent는 설명만 상시, 본문은 쓸 때만"), "Ch2"),
         light("프로젝트 폴더 구조 · .claude/", two(
             '<div class="ctree">' + code("폴더 구조", '내-프로젝트/\n├── CLAUDE.md                 공통 원칙\n├── .mcp.json                 MCP 서버\n└── .claude/\n    ├── settings.json         권한 · Hook 등록 (팀 공유)\n    ├── settings.local.json   내 PC 전용 (git 제외)\n    ├── skills/\n    │   └── spec-quote/\n    │       ├── SKILL.md      절차\n    │       └── 단가표.md      참고 자료\n    ├── agents/\n    │   └── verifier.md       Sub Agent 하나 = 파일 하나\n    ├── commands/\n    │   └── triage.md         /triage 로 부름\n    └── hooks/\n        └── guard.py          Hook 스크립트') + "</div>",
             table(["위치", "들어가는 것", "언제 쓰임"], [
@@ -628,6 +647,14 @@ def ch2():
                                         vl("description: 언제 부를지", "본문: 호출될 때만 로드", "참고 파일: 양식 · 예시"))
               + note("이름", "예시일 뿐 · 팀 규칙에 맞게 자유롭게"), "Ch2"),
         light("명령(command)의 구조", code(".claude/commands/handle.md", cmd) + note("호출", "/handle VPN이 안 붙어요"), "Ch2"),
+        light("Skill과 command의 차이", table(["", "command", "Skill"], [
+            ["<b>누가 부르나</b>", "사람이 /이름 입력", "Claude가 description을 보고 스스로 · 사람도 /이름으로 가능"],
+            ["<b>형태</b>", ".claude/commands/이름.md 한 파일", ".claude/skills/이름/ 폴더 (SKILL.md + 참고 자료)"],
+            ["<b>입력</b>", "$ARGUMENTS 로 뒤의 말", "대화 내용 그대로"],
+            ["<b>맞는 일</b>", "사람이 시작해야 하는 일 · 배포 · 발송", "업무 절차 · 판단 기준 · 양식"],
+            ["<b>비유</b>", "버튼", "업무 매뉴얼"],
+        ]) + note("최근", "command는 Skill로 합쳐진 예전 방식 · 둘 다 /이름을 만들고 똑같이 동작 · 새로 만들 땐 Skill")
+              + note("자동 호출 끄기", "SKILL.md에 disable-model-invocation: true → 사람만 /이름으로 부름 (배포 · 발송처럼 사람이 시작할 일)"), "Ch2"),
         light("Sub Agent 경계 설계", table(["경계", "정하는 것", "예: reviewer"], [
             ["<b>도구 집합</b>", "쓸 수 있는 도구", "Read · Grep · Glob"],
             ["<b>권한</b>", "쓰기 · 실행 허용 여부", "쓰기 금지"],
@@ -1430,6 +1457,16 @@ CSS = '''
   .lfold{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:2px 8px; border-radius:6px;}
   .ctree .code pre{padding:10px 16px;} .ctree .code code{font-size:13px; line-height:1.4;}
   .ptall .code pre{padding:12px 18px;} .ptall .code code{font-size:12.5px; line-height:1.5; white-space:pre-wrap;}
+  .arch{display:grid; grid-template-columns:1.15fr 34px 1fr 34px 1.1fr; gap:6px; align-items:stretch;}
+  .ar-col{border-radius:14px; padding:12px 14px; display:flex; flex-direction:column; gap:7px;}
+  .ar-ctx{background:#EEF2F8;} .ar-model{background:#FFF4E8; justify-content:center;} .ar-gate{background:#1F3A5F; color:#fff;}
+  .ar-h{font-weight:800; font-size:14px; margin-bottom:4px; color:#1F3A5F;} .ar-gate .ar-h{color:#fff;}
+  .ar-it{display:flex; justify-content:space-between; gap:8px; background:#fff; border-radius:8px; padding:6px 10px; font-size:13.5px;}
+  .ar-it em{font-style:normal; color:#8A8FA0; font-size:12.5px; white-space:nowrap;}
+  .ar-act{background:#fff; border:1.5px solid #F28C28; border-radius:8px; padding:9px 12px; font-size:14px; font-weight:600; text-align:center;}
+  .ar-g{background:rgba(255,255,255,.1); border-radius:8px; padding:9px 12px;} .ar-g b{display:block; font-size:14.5px;} .ar-g em{font-style:normal; font-size:12.5px; opacity:.8;}
+  .ar-arrow{display:flex; align-items:center; justify-content:center; font-size:26px; color:#F28C28; font-weight:800;}
+  .ar-loop{margin-top:10px; text-align:center; font-size:14px; color:#1F3A5F; font-weight:600;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
