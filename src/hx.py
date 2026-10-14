@@ -455,7 +455,7 @@ def ch1():
         lab("1-1", "같은 질문 열 번", "Ch1",
             "맨몸 vs CLAUDE.md 한 장의 차이를 숫자로",
             ["맨몸으로 헤드리스 10회 실행", "harness/CLAUDE.md에 역할 · 출력 형식 · 규칙 쓰기", "같은 입력 10회 다시 실행", "답 종류 수 · JSON 유효율 · 토큰 비교표"],
-            ["답 종류 1~2종", "비교표를 최종 산출물 폴더에 저장"], files=labdir("lab1_harness_vs_bare")),
+            ["답 종류 1~2종", "비교표를 최종 산출물 폴더에 저장"], files=labdir("lab1_harness_vs_bare"), mine="내 업무의 답 형식 · 규칙을 CLAUDE.md 세 줄로"),
         bridge("다음: Claude Code 하네스 구조", "", "Ch1", "→ Ch2"),
     ]
 
@@ -612,11 +612,11 @@ def ch2():
         lab("2-1", "하네스 부품 네 개", "Ch2",
             "Skill · 명령 · Sub Agent · Hook을 내 예제에 붙이기",
             ["project/.claude 구조 살펴보기", "내 업무 Skill 하나 · 명령 하나 쓰기", "reviewer를 읽기 전용으로 정의", "guard 차단 목록에 규칙 하나 추가 → 헤드리스로 확인"],
-            ["새 세션에서 Skill 자동 호출", ".env 수정 요청이 차단됨", "reviewer가 파일을 못 고침"], files=labdir("lab2_claude_code_parts")),
+            ["새 세션에서 Skill 자동 호출", ".env 수정 요청이 차단됨", "reviewer가 파일을 못 고침"], files=labdir("lab2_claude_code_parts"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
         lab("2-2", "Claude로 Hook 만들기", "Ch2",
             "「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로",
             ["막을 것 · 허용할 것 목록 정하기 (prompt.md)", "Claude에게 Hook 생성 요청 · .claude 쓰기 승인", "check_hook.py로 채점 → 놓친 사례를 Claude가 수정", "우회 명령 추가 · 대화에서 실제 차단 확인"],
-            ["check_hook.py 15/15", "운영 DB 쓰기가 Hook으로 막히는 것 확인"], files=labdir("lab2_hook_by_claude")),
+            ["check_hook.py 15/15", "운영 DB 쓰기가 Hook으로 막히는 것 확인"], files=labdir("lab2_hook_by_claude"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
         bridge("다음: 컨텍스트 설계", "", "Ch2", "→ Ch3 컨텍스트 엔지니어링"),
     ]
 
@@ -685,7 +685,7 @@ def ch3():
         lab("3-1", "컨텍스트 실험 네 가지", "Ch3",
             "같은 작업, 책상 상태만 바꿔 토큰 비교",
             ["CLAUDE.md 600줄 vs 30줄 + Skill", "폴더 통째 읽기 vs 검색해서 읽기", "직접 조사 vs Sub Agent 위임", "긴 세션 vs 새 세션 · 결과표 채우기"],
-            ["변형 4종 입력 · 캐시 · 출력 토큰 표", "품질이 떨어진 변형 표시"], files=labdir("lab3_context")),
+            ["변형 4종 입력 · 캐시 · 출력 토큰 표", "품질이 떨어진 변형 표시"], files=labdir("lab3_context"), mine="내 업무 입력 중 항상 올릴 것 vs 필요할 때만 올릴 것"),
         bridge("다음: 공개 하네스", "", "Ch3", "→ Ch4 공개 하네스"),
     ]
 
@@ -755,7 +755,7 @@ def ch4():
         lab("4-1", "같은 과제, 네 가지 하네스", "Ch4",
             "맨몸 · 내 하네스 · Superpowers · gstack 비교",
             ["sample_app 과제 카드 읽기 (버그 2개)", "맨몸으로 해결 → 기록", "Superpowers · gstack 각각 설치 후 해결", "토큰 · 시간 · 테스트 통과 · 건너뛴 단계 비교"],
-            ["compare.md 4열 완성", "내 하네스에 가져올 점 3개"], files=labdir("lab4_public_harness")),
+            ["compare.md 4열 완성", "내 하네스에 가져올 점 3개"], files=labdir("lab4_public_harness"), mine="공개 하네스에서 내 업무에 가져올 것 하나"),
         bridge("다음: 멀티에이전트", "", "Ch4", "→ Ch5 멀티에이전트"),
     ]
 
@@ -815,7 +815,7 @@ def ch5():
         lab("5-1", "Supervisor + Sub Agent + 검증", "Ch5",
             "예제 하나를 멀티에이전트로 · 실행을 시각화",
             ["예제 고르기 (라우팅 · 추출)", ".claude/agents 역할 · 도구 · 반환 형식 손보기", "run.py로 실행 (stream-json 저장)", "visualize.py → 타임라인에서 병목 · 실패 찾기"],
-            ["verifier가 오답 1건 이상 차단", "타임라인 HTML · 레인별 토큰"], files=labdir("lab5_multiagent")),
+            ["verifier가 오답 1건 이상 차단", "타임라인 HTML · 레인별 토큰"], files=labdir("lab5_multiagent"), mine="내 업무를 나눌 Agent 역할 (나눌 필요 없으면 「단일」)"),
         bridge("다음: 토큰 경제학", "", "Ch5", "→ Ch6 토큰 경제학"),
     ]
 
@@ -883,7 +883,7 @@ def ch6():
         lab("6-1", "토큰 절감 실측", "Ch6",
             "레버를 하나씩 켜며 토큰 · 품질 비교",
             ["quiz.md로 먼저 예상", "기준선 5개 과제 실행 (bench.py)", "레버 켜기: 간결 지시 · caveman · 모델 나누기 · Sub Agent", "토큰 · 정확도 함께 비교 → 남길 레버 고르기"],
-            ["레버별 토큰 · 정확도 표", "품질이 떨어진 레버는 제외"], files=labdir("lab6_tokens")),
+            ["레버별 토큰 · 정확도 표", "품질이 떨어진 레버는 제외"], files=labdir("lab6_tokens"), mine="내 업무 1회 토큰 예상 · 쓸 레버 하나"),
         bridge("다음: 평가 · 회귀 테스트", "", "Ch6", "→ Ch7 평가 · 회귀 테스트"),
     ]
 
@@ -974,7 +974,7 @@ def ch7():
         lab("7-1", "평가셋 + 회귀 테스트", "Ch7",
             "하네스를 고칠 때마다 자동으로 재는 장치",
             ["대표 10건 + 엣지 케이스 + 합성 10건", "judge 기준 → 사람 10건과 일치도", "기준선 실행 → 하네스 수정 → 재실행", "일부러 나쁘게 고쳐 compare.py 실패 확인"],
-            ["평가셋 20건 이상", "전후 비교표 · 나빠지면 실패로 끝남"], files=labdir("lab7_eval_regression")),
+            ["평가셋 20건 이상", "전후 비교표 · 나빠지면 실패로 끝남"], files=labdir("lab7_eval_regression"), mine="내 업무 평가 문항 다섯 개 · 엣지 케이스 두 개"),
         bridge("다음: 내 하네스 플러그인", "", "Ch7", "→ Ch8 최종 산출물"),
     ]
 
@@ -1008,10 +1008,20 @@ def ch8():
             ["<b>재시도</b>", "일시 오류만 · 최대 횟수 · 대기 늘리며"],
             ["<b>단계적 배포</b>", "일부 사용자 → 지표 확인 → 전체"],
         ]), "Ch8"),
-        lab("8-1", "내 하네스 플러그인 완성", "Ch8",
-            "팀원이 설치해 쓰고, 숫자로 증명되는 하네스",
-            ["my-harness 템플릿에 오늘 만든 부품 옮기기", "claude plugin validate 통과", "평가셋으로 맨몸 · 내 하네스 · 공개 하네스 비교", "GitHub에 올리고 README에 비교표"],
-            ["옆 사람이 설치해 같은 결과", "전후 비교표 · 토큰 실측표 포함"], files=labdir("lab8_final_plugin")),
+        light("업무 명세서 → 하네스 파일", table(["명세서 항목", "하네스 파일", "부품"], [
+            ["<b>출력 · 형식</b>", "CLAUDE.md", "지침"],
+            ["<b>판단 기준 · 사내 규칙</b>", "skills/&lt;업무&gt;/SKILL.md + 참고 자료", "Skill"],
+            ["<b>쓰는 시스템 · 도구</b>", "읽기 전용 조회 스크립트 · 도구 정의", "Tool"],
+            ["<b>절대 하면 안 되는 것</b>", "hooks/guard.py · 권한 deny 규칙", "Hook · 권한"],
+            ["<b>사람 확인 지점</b>", "권한 ask 규칙 · 승인 단계", "권한"],
+            ["<b>잘했다의 기준 · 자주 나는 실수</b>", "eval/dataset.jsonl · 엣지 케이스", "평가"],
+        ]) + code("Claude Code에 요청", "업무명세서.md를 읽고 이 업무용 하네스 초안을 my-harness/에 만들어 줘.\n"
+                  "CLAUDE.md · Skill 1개 · Hook 규칙 · 평가 문항 5개 (엣지 케이스 2개 포함).\n"
+                  "명세서에 없는 규칙은 지어내지 말고 TODO로 남겨."), "Ch8"),
+        lab("8-1", "내 업무 하네스 플러그인", "Ch8",
+            "내 업무 명세서를 설치해 쓰는 하네스로 · 숫자로 증명",
+            ["명세서를 Claude에 주고 CLAUDE.md · Skill · Hook · 평가 문항 초안 생성", "my-harness 템플릿에 넣기 · claude plugin validate", "평가 문항으로 맨몸 vs 내 하네스 비교 (Agent Watch로 흐름 확인)", "README에 명세서 요약 · 비교표"],
+            ["내 업무 플러그인 설치 · 실행", "비교표 (정답 · 토큰 · 시간) · 막은 것 목록"], files=labdir("lab8_final_plugin"), mine="명세서 → 내 업무용 하네스 초안 · 맨몸과 비교"),
         light("발표 2분", flow([("문제", "무엇이 흔들렸나"), ("하네스", "무엇을 붙였나"), ("숫자", "전후 비교"), ("다음", "운영 계획")], hl=2), "Ch8"),
         bridge("정리: 하네스 개선 루프", "", "Ch8", "다음 차수: 하네스 엔지니어링 심화"),
     ]

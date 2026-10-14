@@ -102,7 +102,7 @@ def capture(title, ch, shots, lines=()):
     return light(title, f'<div class="caps n{len(shots)}">{body}</div>' + (f'<ul class="capnote">{side}</ul>' if side else ""), ch)
 
 
-def lab(no, title, ch, goal, steps, done, minutes=None, files=""):
+def lab(no, title, ch, goal, steps, done, minutes=None, files="", mine=""):
     """실습 장 — 목표 · 단계 · 완료 기준 · 시간 네 칸 고정."""
     st = "".join(f"<li>{x}</li>" for x in steps)
     dn = "".join(f"<li>{x}</li>" for x in done)
@@ -112,7 +112,7 @@ def lab(no, title, ch, goal, steps, done, minutes=None, files=""):
   <h2 class="s-title sm">{title}</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>{goal}</p>{f'<div class="lf">사용 파일 · {files}</div>' if files else ''}</div>
+    <div class="lc goal"><div class="lh">목표</div><p>{goal}</p>{f'<div class="lf">사용 파일 · {files}</div>' if files else ''}{f'<div class="mine"><span>내 업무 적용</span>{mine}</div>' if mine else ''}</div>
     <div class="lc steps"><div class="lh">단계</div><ol>{st}</ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul>{dn}</ul></div>
   </div></div>
@@ -624,6 +624,8 @@ CSS = '''
   .tline.t4{grid-template-columns:repeat(4,1fr);}
   .labtag{background:#F28C28; color:#fff; font-size:12px; font-weight:800; border-radius:6px; padding:3px 9px; letter-spacing:0;}
   .labgrid{margin-top:14px; display:grid; grid-template-columns:1fr; grid-template-rows:auto 1fr; gap:16px; height:100%; padding-bottom:10px;}
+  .lt .mine{margin-top:10px; background:#FFF8F1; border:1.5px dashed #F28C28; border-radius:10px; padding:8px 14px; font-size:15px; color:#1F3A5F; font-weight:600;}
+  .lt .mine span{display:inline-block; background:#F28C28; color:#fff; font-size:13px; font-weight:800; border-radius:6px; padding:3px 10px; margin-right:12px;}
   .labgrid .lc{background:#fff; border:1px solid #E1E5EB; border-radius:12px; padding:18px 22px;}
   .labgrid .lh{font-size:13px; font-weight:800; color:#F28C28; margin-bottom:8px;}
   .labgrid .goal p{margin:0; font-size:22px; font-weight:800; color:#16233A;}
