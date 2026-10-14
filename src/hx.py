@@ -482,11 +482,13 @@ def ch1():
                    title="Claude Opus 5 · Claude Code · Terminal-Bench 4.0 · effort 설정만 다름")
              + note("많이 생각시킨다고 늘 좋진 않다", "Sonnet 5.5: max 46.2% < xhigh 52.1% · Sub Agent를 남발해 시간 초과 · 범위 밖 수정 (FrontierCode)"),
              TBLB, A_SON55),
-        stat("하네스 · 측정 환경별 비용과 점수", "Ch1",
-             hbars([("Claude Code", 22.5, True, "도구 22.5회 · 11분"), ("Terminus-2", 41, False, "도구 41회 · 19분")], top=45,
-                   title="같은 오픈 모델 6종 · 푼 과제 28 vs 26 · 실행 1회당")
-             + big([("7", "%", "약한 모델: 하네스를 바꾸면 남는 정답", True), ("6", "점", "서버 자원 설정만 바꿔 생긴 점수 차"),
-                    ("8.8", "점", "같은 모델(Sonnet 5.5), 측정 환경만 다름")]),
+        stat("하네스 · 측정 환경에 따라 달라지는 것", "Ch1",
+             hbars([("Claude Code 하네스", 22.5, True, "도구 22.5번 · 11분"), ("Terminus-2 (터미널만)", 41, False, "도구 41번 · 19분")], top=45,
+                   title="같은 오픈 모델 6종 · 과제 1개당 · 푼 과제 수는 28 vs 26으로 비슷")
+             + big([("7", "%", "약한 모델: 하네스를 바꾸면 풀던 문제 중 다시 푸는 비율", True),
+                    ("6", "점", "서버 사양만 바꿨는데 같은 모델 점수 차이"),
+                    ("8.8", "점", "같은 Sonnet 5.5 · Anthropic 측정 70.6% vs 공개 순위표 61.8%")])
+             + note("그래서", "하네스는 비용도 바꾼다 · 남의 점수는 환경이 다르다 → 우리 환경 · 우리 과제로 직접 잰다 (Ch7)"),
              HARBOR, A_NOISE, SC_SONNET55, TBLB),
         stat("모델 발전과 하네스 규모", "Ch1",
              quote("예전 Claude 모델은 포켓몬을 하려면 복잡한 도우미 하네스가 필요했다. Claude Fable 5는 화면만 보고 게임을 끝냈다", "Anthropic, Claude Fable 5 발표 2026.6")
