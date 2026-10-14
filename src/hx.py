@@ -179,23 +179,23 @@ def opening():
         cover(),
         intro.speaker(),
         agenda(),
-        stat("코딩 에이전트, 이미 매일 쓴다", "시작",
+        stat("코딩 에이전트 사용 현황", "시작",
              big([("73", "%", "코딩 도구 · 에이전트를 매일 사용", True), ("30.9", "%", "하루 4시간 이상 사용"),
                   ("500만+", "", "Codex 주간 사용자 (2026.6)")])
              + hbars([("Claude Code", 65.5, True, "65.5%"), ("GitHub Copilot", 58.7, False, "58.7%"), ("OpenAI Codex", 29.5, False, "29.5%"),
                       ("Cursor", 25.5, False, "25.5%"), ("Google Antigravity", 16.0, False, "16.0%")], top=70, title="쓰는 코딩 에이전트 (복수 응답)"),
              SO26, SO26_DATA, OAI_CODEX),
-        stat("그런데 그대로 믿지는 않는다", "시작",
+        stat("AI 답에 대한 신뢰 수준", "시작",
              rings([(48, "쉽게 검증될 때만<br>믿는다"), (76.5, "쓰기 전에<br>직접 실행해 본다", False), (6.6, "중요한 결정까지<br>맡긴다", False)])
              + note("2026 설문", "그대로 쓴다 9.6% · 복잡한 일엔 약하다 24% · 회사 방침 없이 개인 재량 29.7%"),
              SO26_DATA),
-        stat("체감은 크다, 실측은 아직 어렵다", "시작",
+        stat("생산성 체감과 실측", "시작",
              big([("3", "배", "개발자가 느끼는 속도 향상 (중앙값)", True), ("1.4~2", "배", "느끼는 업무 가치 향상"),
                   ("30~50", "%", "「AI 없이」는 하기 싫어 실험에서 뺀 과제")])
              + quote("설문 결과가 반드시 현실에 근거한 것은 아니다", "METR, 2026 사용 설문")
              + note("그래서", "느낌 대신 우리 과제 · 우리 평가셋으로 잰다"),
              METR26S, METR26),
-        stat("맡기는 방식이 바뀌었다", "시작",
+        stat("채팅과 Claude Code의 작업 방식 차이", "시작",
              hbars([("채팅", 13, False, "13번 주고받음"), ("Claude Code", 1, True, "지시 1번")], top=14, title="블로그 글 하나 완성까지 (중앙값)")
              + big([("86", "%", "일이 빨라짐"), ("82", "%", "맡는 일의 범위가 넓어짐"), ("69", "%", "품질이 좋아짐")]),
              A_ECON26),
@@ -211,7 +211,7 @@ def opening():
             ["<b>VS Code · Python 3.10+</b>", "실습 스크립트 · 데이터"],
             ["<b>Git · GitHub</b>", "하네스 버전 관리 · 공유"],
         ]) + note("실습 저장소", labdir("")), "시작"),
-        light("헤드리스: 대화창 없이 한 줄로", code("터미널", 'claude -p "VPN이 안 붙어요" --output-format json\n\n'
+        light("헤드리스 실행 (claude -p)", code("터미널", 'claude -p "VPN이 안 붙어요" --output-format json\n\n'
                                                   '{ "result": "...", "num_turns": 2, "duration_ms": 8120,\n'
                                                   '  "usage": { "input_tokens": 3812, "output_tokens": 241,\n'
                                                   '             "cache_read_input_tokens": 3402 },\n'
@@ -228,34 +228,34 @@ def opening():
 # ── Ch1 하네스 개념 ─────────────────────────────────────
 def ch1():
     return chapter("Ch1", "하네스 엔지니어링 개념", {"지침 · 컨텍스트"}, "모델과 계층 설계") + [
-        ill("scenes_more", "harness_rig", "left40", "하네스: 모델에 채우는 장비",
+        ill("scenes_more", "harness_rig", "left40", "하네스의 정의",
             ["모델: 답을 만드는 엔진", "하네스: 모델을 감싼 나머지 전부"]),
-        stat("같은 모델, 하네스만 바꿔도", "Ch1",
+        stat("같은 모델의 하네스별 점수", "Ch1",
              hbars([("GPT-5.4 · Codex CLI", 77.3, True, "77.3%"), ("GPT-5.4 · Terminus 2", 54.8, False, "54.8%"),
                     ("GPT-5.4 mini · Codex CLI", 66.1, True, "66.1%"), ("GPT-5.4 mini · Terminus 2", 36.9, False, "36.9%"),
                     ("GPT-5.3-Codex · Codex CLI", 79.1, True, "79.1%"), ("GPT-5.3-Codex · Terminus 2", 68.5, False, "68.5%")], top=100,
                    title="Terminal-Bench 2.1 · 같은 모델, 하네스만 다름")
              + note("최대 22.5점 차이", "Epoch AI도 「성능을 가장 크게 좌우하는 것은 스캐폴드 선택」 (GPT-5 기준 최대 11%)"),
              TB21, EPOCH),
-        stat("설정 하나로 19점", "Ch1",
+        stat("effort 설정별 점수", "Ch1",
              hbars([("low", 34.9, False, "34.9%"), ("medium", 44.9, False, "44.9%"), ("high", 50.3, False, "50.3%"),
                     ("max", 51.8, False, "51.8%"), ("xhigh", 53.9, True, "53.9%")], top=60,
                    title="Claude Opus 5 · Claude Code · Terminal-Bench 4.0 · effort 설정만 다름")
              + note("많이 생각시킨다고 늘 좋진 않다", "Sonnet 5.5: max 46.2% < xhigh 52.1% · Sub Agent를 남발해 시간 초과 · 범위 밖 수정 (FrontierCode)"),
              TBLB, A_SON55),
-        stat("정답 수는 같아도 비용은 두 배", "Ch1",
+        stat("하네스 · 측정 환경별 비용과 점수", "Ch1",
              hbars([("Claude Code", 22.5, True, "도구 22.5회 · 11분"), ("Terminus-2", 41, False, "도구 41회 · 19분")], top=45,
                    title="같은 오픈 모델 6종 · 푼 과제 28 vs 26 · 실행 1회당")
              + big([("7", "%", "약한 모델: 하네스를 바꾸면 남는 정답", True), ("6", "점", "서버 자원 설정만 바꿔 생긴 점수 차"),
                     ("8.8", "점", "같은 모델(Sonnet 5.5), 측정 환경만 다름")]),
              HARBOR, A_NOISE, SC_SONNET55, TBLB),
-        stat("에이전트가 맡는 일은 계속 길어진다", "Ch1",
+        stat("에이전트 작업 길이 추세", "Ch1",
              big([("105", "일", "해낼 수 있는 작업 길이가 2배 되는 주기", True),
                   ("5.7", "시간", "GPT-5.4 · 성공률 50% 기준 작업 길이"),
                   ("54", "분", "같은 모델 · 성공률 80% 기준")])
              + note("믿을 만하게 맡기려면", "성공률 기준을 올리면 맡길 수 있는 길이가 6분의 1로 · 그 사이를 하네스 · 검증이 메운다"),
              METR_FRR, METR_TH),
-        stat("모델이 좋아질수록 하네스는 가벼워진다", "Ch1",
+        stat("모델 발전과 하네스 규모", "Ch1",
              quote("예전 Claude 모델은 포켓몬을 하려면 복잡한 도우미 하네스가 필요했다. Claude Fable 5는 화면만 보고 게임을 끝냈다", "Anthropic, Claude Fable 5 발표 2026.6")
              + hbars([("Mythos 5 · 단일 Agent", 88.0, False, "88.0%"), ("Mythos 5 · 멀티에이전트", 93.3, True, "93.3%")], top=100,
                      title="BrowseComp · 같은 모델, 구성만 다름")
@@ -282,7 +282,7 @@ def ch1():
         ]), "Ch1"),
         ill("scenes_hx", "wobbly_vs_steady", "top20", "하네스 없는 Agent vs 있는 Agent",
             ["없음: 같은 질문에 매번 다른 답", "있음: 같은 형식 · 같은 근거"]),
-        light("부품마다 막는 문제", table(["부품", "막는 문제", "없으면"], [
+        light("부품별로 막는 문제", table(["부품", "막는 문제", "없으면"], [
             ["<b>지침</b>", "답 형식 · 기준이 흔들림", "같은 질문에 매번 다른 형식"],
             ["<b>Skill</b>", "절차 누락", "체크리스트 단계 건너뜀"],
             ["<b>Tool</b>", "지어낸 숫자", "조회 대신 기억으로 답"],
@@ -290,24 +290,24 @@ def ch1():
             ["<b>Hook · 권한</b>", "위험한 실행", "삭제 · 강제 push · 비밀 파일 수정"],
             ["<b>평가</b>", "조용한 품질 저하", "프롬프트 수정 후 다른 곳이 깨짐"],
         ]), "Ch1"),
-        light("신입사원 온보딩과 같은 구조", table(["신입사원이 받는 것", "Agent의 하네스"], [
+        light("신입사원 온보딩과의 비교", table(["신입사원이 받는 것", "Agent의 하네스"], [
             ["회사 소개 · 업무 규칙", "CLAUDE.md"], ["업무 매뉴얼", "Skill"], ["사내 시스템 계정", "Tool · MCP"],
             ["옆 팀 협업", "Sub Agent"], ["결재 · 보안 규정", "Hook · 권한"], ["수습 평가", "평가셋 · 회귀 테스트"],
         ]), "Ch1"),
-        light("일관성은 숫자로 잰다", table(["지표", "재는 법"], [
+        light("일관성 측정 지표", table(["지표", "재는 법"], [
             ["<b>답 일치율</b>", "같은 질문 N번 → 가장 많은 답의 비율"],
             ["<b>형식 준수율</b>", "정해진 JSON · 표 형식을 지킨 비율"],
             ["<b>근거 일치</b>", "답의 숫자 · 조항이 원문에 있는 비율"],
             ["<b>토큰</b>", "실행 1회당 입력 · 캐시 · 출력"],
         ]), "Ch1"),
-        ba("하네스 한 장의 차이", "Ch1",
+        ba("CLAUDE.md 한 장 전후 비교", "Ch1",
            "이 사양서에서 품목과 수량 알려 줘\n\n→ 1회: 표 · 2회: 문장 · 3회: 수량 단위 누락",
            "CLAUDE.md\n역할: 사양서 추출 담당\n출력: JSON {품목, 규격, 재질, 수량, 단위, 비고}\n규칙: 원문에 없는 숫자는 쓰지 않음, 없으면 null\n\n→ 10회 모두 같은 JSON"),
         lab("1-1", "같은 질문 열 번", "Ch1",
             "맨몸 vs CLAUDE.md 한 장의 차이를 숫자로",
             ["맨몸으로 헤드리스 10회 실행", "harness/CLAUDE.md에 역할 · 출력 형식 · 규칙 쓰기", "같은 입력 10회 다시 실행", "답 종류 수 · JSON 유효율 · 토큰 비교표"],
             ["답 종류 1~2종", "비교표를 최종 산출물 폴더에 저장"], files=labdir("lab1_harness_vs_bare")),
-        bridge("다음: Claude Code 하네스 뜯어보기", "", "Ch1", "→ Ch2"),
+        bridge("다음: Claude Code 하네스 구조", "", "Ch1", "→ Ch2"),
     ]
 
 
@@ -350,7 +350,7 @@ def ch2():
              "    print('차단: 위험 명령 · 비밀 파일', file=sys.stderr)\n"
              "    sys.exit(2)                     # 2 = 막고 이유를 Claude에게")
     return chapter("Ch2", "Claude Code 하네스 분해", {"Skill · 명령", "Hook · 권한", "Tool · MCP"}, "Skill · 명령 · Hook · 도구") + [
-        light("언제 로드되고 언제 실행되나", table(["요소", "언제 로드 · 실행", "성격"], [
+        light("부품별 로드 · 실행 시점", table(["요소", "언제 로드 · 실행", "성격"], [
             ["<b>CLAUDE.md</b>", "세션 시작 때 항상", "부탁 (따르려고 읽는 컨텍스트)"],
             ["<b>Skill</b>", "설명만 상시 · 본문은 호출될 때", "절차 (필요할 때만)"],
             ["<b>명령</b> (/이름)", "사람이 부를 때", "정해진 순서 실행"],
@@ -367,7 +367,7 @@ def ch2():
         light("Skill 한 개의 구조", two(code(".claude/skills/incident-report/SKILL.md", skill),
                                         vl("description: 언제 부를지", "본문: 호출될 때만 로드", "참고 파일: 양식 · 예시"))
               + note("이름", "예시일 뿐 · 팀 규칙에 맞게 자유롭게"), "Ch2"),
-        light("명령: 사람이 부르는 정해진 순서", code(".claude/commands/handle.md", cmd) + note("호출", "/handle VPN이 안 붙어요"), "Ch2"),
+        light("명령(command)의 구조", code(".claude/commands/handle.md", cmd) + note("호출", "/handle VPN이 안 붙어요"), "Ch2"),
         light("Sub Agent 경계 설계", table(["경계", "정하는 것", "예: reviewer"], [
             ["<b>도구 집합</b>", "쓸 수 있는 도구", "Read · Grep · Glob"],
             ["<b>권한</b>", "쓰기 · 실행 허용 여부", "쓰기 금지"],
@@ -376,39 +376,39 @@ def ch2():
         ]), "Ch2"),
         light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),
                                           vl("자기 컨텍스트에서 일함", "부모는 결과만 받음", "도구를 줄이면 권한도 줄어듦")), "Ch2"),
-        light("Hook: 막는 건 코드가", code(".claude/settings.json (hooks 부분)", hook_cfg) + code(".claude/hooks/guard.py", guard), "Ch2"),
-        stat("부품마다 드는 비용", "Ch2",
+        light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", hook_cfg) + code(".claude/hooks/guard.py", guard), "Ch2"),
+        stat("부품별 컨텍스트 비용", "Ch2",
              big([("1", "%", "Skill 목록이 쓰는 컨텍스트 (상한)"),
                   ("5천", "토큰", "압축 후 Skill마다 남기는 앞부분"),
                   ("200", "줄 이하", "CLAUDE.md 권장 길이", True),
                   ("2.5만", "토큰", "MCP 도구 출력 기본 한도 (1만부터 경고)")], 4)
              + note("설계 감각", "항상 올라가는 것은 짧게 · 필요할 때 부르는 것은 길어도 된다"),
              D_CCSKILLS, D_COSTS, D_MCP),
-        stat("CLAUDE.md는 권고, Hook은 강제", "Ch2",
+        stat("CLAUDE.md와 Hook의 강제력 차이", "Ch2",
              quote("CLAUDE.md 지침은 권고일 뿐이다. Hook은 결정적이고, 그 동작이 반드시 일어나게 보장한다", "Claude Code Best practices")
              + big([("33", "개", "Hook을 걸 수 있는 이벤트"), ("exit 2", "", "PreToolUse에서 도구 호출 차단", True),
                     ("수만 → 수백", "토큰", "Hook으로 로그에서 ERROR 줄만 넘길 때")]),
              D_BP, D_HOOKS, D_COSTS),
-        stat("사람 승인만으로는 부족하다", "Ch2",
+        stat("사람 승인의 한계", "Ch2",
              big([("93", "%", "승인 요청을 그대로 승인 (승인 피로)", True),
                   ("17", "%", "자동 분류기가 놓친 과잉 행동"),
                   ("0.4", "%", "안전한 명령을 잘못 막은 비율")])
              + note("2026 현재", "Claude Code 대부분 사용자의 기본 권한 = 오토 모드 · 막을 것은 Hook · 권한으로 강제"),
              A_AUTO, SC_OPUS55),
-        stat("프롬프트 주입: 최신 모델도 0은 아니다", "Ch2",
+        stat("모델별 프롬프트 주입 성공률", "Ch2",
              hbars([("Gemini 4 Argon", 0.7, False, "0.7%"), ("Claude Opus 5.5", 1.0, False, "1.0%"), ("Claude Fable 5.1", 1.0, False, "1.0%"),
                     ("Claude Sonnet 5.5", 3.4, False, "3.4%"), ("Gemini 3.8 Flash", 5.5, False, "5.5%"), ("Claude Haiku 5.5", 7.1, False, "7.1%"),
                     ("GPT-6 Astra", 8.5, True, "8.5%")], top=10, title="간접 프롬프트 주입 성공률 · 15번 시도 · 같은 공격 세트 (Anthropic 측정)")
              + note("하네스로", "외부 문서 · 웹 · 메일은 읽기 전용 Agent에 · 쓰기 · 전송은 Hook으로 막기"),
              SC_HAIKU55, SC_GPT6),
-        stat("막는 건 모델이 아니라 하네스", "Ch2",
+        stat("안전장치 유무별 공격 성공률", "Ch2",
              hbars([("Opus 5.5 · 모델만", 54.6, False, "54.6%"), ("Opus 5.5 · 탐지기 추가", 11.1, True, "11.1%")], top=60,
                    title="코딩 Agent 대상 적응형 공격 성공률 (200번 × 40개 시나리오)")
              + hbars([("GPT-5.6 Sol · 확인 정책 없음", 2.9, False, "2.9%"), ("GPT-5.6 Sol · 확인 정책 있음", 0.0, True, "0%")], top=4,
                      title="파괴적 행동 비율")
              + note("브라우저", "안전장치 없이 0.09~3.64% → 오토 모드 켜면 모든 모델 0% (110개 시나리오)"),
              SC_OPUS55, SC_GPT6),
-        stat("도구 연결의 표준: MCP · Skills", "Ch2",
+        stat("MCP · Skills 확산 현황", "Ch2",
              big([("5억", "회", "MCP SDK 월 다운로드 (대표 SDK 합계)", True),
                   ("10억+", "회", "TypeScript · Python SDK 각각 누적"),
                   ("46", "개", "Agent Skills 형식을 지원하는 도구")])
@@ -418,27 +418,27 @@ def ch2():
             "Skill · 명령 · Sub Agent · Hook을 내 예제에 붙이기",
             ["project/.claude 구조 살펴보기", "내 업무 Skill 하나 · 명령 하나 쓰기", "reviewer를 읽기 전용으로 정의", "guard 차단 목록에 규칙 하나 추가 → 헤드리스로 확인"],
             ["새 세션에서 Skill 자동 호출", ".env 수정 요청이 차단됨", "reviewer가 파일을 못 고침"], files=labdir("lab2_claude_code_parts")),
-        bridge("다음: 무엇을 보여 줄 것인가", "", "Ch2", "→ Ch3 컨텍스트 엔지니어링"),
+        bridge("다음: 컨텍스트 설계", "", "Ch2", "→ Ch3 컨텍스트 엔지니어링"),
     ]
 
 
 # ── Ch3 컨텍스트 엔지니어링 ─────────────────────────────
 def ch3():
     return chapter("Ch3", "컨텍스트 엔지니어링", {"지침 · 컨텍스트", "Sub Agent · 팀"}, "컨텍스트") + [
-        light("컨텍스트 창 = 책상", viz("context_window") + note("원칙", "책상에 올린 만큼 매번 다시 읽는다 · 올린 것이 많을수록 흐려진다"), "Ch3"),
-        stat("길어질수록 흐려진다", "Ch3",
+        light("컨텍스트 창의 구성", viz("context_window") + note("원칙", "책상에 올린 만큼 매번 다시 읽는다 · 올린 것이 많을수록 흐려진다"), "Ch3"),
+        stat("입력 길이별 정확도 (GraphWalks)", "Ch3",
              hbars([("Gemini 4 Argon", 84.2, False, "99.7 → 84.2"), ("GPT-6 Astra", 71.8, False, "98.7 → 71.8"),
                     ("Claude Opus 5.5", 66.8, True, "90.6 → 66.8"), ("Claude Fable 5.1", 65.0, False, "91.4 → 65.0")], top=100,
                    title="GraphWalks BFS (F1) · 128K 이하 → 256K~1M (막대 = 긴 쪽)")
              + quote("컨텍스트 창은 빨리 차고, 찰수록 성능이 떨어진다", "Claude Code Best practices"),
              GEM4, D_BP),
-        stat("1M 창 ≠ 1M 기억", "Ch3",
+        stat("입력 길이별 정확도 (MRCR)", "Ch3",
              hbars([("4K~8K", 98.1, False, "98.1%"), ("32K~64K", 90.0, False, "90.0%"), ("128K~256K", 87.5, False, "87.5%"),
                     ("256K~512K", 81.5, False, "81.5%"), ("512K~1M", 74.0, True, "74.0%")], top=100,
                    title="GPT-5.5 · MRCR v2 (8개 단서 찾기) · 입력 길이별")
              + note("더 큰 낙폭", "GPT-5.4: 97.3% → 36.6% · Gemini 3.5 Flash: 128K 77.3% → 1M 26.6%"),
              OAI_GPT55, GEM35F),
-        light("책상에 오르는 것들", table(["항목", "언제", "크기를 좌우하는 것"], [
+        light("컨텍스트에 올라가는 항목", table(["항목", "언제", "크기를 좌우하는 것"], [
             ["<b>시스템 · 도구 목록</b>", "항상", "MCP · 도구 개수"],
             ["<b>CLAUDE.md</b>", "항상", "길이 · 중복"],
             ["<b>Skill 설명</b>", "항상 (본문은 호출 때)", "Skill 개수"],
@@ -451,23 +451,23 @@ def ch3():
             ("줄이기", "/compact · 요약 · 오래된 도구 결과 정리", []),
             ("나누기", "Sub Agent에 따로 맡기고 결과만", []),
         ], 4), "Ch3"),
-        light("CLAUDE.md는 짧게, 매뉴얼은 Skill로", two(
+        light("CLAUDE.md와 Skill의 역할 분리", two(
             code("나쁜 예 · CLAUDE.md 600줄", "# 회사 규정 전문 (복사)\n# 업무 매뉴얼 전문 (복사)\n# 예전 회의록 …\n\n→ 매 요청마다 600줄을 다시 읽음"),
             code("좋은 예 · CLAUDE.md 30줄", "# 역할 · 출력 형식 · 금지 규칙\n# 자세한 절차는 Skill:\n#   incident-report, quote-rules\n\n→ 필요할 때만 Skill 본문 로드")), "Ch3"),
-        light("통째로 읽지 말고 찾아서 읽기", ba_like("「data 폴더 다 읽고 답해 줘」\n→ 문의 30건 + FAQ 전부가 책상에", "「FAQ에서 VPN 조항만 찾아 읽어」\n→ 조항 한 개만 책상에"), "Ch3"),
-        light("Sub Agent로 책상 나누기", viz("subagent_fanout"), "Ch3"),
-        stat("압축은 공짜가 아니다", "Ch3",
+        light("통째 읽기와 검색 읽기 비교", ba_like("「data 폴더 다 읽고 답해 줘」\n→ 문의 30건 + FAQ 전부가 책상에", "「FAQ에서 VPN 조항만 찾아 읽어」\n→ 조항 한 개만 책상에"), "Ch3"),
+        light("Sub Agent를 통한 컨텍스트 분리", viz("subagent_fanout"), "Ch3"),
+        stat("압축의 비용과 손실", "Ch3",
              quote("압축할 때마다 왜 고치기에 실패했는지, 부품이 어떻게 동작하는지 같은 세부가 빠질 수 있다", "OpenAI, GPT-6 Astra 발표 2026.9")
              + big([("400K", "", "Codex에서 실제 쓰는 창 (API는 1M)"), ("272K", "토큰", "넘으면 입력 가격 2배 (GPT-6 Astra)", True),
                     ("100K", "토큰", "넘으면 서버에서 압축 (Anthropic OSWorld 하네스)")])
              + note("하네스로", "압축만 믿지 말고 노트 · 진행 기록 파일 · Sub Agent로 책상을 나눈다"),
              OAI_GPT6, OAI_GPT55, OAI_GPT6DOC, SC_OPUS55),
-        stat("책상 크기: 주요 3사 모두 1M", "Ch3",
+        stat("주요 3사 컨텍스트 창 크기", "Ch3",
              big([("100만", "토큰", "Claude 현재 모델 전부 (출력 12.8만)"), ("105만", "토큰", "GPT-6 Astra · GPT-5.5"),
                   ("100만", "토큰", "Gemini 4 Argon (입력+출력)"), ("96.7만", "토큰", "Claude Code 자동 압축 시작", True)], 4)
              + note("크기보다 내용", "창이 커져도 1M 구간에서 정확도는 떨어진다 → 무엇을 올릴지가 여전히 핵심"),
              D_MODELS, OAI_GPT6DOC, GEM4, D_MODELCFG),
-        light("긴 세션의 함정", table(["증상", "원인", "처방"], [
+        light("긴 세션의 문제와 처방", table(["증상", "원인", "처방"], [
             ["<b>앞 지시를 잊음</b>", "이력이 길어 중요한 줄이 묻힘", "새 작업 = 새 세션"],
             ["<b>엉뚱한 파일 수정</b>", "예전 작업의 흔적이 남음", "/clear 또는 세션 분리"],
             ["<b>점점 느리고 비쌈</b>", "매 턴 전체 이력 재전송", "/compact · 요약 후 이어가기"],
@@ -476,7 +476,7 @@ def ch3():
             "같은 작업, 책상 상태만 바꿔 토큰 비교",
             ["CLAUDE.md 600줄 vs 30줄 + Skill", "폴더 통째 읽기 vs 검색해서 읽기", "직접 조사 vs Sub Agent 위임", "긴 세션 vs 새 세션 · 결과표 채우기"],
             ["변형 4종 입력 · 캐시 · 출력 토큰 표", "품질이 떨어진 변형 표시"], files=labdir("lab3_context")),
-        bridge("다음: 남이 만든 하네스 입어 보기", "", "Ch3", "→ Ch4 공개 하네스"),
+        bridge("다음: 공개 하네스", "", "Ch3", "→ Ch4 공개 하네스"),
     ]
 
 
@@ -501,7 +501,7 @@ def ch4():
           "/office-hours · /plan-eng-review   # 기획 · 설계 검토\n"
           "/review · /qa · /cso               # 리뷰 · QA · 보안")
     return chapter("Ch4", "공개 하네스 적용", {"Skill · 명령", "Sub Agent · 팀", "Hook · 권한"}, "남이 만든 하네스") + [
-        light("하네스를 패키지로: 플러그인", cards([
+        light("플러그인: 하네스 묶음", cards([
             ("맨몸 모델", "매번 모델 재량 · 결과가 운에 흔들림", []),
             ("하네스 입은 모델", "규칙 · 역할 · 절차 · 강제로 품질 고정", []),
             ("플러그인", "Skill · 명령 · Agent · Hook 묶음을 한 줄 설치", []),
@@ -514,21 +514,21 @@ def ch4():
             ["<b>claude-flow</b>", "코드로 짜는 다수 Agent 오케스트레이션", "본격 멀티에이전트"],
             ["<b>공식 플러그인 마켓</b>", "Anthropic 공식 Skill · 플러그인", "용도별"],
         ]) + note("고르는 기준", "내 업무 흐름과 맞는가 · 강제 vs 선택 · 토큰 비용"), "Ch4"),
-        light("Superpowers: 단계를 건너뛰지 못하게", code("Claude Code", sp), "Ch4"),
-        light("gstack: 가상 개발 팀", code("터미널 · Claude Code", gs), "Ch4"),
+        light("Superpowers 설치와 명령", code("Claude Code", sp), "Ch4"),
+        light("gstack 설치와 명령", code("터미널 · Claude Code", gs), "Ch4"),
         light("두 하네스의 성격", table(["", "Superpowers", "gstack"], [
             ["<b>방식</b>", "적은 명령 · 강제 흐름", "많은 명령 · 골라 쓰기"],
             ["<b>강점</b>", "계획 · TDD · 리뷰 누락 없음", "역할별 검토 · QA · 보안"],
             ["<b>약점</b>", "작은 일에도 단계가 많음", "흐름은 사람이 챙김"],
             ["<b>함께</b>", "gstack 기획 → Superpowers 실행 → gstack 리뷰 · QA", ""],
         ]), "Ch4"),
-        light("받아 쓰기 전에 볼 것", table(["항목", "확인"], [
+        light("설치 전 점검 항목", table(["항목", "확인"], [
             ["<b>Hook · 명령</b>", "어떤 명령을 실행하는가 · 외부 전송은 없는가"],
             ["<b>권한</b>", "자동 허용 범위가 넓지 않은가"],
             ["<b>토큰</b>", "상시 로드되는 Skill · 지침 양"],
             ["<b>사내 규정</b>", "외부 저장소 설치 허용 여부"],
         ]) + note("원칙", "공개 하네스도 내 평가셋으로 잰 뒤에 쓴다"), "Ch4"),
-        stat("실측 ①: 정보가 저장소에 다 있을 때", "Ch4",
+        stat("실측 ①: 정보가 저장소 안에 있는 경우", "Ch4",
              hbars([("맨몸 ×5", 15, False, "15 · 15 · 15 · 15 · 15"), ("내 하네스 ×5", 15, False, "15 · 15 · 15 · 15 · 15"),
                     ("Superpowers ×3", 0.2, True, "0 · 0 · 0 (질문하고 멈춤)")], top=15,
                    title="Claude Sonnet 5.5 · 견적 할인 · 할증 과제 · 숨은 인수 테스트 (15개 중)")
@@ -536,7 +536,7 @@ def ch4():
                      title="실행 1회 평균 토큰 (캐시 포함) · 시간 (중앙값)")
              + note("배운 점", "답이 저장소에 있으면 Sonnet 5.5는 맨몸으로도 맞춘다 · 하네스는 절차를 고정하는 대신 토큰 1.7배 · 대화형 하네스는 자동 실행에서 멈춘다"),
              OWN),
-        stat("실측 ②: 확정 정보가 저장소 밖에 있을 때", "Ch4",
+        stat("실측 ②: 확정 정보가 저장소 밖에 있는 경우", "Ch4",
              hbars([("맨몸 ×3", 7.7, False, "5 · 13 · 5"), ("내 하네스 ×3", 15, True, "15 · 15 · 15")], top=15,
                    title="같은 과제 · 확정 회의록만 저장소에서 뺌 (확정본은 하네스 Skill에만)")
              + quote("2026Q3 개정안은 「검토 중」인 초안이라 쓰지 않았습니다. 2025 시행본을 적용했습니다", "맨몸 Sonnet 5.5의 작업 보고 (3회 중 2회)")
@@ -546,7 +546,7 @@ def ch4():
             "맨몸 · 내 하네스 · Superpowers · gstack 비교",
             ["sample_app 과제 카드 읽기 (버그 2개)", "맨몸으로 해결 → 기록", "Superpowers · gstack 각각 설치 후 해결", "토큰 · 시간 · 테스트 통과 · 건너뛴 단계 비교"],
             ["compare.md 4열 완성", "내 하네스에 가져올 점 3개"], files=labdir("lab4_public_harness")),
-        bridge("다음: 여러 Agent를 지휘하기", "", "Ch4", "→ Ch5 멀티에이전트"),
+        bridge("다음: 멀티에이전트", "", "Ch4", "→ Ch5 멀티에이전트"),
     ]
 
 
@@ -558,19 +558,19 @@ def ch5():
             ["<b>자기 검증</b>", "자기가 쓴 답을 자기가 채점 → 관대함"],
             ["<b>순차 처리</b>", "독립 작업도 하나씩"],
         ]), "Ch5"),
-        stat("멀티에이전트는 언제 나은가", "Ch5",
+        stat("멀티에이전트의 효과와 한계", "Ch5",
              big([("2.7", "배", "Opus 5.5 5인 팀 · 같은 점수에 도달하는 속도", True),
                   ("+5.3", "점", "Mythos 5 · 멀티에이전트 구성 (88.0 → 93.3)"),
                   ("느려짐", "", "짧은 과제 · 조율 비용이 이득보다 큼")])
              + note("원칙", "길고 나눌 수 있는 일에만 팀 · 짧은 일은 Agent 하나"),
              SC_OPUS55, SC_FABLE5),
-        stat("토큰은 늘고, 비용은 구성에 달렸다", "Ch5",
+        stat("멀티에이전트 구성별 토큰과 비용", "Ch5",
              hbars([("단일 세션", 1, False, "1×"), ("Agent Teams", 7, True, "약 7×")], top=8, title="Claude Code 토큰 (팀원이 plan 모드일 때)")
              + big([("1.5", "배", "리더 1 + 작업자 25 · 캐시 토큰"), ("½", "", "같은 구성 비용 (작업자는 싼 모델)", True),
                     ("2.3", "시간", "작업 시간 (단일은 15~20시간) · 대신 점수 10~12점↓")])
              + note("OpenAI도", "「Sub Agent 작업은 단일 Agent보다 토큰을 더 쓴다」"),
              D_COSTS, D_OPT, OAI_SUB),
-        stat("규모는 일의 크기에 맞춘다", "Ch5", table(["상황", "측정 결과 · 권장"], [
+        stat("작업 유형별 권장 구성", "Ch5", table(["상황", "측정 결과 · 권장"], [
             ["<b>한 줄기로 이어지는 일</b>", "오케스트레이터를 만들지 않는다 · 단일 모델 + 낮은 effort가 매번 이김"],
             ["<b>어렵지만 하나인 과제</b>", "단일 Agent가 같은 정확도에 22~30% 더 쌈"],
             ["<b>쉬운 일 위임</b>", "평균 비용 ½ · 비싼 상위 10%는 $33 → $12"],
@@ -579,8 +579,8 @@ def ch5():
             ["<b>Agent Teams</b>", "실험 기능 · 팀원 3~5명 · 1인당 작업 5~6개"],
         ]), D_OPT, D_SUB, OAI_MA, D_TEAMS),
         light("오케스트레이션 패턴", viz("orchestration_patterns"), "Ch5"),
-        light("Sub Agent: 위임하고 결과만 받기", viz("subagent_fanout"), "Ch5"),
-        light("Agent Teams: 서로 말하는 팀", viz("agent_teams") + note("상태", "실험 기능 · 환경 변수로 켬 · 위임으로 충분하면 Sub Agent"), "Ch5"),
+        light("Sub Agent 위임 구조", viz("subagent_fanout"), "Ch5"),
+        light("Agent Teams 구조", viz("agent_teams") + note("상태", "실험 기능 · 환경 변수로 켬 · 위임으로 충분하면 Sub Agent"), "Ch5"),
         light("Sub Agent vs Agent Teams", table(["", "Sub Agent", "Agent Teams"], [
             ["<b>소통</b>", "부모 ↔ 자식 한 방향", "구성원끼리 직접 · 공유 작업 목록"],
             ["<b>맞는 일</b>", "독립 조사 · 검증 · 분업", "서로 결과를 반박 · 보완해야 할 때"],
@@ -589,11 +589,11 @@ def ch5():
         ]), "Ch5"),
         ill("scenes_hx", "router_desk", "left40", "예제 A: 문의 라우팅", ["분류 → 영역별 응대 → 검증", "검증 실패 → 재작업 · 사람"]),
         ill("scenes_hx", "spec_extract", "left40", "예제 B: 사양서 추출 · 견적", ["추출 → 견적 → 검증", "원문에 없는 숫자는 실패"]),
-        light("검증은 다른 Agent가", two(
+        light("검증 Agent 분리", two(
             flow([("분류", "classifier"), ("응대", "domain"), ("검증", "verifier"), ("통과 → 답", "")], hl=2),
             flow([("추출", "extractor"), ("견적", "estimator"), ("검증", "verifier"), ("통과 → 결과", "")], hl=2))
               + note("verifier", "읽기 전용 · 근거 · 숫자 · 정책만 판정 · 고치지 않음"), "Ch5"),
-        light("실행을 눈으로 보기", viz("timeline_lanes") + note("만드는 법", "헤드리스 stream-json 이벤트 → visualize.py → 타임라인 HTML"), "Ch5"),
+        light("실행 타임라인", viz("timeline_lanes") + note("만드는 법", "헤드리스 stream-json 이벤트 → visualize.py → 타임라인 HTML"), "Ch5"),
         light("실시간 대시보드: Agent Watch", '<img class="shot" src="img/agent_watch.png" alt="Agent Watch 화면">'
               + note("구성", "Hook → 로컬 서버 → 브라우저 · 메인 · Sub Agent 레인 · 에이전트별 토큰 · 효율 점검 · " + labdir("agent_watch")), "Ch5"),
         light("위임문 4요소", table(["요소", "빠지면"], [
@@ -606,25 +606,25 @@ def ch5():
             "예제 하나를 멀티에이전트로 · 실행을 시각화",
             ["예제 고르기 (라우팅 · 추출)", ".claude/agents 역할 · 도구 · 반환 형식 손보기", "run.py로 실행 (stream-json 저장)", "visualize.py → 타임라인에서 병목 · 실패 찾기"],
             ["verifier가 오답 1건 이상 차단", "타임라인 HTML · 레인별 토큰"], files=labdir("lab5_multiagent")),
-        bridge("다음: 이 모든 것의 값", "", "Ch5", "→ Ch6 토큰 경제학"),
+        bridge("다음: 토큰 경제학", "", "Ch5", "→ Ch6 토큰 경제학"),
     ]
 
 
 # ── Ch6 토큰 경제학 ─────────────────────────────────────
 def ch6():
     return chapter("Ch6", "토큰 경제학", {"평가 · 비용", "지침 · 컨텍스트"}, "토큰") + [
-        light("몇 토큰일까?", cards([
+        light("토큰 양 예상 퀴즈", cards([
             ("「VPN 안 돼요」 한 번", "입력 · 출력 각각 몇 토큰?", []),
             ("CLAUDE.md 600줄", "매 요청마다 몇 토큰이 더 붙나?", []),
             ("파일 하나 통째 읽기", "출력의 몇 배?", []),
         ]) + note("퀴즈", "먼저 맞혀 보고 실습에서 실측"), "Ch6"),
-        stat("출력은 입력의 5배 가격", "Ch6",
+        stat("모델별 토큰 가격", "Ch6",
              hbars([("Haiku 5.5", 0.5, False, "$0.10 → $0.50"), ("Sonnet 5.5", 10, False, "$2 → $10"),
                     ("Opus 5.5", 20, False, "$4 → $20"), ("Fable 5.1", 50, True, "$10 → $50")], top=55,
                    title="100만 토큰당 가격 · 입력 → 출력 (막대 = 출력)")
              + note("Claude Code 실제 비용", "개발자 1인 하루 평균 약 $13 · 월 $150~250 · 90%는 하루 $30 미만"),
              D_PRICE, D_COSTS),
-        stat("캐시와 배치: 할인 규칙", "Ch6",
+        stat("캐시 · 배치 할인 규칙", "Ch6",
              big([("1.25", "배", "캐시 쓰기 (5분 · 1시간은 2배)"),
                   ("0.1", "배", "캐시 읽기 (Opus · Sonnet 5.5는 0.05배)", True),
                   ("1", "번", "한 번만 다시 읽어도 캐시가 이득"),
@@ -638,21 +638,21 @@ def ch6():
                    top=100, title="Opus 5.5 세대 · Anthropic 측정 (2026.9) · 비용 절감률")
              + note("주의", "짧은 작업에 컨텍스트 편집을 켜면 오히려 +74% · 측정은 「방향」이지 보장이 아님"),
              D_OPT, D_PTC),
-        stat("effort: 싸게 먼저, 실패만 다시", "Ch6",
+        stat("effort별 비용과 점수", "Ch6",
              hbars([("low", 33, False, "비용 ⅓ · −8점"), ("medium (기본)", 70, False, "비용 70% · −2.5점"),
                     ("high", 100, False, "기준"), ("xhigh", 250, False, "비용 2.5배 · +1.4점")], top=260,
                    title="Opus 5.5 · SWE-bench Pro · high 대비 비용과 점수")
              + hbars([("전부 high", 29, False, "95.3% · $0.29"), ("low 먼저 → 실패만 high", 17, True, "약 97% · $0.17")], top=32,
                      title="과제 1건당 비용 · 통과율"),
              D_OPT, D_EFFORT),
-        light("토큰은 어디서 새나", viz("token_levers"), "Ch6"),
-        light("캐싱: 앞부분이 같으면 싸다", viz("cache_prefix") + note("규칙", "고정 지침 · 도구 목록은 앞에, 바뀌는 입력은 뒤에 · 시간 · ID를 앞에 넣지 않기"), "Ch6"),
-        stat("도구 목록과 결과가 책상을 채운다", "Ch6",
+        light("토큰 절감 지점", viz("token_levers"), "Ch6"),
+        light("캐싱 원리", viz("cache_prefix") + note("규칙", "고정 지침 · 도구 목록은 앞에, 바뀌는 입력은 뒤에 · 시간 · ID를 앞에 넣지 않기"), "Ch6"),
+        stat("도구 정의 · 결과의 토큰 비중", "Ch6",
              big([("5.5만", "토큰", "MCP 서버 5개의 도구 정의만"), ("85", "%+", "도구 검색으로 줄어드는 정의 토큰", True),
                   ("84", "%", "실제 에이전트 입력 중 캐시 읽기 (중앙값)")])
              + note("Claude Code 기본값", "도구 검색 켜짐 · 정의가 컨텍스트 10%를 넘으면 지연 로딩 · 새로 시작이면 /clear는 비용 0"),
              D_TOOLSEARCH, D_MCP, D_OPT, D_COSTS),
-        light("레버 다섯 개", table(["레버", "방법", "주의"], [
+        light("토큰 절감 레버 다섯 가지", table(["레버", "방법", "주의"], [
             ["<b>① 입력 줄이기</b>", "짧은 CLAUDE.md · 찾아서 읽기 · Sub Agent 분리", "가장 큰 절감"],
             ["<b>② 출력 줄이기</b>", "「간결하게 · JSON으로」 · caveman", "설명이 필요한 곳은 예외"],
             ["<b>③ 코드량 줄이기</b>", "ponytail 같은 최소 구현 Skill", "필요한 기능 누락 확인"],
@@ -665,7 +665,7 @@ def ch6():
         light("코드량 줄이기: ponytail", code("설치", "/plugin marketplace add DietrichGebert/ponytail\n/plugin install ponytail@ponytail")
               + note("효과", "요청한 것만 · 가장 단순한 해법부터 · 적은 코드 = 적은 버그"), "Ch6"),
         light("하네스 전후 토큰", viz("token_meter"), "Ch6"),
-        light("토큰을 써야 할 때", table(["상황", "이유"], [
+        light("토큰을 더 써야 하는 상황", table(["상황", "이유"], [
             ["<b>검증 · 리뷰</b>", "틀린 답의 비용이 토큰보다 큼"],
             ["<b>E2E 테스트</b>", "실제 흐름 확인 · 핵심 흐름에만"],
             ["<b>고위험 도메인</b>", "안전 · 계약 · 인사는 큰 모델 + 사람"],
@@ -674,7 +674,7 @@ def ch6():
             "레버를 하나씩 켜며 토큰 · 품질 비교",
             ["quiz.md로 먼저 예상", "기준선 5개 과제 실행 (bench.py)", "레버 켜기: 간결 지시 · caveman · 모델 나누기 · Sub Agent", "토큰 · 정확도 함께 비교 → 남길 레버 고르기"],
             ["레버별 토큰 · 정확도 표", "품질이 떨어진 레버는 제외"], files=labdir("lab6_tokens")),
-        bridge("다음: 좋아졌는지 어떻게 아나", "", "Ch6", "→ Ch7 평가 · 회귀 테스트"),
+        bridge("다음: 평가 · 회귀 테스트", "", "Ch6", "→ Ch7 평가 · 회귀 테스트"),
     ]
 
 
@@ -704,39 +704,39 @@ def ch7():
                "입력 토큰   12.4k → 8.1k  ▼\n"
                "결과: 통과")
     return chapter("Ch7", "평가 · 회귀 테스트", {"평가 · 비용"}, "평가") + [
-        stat("한 번 성공 ≠ 매번 성공", "Ch7", passk(0.75, 10)
+        stat("pass@k와 pass^k", "Ch7", passk(0.75, 10)
              + note("같은 모델", "1회 75% → 10번 모두 성공은 약 6% · 업무 자동화는 「매번」이 기준"), A_EVALS),
-        stat("평가셋은 작게, 실패에서 시작", "Ch7",
+        stat("평가셋 시작 규모와 기준", "Ch7",
              big([("20~50", "개", "실제 실패에서 뽑은 첫 평가 과제", True),
                   ("0", "%", "통과율 0% = 대개 Agent가 아니라 과제가 고장"),
                   ("F1 ≥ 0.85", "", "성공 기준은 숫자로 (공식 예)")])
              + quote("손으로 채점한 적은 문항보다, 자동 채점한 많은 문항이 낫다", "Anthropic 문서, 성공 기준 정하기"),
              A_EVALS, D_SUCCESS),
-        stat("채점기도 검증한다", "Ch7",
+        stat("채점기 검증", "Ch7",
              big([("0.07", "점", "Claude 작품이라고 알려 주면 후하게 주는 점수 (10점 만점)"),
                   ("9.6", "%", "평가받는 중임을 알아챈 비율 (GPT-6 Astra)", True)], 2)
              + quote("LLM 채점기는 사람 전문가 판정과 맞춰 보정해야 한다", "Anthropic, Demystifying evals for AI agents")
              + note("원칙", "점수가 이상하면 모델보다 채점기 · 과제부터 의심"),
              SC_OPUS55, SC_GPT6, A_EVALS),
-        stat("과제가 망가지면 편법이 는다", "Ch7",
+        stat("과제 결함과 편법 시도", "Ch7",
              big([("20~28", "%", "학습 중 편법을 시도한 비율"), ("0.06", "%", "편법이 실제 통한 비율 (Mythos 5.1)"),
                   ("3~6", "배", "불가능한 과제에서 늘어난 편법 시도", True)])
              + note("하네스로", "테스트 수정 금지 Hook · 숨은 테스트 · 과제부터 검증"),
              SC_FABLE51, SC_OPUS55),
-        stat("공개 벤치마크는 금방 차고, 고장 난다", "Ch7",
+        stat("공개 벤치마크의 포화와 결함", "Ch7",
              hbars([("Verified · 문제 있는 문항", 59.4, False, "59.4%"), ("Pro · 고장 난 과제", 30, False, "약 30%"),
                     ("Pro · Opus 5.5 점수", 89.9, True, "89.9%")], top=100, title="SWE-bench · OpenAI 감사 · Anthropic 시스템 카드 (2026)")
              + hbars([("Terminal-bench 2.1", 89.4, False, "89.4%"), ("Terminal-bench 4.0", 19.1, True, "19.1%")], top=100,
                      title="같은 모델(Gemini 3.8 Flash), 벤치마크 버전만 다름")
              + note("그래서", "남의 점수보다 우리 업무 평가셋 · 우리 회귀 테스트"),
              OAI_SWEV, OAI_SWEP, SC_OPUS55, GEM38),
-        ill("scenes_extra", "calculator_test", "left40", "답을 아는 문제로 먼저 시험", ["평가셋 = 정답 · 허용 범위가 있는 대표 과제"]),
+        ill("scenes_extra", "calculator_test", "left40", "정답셋 평가", ["평가셋 = 정답 · 허용 범위가 있는 대표 과제"]),
         light("과업마다 다른 가중치", table(["지표", "분류 · 라우팅", "생성 (답변)", "추출 · 계산"], [
             ["<b>정확도</b>", "40", "25", "40"], ["<b>근거 충실도</b>", "—", "30", "30"],
             ["<b>일관성</b>", "30", "15", "20"], ["<b>지연</b>", "15", "10", "—"],
             ["<b>토큰</b>", "15", "10", "10"], ["<b>안전 · 정책</b>", "필수 통과", "필수 통과", "—"],
         ]) + note("원칙", "안전 · 정책은 점수가 아니라 통과 조건"), "Ch7"),
-        light("정답셋이 없을 때 세 가지", cards([
+        light("정답셋이 없을 때의 방법 세 가지", cards([
             ("합성 데이터", "대표 예시 → 변형 생성 · 표시해 둠", []),
             ("LLM-as-judge", "채점 기준을 프롬프트로 · 다른 모델이 채점", []),
             ("현업 최소 라벨링", "10~20건만 사람이 채점 → judge 보정", []),
@@ -750,22 +750,22 @@ def ch7():
             ["<b>실패해야 정상</b>", "근거 없는 질문", "「자료에 없음」"],
         ]), "Ch7"),
         light("LLM-as-judge 채점 기준", code("judge_prompt.md", judge), "Ch7"),
-        light("judge를 믿어도 되나", table(["확인", "방법"], [
+        light("judge 신뢰도 확인 방법", table(["확인", "방법"], [
             ["<b>사람과 일치도</b>", "같은 10건을 사람 · judge가 채점 → 일치율 · 카파"],
             ["<b>위치 · 길이 편향</b>", "순서 바꾸기 · 긴 답 편애 확인"],
             ["<b>자기 편향</b>", "같은 모델이 쓴 답을 채점하지 않게"],
         ]), "Ch7"),
-        light("멀티 Agent는 따로, 또 함께", table(["대상", "지표"], [
+        light("멀티 Agent 평가 대상과 지표", table(["대상", "지표"], [
             ["<b>분류 · 라우터</b>", "의도 정확도"], ["<b>Sub Agent</b>", "judge 점수 · 필드 F1"],
             ["<b>verifier</b>", "일부러 넣은 오답 차단율"], ["<b>전체</b>", "최종 품질 · 토큰 · 지연"],
         ]), "Ch7"),
-        ill("scenes_hx", "regression_gate", "top20", "회귀 테스트: 고치면 다시 잰다", ["기준선보다 나빠지면 멈춤"]),
+        ill("scenes_hx", "regression_gate", "top20", "회귀 테스트 구조", ["기준선보다 나빠지면 멈춤"]),
         light("하네스 전후 비교 (시연)", code("터미널", compare) + note("숫자", "예시 출력 · 실습에서 내 숫자로"), "Ch7"),
         lab("7-1", "평가셋 + 회귀 테스트", "Ch7",
             "하네스를 고칠 때마다 자동으로 재는 장치",
             ["대표 10건 + 엣지 케이스 + 합성 10건", "judge 기준 → 사람 10건과 일치도", "기준선 실행 → 하네스 수정 → 재실행", "일부러 나쁘게 고쳐 compare.py 실패 확인"],
             ["평가셋 20건 이상", "전후 비교표 · 나빠지면 실패로 끝남"], files=labdir("lab7_eval_regression")),
-        bridge("다음: 내 하네스를 내보내기", "", "Ch7", "→ Ch8 최종 산출물"),
+        bridge("다음: 내 하네스 플러그인", "", "Ch7", "→ Ch8 최종 산출물"),
     ]
 
 
@@ -785,7 +785,7 @@ def ch8():
     return chapter("Ch8", "내 하네스 플러그인", {p[0] for p in PARTS}, "전체") + [
         light("최종 산출물 구조", two(code("my-harness", tree), vl("오늘 만든 부품을 한 폴더로", "평가셋과 결과를 함께", "GitHub에 올려 팀이 설치")), "Ch8"),
         light("불러오기 · 공유", code("터미널", load), "Ch8"),
-        light("운영: 실패를 먼저 정의", table(["실패", "판정", "대응"], [
+        light("운영: 실패 유형 정의", table(["실패", "판정", "대응"], [
             ["<b>틀린 답</b>", "judge · 정답 비교", "평가셋에 추가"],
             ["<b>근거 없는 답</b>", "숫자 · 조항 대조", "차단 · 사람에게"],
             ["<b>정책 위반</b>", "금지 표현 · 권한", "Hook으로 즉시 차단"],
@@ -803,7 +803,7 @@ def ch8():
             ["my-harness 템플릿에 오늘 만든 부품 옮기기", "claude plugin validate 통과", "평가셋으로 맨몸 · 내 하네스 · 공개 하네스 비교", "GitHub에 올리고 README에 비교표"],
             ["옆 사람이 설치해 같은 결과", "전후 비교표 · 토큰 실측표 포함"], files=labdir("lab8_final_plugin")),
         light("발표 2분", flow([("문제", "무엇이 흔들렸나"), ("하네스", "무엇을 붙였나"), ("숫자", "전후 비교"), ("다음", "운영 계획")], hl=2), "Ch8"),
-        bridge("하네스는 고치고 재는 일의 반복", "", "Ch8", "다음 차수: 하네스 엔지니어링 심화"),
+        bridge("정리: 하네스 개선 루프", "", "Ch8", "다음 차수: 하네스 엔지니어링 심화"),
     ]
 
 
@@ -819,7 +819,7 @@ def advanced():
            ")")
     return [
         divider("심화", "숙련자 확장 과제", ""),
-        light("같은 하네스를 코드로: Agent SDK", code("Python · API 키 필요", sdk) + note("자료", labdir("sdk_optional")), "심화"),
+        light("Agent SDK로 구현한 하네스", code("Python · API 키 필요", sdk) + note("자료", labdir("sdk_optional")), "심화"),
         light("심화 트랙", cards([
             ("자동 리뷰 Agent", "변경 사항을 읽기 전용 Agent가 기준대로 점검", []),
             ("설계 ↔ 리뷰 루프", "통과할 때까지 반복 · 횟수 상한", []),
