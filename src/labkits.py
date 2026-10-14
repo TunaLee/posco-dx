@@ -106,21 +106,23 @@ KITS = {
         ("⑤ 내 평가 문항", "p", "내 업무 평가 문항 5개 (엣지 케이스 2개 포함) 를 eval/cases.jsonl 로 만들어 줘:\n입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말"),
     ]),
 
-    "7-2": dict(folder="my_work_harness", steps=[
-        ("① 설계표", "p", "my_work_spec/내_하네스_설계표.md 의 다섯 유형 중 내 업무 〈한 줄 설명〉 과 가장 비슷한 예시를 골라\n내 업무 값으로 채워 줘. 모르는 칸은 TODO · 고객명 · 실제 수치는 가상 값으로"),
-        ("② 예시 입력", "do", "<b>my_work_harness/inputs/</b> 에 내 업무의 가상 예시 입력 3~5개 (실제 고객 정보 넣지 않기)"),
-        ("③ 하네스 미적용", "p", "my_work_harness 폴더 안에서 inputs/ 의 입력마다 〈내 업무 요청 한 줄〉 을\nclaude -p --setting-sources \"\" --permission-mode acceptEdits 로 실행해\n답을 labs 바로 아래 runs/7-2/미적용_<입력 이름>.md 로 저장해 줘"),
-        ("④ 하네스 만들기", "p", "my_work_spec/내_하네스_설계표.md 를 읽고 my_work_harness 에 하네스를 만들어 줘.\n- CLAUDE.md (공통 원칙 30줄 이내) · Skill 1개 (절차 · 판단 기준 · 결과 양식)\n- Hook (설계표의 「막을 것」만 차단)\n설계표에 없는 규칙은 지어내지 말고 TODO로"),
-        ("⑤ 하네스 적용", "p", "my_work_harness 폴더 안에서 inputs/ 의 입력마다 〈내 업무 요청 한 줄〉 을\nclaude -p --setting-sources project --permission-mode acceptEdits 로 실행해\n답을 labs 바로 아래 runs/7-2/적용_<입력 이름>.md 로 저장해 줘"),
-        ("⑥ 사람 판정", "do", "runs/7-2 의 미적용 · 적용을 나란히 놓고 설계표의 「잘했다의 기준」으로 직접 O / X · 자동 채점 · Claude 의견은 참고만"),
-    ], tip="이 실습의 하네스와 설계표가 내 업무용 최종 결과물 · 요청문 ①②③ · 부록 ①~⑥을 재료로"),
+    "7-2": dict(folder="meta_harness", open="labs/meta_harness", steps=[
+        ("① 메타 하네스 만들기", "do", "앞 장 요청문 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기"),
+        ("② 내 업무로 시작", "p", "내 업무용 하네스를 만들고 싶어: 〈업무 한 줄 설명〉. 인터뷰부터 시작해 줘"),
+        ("③ 인터뷰", "do", "질문에 답하기 · 예시 입력은 가상 값 · 모르면 「모름」"),
+        ("④ 사람 승인", "do", "docs/〈이름〉/design.md 검토 · 고칠 점은 대화로 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)"),
+        ("⑤ 생성 · 검토 · 시험", "p", "docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘"),
+        ("⑥ 사람 판정", "do", "비교표를 인터뷰의 「잘했다의 기준」으로 직접 판정 · 고칠 점을 말하면 다시"),
+    ], tip="요청문이 막히면 부록 ⑨ ⑩ 「파일로 저장」 · 이 메타 하네스는 Ch8에서 다시 씀"),
 
-    "8-1": dict(folder="final_dev_harness", open="labs/final_dev_harness", steps=[
-        ("① 첫 커밋", "p", "이 폴더를 git 저장소로 만들고 첫 커밋 해 줘"),
-        ("② 하네스 만들기", "do", "앞 장 「개발 하네스를 만드는 요청문」 붙여 넣기 → 만든 파일 확인 → 커밋 → Claude Code 새로 열기"),
-        ("③ 브레인스토밍 · 기획", "p", "아이디어.md 를 읽고 브레인스토밍부터 시작해 줘"),
-        ("④ 사람 승인", "do", "docs/plan.md 검토 · 고칠 점은 대화로 → 괜찮으면 탐색기에서 새 파일 <b>docs/APPROVED</b> (사람만)"),
-        ("⑤ 병렬 구현", "p", "docs/APPROVED 만들었어. CLAUDE.md 순서대로 구현을 진행해 줘"),
-        ("⑥ 사람 판정", "do", "직접 실행해 보고 내 합격 기준으로 판정 · 아니면 무엇이 틀렸는지 말하고 다시"),
+    "8-1": dict(folder="final_dev_harness", open="labs/meta_harness → labs/final_dev_harness", steps=[
+        ("① 첫 커밋", "p", "../final_dev_harness 폴더를 git 저장소로 만들고 첫 커밋 해 줘"),
+        ("② 개발 하네스 설계", "do", "앞 장 「메타 하네스로 개발 하네스 만들기」 붙여 넣기 → 인터뷰 답 → design.md 검토 → <b>docs/〈이름〉/APPROVED</b> 직접"),
+        ("③ 생성", "p", "docs/〈이름〉/APPROVED 만들었어. ../final_dev_harness 에 하네스를 만들고 검토한 뒤 커밋해 줘"),
+        ("④ 폴더 바꾸기", "do", "VS Code로 <b>labs/final_dev_harness</b> 열기 → Claude Code 새로 열기"),
+        ("⑤ 브레인스토밍 · 기획", "p", "아이디어.md 를 읽고 브레인스토밍부터 시작해 줘"),
+        ("⑥ 사람 승인", "do", "docs/plan.md 검토 → 괜찮으면 새 파일 <b>docs/APPROVED</b> (사람만)"),
+        ("⑦ 병렬 구현", "p", "docs/APPROVED 만들었어. CLAUDE.md 순서대로 구현을 진행해 줘"),
+        ("⑧ 사람 판정", "do", "직접 실행해 보고 내 합격 기준으로 판정 · 아니면 무엇이 틀렸는지 말하고 다시"),
     ], tip="Node 18 이상 · git · 워크트리 · .claude 쓰기 승인 요청은 내용을 읽고 승인"),
 }

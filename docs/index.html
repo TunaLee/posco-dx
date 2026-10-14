@@ -833,7 +833,7 @@
   <div class="eyebrow"><span class="tag">시작</span></div>
   <h2 class="s-title sm">최종 산출물</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>산출물</th><th>내용</th></tr></thead><tbody><tr><td><b>내 업무 하네스</b></td><td>CLAUDE.md · Skill · Hook · 검증 Agent · 하네스 미적용과 전후 비교</td></tr><tr><td><b>개발 멀티에이전트 하네스</b></td><td>브레인스토밍 → 기획 → 사람 승인 → 병렬 TDD → 리뷰</td></tr><tr><td><b>내 업무 툴</b></td><td>위 하네스로 만든 Node 툴 · 테스트 통과</td></tr><tr><td><b>사람 판정 기록</b></td><td>내가 정한 합격 기준으로 직접 판정 · 2분 발표</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>산출물</th><th>내용</th></tr></thead><tbody><tr><td><b>메타 하네스</b></td><td>인터뷰 → 설계 → 사람 승인 → 상황에 맞는 하네스 생성 · 시험</td></tr><tr><td><b>내 업무 하네스</b></td><td>메타 하네스로 만든 업무 전용 하네스 · 하네스 미적용과 전후 비교</td></tr><tr><td><b>개발 멀티에이전트 하네스</b></td><td>브레인스토밍 → 기획 → 사람 승인 → 병렬 TDD → 리뷰</td></tr><tr><td><b>내 업무 툴</b></td><td>위 하네스로 만든 Node 툴 · 테스트 통과</td></tr><tr><td><b>사람 판정 기록</b></td><td>내가 정한 합격 기준으로 직접 판정 · 2분 발표</td></tr></tbody></table></div></div>
 </section>
 
 <section class="slide lt" data-title="실습 환경">
@@ -2349,14 +2349,6 @@ python3 work_harness/grade.py work_harness/workspace --task T7 로 채점해 줘
   <div class="body"><div class="mid"><div class="hbars"><div class="hbt">100만 토큰당 가격 · 입력 → 출력 (막대 = 출력)</div><div class="hb" style="--d:0.00s"><span class="hn">Haiku 5.5</span><span class="ht"><span class="hf" style="width:0.9%"></span></span><span class="hv">$0.10 → $0.50</span></div><div class="hb" style="--d:0.10s"><span class="hn">Sonnet 5.5</span><span class="ht"><span class="hf" style="width:18.2%"></span></span><span class="hv">$2 → $10</span></div><div class="hb" style="--d:0.20s"><span class="hn">Opus 5.5</span><span class="ht"><span class="hf" style="width:36.4%"></span></span><span class="hv">$4 → $20</span></div><div class="hb hl" style="--d:0.30s"><span class="hn">Fable 5.1</span><span class="ht"><span class="hf" style="width:90.9%"></span></span><span class="hv">$10 → $50</span></div></div><div class="dbnote"><span>Claude Code 실제 비용</span> 개발자 1인 하루 평균 약 $13 · 월 $150~250 · 90%는 하루 $30 미만</div><div class="src">출처 · <a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener">Claude 가격 문서</a> · <a href="https://code.claude.com/docs/en/costs" target="_blank" rel="noopener">Claude Code 비용 문서</a></div></div></div>
 </section>
 
-<section class="slide lt" data-title="토큰 절감 지점">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch6</span></div>
-  <h2 class="s-title sm">토큰 절감 지점</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><svg class="hxv hx-tv" viewBox="0 0 1160 470" xmlns="http://www.w3.org/2000/svg"><style>.hx-tv{width:100%;height:auto;max-height:470px;display:block;margin:0 auto;overflow:visible}.hx-tv text{font-family:var(--serif);dominant-baseline:middle}.hx-tv .tt{font-size:19px;font-weight:800;fill:#1F3A5F}.hx-tv .ts{font-size:15px;fill:#44506A}.hx-tv .to{font-size:15px;font-weight:700;fill:#F28C28}.hx-tv .tw{font-size:15px;font-weight:700;fill:#FFFFFF}.hx-tv .tn{font-size:15px;font-weight:700;fill:#1F3A5F}@media print{.hx-tv *{animation:none!important}.hx-tv .mv{display:none}}@media (prefers-reduced-motion:reduce){.hx-tv *{animation:none!important}.hx-tv .mv{display:none}}@keyframes hxtv1{0%{fill:#1F3A5F}9.03125%{fill:#1F3A5F}10.5312%{fill:#F28C28}14.5312%{fill:#F28C28}17.5312%{fill:#1F3A5F}100%{fill:#1F3A5F}}@keyframes hxtv2{0%{fill:#1F3A5F}22.0938%{fill:#1F3A5F}23.5938%{fill:#F28C28}27.5938%{fill:#F28C28}30.5938%{fill:#1F3A5F}100%{fill:#1F3A5F}}@keyframes hxtv3{0%{fill:#1F3A5F}35.1562%{fill:#1F3A5F}36.6562%{fill:#F28C28}40.6562%{fill:#F28C28}43.6562%{fill:#1F3A5F}100%{fill:#1F3A5F}}@keyframes hxtv4{0%{fill:#1F3A5F}48.2188%{fill:#1F3A5F}49.7188%{fill:#F28C28}53.7188%{fill:#F28C28}56.7188%{fill:#1F3A5F}100%{fill:#1F3A5F}}@keyframes hxtv5{0%{fill:#1F3A5F}61.2812%{fill:#1F3A5F}62.7812%{fill:#F28C28}66.7812%{fill:#F28C28}69.7812%{fill:#1F3A5F}100%{fill:#1F3A5F}}@keyframes hxtv6{0%{opacity:0;transform:translateY(-14px)}15.0625%{opacity:0;transform:translateY(-14px)}19.0625%{opacity:1;transform:translateY(0)}94%{opacity:1;transform:translateY(0)}99%{opacity:0;transform:translateY(0)}100%{opacity:0;transform:translateY(-14px)}}@keyframes hxtv7{0%{opacity:0;transform:translateY(-14px)}28.125%{opacity:0;transform:translateY(-14px)}32.125%{opacity:1;transform:translateY(0)}94%{opacity:1;transform:translateY(0)}99%{opacity:0;transform:translateY(0)}100%{opacity:0;transform:translateY(-14px)}}@keyframes hxtv8{0%{opacity:0;transform:translateY(-14px)}41.1875%{opacity:0;transform:translateY(-14px)}45.1875%{opacity:1;transform:translateY(0)}94%{opacity:1;transform:translateY(0)}99%{opacity:0;transform:translateY(0)}100%{opacity:0;transform:translateY(-14px)}}@keyframes hxtv9{0%{opacity:0;transform:translateY(-14px)}54.25%{opacity:0;transform:translateY(-14px)}58.25%{opacity:1;transform:translateY(0)}94%{opacity:1;transform:translateY(0)}99%{opacity:0;transform:translateY(0)}100%{opacity:0;transform:translateY(-14px)}}@keyframes hxtv10{0%{opacity:0;transform:translateY(-14px)}68%{opacity:0;transform:translateY(-14px)}72%{opacity:1;transform:translateY(0)}94%{opacity:1;transform:translateY(0)}99%{opacity:0;transform:translateY(0)}100%{opacity:0;transform:translateY(-14px)}}@keyframes hxtv11{0%{transform:translate(110px,452px);opacity:0}2%{transform:translate(110px,452px);opacity:0}4%{transform:translate(110px,452px);opacity:1}70%{transform:translate(1070px,452px);opacity:1}74%{transform:translate(1070px,452px);opacity:0}100%{transform:translate(1070px,452px);opacity:0}}</style><defs><marker id="hxtvah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#1F3A5F"/></marker><marker id="hxtvaho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#F28C28"/></marker><marker id="hxtvahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#9AA3B0"/></marker></defs><line x1="60" y1="400" x2="1130" y2="400" stroke="#1F3A5F" stroke-width="3"/><rect x="193" y="110" width="24" height="290" rx="6" fill="#1F3A5F" style="animation:hxtv1 10s linear infinite both;"/><text x="205" y="90" text-anchor="middle" class="tn" >출력 줄이기</text><circle cx="205" cy="58" r="14" fill="#FFFFFF" stroke="#1F3A5F" stroke-width="2.5"/><text x="205" y="59" text-anchor="middle" class="tn" style="font-size:14px">1</text><rect x="383" y="110" width="24" height="290" rx="6" fill="#1F3A5F" style="animation:hxtv2 10s linear infinite both;"/><text x="395" y="90" text-anchor="middle" class="tn" >명령 출력 압축</text><circle cx="395" cy="58" r="14" fill="#FFFFFF" stroke="#1F3A5F" stroke-width="2.5"/><text x="395" y="59" text-anchor="middle" class="tn" style="font-size:14px">2</text><rect x="573" y="110" width="24" height="290" rx="6" fill="#1F3A5F" style="animation:hxtv3 10s linear infinite both;"/><text x="585" y="90" text-anchor="middle" class="tn" >필요한 것만 읽기</text><circle cx="585" cy="58" r="14" fill="#FFFFFF" stroke="#1F3A5F" stroke-width="2.5"/><text x="585" y="59" text-anchor="middle" class="tn" style="font-size:14px">3</text><rect x="763" y="110" width="24" height="290" rx="6" fill="#1F3A5F" style="animation:hxtv4 10s linear infinite both;"/><text x="775" y="90" text-anchor="middle" class="tn" >Sub Agent 분리</text><circle cx="775" cy="58" r="14" fill="#FFFFFF" stroke="#1F3A5F" stroke-width="2.5"/><text x="775" y="59" text-anchor="middle" class="tn" style="font-size:14px">4</text><rect x="953" y="110" width="24" height="290" rx="6" fill="#1F3A5F" style="animation:hxtv5 10s linear infinite both;"/><text x="965" y="90" text-anchor="middle" class="tn" >오래된 결과 정리</text><circle cx="965" cy="58" r="14" fill="#FFFFFF" stroke="#1F3A5F" stroke-width="2.5"/><text x="965" y="59" text-anchor="middle" class="tn" style="font-size:14px">5</text><g><rect x="78" y="379" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.95"/><rect x="78" y="364" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.93"/><rect x="78" y="349" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.91"/><rect x="78" y="334" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.89"/><rect x="78" y="319" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.87"/><rect x="78" y="304" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.85"/><rect x="78" y="289" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.83"/><rect x="78" y="274" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.81"/><rect x="78" y="259" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.79"/><rect x="78" y="244" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.77"/><rect x="78" y="229" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.75"/><rect x="78" y="214" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.73"/><rect x="78" y="199" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.71"/><rect x="78" y="184" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.69"/><rect x="78" y="169" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.67"/><rect x="78" y="154" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.65"/><rect x="78" y="139" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.63"/><rect x="78" y="124" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.61"/></g><g style="animation:hxtv6 10s ease-out infinite both;"><rect x="268" y="379" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.95"/><rect x="268" y="364" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.93"/><rect x="268" y="349" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.91"/><rect x="268" y="334" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.89"/><rect x="268" y="319" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.87"/><rect x="268" y="304" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.85"/><rect x="268" y="289" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.83"/><rect x="268" y="274" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.81"/><rect x="268" y="259" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.79"/><rect x="268" y="244" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.77"/><rect x="268" y="229" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.75"/><rect x="268" y="214" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.73"/><rect x="268" y="199" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.71"/><rect x="268" y="184" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.69"/></g><g style="animation:hxtv7 10s ease-out infinite both;"><rect x="458" y="379" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.95"/><rect x="458" y="364" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.93"/><rect x="458" y="349" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.91"/><rect x="458" y="334" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.89"/><rect x="458" y="319" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.87"/><rect x="458" y="304" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.85"/><rect x="458" y="289" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.83"/><rect x="458" y="274" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.81"/><rect x="458" y="259" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.79"/><rect x="458" y="244" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.77"/><rect x="458" y="229" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.75"/></g><g style="animation:hxtv8 10s ease-out infinite both;"><rect x="648" y="379" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.95"/><rect x="648" y="364" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.93"/><rect x="648" y="349" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.91"/><rect x="648" y="334" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.89"/><rect x="648" y="319" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.87"/><rect x="648" y="304" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.85"/><rect x="648" y="289" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.83"/><rect x="648" y="274" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.81"/></g><g style="animation:hxtv9 10s ease-out infinite both;"><rect x="838" y="379" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.95"/><rect x="838" y="364" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.93"/><rect x="838" y="349" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.91"/><rect x="838" y="334" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.89"/><rect x="838" y="319" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.87"/><rect x="838" y="304" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.85"/></g><g style="animation:hxtv10 10s ease-out infinite both;"><rect x="1038" y="379" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.95"/><rect x="1038" y="364" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.93"/><rect x="1038" y="349" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.91"/><rect x="1038" y="334" width="64" height="11" rx="3" fill="#F28C28" fill-opacity="0.89"/></g><text x="110" y="424" text-anchor="middle" class="ts" >처음</text><text x="1070" y="424" text-anchor="middle" class="to" >남은 양</text><g class="mv" style="animation:hxtv11 10s linear infinite both;"><rect x="-30" y="-14" width="60" height="28" rx="14" fill="#F28C28"/><text x="0" y="1" text-anchor="middle" class="tw" style="font-size:14px">요청</text></g></svg></div></div>
-</section>
-
 <section class="slide lt" data-title="토큰 절감 레버 다섯 가지">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch6</span></div>
@@ -2551,7 +2543,7 @@ python3 work_harness/grade.py work_harness/workspace --task T7 로 채점해 줘
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">사람이 개입하는 지점</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>지점</th><th>사람이 하는 일</th><th>하네스에서</th></tr></thead><tbody><tr><td><b>시작 전</b></td><td>기준 · 합격선 정하기</td><td>설계표 · 평가 문항</td></tr><tr><td><b>계획 뒤</b></td><td>계획 승인 · 범위 조정</td><td>승인 파일 없으면 Hook이 구현 차단 (Ch8)</td></tr><tr><td><b>위험 행동 직전</b></td><td>허락 · 거절</td><td>Hook · 권한 ask (Ch2)</td></tr><tr><td><b>밖으로 나가기 전</b></td><td>발송 · 배포 확인</td><td>초안까지만 · 발송은 사람</td></tr><tr><td><b>끝난 뒤</b></td><td>결과 판정 · 다음 개선</td><td>채점 결과를 보고 사람이 결정</td></tr></tbody></table><div class="dbnote"><span>HITL</span> Human-in-the-loop · 사람이 흐름 안에서 확인 · 승인 · 판정</div></div></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>지점</th><th>사람이 하는 일</th><th>하네스에서</th></tr></thead><tbody><tr><td><b>시작 전</b></td><td>기준 · 합격선 정하기</td><td>인터뷰 · 평가 문항</td></tr><tr><td><b>계획 뒤</b></td><td>계획 승인 · 범위 조정</td><td>승인 파일 없으면 Hook이 구현 차단 (Ch8)</td></tr><tr><td><b>위험 행동 직전</b></td><td>허락 · 거절</td><td>Hook · 권한 ask (Ch2)</td></tr><tr><td><b>밖으로 나가기 전</b></td><td>발송 · 배포 확인</td><td>초안까지만 · 발송은 사람</td></tr><tr><td><b>끝난 뒤</b></td><td>결과 판정 · 다음 개선</td><td>채점 결과를 보고 사람이 결정</td></tr></tbody></table><div class="dbnote"><span>HITL</span> Human-in-the-loop · 사람이 흐름 안에서 확인 · 승인 · 판정</div></div></div>
 </section>
 
 <section class="slide lt" data-title="공개 벤치마크의 포화와 결함">
@@ -2560,14 +2552,6 @@ python3 work_harness/grade.py work_harness/workspace --task T7 로 채점해 줘
   <h2 class="s-title sm">공개 벤치마크의 포화와 결함</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="hbars"><div class="hbt">SWE-bench · OpenAI 감사 · Anthropic 시스템 카드 (2026)</div><div class="hb" style="--d:0.00s"><span class="hn">Verified · 문제 있는 문항</span><span class="ht"><span class="hf" style="width:59.4%"></span></span><span class="hv">59.4%</span></div><div class="hb" style="--d:0.10s"><span class="hn">Pro · 고장 난 과제</span><span class="ht"><span class="hf" style="width:30.0%"></span></span><span class="hv">약 30%</span></div><div class="hb hl" style="--d:0.20s"><span class="hn">Pro · Opus 5.5 점수</span><span class="ht"><span class="hf" style="width:89.9%"></span></span><span class="hv">89.9%</span></div></div><div class="hbars"><div class="hbt">같은 모델(Gemini 3.8 Flash), 벤치마크 버전만 다름</div><div class="hb" style="--d:0.00s"><span class="hn">Terminal-bench 2.1</span><span class="ht"><span class="hf" style="width:89.4%"></span></span><span class="hv">89.4%</span></div><div class="hb hl" style="--d:0.10s"><span class="hn">Terminal-bench 4.0</span><span class="ht"><span class="hf" style="width:19.1%"></span></span><span class="hv">19.1%</span></div></div><div class="dbnote"><span>그래서</span> 남의 점수보다 우리 업무 평가셋 · 우리 회귀 테스트</div><div class="src">출처 · <a href="https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/" target="_blank" rel="noopener">OpenAI · SWE-bench Verified 중단 2026.2</a> · <a href="https://openai.com/index/separating-signal-from-noise-coding-evaluations" target="_blank" rel="noopener">OpenAI · Separating signal from noise 2026.7</a> · <a href="https://www.anthropic.com/claude-opus-5-5-system-card" target="_blank" rel="noopener">Claude Opus 5.5 System Card 2026.9</a> · <a href="https://deepmind.google/models/model-cards/" target="_blank" rel="noopener">Google DeepMind · Gemini 3.8 Flash 모델 카드 2026.9</a></div></div></div>
-</section>
-
-<section class="slide lt" data-title="pass@k와 pass^k">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">pass@k와 pass^k</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><svg class="pkc" viewBox="0 0 1120 380"><line x1="90" x2="1080" y1="290" y2="290" stroke="#EEF1F5" stroke-width="2"/><text x="78" y="295" text-anchor="end" font-size="15" fill="#8A94A3">0%</text><line x1="90" x2="1080" y1="228" y2="228" stroke="#EEF1F5" stroke-width="2"/><text x="78" y="232" text-anchor="end" font-size="15" fill="#8A94A3">25%</text><line x1="90" x2="1080" y1="165" y2="165" stroke="#EEF1F5" stroke-width="2"/><text x="78" y="170" text-anchor="end" font-size="15" fill="#8A94A3">50%</text><line x1="90" x2="1080" y1="102" y2="102" stroke="#EEF1F5" stroke-width="2"/><text x="78" y="108" text-anchor="end" font-size="15" fill="#8A94A3">75%</text><line x1="90" x2="1080" y1="40" y2="40" stroke="#EEF1F5" stroke-width="2"/><text x="78" y="45" text-anchor="end" font-size="15" fill="#8A94A3">100%</text><text x="90" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">1</text><text x="200" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">2</text><text x="310" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">3</text><text x="420" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">4</text><text x="530" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">5</text><text x="640" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">6</text><text x="750" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">7</text><text x="860" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">8</text><text x="970" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">9</text><text x="1080" y="316" text-anchor="middle" font-size="15" fill="#8A94A3">10</text><path d="M90 102 L200 56 L310 44 L420 41 L530 40 L640 40 L750 40 L860 40 L970 40 L1080 40" fill="none" stroke="#1F3A5F" stroke-width="6" stroke-linecap="round" class="pk"/><path d="M90 102 L200 149 L310 185 L420 211 L530 231 L640 246 L750 257 L860 265 L970 271 L1080 276" fill="none" stroke="#F28C28" stroke-width="6" stroke-linecap="round" class="pk"/><circle cx="310" cy="185" r="9" fill="#F28C28"/><text x="326" y="173" font-size="19" font-weight="800" fill="#E07A12">3번 모두 성공 42%</text><text x="1080" y="26" text-anchor="end" font-size="18" font-weight="800" fill="#1F3A5F">한 번이라도 성공 (pass@k)</text><text x="1080" y="262" text-anchor="end" font-size="18" font-weight="800" fill="#E07A12">매번 성공 (pass^k)</text><text x="585" y="340" text-anchor="middle" font-size="15" fill="#8A94A3">시도 횟수 k · 1회 성공률 75%</text></svg><div class="dbnote"><span>같은 모델</span> 1회 75% → 10번 모두 성공은 약 6% · 업무 자동화는 「매번」이 기준</div><div class="src">출처 · <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents" target="_blank" rel="noopener">Anthropic · Demystifying evals for AI agents 2026.1</a></div></div></div>
 </section>
 
 <section class="slide ill" data-title="정답셋 평가">
@@ -2718,14 +2702,6 @@ lab7_eval_regression/run_suite.py -n 10 --k 3 을 다시 실행해 결과 파일
 입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말</code></pre></div></div></div></div>
 </section>
 
-<section class="slide lt" data-title="예시를 내 업무로 바꾸기">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">예시를 내 업무로 바꾸기</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>칸</th><th>예시 · 주간 설비 점검 보고서</th><th>내 업무 · 서버 장애 주간 보고 (가상)</th></tr></thead><tbody><tr><td><b>Skill 이름 · 언제 쓰나</b></td><td>weekly-report · 점검 기록으로 보고서를 만들 때</td><td>outage-report · 장애 기록으로 주간 보고를 만들 때</td></tr><tr><td><b>입력</b></td><td>점검 기록 엑셀 · 점검 기준</td><td>장애 티켓 목록 · 장애 등급 기준</td></tr><tr><td><b>결과 양식</b></td><td>요약 3줄 · 정비 요청 · 경고 · 확인 필요</td><td>요약 3줄 · 1등급 장애 · 재발 · 확인 필요</td></tr><tr><td><b>판단 기준</b></td><td>진동 7.1 초과 경고 · 이틀 연속 → 정비 요청</td><td>30분 넘는 중단 → 1등급 · 같은 원인 2회 → 재발</td></tr><tr><td><b>막을 것 (Hook)</b></td><td>원본 수정 · 외부 메일 발송</td><td>티켓 수정 · 외부 공유</td></tr><tr><td><b>사람 확인</b></td><td>발송 전 팀장</td><td>발송 전 운영 리드</td></tr><tr><td><b>잘했다의 기준 (평가)</b></td><td>누락 0건 · 수치가 원본과 일치</td><td>1등급 누락 0건 · 시간이 티켓과 일치</td></tr><tr><td><b>자주 나는 실수</b></td><td>빈 값을 0으로 · 경계값 7.1</td><td>종료 시각 빈 티켓 · 등급 경계 30분</td></tr></tbody></table><div class="dbnote"><span>방법</span> 가까운 예시 하나를 골라 칸마다 내 업무 값으로 → 다음 장 순서대로 하네스 파일로</div></div></div>
-</section>
-
 <section class="slide lt" data-title="하네스 만드는 순서">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch7</span></div>
@@ -2734,81 +2710,67 @@ lab7_eval_regression/run_suite.py -n 10 --k 3 을 다시 실행해 결과 파일
   <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 가까운 예시</b><span>유형 고르고 값 바꾸기</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (하네스 미적용 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
 </section>
 
-<section class="slide lt" data-title="설계표 → 하네스 파일">
+<section class="slide lt" data-title="메타 하네스란">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">설계표 → 하네스 파일</h2>
+  <h2 class="s-title sm">메타 하네스란</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>설계표 칸</th><th>하네스 파일</th><th>부품</th></tr></thead><tbody><tr><td><b>출력 · 형식</b></td><td>CLAUDE.md</td><td>지침</td></tr><tr><td><b>판단 기준 · 사내 규칙</b></td><td>skills/&lt;업무&gt;/SKILL.md + 참고 자료</td><td>Skill</td></tr><tr><td><b>쓰는 시스템 · 도구</b></td><td>읽기 전용 조회 스크립트 · 도구 정의</td><td>Tool</td></tr><tr><td><b>절대 하면 안 되는 것</b></td><td>hooks/guard.py · 권한 deny 규칙</td><td>Hook · 권한</td></tr><tr><td><b>사람 확인 지점</b></td><td>권한 ask 규칙 · 승인 단계</td><td>권한</td></tr><tr><td><b>잘했다의 기준 · 자주 나는 실수</b></td><td>eval/dataset.jsonl · 엣지 케이스</td><td>평가</td></tr></tbody></table><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Claude Code에 요청</span></div><pre><code>〈내_하네스_설계표.md〉 를 읽고 이 업무용 하네스를 만들어 줘.
-- CLAUDE.md (공통 원칙 30줄 이내)
-- Skill 1개 (절차 · 판단 기준 · 결과 양식)
-- Hook (설계표의 「막을 것」만 차단)
-- 평가 문항 5개 (엣지 케이스 2개 포함) + 채점 스크립트
-설계표에 없는 규칙은 지어내지 말고 TODO로 남겨.
-끝나면 평가를 한 번 돌려 점수를 보여 줘.</code></pre></div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>인터뷰</b><span>업무 · 입력 · 금지</span></div><div class="fa">→</div><div class="fs"><b>설계</b><span>유형 · 필요한 부품만</span></div><div class="fa">→</div><div class="fs hl"><b>사람 승인</b><span>APPROVED</span></div><div class="fa">→</div><div class="fs"><b>생성 · 검토</b><span>하네스 파일</span></div><div class="fa">→</div><div class="fs"><b>시험</b><span>미적용 vs 적용</span></div><div class="fa">→</div><div class="fs"><b>사람 판정</b><span>고치기</span></div></div><table class="dbt"><thead><tr><th></th><th>범용 하네스</th><th>메타 하네스가 만든 하네스</th></tr></thead><tbody><tr><td><b>규칙</b></td><td>누구에게나 맞는 일반 규칙</td><td>인터뷰에서 나온 내 업무 규칙만</td></tr><tr><td><b>부품</b></td><td>전부 다</td><td>필요한 것만 · 넣지 않은 이유도 기록</td></tr><tr><td><b>막을 것</b></td><td>rm -rf · .env 같은 공통</td><td>내 업무에서 사고 나는 지점</td></tr><tr><td><b>평가</b></td><td>없음</td><td>내 예시 입력 3 + 엣지 케이스 2</td></tr><tr><td><b>재사용</b></td><td>한 번 설치</td><td>새 업무 · 새 상황마다 다시 인터뷰</td></tr></tbody></table><div class="dbnote"><span>이어서</span> Ch8에서 이 메타 하네스로 개발 하네스를 만든다</div></div></div>
 </section>
 
-<section class="slide lt" data-title="요청문 ① CLAUDE.md · Skill">
+<section class="slide lt" data-title="메타 하네스 구조">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">요청문 ① CLAUDE.md · Skill</h2>
+  <h2 class="s-title sm">메타 하네스 구조</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code>이 프로젝트의 CLAUDE.md를 만들어 줘. 모든 작업에 공통인 원칙만 30줄 이내로.
-- 결과는 〈out/작업명/〉 에 파일로 남긴다
-- 〈원본 폴더〉 는 수정하지 않는다
-- 숫자 · 이름 · 날짜는 원본에 있는 것만. 없거나 다르면 「확인 필요」
-- 근거(파일명 · 조항 번호)를 함께 적는다
-- 〈사람이 판단할 일: 승인 · 환불 · 외부 발송〉 은 담당자 확인으로 넘긴다
-작업별 절차는 여기 쓰지 말고 Skill로 분리한다.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Skill</span></div><pre><code>〈업무 이름〉 절차를 Skill로 만들어 줘.
-- 위치: .claude/skills/〈skill-이름〉/SKILL.md
-- description: 〈언제 쓰는지 한 줄〉
-- 본문: 단계(번호) · 판단 기준 〈기준〉 · 결과 양식 〈양식〉 · 하면 안 되는 것
-- 긴 규정 · 양식 원본은 같은 폴더의 참고 파일로 빼고 본문에서 가리킨다
-만든 뒤 예시 입력 하나로 시험하고 결과를 보여 줘.</code></pre></div></div><div class="dbnote"><span>쓰는 법</span> 〈 〉 안만 내 업무로 바꿔 Claude Code 대화창에 붙여 넣기 · 플러그인 없이 기본 기능만</div></div></div>
+  <div class="body"><div class="mid"><div class="twocol"><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">폴더 구조</span></div><pre><code>meta_harness/
+├── CLAUDE.md                 순서 · 원칙
+├── templates/                유형별 예시 (업무 · 개발)
+├── docs/&lt;하네스 이름&gt;/
+│   ├── interview.md          인터뷰 답
+│   ├── design.md             설계안
+│   └── APPROVED              사람만 만듦
+├── out/&lt;하네스 이름&gt;/          만들어진 하네스
+└── .claude/
+    ├── skills/interview/     질문 → interview.md
+    ├── skills/design/        유형 · 부품 → design.md
+    ├── skills/build/         하네스 파일 생성
+    ├── skills/try/           미적용 vs 적용 시험
+    ├── agents/harness-reviewer.md  지어낸 규칙 검토
+    └── hooks/guard.py · settings.json  승인 전 생성 차단</code></pre></div></div><table class="dbt"><thead><tr><th>단계</th><th>담당</th><th>결과</th></tr></thead><tbody><tr><td><b>① 인터뷰</b></td><td>interview Skill · 사람이 답함</td><td>interview.md</td></tr><tr><td><b>② 설계</b></td><td>design Skill · templates/ 참고</td><td>design.md · 유형 · 부품</td></tr><tr><td><b>③ 승인</b></td><td><b>사람</b> · APPROVED</td><td>승인 전 생성은 Hook이 차단</td></tr><tr><td><b>④ 생성</b></td><td>build Skill</td><td>대상 폴더에 하네스</td></tr><tr><td><b>⑤ 검토</b></td><td>harness-reviewer</td><td>지어낸 규칙 · 빠진 차단</td></tr><tr><td><b>⑥ 시험</b></td><td>try Skill</td><td>미적용 vs 적용 비교표</td></tr><tr><td><b>⑦ 판정</b></td><td><b>사람</b></td><td>합격 · 고칠 점</td></tr></tbody></table></div></div></div>
 </section>
 
-<section class="slide lt" data-title="요청문 ② Hook · 검증 Agent">
+<section class="slide lt" data-title="메타 하네스를 만드는 요청문">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">요청문 ② Hook · 검증 Agent</h2>
+  <h2 class="s-title sm">메타 하네스를 만드는 요청문</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Hook</span></div><pre><code>PreToolUse Hook을 만들어 줘.
-막을 것: 〈운영 DB 쓰기 · 원본 폴더 수정 · 외부 전송 · 비밀 파일 읽기〉
-허용할 것: 〈조회 · 개발 환경 쓰기 · 일반 작업〉
-- .claude/hooks/guard.py 에 만들고 .claude/settings.json 에 등록
-- 막을 때는 exit 2 + 이유 한 줄
-- 표준 라이브러리만
-- 막아야 할 예 5개 · 허용해야 할 예 5개로 직접 시험해 결과를 표로</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">검증 Agent</span></div><pre><code>읽기 전용 검증 Sub Agent를 만들어 줘.
-- .claude/agents/verifier.md · 도구는 Read · Grep · Glob만
-- 할 일: 결과물을 원본과 대조 — 숫자 · 날짜 · 빠진 항목 · 지어낸 내용 · 확정 아닌 걸 확정처럼 쓴 곳
-- 고치지 않고 판정만 · 반환: 항목별 통과 / 실패 · 근거(파일:줄)
-CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.</code></pre></div></div><div class="dbnote"><span>.claude 쓰기</span> Hook · 설정 파일은 보호 경로라 승인 요청이 뜸 · 내용을 읽고 승인</div></div></div>
+  <div class="body"><div class="mid"><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">labs/meta_harness 에서 붙여 넣기</span></div><pre><code>이 폴더에 「하네스를 만드는 하네스(메타 하네스)」를 만들어 줘.
+
+1. CLAUDE.md — 순서: 인터뷰 → 설계 → 사용자 승인 → 생성 → 검토 → 시험 → 판정은 사람
+   원칙: 범용 규칙 금지 · 인터뷰에 나온 것만 · 부품은 필요한 것만 · 하네스마다 docs/&lt;이름&gt;/
+2. .claude/skills/interview/SKILL.md — 질문은 한 번에 하나 · 최대 7개
+   (업무 · 입력 · 결과물 · 판단 기준 · 하면 안 되는 것 · 사람 확인 지점 · 잘했다의 기준)
+3. .claude/skills/design/SKILL.md — 유형 판별 (문의 응대 · 추출 · 보고 · 비교 · 작성 · 개발)
+   → templates/ 예시 참고 → 부품별 설계 + 넣지 않는 것과 이유 → design.md → 요약을 보여 주고 멈춤
+4. .claude/skills/build/SKILL.md — 승인된 설계대로 대상 폴더(기본 out/&lt;이름&gt;/)에 파일 생성
+5. .claude/skills/try/SKILL.md — eval 입력마다 미적용 · 적용으로 claude -p → 비교표 · 판정은 하지 않음
+6. .claude/agents/harness-reviewer.md — 읽기 전용 · 지어낸 규칙 · 빠진 차단 검토
+7. .claude/hooks/guard.py + .claude/settings.json — APPROVED 전에는 docs/ 밖에 쓰기 차단 ·
+   APPROVED 는 Claude가 만들지 못하게
+
+다 만들면 파일 목록과 역할을 표로 보여 줘.</code></pre></div></div><div class="dbnote"><span>막히면</span> 부록 ⑨ ⑩의 파일 그대로 「파일로 저장」 · .claude 쓰기 승인 요청은 읽고 승인</div></div></div>
 </section>
 
-<section class="slide lt" data-title="요청문 ③ 평가 · 고치기">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">요청문 ③ 평가 · 고치기</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">평가</span></div><pre><code>이 업무의 평가셋과 채점 스크립트를 만들어 줘.
-- eval/cases.jsonl: 과거 사례 〈5〉건 + 엣지 케이스 〈2〉건
-  (입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말)
-- eval/grade.py: 결과 파일을 읽어 항목별 O / X와 점수 출력 (표준 라이브러리만)
-지금 하네스로 한 번 돌려 점수를 보여 줘.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">고치기</span></div><pre><code>방금 채점에서 틀린 항목을 보고 하네스를 고쳐 줘.
-- 원인이 절차면 Skill, 공통 원칙이면 CLAUDE.md, 꼭 막아야 할 것이면 Hook
-- 무엇을 왜 바꿨는지 한 줄씩 남기고
-- 다시 채점해 전후 점수를 비교해 줘</code></pre></div></div><div class="dbnote"><span>한 번에</span> 설계표가 있으면 앞 장 「설계표 → 하네스」 요청문 하나로 전부 · 자료 <a class="dl" href="dl/harness_prompts.md" download>harness_prompts.md</a></div></div></div>
-</section>
-
-<section class="slide lt labs" data-title="[실습 7-2] 내 업무 하네스 만들기">
+<section class="slide lt labs" data-title="[실습 7-2] 메타 하네스 만들기 · 내 업무에 적용">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch7</span><span class="labtag">실습 7-2</span></div>
-  <h2 class="s-title sm">내 업무 하네스 만들기</h2>
+  <h2 class="s-title sm">메타 하네스 만들기 · 내 업무에 적용</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>내 업무 하나에 하네스를 입히고 하네스 미적용과 비교 · 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/my_work_harness</code></div><div class="mine"><span>내 업무 적용</span>실제 고객명 · 수치는 가상 값으로 바꿔서</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>설계표를 내 업무 값으로 채우기</li><li>가상 예시 입력 3~5개 준비</li><li>하네스 미적용 상태로 실행</li><li>설계표로 하네스 만들기 → 같은 입력 실행</li><li>설계표의 「잘했다의 기준」으로 직접 판정</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>미적용 · 적용 결과 나란히</li><li>사람이 판정한 O / X 표 · 고칠 점 하나</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>상황에 맞는 하네스를 만들어 주는 하네스 · 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/meta_harness</code></div><div class="mine"><span>내 업무 적용</span>Ch8에서 같은 메타 하네스로 개발 하네스를 만든다</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>요청문으로 메타 하네스 만들기</li><li>내 업무 한 줄 → 인터뷰에 답하기</li><li>design.md 검토 → APPROVED 직접 만들기 (사람 승인)</li><li>하네스 생성 · 검토 · 미적용 vs 적용 시험</li><li>비교표를 보고 직접 판정 → 고칠 점 반영</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>내 업무 전용 하네스 폴더</li><li>사람이 판정한 비교표</li></ul></div>
   </div></div>
 </section>
 
@@ -2817,15 +2779,7 @@ CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">실습 7-2 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>my_work_harness/</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 설계표</span></div><pre><code>my_work_spec/내_하네스_설계표.md 의 다섯 유형 중 내 업무 〈한 줄 설명〉 과 가장 비슷한 예시를 골라
-내 업무 값으로 채워 줘. 모르는 칸은 TODO · 고객명 · 실제 수치는 가상 값으로</code></pre></div><div class="kdo"><span>② 예시 입력</span><p><b>my_work_harness/inputs/</b> 에 내 업무의 가상 예시 입력 3~5개 (실제 고객 정보 넣지 않기)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 하네스 미적용</span></div><pre><code>my_work_harness 폴더 안에서 inputs/ 의 입력마다 〈내 업무 요청 한 줄〉 을
-claude -p --setting-sources "" --permission-mode acceptEdits 로 실행해
-답을 labs 바로 아래 runs/7-2/미적용_&lt;입력 이름&gt;.md 로 저장해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 하네스 만들기</span></div><pre><code>my_work_spec/내_하네스_설계표.md 를 읽고 my_work_harness 에 하네스를 만들어 줘.
-- CLAUDE.md (공통 원칙 30줄 이내) · Skill 1개 (절차 · 판단 기준 · 결과 양식)
-- Hook (설계표의 「막을 것」만 차단)
-설계표에 없는 규칙은 지어내지 말고 TODO로</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 하네스 적용</span></div><pre><code>my_work_harness 폴더 안에서 inputs/ 의 입력마다 〈내 업무 요청 한 줄〉 을
-claude -p --setting-sources project --permission-mode acceptEdits 로 실행해
-답을 labs 바로 아래 runs/7-2/적용_&lt;입력 이름&gt;.md 로 저장해 줘</code></pre></div><div class="kdo"><span>⑥ 사람 판정</span><p>runs/7-2 의 미적용 · 적용을 나란히 놓고 설계표의 「잘했다의 기준」으로 직접 O / X · 자동 채점 · Claude 의견은 참고만</p></div></div><div class="dbnote"><span>참고</span> 이 실습의 하네스와 설계표가 내 업무용 최종 결과물 · 요청문 ①②③ · 부록 ①~⑥을 재료로</div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/meta_harness</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="kdo"><span>① 메타 하네스 만들기</span><p>앞 장 요청문 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 내 업무로 시작</span></div><pre><code>내 업무용 하네스를 만들고 싶어: 〈업무 한 줄 설명〉. 인터뷰부터 시작해 줘</code></pre></div><div class="kdo"><span>③ 인터뷰</span><p>질문에 답하기 · 예시 입력은 가상 값 · 모르면 「모름」</p></div><div class="kdo"><span>④ 사람 승인</span><p>docs/〈이름〉/design.md 검토 · 고칠 점은 대화로 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 생성 · 검토 · 시험</span></div><pre><code>docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘</code></pre></div><div class="kdo"><span>⑥ 사람 판정</span><p>비교표를 인터뷰의 「잘했다의 기준」으로 직접 판정 · 고칠 점을 말하면 다시</p></div></div><div class="dbnote"><span>참고</span> 요청문이 막히면 부록 ⑨ ⑩ 「파일로 저장」 · 이 메타 하네스는 Ch8에서 다시 씀</div></div></div>
 </section>
 
 <section class="slide lt" data-title="운영: 실패 유형 정의">
@@ -2936,29 +2890,17 @@ export const total = (n) =>
   <div class="body"><div class="mid"><svg class="hxv hx-dt" viewBox="0 0 1160 440" xmlns="http://www.w3.org/2000/svg"><style>.hx-dt{width:100%;height:auto;max-height:470px;display:block;margin:0 auto;overflow:visible}.hx-dt text{font-family:var(--serif);dominant-baseline:middle}.hx-dt .tt{font-size:19px;font-weight:800;fill:#1F3A5F}.hx-dt .ts{font-size:15px;fill:#44506A}.hx-dt .to{font-size:15px;font-weight:700;fill:#F28C28}.hx-dt .tw{font-size:15px;font-weight:700;fill:#FFFFFF}.hx-dt .tn{font-size:15px;font-weight:700;fill:#1F3A5F}@media print{.hx-dt *{animation:none!important}.hx-dt .mv{display:none}}@media (prefers-reduced-motion:reduce){.hx-dt *{animation:none!important}.hx-dt .mv{display:none}}@keyframes hxdt1{0%{transform:scaleX(0);opacity:1}0%{transform:scaleX(0);opacity:1}10.32%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt2{0%{opacity:0}10.32%{opacity:0}11.32%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt3{0%{opacity:0}10.75%{opacity:0}11.75%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt4{0%{transform:scaleX(0);opacity:1}11.18%{transform:scaleX(0);opacity:1}15.48%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt5{0%{opacity:0}15.48%{opacity:0}16.48%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt6{0%{opacity:0}15.91%{opacity:0}16.91%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt7{0%{transform:scaleX(0);opacity:1}16.34%{transform:scaleX(0);opacity:1}26.66%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt8{0%{opacity:0}26.66%{opacity:0}27.66%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt9{0%{opacity:0}27.09%{opacity:0}28.09%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt10{0%{transform:scaleX(0);opacity:1}27.52%{transform:scaleX(0);opacity:1}35.26%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt11{0%{opacity:0}35.26%{opacity:0}36.26%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt12{0%{opacity:0}35.69%{opacity:0}36.69%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt13{0%{transform:scaleX(0);opacity:1}36.12%{transform:scaleX(0);opacity:1}40.42%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt14{0%{opacity:0}40.42%{opacity:0}41.42%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt15{0%{opacity:0}40.85%{opacity:0}41.85%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt16{0%{opacity:0}41.71%{opacity:0}42.71%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt17{0%{opacity:0}42.57%{opacity:0}43.57%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt18{0%{transform:scaleX(0);opacity:1}42.14%{transform:scaleX(0);opacity:1}49.88%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt19{0%{opacity:0}49.88%{opacity:0}50.88%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt20{0%{transform:scaleX(0);opacity:1}49.88%{transform:scaleX(0);opacity:1}61.06%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt21{0%{opacity:0}61.06%{opacity:0}62.06%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt22{0%{transform:scaleX(0);opacity:1}43%{transform:scaleX(0);opacity:1}49.02%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt23{0%{opacity:0}49.02%{opacity:0}50.02%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt24{0%{transform:scaleX(0);opacity:1}49.02%{transform:scaleX(0);opacity:1}56.76%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt25{0%{opacity:0}56.76%{opacity:0}57.76%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt26{0%{transform:scaleX(0);opacity:1}43.86%{transform:scaleX(0);opacity:1}52.46%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt27{0%{opacity:0}52.46%{opacity:0}53.46%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt28{0%{transform:scaleX(0);opacity:1}52.46%{transform:scaleX(0);opacity:1}62.78%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt29{0%{opacity:0}62.78%{opacity:0}63.78%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt30{0%{opacity:0}57.19%{opacity:0}58.19%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt31{0%{opacity:0}61.49%{opacity:0}62.49%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt32{0%{opacity:0}63.21%{opacity:0}64.21%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt33{0%{transform:scaleX(0);opacity:1}63.64%{transform:scaleX(0);opacity:1}70.52%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt34{0%{opacity:0}70.52%{opacity:0}71.52%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt35{0%{opacity:0}70.95%{opacity:0}71.95%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt36{0%{transform:scaleX(0);opacity:1}71.38%{transform:scaleX(0);opacity:1}75.68%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt37{0%{opacity:0}75.68%{opacity:0}76.68%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt38{0%{opacity:0}76.11%{opacity:0}77.11%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt39{0%{transform:scaleX(0);opacity:1}76.54%{transform:scaleX(0);opacity:1}79.12%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt40{0%{opacity:0}79.12%{opacity:0}80.12%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt41{0%{opacity:0}79.55%{opacity:0}80.55%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt42{0%{transform:scaleX(0);opacity:1}79.98%{transform:scaleX(0);opacity:1}86%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt43{0%{opacity:0}86%{opacity:0}87%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt44{0%{transform:translate(150px,0px);opacity:1}86%{transform:translate(1130px,0px);opacity:1}92%{transform:translate(1130px,0px);opacity:1}96%{transform:translate(1130px,0px);opacity:0}100%{transform:translate(150px,0px);opacity:0}}</style><defs><marker id="hxdtah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#1F3A5F"/></marker><marker id="hxdtaho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#F28C28"/></marker><marker id="hxdtahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#9AA3B0"/></marker></defs><text x="150" y="18" text-anchor="start" class="ts" >시간 →</text><rect x="0" y="40" width="1160" height="64" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="72" text-anchor="end" class="tt" style="font-size:17px">사람</text><text x="128" y="136" text-anchor="end" class="tt" style="font-size:17px">메인</text><rect x="0" y="168" width="1160" height="64" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="200" text-anchor="end" class="tt" style="font-size:17px">작업 A</text><text x="128" y="264" text-anchor="end" class="tt" style="font-size:17px">작업 B</text><rect x="0" y="296" width="1160" height="64" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="328" text-anchor="end" class="tt" style="font-size:17px">작업 C</text><text x="128" y="392" text-anchor="end" class="tt" style="font-size:17px">reviewer</text><text x="128" y="284" text-anchor="end" class="ts" style="font-size:12px">각자 워크트리</text><line x1="144" y1="40" x2="144" y2="424" stroke="#1F3A5F" stroke-width="2"/><rect x="150" y="116" width="117.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt1 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="208.8" y="137" text-anchor="middle" class="tw" style="animation:hxdt2 14s linear infinite both;">브레인스토밍</text><line x1="272.5" y1="114" x2="272.5" y2="94" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt3 14s linear infinite both;"/><rect x="277.4" y="52" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt4 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="301.9" y="73" text-anchor="middle" class="tw" style="animation:hxdt5 14s linear infinite both;">답</text><line x1="331.3" y1="94" x2="331.3" y2="114" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt6 14s linear infinite both;"/><rect x="336.2" y="116" width="117.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt7 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="395" y="137" text-anchor="middle" class="tw" style="animation:hxdt8 14s linear infinite both;">구현 기획</text><line x1="458.7" y1="114" x2="458.7" y2="94" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt9 14s linear infinite both;"/><rect x="463.6" y="52" width="88.2" height="40" rx="8" fill="#F28C28" stroke="#F28C28" stroke-width="3" style="animation:hxdt10 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="507.7" y="73" text-anchor="middle" class="tw" style="animation:hxdt11 14s linear infinite both;">승인</text><line x1="556.7" y1="94" x2="556.7" y2="114" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt12 14s linear infinite both;"/><rect x="561.6" y="116" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt13 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="586.1" y="137" text-anchor="middle" class="tw" style="animation:hxdt14 14s linear infinite both;">위임</text><line x1="615.5" y1="158" x2="615.5" y2="178" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt15 14s linear infinite both;"/><line x1="625.3" y1="158" x2="625.3" y2="242" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt16 14s linear infinite both;"/><line x1="635.1" y1="158" x2="635.1" y2="306" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt17 14s linear infinite both;"/><rect x="630.2" y="180" width="88.2" height="40" rx="8" fill="#FFFFFF" stroke="#F28C28" stroke-width="3" style="animation:hxdt18 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="674.3" y="201" text-anchor="middle" class="to" style="animation:hxdt19 14s linear infinite both;">테스트 ✗</text><rect x="718.4" y="180" width="127.4" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt20 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="782.1" y="201" text-anchor="middle" class="tw" style="animation:hxdt21 14s linear infinite both;">구현 ✓</text><rect x="640" y="244" width="68.6" height="40" rx="8" fill="#FFFFFF" stroke="#F28C28" stroke-width="3" style="animation:hxdt22 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="674.3" y="265" text-anchor="middle" class="to" style="animation:hxdt23 14s linear infinite both;">테스트 ✗</text><rect x="708.6" y="244" width="88.2" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt24 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="752.7" y="265" text-anchor="middle" class="tw" style="animation:hxdt25 14s linear infinite both;">구현 ✓</text><rect x="649.8" y="308" width="98" height="40" rx="8" fill="#FFFFFF" stroke="#F28C28" stroke-width="3" style="animation:hxdt26 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="698.8" y="329" text-anchor="middle" class="to" style="animation:hxdt27 14s linear infinite both;">테스트 ✗</text><rect x="747.8" y="308" width="117.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt28 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="806.6" y="329" text-anchor="middle" class="tw" style="animation:hxdt29 14s linear infinite both;">구현 ✓</text><line x1="801.7" y1="242" x2="801.7" y2="158" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt30 14s linear infinite both;"/><line x1="850.7" y1="178" x2="850.7" y2="158" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt31 14s linear infinite both;"/><line x1="870.3" y1="306" x2="870.3" y2="158" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt32 14s linear infinite both;"/><rect x="875.2" y="116" width="78.4" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt33 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="914.4" y="137" text-anchor="middle" class="tw" style="animation:hxdt34 14s linear infinite both;">병합 · 테스트</text><line x1="958.5" y1="158" x2="958.5" y2="370" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt35 14s linear infinite both;"/><rect x="963.4" y="372" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt36 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="987.9" y="393" text-anchor="middle" class="tw" style="animation:hxdt37 14s linear infinite both;">검토</text><line x1="1017.3" y1="370" x2="1017.3" y2="158" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt38 14s linear infinite both;"/><rect x="1022.2" y="116" width="29.4" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt39 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="1036.9" y="137" text-anchor="middle" class="tw" style="animation:hxdt40 14s linear infinite both;">반영</text><line x1="1056.5" y1="114" x2="1056.5" y2="94" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt41 14s linear infinite both;"/><rect x="1061.4" y="52" width="68.6" height="40" rx="8" fill="#F28C28" stroke="#F28C28" stroke-width="3" style="animation:hxdt42 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="1095.7" y="73" text-anchor="middle" class="tw" style="animation:hxdt43 14s linear infinite both;">판정</text><g class="mv" style="animation:hxdt44 14s linear infinite both;"><line x1="0" y1="34" x2="0" y2="430" stroke="#F28C28" stroke-width="3"/><circle cx="0" cy="34" r="6" fill="#F28C28"/></g></svg><div class="dbnote"><span>읽는 법</span> 주황 = 사람 (승인 · 판정) · 주황 테두리 = 실패하는 테스트 먼저 · 작업 A · B · C는 각자 워크트리에서 동시에</div></div></div>
 </section>
 
-<section class="slide lt" data-title="개발 하네스를 만드는 요청문">
+<section class="slide lt" data-title="메타 하네스로 개발 하네스 만들기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
-  <h2 class="s-title sm">개발 하네스를 만드는 요청문</h2>
+  <h2 class="s-title sm">메타 하네스로 개발 하네스 만들기</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">final_dev_harness 에서 붙여 넣기</span></div><pre><code>이 폴더에 개발 멀티에이전트 하네스를 만들어 줘.
-Node.js · 외부 패키지 없음 · 테스트는 node --test
-
-1. CLAUDE.md — 순서를 건너뛰지 않는다:
-   브레인스토밍 → 구현 기획 → 사용자 승인 → 병렬 구현(TDD) → 통합 · 리뷰 → README
-2. .claude/skills/brainstorm/SKILL.md
-   질문은 한 번에 하나 · 최대 5개 → docs/brief.md
-3. .claude/skills/plan/SKILL.md
-   공통 약속(파일 · 함수 · 데이터 모양) + 서로 겹치지 않는 작업 2~4개
-   (작업마다 맡을 파일 · 테스트 사례 3개 이상 · 완료 기준) → docs/plan.md
-   → 요약을 보여 주고 멈춘다
-4. .claude/agents/implementer.md — isolation: worktree
-   테스트 먼저 → 구현 → node --test 통과 → 커밋 · 맡은 파일 밖은 고치지 않음
-5. .claude/agents/reviewer.md — 읽기 전용 · plan 대비 빠진 것 · 테스트 없는 분기
-6. .claude/hooks/plan_gate.mjs + .claude/settings.json (PreToolUse)
-   docs/APPROVED 가 없으면 src/ · test/ 쓰기 차단 · APPROVED 는 Claude가 만들지 못하게
-
-다 만들면 파일 목록과 역할을 표로 보여 줘.</code></pre></div></div><div class="dbnote"><span>막히면</span> 부록 ⑦ ⑧의 파일 그대로 「파일로 저장」 · .claude 쓰기 · git · 워크트리 승인 요청은 읽고 승인</div></div></div>
+  <div class="body"><div class="mid"><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">labs/meta_harness 에서 붙여 넣기</span></div><pre><code>개발용 하네스를 만들어 줘. 대상 폴더는 ../final_dev_harness
+- Node.js · 외부 패키지 없음 · 테스트는 node --test
+- 흐름: 브레인스토밍 → 구현 기획 → 사람 승인 → 작업마다 Sub Agent가 각자 워크트리에서 TDD
+  → 병합 · 리뷰 → 사람 판정
+- 승인 전에는 src/ · test/ 쓰기를 Hook으로 막기
+예시는 templates/dev/ 참고 · 인터뷰는 위에 없는 것만 물어봐</code></pre></div></div><table class="dbt"><thead><tr><th></th><th>Ch7 · 내 업무</th><th>Ch8 · 개발</th></tr></thead><tbody><tr><td><b>메타 하네스</b></td><td>같은 것</td><td>같은 것</td></tr><tr><td><b>인터뷰 · 설계</b></td><td>업무 유형 · 막을 것</td><td>개발 유형 · 작업 나누기 · 워크트리 · TDD</td></tr><tr><td><b>결과</b></td><td>업무 하네스</td><td>개발 멀티에이전트 하네스 (앞 장 구조)</td></tr></tbody></table><div class="dbnote"><span>막히면</span> 부록 ⑦ ⑧의 개발 하네스 파일 그대로</div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 8-1] 개발 멀티에이전트 하네스로 내 업무 툴">
@@ -2968,7 +2910,7 @@ Node.js · 외부 패키지 없음 · 테스트는 node --test
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
     <div class="lc goal"><div class="lh">목표</div><p>기획 → 사람 승인 → 병렬 TDD로 내가 쓸 툴 만들기 · 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/final_dev_harness</code></div><div class="mine"><span>내 업무 적용</span>평소 손으로 하던 업무 하나를 툴로</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>final_dev_harness를 git 저장소로 (첫 커밋)</li><li>요청문으로 하네스 만들기 → 파일 확인 · 커밋</li><li>아이디어.md → 브레인스토밍 · 구현 기획</li><li>plan.md 검토 → docs/APPROVED 직접 만들기 (사람 승인)</li><li>병렬 TDD 구현 → 통합 · 리뷰</li><li>직접 써 보고 판정 → 2분 발표</li></ol></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>final_dev_harness를 git 저장소로 (첫 커밋)</li><li>메타 하네스로 개발 하네스 만들기 (인터뷰 · 승인 · 생성)</li><li>아이디어.md → 브레인스토밍 · 구현 기획</li><li>plan.md 검토 → docs/APPROVED 직접 만들기 (사람 승인)</li><li>병렬 TDD 구현 → 통합 · 리뷰</li><li>직접 써 보고 판정 → 2분 발표</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>node --test 전부 통과</li><li>내 합격 기준으로 직접 판정한 기록</li><li>툴 시연 2분</li></ul></div>
   </div></div>
 </section>
@@ -2978,7 +2920,7 @@ Node.js · 외부 패키지 없음 · 테스트는 node --test
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">실습 8-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/final_dev_harness</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 첫 커밋</span></div><pre><code>이 폴더를 git 저장소로 만들고 첫 커밋 해 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>앞 장 「개발 하네스를 만드는 요청문」 붙여 넣기 → 만든 파일 확인 → 커밋 → Claude Code 새로 열기</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 브레인스토밍 · 기획</span></div><pre><code>아이디어.md 를 읽고 브레인스토밍부터 시작해 줘</code></pre></div><div class="kdo"><span>④ 사람 승인</span><p>docs/plan.md 검토 · 고칠 점은 대화로 → 괜찮으면 탐색기에서 새 파일 <b>docs/APPROVED</b> (사람만)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 병렬 구현</span></div><pre><code>docs/APPROVED 만들었어. CLAUDE.md 순서대로 구현을 진행해 줘</code></pre></div><div class="kdo"><span>⑥ 사람 판정</span><p>직접 실행해 보고 내 합격 기준으로 판정 · 아니면 무엇이 틀렸는지 말하고 다시</p></div></div><div class="dbnote"><span>참고</span> Node 18 이상 · git · 워크트리 · .claude 쓰기 승인 요청은 내용을 읽고 승인</div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/meta_harness → labs/final_dev_harness</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 첫 커밋</span></div><pre><code>../final_dev_harness 폴더를 git 저장소로 만들고 첫 커밋 해 줘</code></pre></div><div class="kdo"><span>② 개발 하네스 설계</span><p>앞 장 「메타 하네스로 개발 하네스 만들기」 붙여 넣기 → 인터뷰 답 → design.md 검토 → <b>docs/〈이름〉/APPROVED</b> 직접</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 생성</span></div><pre><code>docs/〈이름〉/APPROVED 만들었어. ../final_dev_harness 에 하네스를 만들고 검토한 뒤 커밋해 줘</code></pre></div><div class="kdo"><span>④ 폴더 바꾸기</span><p>VS Code로 <b>labs/final_dev_harness</b> 열기 → Claude Code 새로 열기</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 브레인스토밍 · 기획</span></div><pre><code>아이디어.md 를 읽고 브레인스토밍부터 시작해 줘</code></pre></div><div class="kdo"><span>⑥ 사람 승인</span><p>docs/plan.md 검토 → 괜찮으면 새 파일 <b>docs/APPROVED</b> (사람만)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑦ 병렬 구현</span></div><pre><code>docs/APPROVED 만들었어. CLAUDE.md 순서대로 구현을 진행해 줘</code></pre></div><div class="kdo"><span>⑧ 사람 판정</span><p>직접 실행해 보고 내 합격 기준으로 판정 · 아니면 무엇이 틀렸는지 말하고 다시</p></div></div><div class="dbnote"><span>참고</span> Node 18 이상 · git · 워크트리 · .claude 쓰기 승인 요청은 내용을 읽고 승인</div></div></div>
 </section>
 
 <section class="slide lt" data-title="발표 2분">
@@ -3221,7 +3163,7 @@ if re.search(r"(^|[;&amp;|(]\s*)(mail|sendmail|mutt|curl|wget|scp|sftp|ftp|nc)\s
     sys.exit(2)
 if re.search(r"(&gt;&gt;?|\brm\b|\bmv\b|sed -i|\btee\b)\s*[^|;&amp;]*(^|[\s/'\"])inputs/", cmd):
     print("차단: inputs/ 원본은 고치지 않는다.", file=sys.stderr)
-    sys.exit(2)</code></pre></div></div><div class="dbnote"><span>주의</span> 막을 것 목록은 내 업무에 맞게 · 직접 고치기 어려우면 Ch7 요청문 ②로 Claude에게</div></div></div>
+    sys.exit(2)</code></pre></div></div><div class="dbnote"><span>주의</span> 막을 것 목록은 내 업무에 맞게 · 직접 고치기 어려우면 부록 ⑫ 요청문으로 Claude에게</div></div></div>
 </section>
 
 <section class="slide lt" data-title="부록 ⑦ 개발 하네스 · 순서 · Skill">
@@ -3336,6 +3278,198 @@ process.exit(0);</code></pre></div><div data-file="settings.json" class="code sm
     ]
   }
 }</code></pre></div></div></div></div>
+</section>
+
+<section class="slide lt" data-title="부록 ⑨ 메타 하네스 · 순서 · 인터뷰 · 설계">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">부록</span></div>
+  <h2 class="s-title sm">부록 ⑨ 메타 하네스 · 순서 · 인터뷰 · 설계</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kgrid"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code># 메타 하네스 · 상황에 맞는 하네스를 만드는 하네스
+
+결과물: 사용자가 말한 업무 하나에 맞춘 하네스 폴더
+
+## 순서 (건너뛰지 않는다 · 하네스마다 docs/&lt;하네스 이름&gt;/ 하나)
+1. 인터뷰 — interview Skill → docs/&lt;이름&gt;/interview.md
+2. 설계 — design Skill → docs/&lt;이름&gt;/design.md
+3. 사용자 승인 — 설계 요약을 보여 주고 멈춘다. docs/&lt;이름&gt;/APPROVED 는 사람만 만든다
+4. 생성 — build Skill → 사용자가 정한 대상 폴더 (없으면 out/&lt;이름&gt;/)
+5. 검토 — harness-reviewer 에게 맡기고 지적 반영
+6. 시험 — try Skill → 하네스 미적용 vs 적용 비교표
+7. 판정은 사람 — 비교표를 보여 주고 고칠 점을 묻는다
+
+## 원칙
+- 범용 규칙을 늘어놓지 않는다. 인터뷰에 나온 것만 넣고, 모르는 값은 TODO
+- 부품은 필요한 것만: 매번 지킬 원칙 → CLAUDE.md · 절차 → Skill · 어기면 사고 → Hook · 확인 → 검증 Agent · 큰 일 나누기 → Sub Agent
+- 유형별 예시는 templates/README.md</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/interview/SKILL.md</span></div><pre><code>---
+name: interview
+description: 새 하네스를 만들기 전에 사용자의 업무 · 상황을 파악할 때.
+---
+
+# interview
+
+한 번에 질문 하나, 최대 7개. 이미 답한 것은 묻지 않는다.
+
+1. 어떤 업무 · 얼마나 자주 · 결과를 누가 받나
+2. 입력 (파일 종류 · 예시 하나)
+3. 결과물 (형식 · 위치 · 예시 하나)
+4. 판단 기준 · 사내 규칙
+5. 절대 하면 안 되는 것
+6. 사람이 꼭 확인할 지점
+7. 「잘했다」의 기준 · 자주 나는 실수
+
+결과: docs/&lt;하네스 이름&gt;/interview.md — 답 그대로, 빈 칸은 TODO</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/design/SKILL.md</span></div><pre><code>---
+name: design
+description: interview.md를 바탕으로 상황에 맞는 하네스 설계안을 만들 때.
+---
+
+# design
+
+1. 유형 판별: 문의 응대 · 추출 · 계산 · 기록 → 보고 · 비교 · 검토 · 정리 · 작성 · 개발 (섞이면 주 유형 하나)
+2. templates/README.md 에서 그 유형의 예시를 읽는다
+3. 부품별 설계 (필요한 것만)
+   - CLAUDE.md: 매번 지킬 원칙 5줄 이내
+   - Skill: 절차 · 판단 기준 · 결과 양식
+   - Hook: 「하면 안 되는 것」 중 코드로 막을 수 있는 것
+   - 검증 Agent: 숫자 · 발송 · 고객 대상이면
+   - Sub Agent 나누기: 여러 건 · 독립 작업이면 (개발이면 작업별 워크트리 · TDD)
+   - 평가 문항: 예시 3개 + 엣지 케이스 2개
+4. 「넣지 않는 것」과 이유
+5. 결과: docs/&lt;이름&gt;/design.md → 요약을 보여 주고 승인(docs/&lt;이름&gt;/APPROVED)을 기다린다</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/build/SKILL.md</span></div><pre><code>---
+name: build
+description: 승인된 design.md대로 하네스 파일을 만들 때.
+---
+
+# build
+
+1. docs/&lt;이름&gt;/APPROVED 가 있는지 확인 — 없으면 멈춘다
+2. 대상 폴더(사용자가 정한 곳, 없으면 out/&lt;이름&gt;/)에 design.md 그대로:
+   CLAUDE.md · .claude/skills/ · .claude/agents/ · .claude/hooks/ + .claude/settings.json · eval/cases.jsonl
+3. 설계에 없는 규칙은 넣지 않는다 · 모르는 값은 TODO
+4. 만든 파일 목록과 각 파일이 design.md 어느 줄에서 왔는지 표로</code></pre></div></div></div></div>
+</section>
+
+<section class="slide lt" data-title="부록 ⑩ 메타 하네스 · 시험 · 검토 · Hook">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">부록</span></div>
+  <h2 class="s-title sm">부록 ⑩ 메타 하네스 · 시험 · 검토 · Hook</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kgrid"><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/try/SKILL.md</span></div><pre><code>---
+name: try
+description: 만든 하네스를 예시 입력으로 시험할 때.
+---
+
+# try
+
+1. 대상 폴더의 eval/cases.jsonl 입력마다
+   - 하네스 미적용: 빈 임시 폴더에서 claude -p --setting-sources ""
+   - 하네스 적용: 대상 폴더에서 claude -p --setting-sources project
+2. 결과를 runs/&lt;이름&gt;/ 에 저장하고 표로: 입력 · 기대 결과 · 미적용 · 적용
+3. 합격 판정은 하지 않는다 — 사람이 표를 보고 판정한다</code></pre></div><div data-file="harness-reviewer.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/agents/harness-reviewer.md</span></div><pre><code>---
+name: harness-reviewer
+description: 생성된 하네스를 design.md와 대조해 검토한다. 고치지 않고 보고만 한다.
+tools: Read, Grep, Glob
+---
+
+너는 하네스 검토 담당이다. 파일을 고치지 않는다.
+
+1. design.md 에 없는 규칙이 들어갔는가 (지어낸 규칙)
+2. 「하면 안 되는 것」이 Hook으로 실제 막히는가 · 빠진 것
+3. CLAUDE.md 가 길거나 Skill과 겹치는가
+4. Skill description 이 「언제 쓰는지」 분명한가
+
+반환: | 파일 | 문제 | 고칠 방향 | · 없으면 「문제 없음」</code></pre></div><div data-file="guard.py" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/hooks/guard.py</span></div><pre><code>"""PreToolUse Hook — 설계 승인 전에는 docs/ 밖에 쓰지 못하게 · APPROVED 는 사람만."""
+import json
+import os
+import re
+import sys
+from pathlib import Path
+
+e = json.load(sys.stdin)
+inp = e.get("tool_input", {})
+root = Path(os.environ.get("CLAUDE_PROJECT_DIR") or e.get("cwd", "."))
+path = str(inp.get("file_path", ""))
+cmd = str(inp.get("command", ""))
+
+
+def block(msg):
+    print(f"[메타 하네스] {msg}", file=sys.stderr)
+    sys.exit(2)
+
+
+if "APPROVED" in path or ("APPROVED" in cmd and re.search(r"(&gt;|touch|cp |mv |tee|rm )", cmd)):
+    block("APPROVED 는 사용자가 직접 만든다 · 설계 요약을 보여 주고 기다릴 것")
+
+if e.get("tool_name") in ("Write", "Edit", "MultiEdit") and path:
+    target = Path(path).resolve()
+    in_docs = str(target).startswith(str((root / "docs").resolve()))
+    approved = any(root.glob("docs/*/APPROVED"))
+    if not in_docs and not approved:
+        block("아직 설계 승인 전 · docs/&lt;이름&gt;/design.md 를 보여 주고 사용자가 APPROVED 를 만들 때까지 생성하지 않는다")
+sys.exit(0)</code></pre></div><div data-file="settings.json" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/settings.json</span></div><pre><code>{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|Bash",
+        "hooks": [
+          { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard.py\"" }
+        ]
+      }
+    ]
+  }
+}</code></pre></div></div></div></div>
+</section>
+
+<section class="slide lt" data-title="부록 ⑪ 요청문 ① CLAUDE.md · Skill">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">부록</span></div>
+  <h2 class="s-title sm">부록 ⑪ 요청문 ① CLAUDE.md · Skill</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code>이 프로젝트의 CLAUDE.md를 만들어 줘. 모든 작업에 공통인 원칙만 30줄 이내로.
+- 결과는 〈out/작업명/〉 에 파일로 남긴다
+- 〈원본 폴더〉 는 수정하지 않는다
+- 숫자 · 이름 · 날짜는 원본에 있는 것만. 없거나 다르면 「확인 필요」
+- 근거(파일명 · 조항 번호)를 함께 적는다
+- 〈사람이 판단할 일: 승인 · 환불 · 외부 발송〉 은 담당자 확인으로 넘긴다
+작업별 절차는 여기 쓰지 말고 Skill로 분리한다.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Skill</span></div><pre><code>〈업무 이름〉 절차를 Skill로 만들어 줘.
+- 위치: .claude/skills/〈skill-이름〉/SKILL.md
+- description: 〈언제 쓰는지 한 줄〉
+- 본문: 단계(번호) · 판단 기준 〈기준〉 · 결과 양식 〈양식〉 · 하면 안 되는 것
+- 긴 규정 · 양식 원본은 같은 폴더의 참고 파일로 빼고 본문에서 가리킨다
+만든 뒤 예시 입력 하나로 시험하고 결과를 보여 줘.</code></pre></div></div><div class="dbnote"><span>쓰는 법</span> 〈 〉 안만 내 업무로 바꿔 Claude Code 대화창에 붙여 넣기 · 플러그인 없이 기본 기능만</div></div></div>
+</section>
+
+<section class="slide lt" data-title="부록 ⑫ 요청문 ② Hook · 검증 Agent">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">부록</span></div>
+  <h2 class="s-title sm">부록 ⑫ 요청문 ② Hook · 검증 Agent</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Hook</span></div><pre><code>PreToolUse Hook을 만들어 줘.
+막을 것: 〈운영 DB 쓰기 · 원본 폴더 수정 · 외부 전송 · 비밀 파일 읽기〉
+허용할 것: 〈조회 · 개발 환경 쓰기 · 일반 작업〉
+- .claude/hooks/guard.py 에 만들고 .claude/settings.json 에 등록
+- 막을 때는 exit 2 + 이유 한 줄
+- 표준 라이브러리만
+- 막아야 할 예 5개 · 허용해야 할 예 5개로 직접 시험해 결과를 표로</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">검증 Agent</span></div><pre><code>읽기 전용 검증 Sub Agent를 만들어 줘.
+- .claude/agents/verifier.md · 도구는 Read · Grep · Glob만
+- 할 일: 결과물을 원본과 대조 — 숫자 · 날짜 · 빠진 항목 · 지어낸 내용 · 확정 아닌 걸 확정처럼 쓴 곳
+- 고치지 않고 판정만 · 반환: 항목별 통과 / 실패 · 근거(파일:줄)
+CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.</code></pre></div></div><div class="dbnote"><span>.claude 쓰기</span> Hook · 설정 파일은 보호 경로라 승인 요청이 뜸 · 내용을 읽고 승인</div></div></div>
+</section>
+
+<section class="slide lt" data-title="부록 ⑬ 요청문 ③ 평가 · 고치기">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">부록</span></div>
+  <h2 class="s-title sm">부록 ⑬ 요청문 ③ 평가 · 고치기</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">평가</span></div><pre><code>이 업무의 평가셋과 채점 스크립트를 만들어 줘.
+- eval/cases.jsonl: 과거 사례 〈5〉건 + 엣지 케이스 〈2〉건
+  (입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말)
+- eval/grade.py: 결과 파일을 읽어 항목별 O / X와 점수 출력 (표준 라이브러리만)
+지금 하네스로 한 번 돌려 점수를 보여 줘.</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">고치기</span></div><pre><code>방금 채점에서 틀린 항목을 보고 하네스를 고쳐 줘.
+- 원인이 절차면 Skill, 공통 원칙이면 CLAUDE.md, 꼭 막아야 할 것이면 Hook
+- 무엇을 왜 바꿨는지 한 줄씩 남기고
+- 다시 채점해 전후 점수를 비교해 줘</code></pre></div></div><div class="dbnote"><span>한 번에</span> 메타 하네스(Ch7)를 쓰면 인터뷰 · 설계 · 생성까지 한 번에 · 자료 <a class="dl" href="dl/harness_prompts.md" download>harness_prompts.md</a></div></div></div>
 </section>
 
     </div>

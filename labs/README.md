@@ -20,8 +20,8 @@
 | 5-1 · 5-2 멀티에이전트 | `lab5_multiagent/` · `work_harness/workspace/` | extractor · verifier · 나누기 규칙 |
 | 6-1 토큰 | `lab6_tokens/` | — |
 | 7-1 평가 · 회귀 | `lab7_eval_regression/` | — |
-| 7-2 내 업무 하네스 | `my_work_spec/` · `my_work_harness/` | 설계표 → 요청문으로 직접 |
-| 8-1 개발 멀티에이전트 하네스 · 내 업무 툴 | `final_dev_harness/` (이 폴더를 VS Code로) | 요청문 · 부록 ⑦ ⑧ |
+| 7-2 메타 하네스 · 내 업무 | `meta_harness/` (이 폴더를 VS Code로) | 요청문 · 부록 ⑨ ⑩ |
+| 8-1 개발 멀티에이전트 하네스 · 내 업무 툴 | `meta_harness/` 로 만들고 `final_dev_harness/` 에서 개발 | 메타 하네스 · 부록 ⑦ ⑧ |
 
 ## 강사용 참고
 
