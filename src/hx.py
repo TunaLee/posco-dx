@@ -72,6 +72,21 @@ D_PTC = ("Anthropic 문서 · Programmatic tool calling", "https://platform.clau
 D_CCSKILLS = ("Claude Code Skills 문서", "https://code.claude.com/docs/en/skills")
 OAI_MA = ("OpenAI 문서 · Responses multi-agent", "https://developers.openai.com/api/docs/guides/responses-multi-agent")
 OAI_SUB = ("OpenAI Codex 문서 · Subagents", "https://learn.chatgpt.com/docs/agent-configuration/subagents")
+C_OAI_HE = ("OpenAI · Harness engineering 2026.2", "https://openai.com/index/harness-engineering/")
+C_STRIPE = ("Stripe · Minions 2026.2", "https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents")
+C_SPOTIFY = ("Spotify Engineering · Honk 2025.11", "https://engineering.atspotify.com/2025/11/spotifys-background-coding-agent-part-1")
+C_AIRBNB = ("Airbnb Tech · 테스트 이전 2025.3", "https://airbnb.tech/?p=366")
+C_SHOPIFY = ("Shopify Engineering · Roast 2025.6", "https://shopify.engineering/introducing-roast")
+C_WOOWA = ("우아한형제들 기술블로그 2026.4", "https://techblog.woowahan.com/26177/")
+C_RAKUTEN = ("Anthropic 고객 사례 · Rakuten", "https://claude.com/customers/rakuten")
+C_ANTH_WORK = ("Anthropic · How AI is transforming work 2025.12", "https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic")
+C_AGENTSMD = ("OpenAI · Agentic AI Foundation 2025.12", "https://openai.com/index/agentic-ai-foundation/")
+C_COPILOT_RV = ("GitHub Blog · Copilot 코드 리뷰 6천만 건", "https://github.blog/ai-and-ml/github-copilot/60-million-copilot-code-reviews-and-counting/")
+C_SANDBOX = ("Anthropic · Claude Code sandboxing", "https://anthropic.com/engineering/claude-code-sandboxing")
+C_LONGRUN = ("Anthropic · Effective harnesses for long-running agents", "https://anthropic.com/engineering/effective-harnesses-for-long-running-agents")
+C_METR = ("METR · 숙련 개발자 연구 2025.7", "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/")
+C_DORA = ("Google · DORA 2025", "https://blog.google/technology/developers/dora-report-2025/")
+C_FOWLER = ("martinfowler.com · Harness engineering 2026.2", "https://www.martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html")
 INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
 INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
 INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
@@ -402,7 +417,7 @@ AGENDA = [
     ("Ch1", "하네스 개념", "하네스 전후 비교표"),
     ("Ch2", "Claude Code 하네스 분해", "Skill · Sub Agent · Hook · 명령"),
     ("Ch3", "컨텍스트 엔지니어링", "컨텍스트 실험표"),
-    ("Ch4", "공개 하네스 적용", "Superpowers · gstack 비교"),
+    ("Ch4", "공개 하네스 · 다른 회사 사례", "기업 사례 · Superpowers · gstack"),
     ("Ch5", "멀티에이전트 오케스트레이션", "Supervisor + Sub Agent · 실행 타임라인"),
     ("Ch6", "토큰 경제학", "토큰 절감 실측표"),
     ("Ch7", "평가 · HITL", "사람 판정 기준 · 자동 비교"),
@@ -472,7 +487,7 @@ def opening():
             ["<b>14:50</b>", "Ch7 평가 · HITL · 회귀 테스트", "<b>7-1 필수</b> · 회귀 테스트 · 사람 판정"],
             ["<b>15:50</b>", "Ch8 내 하네스 만들기 (사전 과제 주제)", "<b>8-1 필수</b> · 메타 하네스로 내 하네스 · 90분"],
             ["<b>17:20</b>", "패들릿 공유 · 1~2분 발표", "—"],
-        ]) + note("대상", "소프트웨어 직군 · 사전 과제: 반복 업무 하나 + 결과 확인 방법 · 샘플 데이터 labs/samples/ 11개 분야"), "시작"),
+        ]) + note("대상", "소프트웨어 직군 · 사전 과제 주제로 8-1 · 샘플 데이터 11개 분야"), "시작"),
         light("실습 진행 방식", flow([("labs.zip 받기", "아래 링크 · 덱과 같은 곳"), ("압축 풀기", "바탕화면 등"), ("VS Code로 폴더 열기", "실습마다 열 폴더 표시"), ("Claude Code 패널", "왼쪽 위 아이콘"), ("요청문 붙여 넣기", "「실습 진행」 장표")])
               + '<div class="kit wide" style="margin-top:22px">' + code("처음 한 번 · labs 폴더에서", esc("python3 · claude 버전을 확인하고\nlabs 폴더의 실습 폴더 목록을 보여 줘"))
               + code("막히면", esc("방금 오류를 보고 원인과 고칠 방법을 알려 줘. 내 PC 설정은 바꾸기 전에 물어봐"))
@@ -936,6 +951,44 @@ def ch4():
           "/office-hours · /plan-eng-review   # 기획 · 설계 검토\n"
           "/review · /qa · /cso               # 리뷰 · QA · 보안")
     return chapter("Ch4", "공개 하네스 적용", {"Skill · 명령", "Sub Agent · 팀", "Hook · 권한"}, "남이 만든 하네스") + [
+        stat("다른 회사의 하네스 ① 개발 자동화", "Ch4", table(["회사", "무엇을", "하네스 요소", "결과"], [
+            ["<b>OpenAI Codex 팀</b>", "내부 제품을 손코딩 0줄로 · 5개월", "docs/ 지도 · 실행 계획 · 린터와 구조 테스트로 경계 강제 · 로그 · 지표 읽기", "약 100만 줄 · 손코딩 대비 약 1/10 시간"],
+            ["<b>Stripe</b>", "Slack 요청 → CI 통과 PR", "격리 devbox · 하위 폴더별 규칙 파일 · 사내 MCP 도구 400+ 중 골라 줌 · CI 최대 2회", "주 1,000+ PR 병합 · 전부 사람 리뷰"],
+            ["<b>Spotify</b>", "대규모 코드 마이그레이션", "컨테이너 작업 · 포맷 · 린트 MCP · LLM judge가 diff 검토 · 트레이스", "1,500+ PR 병합 · 60~90% 시간 절감"],
+            ["<b>Airbnb</b>", "테스트 3.5천 파일 이전", "변환 → Jest → 린트 → 타입 검사 단계 · 오류를 넣어 재시도 · 병렬", "6주 (손으로 1.5년 예상) · 97% 자동 · 3% 사람"],
+        ]) + note("공통", "좁고 반복되고 확인 가능한 일 · 결정적 검사(테스트 · 린트 · CI)를 루프 안에 · 마지막은 사람"),
+             C_OAI_HE, C_STRIPE, C_SPOTIFY, C_AIRBNB),
+        stat("다른 회사의 하네스 ② 규칙 · 구조 · 사내 확산", "Ch4", table(["회사", "무엇을", "하네스 요소", "결과"], [
+            ["<b>배달의민족</b>", "프론트엔드 개발 · Cursor", "경로별 규칙 · Skill · 필요한 메타데이터만 넘기는 전처리 스크립트", "컨텍스트 평균 −96.5% · 도구 호출 4 → 1"],
+            ["<b>Shopify</b>", "테스트 채점 · 생성 · 커버리지", "Roast: YAML · Markdown 워크플로에 결정적 단계와 Claude Code를 섞음", "「구조 없이 풀어 둔 AI는 큰 코드베이스에서 실패」"],
+            ["<b>Rakuten</b>", "1,250만 줄 vLLM 기능 구현", "Claude Code 7시간 자율 작업", "기준 대비 정확도 99.9% · 출시 24일 → 5일 (고객 사례)"],
+            ["<b>Anthropic 내부</b>", "엔지니어 132명 · 세션 20만 건 분석", "Claude Code 사내 사용", "업무 중 Claude 28% → 59% · 「완전히 맡길 수 있는 일은 0~20%」"],
+        ]) + note("하네스의 두 축", "가이드(미리 알려 주기: 규칙 · Skill) + 센서(결과 확인: 테스트 · 린트 · 리뷰) — martinfowler.com"),
+             C_WOOWA, C_SHOPIFY, C_RAKUTEN, C_ANTH_WORK, C_FOWLER),
+        stat("Claude Code 밖의 하네스 요소", "Ch4", table(["요소", "무엇", "적용 예"], [
+            ["<b>AGENTS.md</b>", "도구 공통 규칙 파일 표준 (Linux Foundation)", "오픈소스 6만+ 프로젝트 · Copilot · Codex · Cursor가 읽음"],
+            ["<b>Copilot · Cursor 규칙</b>", "copilot-instructions.md · 경로별 .instructions.md · .cursor/rules", "배달의민족 경로별 규칙"],
+            ["<b>MCP</b>", "사내 도구 · 데이터 연결 표준", "Stripe 사내 도구 400+"],
+            ["<b>CI 연동</b>", "PR 리뷰 · 수정 봇", "Copilot 코드 리뷰 6천만 건 · GitHub 리뷰 5건 중 1건 이상 · claude-code-action"],
+            ["<b>샌드박스</b>", "파일 · 네트워크 격리 · microVM", "Claude Code 샌드박스로 권한 확인 −84% · Stripe 격리 devbox"],
+            ["<b>평가 · 레드팀</b>", "평가셋 · 공격 시나리오 자동 실행", "promptfoo (OpenAI 인수 2026.3) · Spotify LLM judge"],
+            ["<b>관측</b>", "에이전트 실행 트레이스 · 로그", "Langfuse · Spotify MLflow 트레이스"],
+            ["<b>프레임워크 · SDK</b>", "에이전트를 코드로 조립", "Claude Agent SDK · OpenAI Agents SDK · LangGraph · Google ADK"],
+            ["<b>워크트리</b>", "병렬 에이전트 작업 분리", "Codex 앱 · Claude Code 모두 에이전트마다 워크트리"],
+        ]), C_AGENTSMD, C_COPILOT_RV, C_SANDBOX, C_STRIPE),
+        stat("하네스가 효과적일 때 · 아닐 때", "Ch4", two(
+            table(["효과적일 때", "근거"], [
+                ["<b>좁고 반복 · 확인 가능</b>", "Airbnb 97% 자동 · Spotify 60~90% 절감"],
+                ["<b>긴 작업을 파일로 나눔</b>", "진행 기록 · 기능 목록 · 커밋 (Anthropic 장기 작업 하네스)"],
+                ["<b>필요한 맥락만</b>", "배달의민족 컨텍스트 −96.5%"],
+            ]),
+            table(["효과가 없을 때", "근거"], [
+                ["<b>익숙한 저장소의 숙련자</b>", "METR: 19% 느려짐 · 본인은 20% 빨라졌다고 느낌"],
+                ["<b>구조 없이 풀어 둠</b>", "Shopify: 큰 코드베이스에서 실패"],
+                ["<b>리뷰가 병목</b>", "Spotify: PR이 늘수록 리뷰가 새 병목"],
+            ]))
+             + note("DORA 2025", "AI는 강한 조직도 약한 조직도 증폭 · 확인 장치가 약하면 손해도 커짐"),
+             C_AIRBNB, C_LONGRUN, C_METR, C_DORA),
         light("플러그인: 하네스 묶음", cards([
             ("하네스 미적용 모델", "매번 모델 재량 · 결과가 운에 흔들림", []),
             ("하네스 입은 모델", "규칙 · 역할 · 절차 · 강제로 품질 고정", []),
@@ -1099,7 +1152,7 @@ def ch6():
             ["<b>⑧ 캐시 지키기</b>", "앞부분 고정 · 시각 · ID는 뒤에", "새 입력 → 캐시 읽기 (0.1배)"],
             ["<b>⑨ 출력 줄이기</b>", "「결과는 파일로 · 대화엔 3줄」", "출력"],
             ["<b>⑩ 로그는 Hook으로 거르기</b>", "ERROR 줄만 넘기기", "수만 → 수백 토큰"],
-        ]) + note("먼저 재기", "/context · /cost 로 어디서 쓰는지 보고 큰 것부터 · 줄인 뒤 품질은 평가로 확인"), "Ch6"),
+        ]) + note("먼저 재기", "/context로 큰 것부터 · 줄인 뒤 품질은 평가로"), "Ch6"),
         light("캐싱의 원리", two(
             cards([("① 매번 처음부터 다시 읽음", "요청마다 도구 목록 · 시스템 · CLAUDE.md · 지난 대화 · 새 질문을 통째로 다시 보냄", []),
                    ("② 앞부분을 저장해 둠", "다음 요청의 앞부분이 글자 하나까지 같으면 저장본을 씀", []),
