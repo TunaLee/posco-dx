@@ -531,33 +531,19 @@ def ch1():
             ["옆 팀 협업", "Sub Agent"], ["결재 · 보안 규정", "Hook · 권한"], ["수습 평가", "평가셋 · 회귀 테스트"],
         ]), "Ch1"),
         light("모델 발전과 요구의 변화", evolution(), "Ch1"),
-        stat("프롬프트에서 그래프까지", "Ch1", flow([
-            ("프롬프트", "한 번의 지시"), ("컨텍스트", "무엇을 보여 줄지"), ("하네스", "모델을 감싸는 장치"),
-            ("루프", "사람 없이 반복"), ("그래프", "여러 Agent 연결")], hl=2)
-            + table(["엔지니어링", "무엇을 설계하나", "이 강의에서"], [
-                ["<b>프롬프트</b>", "질문 · 지시문 하나", "요청문 (자연어)"],
-                ["<b>컨텍스트</b>", "무엇을 언제 보여 줄지 · RAG", "Ch3"],
-                ["<b>하네스</b>", "규칙 · 도구 · 검사 · 권한 · 평가", "Ch1~Ch7 전체"],
-                ["<b>루프</b>", "트리거 · 멈춤 규칙 · 상태 파일 · 검증 Agent · 토큰 예산", "Ch8 루프 하네스"],
-                ["<b>그래프</b>", "작업 · Agent · 검증기 · 사람을 잇는 구조", "Ch5 오케스트레이션 · Superpowers 흐름"],
-            ]) + note("관계", "뒤 단계는 앞 단계를 품음 · 하네스가 약하면 루프 · 그래프도 같이 무너짐"),
-             A_GRAPHENG, A_LOOPENG),
-        stat("루프 엔지니어링 · 그래프 엔지니어링", "Ch1", two(
-            table(["", "루프 엔지니어링"], [
-                ["<b>뜻</b>", "사람이 매번 시키지 않아도 일정 · 저장소 이벤트로 Agent가 도는 구조"],
-                ["<b>부품</b>", "트리거 · 멈춤 조건 · 상태 파일 · 검증 Agent · 토큰 예산 · 사람이 넘겨받는 지점"],
-                ["<b>현황</b>", "저장소 36,710개 조사 → 자율 루프 217개 확인 · 설정은 커밋, 상태 파일은 거의 안 함"],
-                ["<b>도구</b>", "Claude Code /loop (2026.3) · 루프 스크립트 · Stop Hook"],
-                ["<b>주의</b>", "무인 루프는 무인 실수도 반복 (Addy Osmani)"],
-            ]),
-            table(["", "그래프 엔지니어링"], [
-                ["<b>뜻</b>", "작업 · Agent · 시스템 상태를 명시적인 그래프로 설계해 여러 Agent를 조율"],
-                ["<b>왜</b>", "Agent 하나를 키우는 것으로는 복잡한 일의 구조 문제가 안 풀림 → 「시스템 지능」"],
-                ["<b>예</b>", "분류 → 응대 → 검증 (Ch5) · 설계 → 계획 → 구현 → 리뷰 (Superpowers) · LangGraph"],
-                ["<b>주의</b>", "2026년 여름에 생긴 용어 · 이름보다 구조를 볼 것"],
-            ]))
-             + note("공통", "둘 다 하네스 위에 올라감 · 멈춤 규칙 · 검증 · 사람 승인이 없으면 그냥 빨리 틀리는 장치"),
-             A_LOOPENG, A_GRAPHENG, ADT_LOOP),
+        stat("루프 엔지니어링이 가능해진 이유", "Ch1",
+             '<div class="eqn">'
+             '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">105<small>일</small></div>'
+             '<div class="eq-d">혼자 맡을 수 있는 작업 길이가 2배 되는 기간</div></div>'
+             '<div class="eq-op">+</div>'
+             '<div class="eq-c"><div class="eq-h">하네스가 좋아짐</div><div class="eq-v sm">기록 · 테스트 · 검증 · 멈춤 규칙</div>'
+             '<div class="eq-d">사람이 중간에 안 봐도 품질을 지키는 장치</div></div>'
+             '<div class="eq-op">=</div>'
+             '<div class="eq-c hl"><div class="eq-h">루프 엔지니어링</div><div class="eq-v sm">사람 없이 반복</div>'
+             '<div class="eq-d">일정 · 이벤트로 Agent가 스스로 돌고 사람은 끝에 판정</div></div>'
+             '</div>'
+             + note("다음 단계", "그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)"),
+             METR_TH, A_LOOPENG, A_GRAPHENG),
         light("대화형 작업과 위임형 작업", two(
             cards([("대화형", "질문 → 답 → 사람이 읽고 다음 질문", []),
                    ("사람의 역할", "매 답을 확인 · 실수는 다음 턴에 바로잡음", [])], 1),
@@ -1683,6 +1669,14 @@ CSS = '''
   .ktree{grid-template-columns:1.05fr 1fr;} .ktree .kf .code pre{max-height:165px;}
   .kindtag{margin-left:8px; font-size:12px; font-weight:800; padding:3px 10px; border-radius:999px; color:#fff;}
   .k필수{background:#F28C28;} .k선택{background:#1F3A5F;} .k시연{background:#8A94A3;}
+  .eqn{display:grid; grid-template-columns:1fr 48px 1fr 48px 1fr; align-items:stretch; gap:8px; margin-top:20px;}
+  .eq-c{border:2px solid #1F3A5F; border-radius:16px; padding:22px 20px; background:#fff; display:flex; flex-direction:column; gap:12px; min-height:230px;}
+  .eq-c.hl{border-color:#F28C28; background:#FFF4E8;}
+  .eq-h{font-size:20px; font-weight:800; color:#1F3A5F;} .eq-c.hl .eq-h{color:#C25E00;}
+  .eq-v{font-size:52px; font-weight:800; color:#1F3A5F; line-height:1;} .eq-v small{font-size:22px; margin-left:4px;}
+  .eq-v.sm{font-size:24px; line-height:1.35;} .eq-c.hl .eq-v{color:#F28C28;}
+  .eq-d{font-size:15px; color:#555; line-height:1.5; margin-top:auto;}
+  .eq-op{display:flex; align-items:center; justify-content:center; font-size:44px; font-weight:800; color:#F28C28;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
