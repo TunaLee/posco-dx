@@ -1493,7 +1493,7 @@ def ch8():
                 ["<b>⑦ 판정</b>", "<b>사람</b>", "합격 · 고칠 점"],
             ])), "Ch8"),
         light("메타 하네스를 만드는 요청문", '<div class="ptall">' + code("labs/meta_harness 에서 · 이렇게 말하면 됨", '이 폴더에 「하네스를 만들어 주는 하네스」를 만들어 줘.\n\n내가 어떤 업무를 말하면, 먼저 질문을 한 번에 하나씩(최대 일곱 개) 해서\n업무 · 입력 · 결과물 · 판단 기준 · 하면 안 되는 것 · 사람이 확인할 곳 · 잘했다의 기준을 파악해 줘.\n그걸로 설계안(docs/&lt;이름&gt;/spec.md)을 만들어 보여 주고, 내가 docs/&lt;이름&gt;/APPROVED 를 만들 때까지 기다려.\n\n승인하면 그 업무에 꼭 필요한 부품만 골라 하네스 파일을 만들고, 검토 담당 Agent가 지어낸 규칙이 없는지 본 다음,\n하네스 없이 · 있게 돌려서 비교표를 보여 줘. 판정은 내가 할게.\n승인 전에는 docs/ 밖에 아무것도 못 쓰게 Hook으로 막아 주고, 유형별 예시는 templates/ 를 참고해.\n다 만들면 만든 파일과 역할을 표로 보여 줘.') + "</div>"
-              + note("내 말로", "문장은 바꿔도 됨 · 순서 · 사람 승인 · 승인 전 차단만 들어가면 · 막히면 부록 ⑦ ⑧ 파일 그대로"), "Ch8"),
+              + note("내 말로", "문장은 바꿔도 됨 · 순서 · 사람 승인 · 승인 전 차단만 들어가면"), "Ch8"),
         light("TDD (테스트 주도 개발)", two(
             '<div>' + flow([("① 빨강", "실패하는 테스트 먼저"), ("② 초록", "통과할 만큼만 구현"), ("③ 정리", "테스트는 그대로 통과")], hl=0)
             + table(["에이전트에게 좋은 이유", ""], [
@@ -1549,77 +1549,41 @@ def ch8():
             ["기능 6개 중 통과 수 · 반복 횟수 · 토큰", "사람 판정 (CLI 직접 실행)"], files=labdir("settle_check"),
             mine="내 업무 툴을 기능 목록으로 쪼개 루프에 맡기기"),
         *labkit('8-2', 'Ch8'),
-        light("패들릿 공유 양식", two(
-            '<div class="ptall">' + code("패들릿에 붙여 넣기", '[이름 · 분야]\n업무 한 줄:\n하네스 구성: CLAUDE.md · Skill 〈이름〉 · Hook 〈막은 것〉 · Agent 〈있으면〉\n하네스 미적용 → 적용: 〈무엇이 달라졌나 한 줄〉\n사람 판정: 합격 / 보완 · 이유\n막힌 점 · 다음에 할 것:') + "</div>",
-            '<div class="ptall">' + code("Claude에게 정리 요청", '만든 하네스와 시험 결과를 패들릿 양식으로 정리해 줘:\n이름 · 분야 / 업무 한 줄 / 하네스 구성 / 미적용 → 적용 / 사람 판정은 비워 둠 / 막힌 점') + "</div>")
-              + note("사람 판정", "합격 여부와 이유는 본인이 직접 · Claude가 쓴 판정은 올리지 않음"), "Ch8"),
-        light("발표 1~2분", flow([("업무", "무엇을 맡겼나"), ("하네스", "부품 · 사람 승인 지점"), ("전후", "미적용 vs 적용"), ("판정", "내 기준으로 합격인가")], hl=3), "Ch8"),
-        bridge("정리: 하네스 개선 루프", "", "Ch8", "다음 차수: 하네스 엔지니어링 심화"),
+        stat("하네스는 사람이 키운다", "Ch8",
+             '<div class="eqn">'
+             '<div class="eq-c"><div class="eq-h">사람이 정한다</div><div class="eq-v sm">기준 · 막을 것 · 합격선</div>'
+             '<div class="eq-d">무엇이 잘한 것인지는 Agent가 정하지 않음</div></div>'
+             '<div class="eq-op">→</div>'
+             '<div class="eq-c"><div class="eq-h">Agent가 한다</div><div class="eq-v sm">하네스 안에서 실행</div>'
+             '<div class="eq-d">규칙 · 절차 · 강제 · 검증을 따라 반복</div></div>'
+             '<div class="eq-op">→</div>'
+             '<div class="eq-c hl"><div class="eq-h">사람이 판정하고 고친다</div><div class="eq-v sm">틀린 것 → 하네스 한 줄</div>'
+             '<div class="eq-d">판정이 쌓일수록 하네스가 자라고 사람은 새로운 실수만 봄</div></div>'
+             '</div>'
+             + note("결론", "하네스는 한 번 만들고 끝나는 설정이 아니라, 사람이 스스로 평가하며 키워 가는 업무 방식")),
+        light("오늘 다룬 것", table(["장", "한 줄"], [
+            ["<b>Ch1</b>", "모델이 좋아질수록 일을 맡기는 장치(하네스)가 결과를 가름"],
+            ["<b>Ch2</b>", "부탁(CLAUDE.md) · 절차(Skill) · 강제(Hook) — 꼭 막을 것은 코드로"],
+            ["<b>Ch3</b>", "책상에는 지금 필요한 것만 · 남길 것은 파일로"],
+            ["<b>Ch4</b>", "남이 만든 하네스는 빌려 쓰고, 다른 회사는 좁고 확인 가능한 일부터"],
+            ["<b>Ch5</b>", "나누면 비용이 늘어남 · 역할 분리와 규모가 필요할 때만"],
+            ["<b>Ch6</b>", "토큰은 턴 수와 컨텍스트에서 · 재고 나서 줄이기"],
+            ["<b>Ch7</b>", "자동 채점은 볼 곳을 좁히고, 판정은 사람이"],
+            ["<b>Ch8</b>", "계획 먼저 · 내 업무는 메타 하네스로 · 개발은 Superpowers · 오래 걸리면 루프"],
+        ]), "Ch8"),
+        light("내일부터 할 일", table(["", "할 일", "방법"], [
+            ["<b>①</b>", "<b>반복 업무 하나</b>", "CLAUDE.md 한 장으로 시작 · 결과는 파일로 · 결정은 사람에게"],
+            ["<b>②</b>", "<b>판정을 기록</b>", "틀릴 때마다 무엇이 · 왜 틀렸는지 한 줄"],
+            ["<b>③</b>", "<b>원인별로 반영</b>", "절차는 Skill · 원칙은 CLAUDE.md · 사고는 Hook"],
+            ["<b>④</b>", "<b>평가 문항 다섯 개</b>", "고칠 때마다 다시 돌려 나빠진 곳 확인"],
+            ["<b>⑤</b>", "<b>크게 만들지 않기</b>", "나누기 · 플러그인 · 루프는 재 보고 필요할 때만"],
+        ]), "Ch8"),
+        bridge("하네스는 사람이 키운다", "", "Ch8", "Q & A"),
     ]
 
-
-# ── 심화 ───────────────────────────────────────────────
-def advanced():
-    sdk = ("from claude_agent_sdk import query, ClaudeAgentOptions, AgentDefinition\n\n"
-           "options = ClaudeAgentOptions(\n"
-           "    system_prompt=SUPERVISOR,\n"
-           "    agents={'verifier': AgentDefinition(description='검증', prompt=V,\n"
-           "                                        tools=['Read'])},\n"
-           "    hooks={'PreToolUse': [HookMatcher(matcher='Bash', hooks=[guard])]},\n"
-           "    max_turns=8,\n"
-           ")")
-    return [
-        divider("심화", "숙련자 확장 과제", ""),
-        light("Agent SDK로 구현한 하네스", code("Python · API 키 필요", sdk) + note("자료", labdir("sdk_optional")), "심화"),
-        light("심화 트랙", cards([
-            ("자동 리뷰 Agent", "변경 사항을 읽기 전용 Agent가 기준대로 점검", []),
-            ("설계 ↔ 리뷰 루프", "통과할 때까지 반복 · 횟수 상한", []),
-            ("장기 세션 관리", "resume · 요약 · 상태 파일로 며칠짜리 작업", []),
-        ]) + note("자료", labdir("sdk_optional")), "심화"),
-    ]
-
-
-
-# ── 부록: 하네스 재료 (복사 · 파일로 저장) ─────────────────
-def materials():
-    W = "office_work/harness/"
-    M = "office_work/harness_multi/"
-    sk = lambda n: labfile(W + f".claude/skills/{n}/SKILL.md")
-    css = '<div class="pgrid2 mat">'
-    return [divider("부록", "하네스 재료", "")] + [
-        light("부록 ① CLAUDE.md · 공통 원칙", css + filecode("CLAUDE.md", labfile(W + "CLAUDE.md")) +
-              filecode("CLAUDE_멀티에이전트_추가.md", labfile(M + "CLAUDE.md"), "CLAUDE.md 에 덧붙임 · 멀티에이전트 (Ch5)") + "</div>"
-              + note("쓰는 법", "「파일로 저장」 → 내 작업 폴더에 CLAUDE.md로 · 〈업무 종류 → Skill〉 표만 내 업무로"), "부록"),
-        light("부록 ② Skill 지침서 · 문의 응대 · 견적", css + filecode("SKILL.md", sk("inquiry-answer"), ".claude/skills/inquiry-answer/SKILL.md")
-              + filecode("SKILL.md", sk("spec-quote"), ".claude/skills/spec-quote/SKILL.md") + "</div>"
-              + note("위치", ".claude/skills/〈이름〉/SKILL.md · name · description 줄은 그대로 두고 본문만 내 업무로"), "부록"),
-        light("부록 ③ Skill 지침서 · 회의록 · 보고서", css + filecode("SKILL.md", sk("meeting-actions"), ".claude/skills/meeting-actions/SKILL.md")
-              + filecode("SKILL.md", sk("weekly-report"), ".claude/skills/weekly-report/SKILL.md") + "</div>", "부록"),
-        light("부록 ④ Skill 지침서 · 문서 비교 · 메일", css + filecode("SKILL.md", sk("doc-diff"), ".claude/skills/doc-diff/SKILL.md")
-              + filecode("SKILL.md", sk("mail-draft"), ".claude/skills/mail-draft/SKILL.md") + "</div>", "부록"),
-        light("부록 ⑤ Sub Agent · 검증 · 추출", css + filecode("verifier.md", labfile(M + ".claude/agents/verifier.md"), ".claude/agents/verifier.md")
-              + filecode("extractor.md", labfile(M + ".claude/agents/extractor.md"), ".claude/agents/extractor.md") + "</div>", "부록"),
-        light("부록 ⑥ Hook · 원본 보호 · 외부 전송 차단", css + filecode("settings.json", labfile(W + ".claude/settings.json"), ".claude/settings.json")
-              + filecode("guard.py", labfile(W + ".claude/hooks/guard.py"), ".claude/hooks/guard.py") + "</div>"
-              + note("주의", "막을 것 목록은 내 업무에 맞게 · 직접 고치기 어려우면 부록 ⑩ 요청문으로 Claude에게"), "부록"),
-        light("부록 ⑦ 메타 하네스 · 순서 · 인터뷰 · 설계", '<div class="kgrid">' + filecode("CLAUDE.md", _kitsrc("@7-2/CLAUDE.md"), "CLAUDE.md")
-              + filecode("SKILL.md", _kitsrc("@7-2/skills/interview/SKILL.md"), ".claude/skills/interview/SKILL.md")
-              + filecode("SKILL.md", _kitsrc("@7-2/skills/spec/SKILL.md"), ".claude/skills/spec/SKILL.md")
-              + filecode("SKILL.md", _kitsrc("@7-2/skills/build/SKILL.md"), ".claude/skills/build/SKILL.md") + "</div>", "부록"),
-        light("부록 ⑧ 메타 하네스 · 시험 · 검토 · Hook", '<div class="kgrid">' + filecode("SKILL.md", _kitsrc("@7-2/skills/try/SKILL.md"), ".claude/skills/try/SKILL.md")
-              + filecode("harness-reviewer.md", _kitsrc("@7-2/agents/harness-reviewer.md"), ".claude/agents/harness-reviewer.md")
-              + filecode("guard.py", _kitsrc("@7-2/hooks/guard.py"), ".claude/hooks/guard.py")
-              + filecode("settings.json", _kitsrc("@7-2/settings.json"), ".claude/settings.json") + "</div>", "부록"),
-        light("부록 ⑨ 요청문 ① CLAUDE.md · Skill", '<div class="pgrid2">' + code("CLAUDE.md", PROMPTS_HX["CLAUDE.md"]) + code("Skill", PROMPTS_HX["Skill"]) + '</div>'
-              + note("쓰는 법", "〈 〉 안만 내 업무로 바꿔 Claude Code 대화창에 붙여 넣기 · 플러그인 없이 기본 기능만"), "부록"),
-        light("부록 ⑩ 요청문 ② Hook · 검증 Agent", '<div class="pgrid2">' + code("Hook", PROMPTS_HX["Hook"]) + code("검증 Agent", PROMPTS_HX["검증 Agent"]) + '</div>'
-              + note(".claude 쓰기", "Hook · 설정 파일은 보호 경로라 승인 요청이 뜸 · 내용을 읽고 승인"), "부록"),
-        light("부록 ⑪ 요청문 ③ 평가 · 고치기", '<div class="pgrid2">' + code("평가", PROMPTS_HX["평가"]) + code("고치기", PROMPTS_HX["고치기"]) + '</div>'
-              + note("한 번에", "메타 하네스(Ch7)를 쓰면 인터뷰 · 설계 · 생성까지 한 번에 · 자료 " + labdir("harness_prompts.md")), "부록"),
-    ]
 
 def slides():
-    return opening() + ch1() + ch2() + ch3() + ch4() + ch5() + ch6() + ch7() + ch8() + advanced() + materials()
+    return opening() + ch1() + ch2() + ch3() + ch4() + ch5() + ch6() + ch7() + ch8()
 
 
 CSS = '''

@@ -41,7 +41,7 @@ KITS = {
     ], files=[("CLAUDE.md", "office_work/workspace/CLAUDE.md", "office_work/harness/CLAUDE.md"),
               ("SKILL.md", "office_work/workspace/.claude/skills/meeting-actions/SKILL.md", "office_work/harness/.claude/skills/meeting-actions/SKILL.md"),
               ("SKILL.md", "office_work/workspace/.claude/skills/weekly-report/SKILL.md", "office_work/harness/.claude/skills/weekly-report/SKILL.md")],
-        tip="다른 과제 · T1 문의 답변 · T2 견적 · T5 정책 비교 · T6 지연 안내 메일 · 나머지 Skill은 부록 ②~④"),
+        tip="다른 과제 · T1 문의 답변 · T2 견적 · T5 정책 비교 · T6 지연 안내 메일 · 나머지 Skill은 office_work/harness/.claude/skills/"),
 
     "3-1": dict(folder="", steps=[
         ("① 압축 전 정리", "p", "지금까지 이 대화에서 한 일을 정리해 줘.\n실습별로 만든 파일 · 비교 결과 숫자 · 내가 준 지시를 빠짐없이.\nlabs 바로 아래 runs/3-1/압축전.md 로 저장해 줘"),
@@ -115,7 +115,7 @@ KITS = {
         ("④ 생성 · 시험", "p", "docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘"),
         ("⑤ 개발 주제라면", "do", "<b>labs/my_tool</b> 를 열고 Superpowers 설치 → 「Superpowers로 개발하기」 요청문 → 설계 승인 · DESIGN.md · 계획 승인 → 구현"),
         ("⑥ 사람 판정 · 공유", "do", "비교표 · 결과물을 직접 판정 → 다음 장 양식으로 패들릿에 올리기"),
-    ], tip="샘플 데이터 labs/samples/ · 요청문이 막히면 부록 ⑦ ⑧ 「파일로 저장」 · 플러그인 설치가 막히면 Superpowers는 강사 시연"),
+    ], tip="샘플 데이터 labs/samples/ · 플러그인 설치가 막히면 Superpowers는 강사 시연"),
     "8-2": dict(folder="settle_check", open="labs/settle_check", steps=[
         ("① 첫 커밋", "p", "이 폴더를 git 저장소로 만들고 첫 커밋 해 줘"),
         ("② 하네스 만들기", "do", "앞 장 파일 네 개(CLAUDE.md · PROMPT.md · features.json · progress.md)를 같은 이름으로 만들기 → 커밋"),
