@@ -532,19 +532,6 @@ def ch1():
             ["옆 팀 협업", "Sub Agent"], ["결재 · 보안 규정", "Hook · 권한"], ["수습 평가", "평가셋 · 회귀 테스트"],
         ]), "Ch1"),
         light("모델 발전과 요구의 변화", evolution(), "Ch1"),
-        stat("루프 엔지니어링이 가능해진 이유", "Ch1",
-             '<div class="eqn">'
-             '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div>'
-             '<div class="eq-d">사람 없이 이어서 하는 도구 호출 · 최대 연속 (Anthropic 사내 조사)</div></div>'
-             '<div class="eq-op">+</div>'
-             '<div class="eq-c"><div class="eq-h">하네스가 좋아짐</div><div class="eq-v sm">기록 · 테스트 · 검증 · 멈춤 규칙</div>'
-             '<div class="eq-d">사람이 중간에 안 봐도 품질을 지키는 장치</div></div>'
-             '<div class="eq-op">=</div>'
-             '<div class="eq-c hl"><div class="eq-h">루프 엔지니어링</div><div class="eq-v sm">사람 없이 반복</div>'
-             '<div class="eq-d">일정 · 이벤트로 Agent가 스스로 돌고 사람은 끝에 판정</div></div>'
-             '</div>'
-             + note("다음 단계", "그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)"),
-             C_ANTH_WORK, A_LOOPENG, A_GRAPHENG),
         light("대화형 작업과 위임형 작업", two(
             cards([("대화형", "질문 → 답 → 사람이 읽고 다음 질문", []),
                    ("사람의 역할", "매 답을 확인 · 실수는 다음 턴에 바로잡음", [])], 1),
@@ -596,6 +583,19 @@ def ch1():
                      title="BrowseComp · 같은 모델, 구성만 다름")
              + note("그래서", "하네스는 한 번 만들고 끝이 아니라, 모델이 바뀔 때마다 재고 덜어 낸다"),
              A_FABLE5, SC_FABLE5),
+        stat("루프 엔지니어링이 가능해진 이유", "Ch1",
+             '<div class="eqn">'
+             '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div>'
+             '<div class="eq-d">사람 없이 이어서 하는 도구 호출 · 최대 연속 (Anthropic 사내 조사)</div></div>'
+             '<div class="eq-op">+</div>'
+             '<div class="eq-c"><div class="eq-h">하네스가 좋아짐</div><div class="eq-v sm">기록 · 테스트 · 검증 · 멈춤 규칙</div>'
+             '<div class="eq-d">사람이 중간에 안 봐도 품질을 지키는 장치</div></div>'
+             '<div class="eq-op">=</div>'
+             '<div class="eq-c hl"><div class="eq-h">루프 엔지니어링</div><div class="eq-v sm">사람 없이 반복</div>'
+             '<div class="eq-d">일정 · 이벤트로 Agent가 스스로 돌고 사람은 끝에 판정</div></div>'
+             '</div>'
+             + note("다음 단계", "그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)"),
+             C_ANTH_WORK, A_LOOPENG, A_GRAPHENG),
         light("일관성 측정 지표", table(["지표", "재는 법"], [
             ["<b>답 일치율</b>", "같은 질문 N번 → 가장 많은 답의 비율"],
             ["<b>형식 준수율</b>", "정해진 JSON · 표 형식을 지킨 비율"],
@@ -706,6 +706,19 @@ def ch2():
             ["<b>비유</b>", "버튼", "업무 매뉴얼"],
         ]) + note("최근", "command는 Skill로 합쳐진 예전 방식 · 둘 다 /이름을 만들고 똑같이 동작 · 새로 만들 땐 Skill")
               + note("자동 호출 끄기", "SKILL.md에 disable-model-invocation: true → 사람만 /이름으로 부름 (배포 · 발송처럼 사람이 시작할 일)"), "Ch2"),
+        light("Sub Agent 경계 설계", table(["경계", "정하는 것", "예: reviewer"], [
+            ["<b>도구 집합</b>", "쓸 수 있는 도구", "Read · Grep · Glob"],
+            ["<b>권한</b>", "쓰기 · 실행 허용 여부", "쓰기 금지"],
+            ["<b>컨텍스트</b>", "보여 줄 자료 범위", "변경 파일만"],
+            ["<b>반환 형식</b>", "부모가 받을 결과", "파일:줄 · 문제 · 근거"],
+        ]), "Ch2"),
+        light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),
+                                          vl("자기 컨텍스트에서 일함", "부모는 결과만 받음", "도구를 줄이면 권한도 줄어듦")), "Ch2"),
+        lab("2-1", "Skill · Sub Agent 붙이기", "Ch2",
+            "Skill · Sub Agent를 직접 붙이고 전후 비교",
+            ["하네스 미적용 상태로 요청 두 개 (장애 보고서 · 코드 리뷰)", "장표의 SKILL.md · reviewer.md를 같은 경로로 만들기", "같은 요청 두 개 다시", "양식 · 위임 비교 → 내 업무 Skill 하나 추가"],
+            ["보고서가 Skill 양식대로", "리뷰가 reviewer로 위임 · 파일은 그대로"], files=labdir("lab2_1_parts"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
+        *labkit('2-1', 'Ch2'),
         stat("DESIGN.md · 디자인 하네스", "Ch2", two(
             '<div class="ctree">' + code("DESIGN.md (예 · 이 강의 장표)", '---\ncolors: { primary: "#1F3A5F", accent: "#F28C28" }\ntypography: { body: Pretendard 15, heading: Pretendard 800 }\nrounded: { card: 12 }\nspacing: { unit: 8 }\n---\n## Overview\n사내 업무 도구 · 정보는 빽빽하게 · 강조는 주황 하나\n\n## Components\n- 표: 헤더 primary · 숫자는 오른쪽 정렬\n\n## Do\'s and Don\'ts\n- Do: 상태는 색 + 글자 함께\n- Don\'t: 그라데이션 · 그림자 남발') + "</div>",
             table(["섹션 (이 순서)", "담는 것"], [
@@ -727,19 +740,6 @@ def ch2():
             ]) + '</div>',
             '<div class="ptall">' + code("DESIGN.md 만들기 · 이렇게 말하면 됨", "이 화면(또는 첨부한 스크린샷)의 스타일을 정리해서 DESIGN.md 를 만들어 줘.\n맨 위에는 색 · 글꼴 · 모서리 · 간격을 YAML 토큰으로, 아래는 Overview부터 Do's and Don'ts까지 형식 순서대로.\n그리고 앞으로 화면을 만들거나 고칠 땐 DESIGN.md 를 따르라고 CLAUDE.md 에 적어 줘.") + "</div>")
               + note("어디에", "Ch8 내 업무 툴에 화면이 있으면 같이 넣기 · 형식이 alpha라 바뀔 수 있음"), "Ch2"),
-        light("Sub Agent 경계 설계", table(["경계", "정하는 것", "예: reviewer"], [
-            ["<b>도구 집합</b>", "쓸 수 있는 도구", "Read · Grep · Glob"],
-            ["<b>권한</b>", "쓰기 · 실행 허용 여부", "쓰기 금지"],
-            ["<b>컨텍스트</b>", "보여 줄 자료 범위", "변경 파일만"],
-            ["<b>반환 형식</b>", "부모가 받을 결과", "파일:줄 · 문제 · 근거"],
-        ]), "Ch2"),
-        light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),
-                                          vl("자기 컨텍스트에서 일함", "부모는 결과만 받음", "도구를 줄이면 권한도 줄어듦")), "Ch2"),
-        lab("2-1", "Skill · Sub Agent 붙이기", "Ch2",
-            "Skill · Sub Agent를 직접 붙이고 전후 비교",
-            ["하네스 미적용 상태로 요청 두 개 (장애 보고서 · 코드 리뷰)", "장표의 SKILL.md · reviewer.md를 같은 경로로 만들기", "같은 요청 두 개 다시", "양식 · 위임 비교 → 내 업무 Skill 하나 추가"],
-            ["보고서가 Skill 양식대로", "리뷰가 reviewer로 위임 · 파일은 그대로"], files=labdir("lab2_1_parts"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
-        *labkit('2-1', 'Ch2'),
         light("놓치면 생기는 문제", table(["유형", "예", "피해"], [
             ["<b>운영 데이터 변경 · 삭제</b>", "DROP · DELETE · 볼륨 삭제 API", "서비스 중단 · 복구 불가"],
             ["<b>파일 · 드라이브 삭제</b>", "홈 폴더 · 드라이브 전체 삭제 명령", "작업물 · 설정 전부 손실"],
@@ -1168,6 +1168,11 @@ def ch6():
                    title="100만 토큰당 가격 · 입력 → 출력 (막대 = 출력)")
              + note("Claude Code 실제 비용", "개발자 1인 하루 평균 약 $13 · 월 $150~250 · 90%는 하루 $30 미만"),
              D_PRICE, D_COSTS),
+        stat("도구 정의 · 결과의 토큰 비중", "Ch6",
+             big([("5.5만", "토큰", "MCP 서버 5개의 도구 정의만"), ("85", "%+", "도구 검색으로 줄어드는 정의 토큰", True),
+                  ("84", "%", "실제 에이전트 입력 중 캐시 읽기 (중앙값)")])
+             + note("Claude Code 기본값", "도구 검색 켜짐 · 정의가 컨텍스트 10%를 넘으면 지연 로딩 · 새로 시작이면 /clear는 비용 0"),
+             D_TOOLSEARCH, D_MCP, D_OPT, D_COSTS),
         light("토큰 절감 레버 다섯 가지", table(["레버", "방법", "주의"], [
             ["<b>① 입력 줄이기</b>", "짧은 CLAUDE.md · 찾아서 읽기 · Sub Agent 분리", "가장 큰 절감"],
             ["<b>② 출력 줄이기</b>", "「간결하게 · JSON으로」 · caveman", "설명이 필요한 곳은 예외"],
@@ -1175,18 +1180,6 @@ def ch6():
             ["<b>④ 도구 출력 줄이기</b>", "rtk 같은 명령 출력 압축", "필요한 오류 줄까지 지우지 않게"],
             ["<b>⑤ 모델 나누기</b>", "분류는 작은 모델 · 판단은 큰 모델", "품질은 평가셋으로 확인"],
         ]), "Ch6"),
-        light("플러그인 없이 바로 쓰는 절감법", table(["방법", "어떻게", "줄어드는 곳"], [
-            ["<b>① 일이 바뀌면 새로</b>", "/clear", "앞 대화 재전송 · 새로 시작은 비용 0"],
-            ["<b>② 긴 세션 요약</b>", "/compact 남길 것", "쌓인 대화 · 도구 결과"],
-            ["<b>③ CLAUDE.md 짧게</b>", "긴 매뉴얼은 Skill · 참고 파일로", "매 요청 고정 입력"],
-            ["<b>④ 찾아서 읽기</b>", "통째 Read 대신 Grep · 줄 범위", "도구 결과"],
-            ["<b>⑤ MCP는 필요한 것만</b>", "안 쓰는 서버 끄기 · 도구 검색 (기본 켜짐)", "도구 정의"],
-            ["<b>⑥ 모델 나누기</b>", "분류 · 검색 Sub Agent는 model: haiku", "단가"],
-            ["<b>⑦ effort 조절</b>", "low 먼저 → 실패만 high", "생각 토큰"],
-            ["<b>⑧ 캐시 지키기</b>", "앞부분 고정 · 시각 · ID는 뒤에", "새 입력 → 캐시 읽기 (0.1배)"],
-            ["<b>⑨ 출력 줄이기</b>", "「결과는 파일로 · 대화엔 3줄」", "출력"],
-            ["<b>⑩ 로그는 Hook으로 거르기</b>", "ERROR 줄만 넘기기", "수만 → 수백 토큰"],
-        ]) + note("먼저 재기", "/context로 큰 것부터 · 줄인 뒤 품질은 평가로"), "Ch6"),
         light("캐싱의 원리", two(
             cards([("① 매번 처음부터 다시 읽음", "요청마다 도구 목록 · 시스템 · CLAUDE.md · 지난 대화 · 새 질문을 통째로 다시 보냄", []),
                    ("② 앞부분을 저장해 둠", "다음 요청의 앞부분이 글자 하나까지 같으면 저장본을 씀", []),
@@ -1208,11 +1201,6 @@ def ch6():
                   ("50", "%", "배치 API 할인 (입력 · 출력 모두)")], 4)
              + note("기억할 것", "캐시 기본 수명 5분 · 쓸 때마다 갱신 · 앞부분이 1글자라도 바뀌면 새로 씀"),
              D_CACHE, D_PRICE),
-        stat("도구 정의 · 결과의 토큰 비중", "Ch6",
-             big([("5.5만", "토큰", "MCP 서버 5개의 도구 정의만"), ("85", "%+", "도구 검색으로 줄어드는 정의 토큰", True),
-                  ("84", "%", "실제 에이전트 입력 중 캐시 읽기 (중앙값)")])
-             + note("Claude Code 기본값", "도구 검색 켜짐 · 정의가 컨텍스트 10%를 넘으면 지연 로딩 · 새로 시작이면 /clear는 비용 0"),
-             D_TOOLSEARCH, D_MCP, D_OPT, D_COSTS),
         stat("effort별 비용과 점수", "Ch6",
              hbars([("low", 33, False, "비용 ⅓ · −8점"), ("medium (기본)", 70, False, "비용 70% · −2.5점"),
                     ("high", 100, False, "기준"), ("xhigh", 250, False, "비용 2.5배 · +1.4점")], top=260,
@@ -1239,6 +1227,18 @@ def ch6():
             ["<b>E2E 테스트</b>", "실제 흐름 확인 · 핵심 흐름에만"],
             ["<b>고위험 도메인</b>", "안전 · 계약 · 인사는 큰 모델 + 사람"],
         ]) + note("원칙", "토큰이 아니라 「완료된 작업 1건당 비용」으로 판단"), "Ch6"),
+        light("플러그인 없이 바로 쓰는 절감법", table(["방법", "어떻게", "줄어드는 곳"], [
+            ["<b>① 일이 바뀌면 새로</b>", "/clear", "앞 대화 재전송 · 새로 시작은 비용 0"],
+            ["<b>② 긴 세션 요약</b>", "/compact 남길 것", "쌓인 대화 · 도구 결과"],
+            ["<b>③ CLAUDE.md 짧게</b>", "긴 매뉴얼은 Skill · 참고 파일로", "매 요청 고정 입력"],
+            ["<b>④ 찾아서 읽기</b>", "통째 Read 대신 Grep · 줄 범위", "도구 결과"],
+            ["<b>⑤ MCP는 필요한 것만</b>", "안 쓰는 서버 끄기 · 도구 검색 (기본 켜짐)", "도구 정의"],
+            ["<b>⑥ 모델 나누기</b>", "분류 · 검색 Sub Agent는 model: haiku", "단가"],
+            ["<b>⑦ effort 조절</b>", "low 먼저 → 실패만 high", "생각 토큰"],
+            ["<b>⑧ 캐시 지키기</b>", "앞부분 고정 · 시각 · ID는 뒤에", "새 입력 → 캐시 읽기 (0.1배)"],
+            ["<b>⑨ 출력 줄이기</b>", "「결과는 파일로 · 대화엔 3줄」", "출력"],
+            ["<b>⑩ 로그는 Hook으로 거르기</b>", "ERROR 줄만 넘기기", "수만 → 수백 토큰"],
+        ]) + note("먼저 재기", "/context로 큰 것부터 · 줄인 뒤 품질은 평가로"), "Ch6"),
         lab("6-1", "토큰 절감 실측", "Ch6",
             "레버를 하나씩 켜며 토큰 · 품질 비교",
             ["quiz.md로 먼저 예상", "기준선 5개 과제 실행 (bench.py)", "레버 켜기: 간결 지시 · caveman · 모델 나누기 · Sub Agent", "토큰 · 정확도 함께 비교 → 남길 레버 고르기"],
