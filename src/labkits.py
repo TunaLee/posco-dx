@@ -88,19 +88,25 @@ KITS = {
               ("CLAUDE_추가.md", "office_work/workspace/CLAUDE.md 끝에 덧붙임", "office_work/harness_multi/CLAUDE.md")]),
 
     "6-1": dict(folder="", steps=[
-        ("① 기준선", "p", "lab6_tokens/bench.py --levers baseline,brief 를 실행하고\n과제별 토큰 · 정답 여부를 표로"),
-        ("② 모델 나누기", "p", "bench.py --levers haiku,sonnet,opus 실행 → 과제별 토큰 · 정답 비교"),
-        ("③ 캐시 · Sub Agent", "p", "bench.py --levers cache,subagent 실행 → 기준선 대비 변화"),
-        ("④ 고르기", "p", "세 결과를 합쳐 품질이 떨어지지 않은 레버만 골라\n내 업무에 쓸 순서로 추천해 줘"),
-    ], files=[("quiz.md", "quiz.md · 먼저 예상", "lab6_tokens/quiz.md")]),
+        ("① 플러그인 없이", "p", "labs/plugin_check 를 runs/6-1/기준 으로 복사하고, 그 폴더 안에서 플러그인 없이\n(claude -p --setting-sources \"\" --output-format json) 아래 두 요청을 차례로 실행해 줘.\n요청마다 입력 · 출력 토큰과 바뀐 코드 줄 수, 테스트 결과를 기록해 줘.\n1. src/settle.js 가 하는 일을 설명해 줘\n2. CHANGES.md 기준대로 원 미만 절사와 1% 경계를 고치고 테스트를 추가해 줘"),
+        ("② 설치", "p", "/plugin marketplace add JuliusBrussee/caveman\n/plugin install caveman@caveman\n/plugin marketplace add DietrichGebert/ponytail\n/plugin install ponytail@ponytail"),
+        ("③ 다시 열기", "do", "Claude Code 창을 닫고 새로 열기 → <b>/plugin</b> 으로 두 플러그인이 켜졌는지 확인"),
+        ("④ 플러그인 켜고", "p", "labs/plugin_check 를 runs/6-1/플러그인 으로 복사하고, 그 안에서 이번엔 설치한 플러그인을 쓰도록\n(claude -p --setting-sources user --output-format json) 같은 두 요청을 실행해 똑같이 기록해 줘"),
+        ("⑤ 비교", "p", "runs/6-1/기준 과 runs/6-1/플러그인 결과를 표로 비교해 줘:\n요청별 입력 · 출력 토큰, 바뀐 줄 수, 테스트 통과 여부, 줄어든 비율"),
+        ("⑥ 사람 판정", "do", "짧아진 설명이 여전히 맞는지 · 줄어든 코드가 기준을 지키는지 직접 읽고 판정 → 쓸지 말지"),
+    ], tip="--setting-sources user 는 내 개인 설정 · CLAUDE.md도 함께 켜짐 · 하나씩 켜면 플러그인별 효과를 나눠 볼 수 있음"),
 
-    "7-1": dict(folder="office_work", steps=[
-        ("① 기준선", "p", "office_work/run_tasks.py --cond single --tasks T1 T2 T3 T4 T5 T6 을 실행하고\n과제별 점수 · 시간 · 토큰을 표로 정리해 줘"),
-        ("② 일부러 나쁘게", "p", "office_work/harness/CLAUDE.md 를 CLAUDE.md.bak 으로 복사해 두고\n「결과는 out/<과제번호>/ 에 만든다」 줄을 지워 줘"),
-        ("③ 회귀 찾기", "p", "office_work/run_tasks.py --cond single --tasks T1 T2 T3 T4 T5 T6 을 다시 실행해\n바로 전 실행과 과제별 점수를 비교하고 나빠진 과제와 이유를 표로 정리해 줘"),
-        ("④ 사람 판정", "do", "점수가 같은 과제도 결과물 2개를 직접 열어 읽고 O / X · 자동 채점과 다른 판정을 적기"),
-        ("⑤ 되돌리기", "p", "office_work/harness/CLAUDE.md 를 CLAUDE.md.bak 내용으로 되돌려 줘"),
-    ], tip="자동 채점은 사람이 볼 곳을 좁혀 줌 · 합격 여부는 사람이"),
+    "7-1": dict(folder="build_gate", split=True, steps=[
+        ("① 하네스 미적용", "p", "labs/build_gate 를 runs/7-1/미적용 으로 복사하고, 그 안에서 하네스 없이(claude -p --setting-sources \"\")\n「src/settle.js 의 정산액 계산을 CHANGES.md 기준대로 원 미만 절사로 고쳐 줘.」를 실행한 뒤\nnode --test 결과를 알려 줘"),
+        ("② 하네스 만들기", "do", "앞 장 파일 세 개를 <b>labs/build_gate</b> 안에 화면의 경로대로 (CLAUDE.md · .claude/settings.json · .claude/hooks/test_gate.mjs)"),
+        ("③ 하네스 적용", "p", "labs/build_gate 를 runs/7-1/적용 으로 복사하고, 그 안에서 claude -p --setting-sources project 로 같은 요청을 실행한 뒤\nnode --test 결과를 알려 주고 ①과 표로 비교해 줘"),
+        ("④ CI 보기", "do", "앞 장 <b>ci.yml</b> → .github/workflows/ci.yml 로 두면 PR마다 같은 테스트 · 사내 Git도 같은 방식"),
+        ("⑤ 사람 판정", "do", "테스트 기대값을 바꿨다면 그 계산 근거가 맞는지 직접 확인 · 게이트를 통과해도 기대값이 틀리면 위험"),
+    ], files=[("CLAUDE.md", "CLAUDE.md", "@7-1/CLAUDE.md"),
+              ("settings.json", ".claude/settings.json", "@7-1/settings.json"),
+              ("test_gate.mjs", ".claude/hooks/test_gate.mjs", "@7-1/hooks/test_gate.mjs"),
+              ("ci.yml", ".github/workflows/ci.yml", "@7-1/ci.yml")],
+        tip="Stop Hook이 테스트 실패면 「끝내지 마」로 돌려보냄 · 8번 연속이면 Claude Code가 무시하므로 무한 반복은 없음"),
 
     "8-1": dict(folder="meta_harness", open="labs/meta_harness", steps=[
         ("① 메타 하네스 만들기", "do", "Ch8 「메타 하네스를 만드는 요청문」 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기"),

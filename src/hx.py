@@ -14,7 +14,7 @@ import labkits
 
 deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("선택", 15), "2-2": ("필수", 20), "2-3": ("선택", 25),
                       "3-1": ("선택", 15), "4-1": ("선택", 20), "5-1": ("선택", 25), "5-2": ("선택", 20),
-                      "6-1": ("시연", 10), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
+                      "6-1": ("선택", 25), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
 from stats_hx import big, hbars, quote, rings, stat
 
@@ -101,6 +101,9 @@ OWN_LAB11 = ("직접 실측 2026.10.19 · Sonnet 5.5 · 실습 1-1 요청 그대
 D_CTXWIN = ("Claude Code 문서 · Context window (What survives compaction)", "https://code.claude.com/docs/en/context-window.md")
 D_MEMORY = ("Claude Code 문서 · Memory", "https://code.claude.com/docs/en/memory.md")
 OWN_LAB51 = ("직접 실측 2026.10.20 · Sonnet 5.5 · 실습 5-1 PR · 각 2회 · 키워드 + 직접 확인", "https://github.com/TunaLee/posco-dx")
+D_CAVEMAN = ("caveman README (제작자 발표)", "https://github.com/JuliusBrussee/caveman")
+D_PONYTAIL = ("ponytail README (제작자 발표)", "https://github.com/DietrichGebert/ponytail")
+OWN_LAB71 = ("직접 실측 2026.10.20 · Sonnet 5.5 · 실습 7-1 요청 그대로 · 각 2회", "https://github.com/TunaLee/posco-dx")
 INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
 INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
 INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
@@ -1234,11 +1237,15 @@ def ch6():
                      title="과제 1건당 비용 · 통과율")
              + note("많이 생각시킨다고 늘 좋진 않다", "Sonnet 5.5: max 46.2% < xhigh 52.1% · Sub Agent 남발 · 범위 밖 수정"),
              D_OPT, D_EFFORT, A_SON55),
-        light("출력 줄이기: caveman", two(
+        stat("출력 줄이기: caveman", "Ch6", two(
             code("설치", "/plugin marketplace add JuliusBrussee/caveman\n/plugin install caveman@caveman"),
-            ba_like2("좋은 질문이에요! 이 문제는 여러 가지 원인이 있을 수 있는데요, 우선 VPN 클라이언트가…", "원인: 인증서 만료. 조치: 재발급 (IT-3).")), "Ch6"),
-        light("코드량 줄이기: ponytail", code("설치", "/plugin marketplace add DietrichGebert/ponytail\n/plugin install ponytail@ponytail")
-              + note("효과", "요청한 것만 · 가장 단순한 해법부터 · 적은 코드 = 적은 버그"), "Ch6"),
+            ba_like2("좋은 질문이에요! 이 문제는 여러 가지 원인이 있을 수 있는데요, 우선 VPN 클라이언트가…", "원인: 인증서 만료. 조치: 재발급 (IT-3)."))
+             + note("제작자 발표", "같은 답 63 → 20토큰 예시 · 세션 전체 입력 −33.2% (54회) · 실습 6-1에서 직접 재 보기"),
+             D_CAVEMAN),
+        stat("코드량 줄이기: ponytail", "Ch6", code("설치", "/plugin marketplace add DietrichGebert/ponytail\n/plugin install ponytail@ponytail")
+              + note("방식", "요청한 것만 · 가장 단순한 해법부터 · 표준 라이브러리 먼저")
+              + note("제작자 발표", "코드 −53% · 시간 −41% · 비용 −26% · 토큰 −45% (Opus 5.5 · 39과제 × 5회) · 턴마다 비용 기록을 홈 폴더에 남김"),
+             D_PONYTAIL),
         stat("공식 사례로 본 절감 폭", "Ch6",
              hbars([("같은 점수 · 모델 · effort 조정", 81, True, "$1.19 → $0.22"), ("남은 시간 알려 주기", 60, False, "비용 −60%"),
                     ("도구 검색 (도구 502개)", 45, False, "$1.02 → $0.56"), ("오래된 도구 결과 정리", 39, False, "−39%"),
@@ -1264,10 +1271,12 @@ def ch6():
             ["<b>⑨ 출력 줄이기</b>", "「결과는 파일로 · 대화엔 3줄」", "출력"],
             ["<b>⑩ 로그는 Hook으로 거르기</b>", "ERROR 줄만 넘기기", "수만 → 수백 토큰"],
         ]) + note("먼저 재기", "/context로 큰 것부터 · 줄인 뒤 품질은 평가로"), "Ch6"),
-        lab("6-1", "토큰 절감 실측", "Ch6",
-            "레버를 하나씩 켜며 토큰 · 품질 비교",
-            ["quiz.md로 먼저 예상", "기준선 5개 과제 실행 (bench.py)", "레버 켜기: 간결 지시 · caveman · 모델 나누기 · Sub Agent", "토큰 · 정확도 함께 비교 → 남길 레버 고르기"],
-            ["레버별 토큰 · 정확도 표", "품질이 떨어진 레버는 제외"], files=labdir("lab6_tokens"), mine="내 업무 1회 토큰 예상 · 쓸 레버 하나"),
+        lab("6-1", "플러그인으로 토큰이 얼마나 줄어드나", "Ch6",
+            "caveman · ponytail을 켜고 끄며 같은 일을 시켜 토큰 · 코드량 · 품질을 직접 재기",
+            ["플러그인 없이 설명 · 수정 두 요청 → 토큰 · 바뀐 줄 기록", "caveman · ponytail 설치", "플러그인을 켜고 같은 두 요청",
+             "토큰 · 코드량 · 테스트 통과 비교", "짧아진 답 · 코드를 사람이 판정 → 쓸지 말지"],
+            ["플러그인별 토큰 · 코드량 비교표", "제작자 발표 수치와 내 결과 비교"], files=labdir("plugin_check"),
+            mine="내 업무에 켤 플러그인 하나 · 이유"),
         *labkit('6-1', 'Ch6'),
         bridge("다음: 평가 · HITL", "", "Ch6", "→ Ch7 평가 · HITL"),
     ]
@@ -1370,13 +1379,20 @@ def ch7():
         ]), "Ch7"),
         ill("scenes_hx", "regression_gate", "top20", "회귀 테스트 구조", ["기준선보다 나빠지면 멈춤"]),
         light("하네스 전후 비교 (시연)", code("터미널", compare) + note("숫자", "예시 출력 · 실습에서 내 숫자로"), "Ch7"),
-        lab("7-1", "업무 하네스 회귀 테스트 · 사람 판정", "Ch7",
-            "하네스를 고친 뒤 나빠진 곳을 찾고 · 최종 판정은 사람",
-            ["기준선: 업무 하네스로 과제 6개 실행 → 자동 채점", "CLAUDE.md 규칙 한 줄을 일부러 지우기", "같은 과제 다시 → 점수 비교 (회귀 찾기)",
-             "점수가 같아도 결과물 2개는 직접 읽고 판정 → 되돌리기"],
-            ["전후 점수표 · 나빠진 과제와 이유", "사람 판정 기록 (자동 채점과 다른 점)"], files=labdir("office_work"),
-            mine="내 업무에서 「점수는 같은데 사람이 보면 틀린」 경우 하나"),
+        lab("7-1", "빌드 · 테스트 하네스 (CI 게이트)", "Ch7",
+            "「테스트가 통과해야 끝」을 부탁이 아니라 Hook · CI로 강제",
+            ["하네스 미적용 상태로 코드 수정 요청 → 끝난 뒤 테스트 결과", "CLAUDE.md · Stop Hook(테스트 게이트) 만들기",
+             "같은 요청 → 테스트 결과 비교", "같은 검사를 PR마다 돌리는 CI 설정 보기", "테스트 기대값을 바꾼 근거는 사람이 확인"],
+            ["미적용 · 적용 테스트 결과 비교표", "기대값 변경 근거를 사람이 판정"], files=labdir("build_gate"),
+            mine="내 업무에서 「이게 통과해야 끝」인 검사 하나"),
         *labkit('7-1', 'Ch7'),
+        stat("실측: 테스트 게이트 전후", "Ch7", table(["", "하네스 미적용 ×2", "CLAUDE.md + Stop Hook ×2"], [
+            ["<b>끝난 뒤 node --test</b>", "실패 1건 남음 · 2 / 2", "<b>3 / 3 통과 · 2 / 2</b>"],
+            ["<b>남긴 말</b>", "「테스트는 실행하지 않았습니다」", "틀린 기대값을 계산 근거와 함께 수정"],
+            ["<b>턴 · 시간</b>", "5턴 · 17초", "10턴 · 28초"],
+        ]) + note("배운 점", "「테스트 통과가 완료 기준」은 Hook이 코드로 지킴 · 기대값을 바꾼 근거는 사람이 확인 (HITL)")
+             + note("CI", "같은 검사를 PR마다 · Claude로 PR 리뷰까지 넣으려면 claude-code-action · API 키 필요"),
+             OWN_LAB71),
         light("운영: 실패 유형 정의", table(["실패", "판정", "대응"], [
             ["<b>틀린 답</b>", "judge · 정답 비교", "평가셋에 추가"],
             ["<b>근거 없는 답</b>", "숫자 · 조항 대조", "차단 · 사람에게"],
