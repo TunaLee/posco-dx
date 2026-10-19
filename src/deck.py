@@ -102,13 +102,16 @@ def capture(title, ch, shots, lines=()):
     return light(title, f'<div class="caps n{len(shots)}">{body}</div>' + (f'<ul class="capnote">{side}</ul>' if side else ""), ch)
 
 
+LAB_KIND = {}   # 실습 번호 → (필수 · 선택 · 시연, 분)
+
+
 def lab(no, title, ch, goal, steps, done, minutes=None, files="", mine=""):
     """실습 장 — 목표 · 단계 · 완료 기준 · 시간 네 칸 고정."""
     st = "".join(f"<li>{x}</li>" for x in steps)
     dn = "".join(f"<li>{x}</li>" for x in done)
     return f'''<section class="slide lt labs" data-title="[실습 {no}] {title}">
   {coord()}
-  <div class="eyebrow"><span class="tag">{ch}</span><span class="labtag">실습 {no}</span></div>
+  <div class="eyebrow"><span class="tag">{ch}</span><span class="labtag">실습 {no}</span>{_kind(no)}</div>
   <h2 class="s-title sm">{title}</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -117,6 +120,11 @@ def lab(no, title, ch, goal, steps, done, minutes=None, files="", mine=""):
     <div class="lc done"><div class="lh">완료 기준</div><ul>{dn}</ul></div>
   </div></div>
 </section>'''
+
+
+def _kind(no):
+    k = LAB_KIND.get(no)
+    return f'<span class="kindtag k{k[0]}">{k[0]} · {k[1]}분</span>' if k else ""
 
 
 def bridge(title, question, ch, nxt):

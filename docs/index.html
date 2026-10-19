@@ -664,6 +664,8 @@
   .ar-arrow{display:flex; align-items:center; justify-content:center; font-size:26px; color:#F28C28; font-weight:800;}
   .ar-loop{margin-top:10px; text-align:center; font-size:14px; color:#1F3A5F; font-weight:600;}
   .ktree{grid-template-columns:1.05fr 1fr;} .ktree .kf .code pre{max-height:165px;}
+  .kindtag{margin-left:8px; font-size:12px; font-weight:800; padding:3px 10px; border-radius:999px; color:#fff;}
+  .k필수{background:#F28C28;} .k선택{background:#1F3A5F;} .k시연{background:#8A94A3;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}
@@ -801,7 +803,7 @@
 <section class="slide dk" data-title="목차">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <h2>목차</h2>
-  <div class="days two"><div class="daycol"><div class="ch"><span class="chip">Ch1</span><div class="tx"><b>하네스 개념</b><span>하네스 전후 비교표</span></div></div><div class="ch"><span class="chip">Ch2</span><div class="tx"><b>Claude Code 하네스 분해</b><span>Skill · Sub Agent · Hook · 명령</span></div></div><div class="ch"><span class="chip">Ch3</span><div class="tx"><b>컨텍스트 엔지니어링</b><span>컨텍스트 실험표</span></div></div><div class="ch"><span class="chip">Ch4</span><div class="tx"><b>공개 하네스 적용</b><span>Superpowers · gstack 비교</span></div></div><div class="ch"><span class="chip">Ch5</span><div class="tx"><b>멀티에이전트 오케스트레이션</b><span>Supervisor + Sub Agent · 실행 타임라인</span></div></div><div class="ch"><span class="chip">Ch6</span><div class="tx"><b>토큰 경제학</b><span>토큰 절감 실측표</span></div></div><div class="ch"><span class="chip">Ch7</span><div class="tx"><b>평가 · HITL</b><span>사람 판정 기준 · 자동 비교</span></div></div><div class="ch"><span class="chip">Ch8</span><div class="tx"><b>개발 멀티에이전트 하네스</b><span>내 업무 툴 · 발표</span></div></div></div></div>
+  <div class="days two"><div class="daycol"><div class="ch"><span class="chip">Ch1</span><div class="tx"><b>하네스 개념</b><span>하네스 전후 비교표</span></div></div><div class="ch"><span class="chip">Ch2</span><div class="tx"><b>Claude Code 하네스 분해</b><span>Skill · Sub Agent · Hook · 명령</span></div></div><div class="ch"><span class="chip">Ch3</span><div class="tx"><b>컨텍스트 엔지니어링</b><span>컨텍스트 실험표</span></div></div><div class="ch"><span class="chip">Ch4</span><div class="tx"><b>공개 하네스 적용</b><span>Superpowers · gstack 비교</span></div></div><div class="ch"><span class="chip">Ch5</span><div class="tx"><b>멀티에이전트 오케스트레이션</b><span>Supervisor + Sub Agent · 실행 타임라인</span></div></div><div class="ch"><span class="chip">Ch6</span><div class="tx"><b>토큰 경제학</b><span>토큰 절감 실측표</span></div></div><div class="ch"><span class="chip">Ch7</span><div class="tx"><b>평가 · HITL</b><span>사람 판정 기준 · 자동 비교</span></div></div><div class="ch"><span class="chip">Ch8</span><div class="tx"><b>내 하네스 만들기</b><span>메타 하네스 · 패들릿 · 발표</span></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="코딩 에이전트 사용 현황">
@@ -842,6 +844,14 @@
   <h2 class="s-title sm">실습 환경</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>도구</th><th>용도</th></tr></thead><tbody><tr><td><b>Claude Code (비즈니스 계정)</b></td><td>하네스 만들기 · 대화형 실습</td></tr><tr><td><b>VS Code · Python 3.10+</b></td><td>실습 스크립트 · 데이터</td></tr><tr><td><b>Agent Watch</b></td><td>에이전트 실행 흐름 · 토큰 대시보드</td></tr><tr><td><b>Git · GitHub</b></td><td>하네스 버전 관리 · 공유</td></tr></tbody></table><div class="dbnote"><span>실습 자료</span> <a class="dl" href="dl/labs.zip" download>전체 실습 자료 labs.zip</a> · 장마다 실습 장표의 「사용 파일」에서도 내려받기</div></div></div>
+</section>
+
+<section class="slide lt" data-title="하루 일정 · 8시간">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">시작</span></div>
+  <h2 class="s-title sm">하루 일정 · 8시간</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>시간</th><th>내용</th><th>실습</th></tr></thead><tbody><tr><td><b>09:00</b></td><td>시작 · 트렌드 · 하네스가 필요한 이유</td><td>—</td></tr><tr><td><b>09:30</b></td><td>Ch1 하네스 개념</td><td><b>1-1 필수</b> · 같은 질문 열 번</td></tr><tr><td><b>10:30</b></td><td>Ch2 Claude Code 하네스 분해 · Skill · Hook</td><td><b>2-2 필수</b> · Claude로 Hook 만들기 · 2-1 · 2-3 선택</td></tr><tr><td><b>11:40</b></td><td>Ch3 컨텍스트 엔지니어링</td><td>3-1 시연</td></tr><tr><td><b>13:10</b></td><td>Ch4 공개 하네스 · 다른 회사 사례 · Ch5 멀티에이전트</td><td>4-1 · 5-1 시연 · 5-2 선택</td></tr><tr><td><b>14:20</b></td><td>Ch6 토큰 경제학</td><td>6-1 시연</td></tr><tr><td><b>14:50</b></td><td>Ch7 평가 · HITL · 회귀 테스트</td><td><b>7-1 필수</b> · 회귀 테스트 · 사람 판정</td></tr><tr><td><b>15:50</b></td><td>Ch8 내 하네스 만들기 (사전 과제 주제)</td><td><b>8-1 필수</b> · 메타 하네스로 내 하네스 · 90분</td></tr><tr><td><b>17:20</b></td><td>패들릿 공유 · 1~2분 발표</td><td>—</td></tr></tbody></table><div class="dbnote"><span>대상</span> 소프트웨어 직군 · 사전 과제: 반복 업무 하나 + 결과 확인 방법 · 샘플 데이터 labs/samples/ 11개 분야</div></div></div>
 </section>
 
 <section class="slide lt" data-title="실습 진행 방식">
@@ -1041,7 +1051,7 @@ labs 폴더의 실습 폴더 목록을 보여 줘</code></pre></div><div class="
 
 <section class="slide lt labs" data-title="[실습 1-1] 같은 질문 열 번">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch1</span><span class="labtag">실습 1-1</span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span><span class="labtag">실습 1-1</span><span class="kindtag k필수">필수 · 15분</span></div>
   <h2 class="s-title sm">같은 질문 열 번</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -1245,7 +1255,7 @@ model: sonnet
 
 <section class="slide lt labs" data-title="[실습 2-1] Skill · Sub Agent 붙이기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-1</span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-1</span><span class="kindtag k선택">선택 · 15분</span></div>
   <h2 class="s-title sm">Skill · Sub Agent 붙이기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -1447,7 +1457,7 @@ if any(b in i.get('command', '') for b in bad) \
 
 <section class="slide lt labs" data-title="[실습 2-2] Claude로 Hook 만들기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-2</span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-2</span><span class="kindtag k필수">필수 · 20분</span></div>
   <h2 class="s-title sm">Claude로 Hook 만들기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -1502,12 +1512,12 @@ claude -p --setting-sources project --permission-mode acceptEdits "리포트 오
   <div class="body"><div class="mid"><div class="twocol"><table class="dbt"><thead><tr><th>만들기 좋은 업무</th><th>이유</th></tr></thead><tbody><tr><td><b>자주 반복</b></td><td>한 번 만든 지침 · Skill · Hook을 계속 재사용</td></tr><tr><td><b>규칙 · 기준이 분명</b></td><td>「잘했다」를 정해야 지침으로 고정 가능</td></tr><tr><td><b>결과 확인 가능</b></td><td>평가셋 · 검증 Agent · 테스트로 자동 확인</td></tr><tr><td><b>회사만 아는 지식 필요</b></td><td>규정 · 양식 · 확정 사항을 넣어 줘야 함</td></tr><tr><td><b>막아야 할 구간이 있음</b></td><td>Hook · 권한으로 강제</td></tr></tbody></table><table class="dbt"><thead><tr><th>맞지 않는 업무</th><th>이유</th></tr></thead><tbody><tr><td><b>한 번 하고 끝</b></td><td>대화로 시키는 편이 빠름</td></tr><tr><td><b>기준이 매번 다른 판단</b></td><td>기획 · 협상 · 아이디어</td></tr><tr><td><b>확인할 방법이 없음</b></td><td>좋아졌는지 알 수 없음</td></tr><tr><td><b>되돌릴 수 없고 확인 장치도 없음</b></td><td>결재 · 송금은 사람 승인이 기본</td></tr></tbody></table></div></div></div>
 </section>
 
-<section class="slide lt" data-title="하네스 적용 예시 다섯 유형">
+<section class="slide lt" data-title="하네스 적용 예시 여섯 유형">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch2</span></div>
-  <h2 class="s-title sm">하네스 적용 예시 다섯 유형</h2>
+  <h2 class="s-title sm">하네스 적용 예시 여섯 유형</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>유형</th><th>실습 예시</th><th>내 업무라면 (예)</th><th>하네스 핵심</th></tr></thead><tbody><tr><td><b>문의 응대형</b></td><td>사내 문의 답변</td><td>고객 클레임 1차 답변 · 시스템 사용 문의</td><td>규정 근거 Skill · 승인 필요 건은 사람에게 · 발송 차단</td></tr><tr><td><b>문서 추출 · 계산형</b></td><td>사양서 → 견적</td><td>발주서 검토 · 계약 조항 추출</td><td>추출 양식 Skill · 불일치면 보류 · 원본 수정 차단</td></tr><tr><td><b>기록 → 보고서형</b></td><td>점검 기록 → 주간 보고서</td><td>장애 주간 보고 · 생산 실적 보고</td><td>기준값 · 양식 Skill · 빈 값은 확인 필요 · 수치 대조</td></tr><tr><td><b>비교 · 검토형</b></td><td>규정 개정 비교 · 코드 리뷰</td><td>계약 변경점 · 설정 변경 리뷰</td><td>비교 절차 Skill · 검증 Agent · 고치지 않고 판정</td></tr><tr><td><b>정리 · 작성형</b></td><td>회의록 → 할 일 · 안내 메일</td><td>회의 후속 조치 · 공지 · 협력사 메일</td><td>필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지</td></tr></tbody></table><div class="dbnote"><span>실습 자료</span> <code class="lfold">labs/work_harness</code> 의 Skill 6개가 이 유형들 · 가장 가까운 것을 가져와 값만 바꿈</div></div></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>유형</th><th>실습 예시</th><th>내 업무라면 (예)</th><th>하네스 핵심</th></tr></thead><tbody><tr><td><b>문의 응대형</b></td><td>사내 문의 답변</td><td>고객 클레임 1차 답변 · 시스템 사용 문의</td><td>규정 근거 Skill · 승인 필요 건은 사람에게 · 발송 차단</td></tr><tr><td><b>문서 추출 · 계산형</b></td><td>사양서 → 견적</td><td>발주서 검토 · 계약 조항 추출</td><td>추출 양식 Skill · 불일치면 보류 · 원본 수정 차단</td></tr><tr><td><b>기록 → 보고서형</b></td><td>점검 기록 → 주간 보고서</td><td>장애 주간 보고 · 생산 실적 보고</td><td>기준값 · 양식 Skill · 빈 값은 확인 필요 · 수치 대조</td></tr><tr><td><b>비교 · 검토형</b></td><td>규정 개정 비교 · 코드 리뷰</td><td>계약 변경점 · 설정 변경 리뷰</td><td>비교 절차 Skill · 검증 Agent · 고치지 않고 판정</td></tr><tr><td><b>정리 · 작성형</b></td><td>회의록 → 할 일 · 안내 메일</td><td>회의 후속 조치 · 공지 · 협력사 메일</td><td>필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지</td></tr><tr><td><b>개발형</b></td><td>내 업무 툴 (Ch8)</td><td>MES 로그 분석 · 정산 검증 배치 · 테스트 보강</td><td>기획 → 사람 승인 → 워크트리 TDD · 리뷰 Agent</td></tr></tbody></table><div class="dbnote"><span>샘플</span> <code class="lfold">labs/samples</code> · 11개 업무 분야 가상 데이터 · 분야마다 하네스 주제 예시 3개</div></div></div>
 </section>
 
 <section class="slide lt" data-title="업무 처리 하네스 구성">
@@ -1536,7 +1546,7 @@ claude -p --setting-sources project --permission-mode acceptEdits "리포트 오
 
 <section class="slide lt labs" data-title="[실습 2-3] 업무 처리 하네스로 실무 과제">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-3</span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-3</span><span class="kindtag k선택">선택 · 25분</span></div>
   <h2 class="s-title sm">업무 처리 하네스로 실무 과제</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -1780,7 +1790,7 @@ python3 work_harness/grade.py work_harness/workspace --task T3 T4 로 채점해 
 
 <section class="slide lt labs" data-title="[실습 3-1] 컨텍스트 실험 네 가지">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch3</span><span class="labtag">실습 3-1</span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span><span class="labtag">실습 3-1</span><span class="kindtag k시연">시연 · 10분</span></div>
   <h2 class="s-title sm">컨텍스트 실험 네 가지</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -1913,7 +1923,7 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
 
 <section class="slide lt labs" data-title="[실습 4-1] 같은 과제, 네 가지 하네스">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch4</span><span class="labtag">실습 4-1</span></div>
+  <div class="eyebrow"><span class="tag">Ch4</span><span class="labtag">실습 4-1</span><span class="kindtag k시연">시연 · 10분</span></div>
   <h2 class="s-title sm">같은 과제, 네 가지 하네스</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -2095,7 +2105,7 @@ description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·B
 
 <section class="slide lt labs" data-title="[실습 5-1] Supervisor + Sub Agent + 검증">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch5</span><span class="labtag">실습 5-1</span></div>
+  <div class="eyebrow"><span class="tag">Ch5</span><span class="labtag">실습 5-1</span><span class="kindtag k시연">시연 · 10분</span></div>
   <h2 class="s-title sm">Supervisor + Sub Agent + 검증</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -2218,7 +2228,7 @@ verifier-inquiry 가 막았는지 알려 줘</code></pre></div></div></div></div
 
 <section class="slide lt labs" data-title="[실습 5-2] 업무 하네스에 멀티에이전트 입히기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch5</span><span class="labtag">실습 5-2</span></div>
+  <div class="eyebrow"><span class="tag">Ch5</span><span class="labtag">실습 5-2</span><span class="kindtag k선택">선택 · 20분</span></div>
   <h2 class="s-title sm">업무 하네스에 멀티에이전트 입히기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -2357,6 +2367,14 @@ python3 work_harness/grade.py work_harness/workspace --task T7 로 채점해 줘
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>레버</th><th>방법</th><th>주의</th></tr></thead><tbody><tr><td><b>① 입력 줄이기</b></td><td>짧은 CLAUDE.md · 찾아서 읽기 · Sub Agent 분리</td><td>가장 큰 절감</td></tr><tr><td><b>② 출력 줄이기</b></td><td>「간결하게 · JSON으로」 · caveman</td><td>설명이 필요한 곳은 예외</td></tr><tr><td><b>③ 코드량 줄이기</b></td><td>ponytail 같은 최소 구현 Skill</td><td>필요한 기능 누락 확인</td></tr><tr><td><b>④ 도구 출력 줄이기</b></td><td>rtk 같은 명령 출력 압축</td><td>필요한 오류 줄까지 지우지 않게</td></tr><tr><td><b>⑤ 모델 나누기</b></td><td>분류는 작은 모델 · 판단은 큰 모델</td><td>품질은 평가셋으로 확인</td></tr></tbody></table></div></div>
 </section>
 
+<section class="slide lt" data-title="플러그인 없이 바로 쓰는 절감법">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch6</span></div>
+  <h2 class="s-title sm">플러그인 없이 바로 쓰는 절감법</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>방법</th><th>어떻게</th><th>줄어드는 곳</th></tr></thead><tbody><tr><td><b>① 일이 바뀌면 새로</b></td><td>/clear</td><td>앞 대화 재전송 · 새로 시작은 비용 0</td></tr><tr><td><b>② 긴 세션 요약</b></td><td>/compact 남길 것</td><td>쌓인 대화 · 도구 결과</td></tr><tr><td><b>③ CLAUDE.md 짧게</b></td><td>긴 매뉴얼은 Skill · 참고 파일로</td><td>매 요청 고정 입력</td></tr><tr><td><b>④ 찾아서 읽기</b></td><td>통째 Read 대신 Grep · 줄 범위</td><td>도구 결과</td></tr><tr><td><b>⑤ MCP는 필요한 것만</b></td><td>안 쓰는 서버 끄기 · 도구 검색 (기본 켜짐)</td><td>도구 정의</td></tr><tr><td><b>⑥ 모델 나누기</b></td><td>분류 · 검색 Sub Agent는 model: haiku</td><td>단가</td></tr><tr><td><b>⑦ effort 조절</b></td><td>low 먼저 → 실패만 high</td><td>생각 토큰</td></tr><tr><td><b>⑧ 캐시 지키기</b></td><td>앞부분 고정 · 시각 · ID는 뒤에</td><td>새 입력 → 캐시 읽기 (0.1배)</td></tr><tr><td><b>⑨ 출력 줄이기</b></td><td>「결과는 파일로 · 대화엔 3줄」</td><td>출력</td></tr><tr><td><b>⑩ 로그는 Hook으로 거르기</b></td><td>ERROR 줄만 넘기기</td><td>수만 → 수백 토큰</td></tr></tbody></table><div class="dbnote"><span>먼저 재기</span> /context · /cost 로 어디서 쓰는지 보고 큰 것부터 · 줄인 뒤 품질은 평가로 확인</div></div></div>
+</section>
+
 <section class="slide lt" data-title="캐싱의 원리">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch6</span></div>
@@ -2445,7 +2463,7 @@ python3 work_harness/grade.py work_harness/workspace --task T7 로 채점해 줘
 
 <section class="slide lt labs" data-title="[실습 6-1] 토큰 절감 실측">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch6</span><span class="labtag">실습 6-1</span></div>
+  <div class="eyebrow"><span class="tag">Ch6</span><span class="labtag">실습 6-1</span><span class="kindtag k시연">시연 · 10분</span></div>
   <h2 class="s-title sm">토큰 절감 실측</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -2677,15 +2695,15 @@ python compare.py results/before.json results/after.json
 결과: 통과</code></pre></div><div class="dbnote"><span>숫자</span> 예시 출력 · 실습에서 내 숫자로</div></div></div>
 </section>
 
-<section class="slide lt labs" data-title="[실습 7-1] 평가셋 + 회귀 테스트">
+<section class="slide lt labs" data-title="[실습 7-1] 업무 하네스 회귀 테스트 · 사람 판정">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span><span class="labtag">실습 7-1</span></div>
-  <h2 class="s-title sm">평가셋 + 회귀 테스트</h2>
+  <div class="eyebrow"><span class="tag">Ch7</span><span class="labtag">실습 7-1</span><span class="kindtag k필수">필수 · 30분</span></div>
+  <h2 class="s-title sm">업무 하네스 회귀 테스트 · 사람 판정</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>자동 채점은 보조 · 사람 판정과 맞춰 보고 최종 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/lab7_eval_regression</code></div><div class="mine"><span>내 업무 적용</span>내 업무 평가 문항 다섯 개 · 엣지 케이스 두 개</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>대표 10건 + 엣지 케이스 + 합성 10건</li><li>judge 기준 → 사람 10건과 일치도</li><li>기준선 실행 → 하네스 수정 → 재실행</li><li>일부러 나쁘게 고쳐 compare.py 실패 확인</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>사람이 직접 판정한 10건과 judge 일치도</li><li>전후 비교표 · 최종 판정은 사람이 기록</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>하네스를 고친 뒤 나빠진 곳을 찾고 · 최종 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/work_harness</code></div><div class="mine"><span>내 업무 적용</span>내 업무에서 「점수는 같은데 사람이 보면 틀린」 경우 하나</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>기준선: 업무 하네스로 과제 6개 실행 → 자동 채점</li><li>CLAUDE.md 규칙 한 줄을 일부러 지우기</li><li>같은 과제 다시 → 점수 비교 (회귀 찾기)</li><li>점수가 같아도 결과물 2개는 직접 읽고 판정 → 되돌리기</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>전후 점수표 · 나빠진 과제와 이유</li><li>사람 판정 기록 (자동 채점과 다른 점)</li></ul></div>
   </div></div>
 </section>
 
@@ -2694,100 +2712,10 @@ python compare.py results/before.json results/after.json
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">실습 7-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① judge 일치도</span></div><pre><code>lab7_eval_regression/agreement.py 를 실행해
-judge와 사람 채점 일치도를 설명해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 기준선</span></div><pre><code>lab7_eval_regression/run_suite.py -n 10 --k 3 실행 →
-결과 파일 경로와 점수 요약</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 일부러 나쁘게</span></div><pre><code>lab1_harness_vs_bare/harness/CLAUDE.md 에서 환불 · 징계를 약속하지 않는다는 줄을 지우고
-lab7_eval_regression/run_suite.py -n 10 --k 3 을 다시 실행해 결과 파일 경로를 알려 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 회귀 확인</span></div><pre><code>lab7_eval_regression/compare.py 로 CLAUDE.md 수정 전 · 후 run_suite 결과 파일을 비교해
-무엇이 나빠졌는지 · 회귀로 실패했는지 알려 줘. 끝나면 CLAUDE.md 되돌려 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 내 평가 문항</span></div><pre><code>내 업무 평가 문항 5개 (엣지 케이스 2개 포함) 를 eval/cases.jsonl 로 만들어 줘:
-입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말</code></pre></div></div></div></div>
-</section>
-
-<section class="slide lt" data-title="하네스 브레인스토밍">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">하네스 브레인스토밍</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>질문</th><th>왜 묻나</th><th>예 · 주간 설비 점검 보고서</th></tr></thead><tbody><tr><td><b>① 어떤 업무 · 얼마나 자주</b></td><td>반복되지 않으면 하네스보다 그때그때 요청</td><td>매주 월요일 · 팀장에게 보고</td></tr><tr><td><b>② 무엇이 들어오나</b></td><td>입력 형식이 Skill의 첫 단계</td><td>점검 기록 CSV · 점검 기준 문서</td></tr><tr><td><b>③ 무엇이 나가야 하나</b></td><td>결과 양식 · 위치 → CLAUDE.md · Skill</td><td>요약 3줄 · 정비 요청 · 경고 표</td></tr><tr><td><b>④ 판단 기준 · 사내 규칙</b></td><td>모델이 모르는 회사 기준 → Skill</td><td>7.0 초과면 경고 · 이틀 연속이면 정비 요청</td></tr><tr><td><b>⑤ 절대 하면 안 되는 것</b></td><td>어기면 사고 → Hook</td><td>원본 기록 수정 · 외부 메일 발송</td></tr><tr><td><b>⑥ 사람이 꼭 볼 곳</b></td><td>HITL 지점 → 승인 · 판정</td><td>발송 전 팀장 확인</td></tr><tr><td><b>⑦ 잘했다의 기준 · 자주 나는 실수</b></td><td>평가 문항 · 엣지 케이스</td><td>누락 0건 · 빈 값을 0으로 읽는 실수</td></tr></tbody></table><div class="dbnote"><span>다음</span> 답이 곧 하네스 재료 · 메타 하네스의 인터뷰가 이 질문을 대신 던진다</div></div></div>
-</section>
-
-<section class="slide lt" data-title="하네스 만드는 순서">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">하네스 만드는 순서</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 브레인스토밍</b><span>업무 · 막을 것 · 잘했다의 기준</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (하네스 미적용 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
-</section>
-
-<section class="slide lt" data-title="메타 하네스란">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">메타 하네스란</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>인터뷰</b><span>업무 · 입력 · 금지</span></div><div class="fa">→</div><div class="fs"><b>설계</b><span>유형 · 필요한 부품만</span></div><div class="fa">→</div><div class="fs hl"><b>사람 승인</b><span>APPROVED</span></div><div class="fa">→</div><div class="fs"><b>생성 · 검토</b><span>하네스 파일</span></div><div class="fa">→</div><div class="fs"><b>시험</b><span>미적용 vs 적용</span></div><div class="fa">→</div><div class="fs"><b>사람 판정</b><span>고치기</span></div></div><table class="dbt"><thead><tr><th></th><th>범용 하네스</th><th>메타 하네스가 만든 하네스</th></tr></thead><tbody><tr><td><b>규칙</b></td><td>누구에게나 맞는 일반 규칙</td><td>인터뷰에서 나온 내 업무 규칙만</td></tr><tr><td><b>부품</b></td><td>전부 다</td><td>필요한 것만 · 넣지 않은 이유도 기록</td></tr><tr><td><b>막을 것</b></td><td>rm -rf · .env 같은 공통</td><td>내 업무에서 사고 나는 지점</td></tr><tr><td><b>평가</b></td><td>없음</td><td>내 예시 입력 3 + 엣지 케이스 2</td></tr><tr><td><b>재사용</b></td><td>한 번 설치</td><td>새 업무 · 새 상황마다 다시 인터뷰</td></tr></tbody></table><div class="dbnote"><span>이어서</span> Ch8에서 이 메타 하네스로 개발 하네스를 만든다</div></div></div>
-</section>
-
-<section class="slide lt" data-title="메타 하네스 구조">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">메타 하네스 구조</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">폴더 구조</span></div><pre><code>meta_harness/
-├── CLAUDE.md                 순서 · 원칙
-├── templates/                유형별 예시 (업무 · 개발)
-├── docs/&lt;하네스 이름&gt;/
-│   ├── interview.md          인터뷰 답
-│   ├── design.md             설계안
-│   └── APPROVED              사람만 만듦
-├── out/&lt;하네스 이름&gt;/          만들어진 하네스
-└── .claude/
-    ├── skills/interview/     질문 → interview.md
-    ├── skills/design/        유형 · 부품 → design.md
-    ├── skills/build/         하네스 파일 생성
-    ├── skills/try/           미적용 vs 적용 시험
-    ├── agents/harness-reviewer.md  지어낸 규칙 검토
-    └── hooks/guard.py · settings.json  승인 전 생성 차단</code></pre></div></div><table class="dbt"><thead><tr><th>단계</th><th>담당</th><th>결과</th></tr></thead><tbody><tr><td><b>① 인터뷰</b></td><td>interview Skill · 사람이 답함</td><td>interview.md</td></tr><tr><td><b>② 설계</b></td><td>design Skill · templates/ 참고</td><td>design.md · 유형 · 부품</td></tr><tr><td><b>③ 승인</b></td><td><b>사람</b> · APPROVED</td><td>승인 전 생성은 Hook이 차단</td></tr><tr><td><b>④ 생성</b></td><td>build Skill</td><td>대상 폴더에 하네스</td></tr><tr><td><b>⑤ 검토</b></td><td>harness-reviewer</td><td>지어낸 규칙 · 빠진 차단</td></tr><tr><td><b>⑥ 시험</b></td><td>try Skill</td><td>미적용 vs 적용 비교표</td></tr><tr><td><b>⑦ 판정</b></td><td><b>사람</b></td><td>합격 · 고칠 점</td></tr></tbody></table></div></div></div>
-</section>
-
-<section class="slide lt" data-title="메타 하네스를 만드는 요청문">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">메타 하네스를 만드는 요청문</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">labs/meta_harness 에서 붙여 넣기</span></div><pre><code>이 폴더에 「하네스를 만드는 하네스(메타 하네스)」를 만들어 줘.
-
-1. CLAUDE.md — 순서: 인터뷰 → 설계 → 사용자 승인 → 생성 → 검토 → 시험 → 판정은 사람
-   원칙: 범용 규칙 금지 · 인터뷰에 나온 것만 · 부품은 필요한 것만 · 하네스마다 docs/&lt;이름&gt;/
-2. .claude/skills/interview/SKILL.md — 질문은 한 번에 하나 · 최대 7개
-   (업무 · 입력 · 결과물 · 판단 기준 · 하면 안 되는 것 · 사람 확인 지점 · 잘했다의 기준)
-3. .claude/skills/design/SKILL.md — 유형 판별 (문의 응대 · 추출 · 보고 · 비교 · 작성 · 개발)
-   → templates/ 예시 참고 → 부품별 설계 + 넣지 않는 것과 이유 → design.md → 요약을 보여 주고 멈춤
-4. .claude/skills/build/SKILL.md — 승인된 설계대로 대상 폴더(기본 out/&lt;이름&gt;/)에 파일 생성
-5. .claude/skills/try/SKILL.md — eval 입력마다 미적용 · 적용으로 claude -p → 비교표 · 판정은 하지 않음
-6. .claude/agents/harness-reviewer.md — 읽기 전용 · 지어낸 규칙 · 빠진 차단 검토
-7. .claude/hooks/guard.py + .claude/settings.json — APPROVED 전에는 docs/ 밖에 쓰기 차단 ·
-   APPROVED 는 Claude가 만들지 못하게
-
-다 만들면 파일 목록과 역할을 표로 보여 줘.</code></pre></div></div><div class="dbnote"><span>막히면</span> 부록 ⑨ ⑩의 파일 그대로 「파일로 저장」 · .claude 쓰기 승인 요청은 읽고 승인</div></div></div>
-</section>
-
-<section class="slide lt labs" data-title="[실습 7-2] 메타 하네스 만들기 · 내 업무에 적용">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span><span class="labtag">실습 7-2</span></div>
-  <h2 class="s-title sm">메타 하네스 만들기 · 내 업무에 적용</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>상황에 맞는 하네스를 만들어 주는 하네스 · 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/meta_harness</code></div><div class="mine"><span>내 업무 적용</span>Ch8에서 같은 메타 하네스로 개발 하네스를 만든다</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>요청문으로 메타 하네스 만들기</li><li>내 업무 한 줄 → 인터뷰에 답하기</li><li>design.md 검토 → APPROVED 직접 만들기 (사람 승인)</li><li>하네스 생성 · 검토 · 미적용 vs 적용 시험</li><li>비교표를 보고 직접 판정 → 고칠 점 반영</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>내 업무 전용 하네스 폴더</li><li>사람이 판정한 비교표</li></ul></div>
-  </div></div>
-</section>
-
-<section class="slide lt" data-title="실습 7-2 진행">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch7</span></div>
-  <h2 class="s-title sm">실습 7-2 진행</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/meta_harness</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="kdo"><span>① 메타 하네스 만들기</span><p>앞 장 요청문 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 내 업무로 시작</span></div><pre><code>내 업무용 하네스를 만들고 싶어: 〈업무 한 줄 설명〉. 인터뷰부터 시작해 줘</code></pre></div><div class="kdo"><span>③ 인터뷰</span><p>질문에 답하기 · 예시 입력은 가상 값 · 모르면 「모름」</p></div><div class="kdo"><span>④ 사람 승인</span><p>docs/〈이름〉/design.md 검토 · 고칠 점은 대화로 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 생성 · 검토 · 시험</span></div><pre><code>docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘</code></pre></div><div class="kdo"><span>⑥ 사람 판정</span><p>비교표를 인터뷰의 「잘했다의 기준」으로 직접 판정 · 고칠 점을 말하면 다시</p></div></div><div class="dbnote"><span>참고</span> 요청문이 막히면 부록 ⑨ ⑩ 「파일로 저장」 · 이 메타 하네스는 Ch8에서 다시 씀</div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>work_harness/</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 기준선</span></div><pre><code>work_harness/run_tasks.py --cond single --tasks T1 T2 T3 T4 T5 T6 을 실행하고
+과제별 점수 · 시간 · 토큰을 표로 정리해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 일부러 나쁘게</span></div><pre><code>work_harness/harness/CLAUDE.md 를 CLAUDE.md.bak 으로 복사해 두고
+「결과는 out/&lt;과제번호&gt;/ 에 만든다」 줄을 지워 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 회귀 찾기</span></div><pre><code>work_harness/run_tasks.py --cond single --tasks T1 T2 T3 T4 T5 T6 을 다시 실행해
+바로 전 실행과 과제별 점수를 비교하고 나빠진 과제와 이유를 표로 정리해 줘</code></pre></div><div class="kdo"><span>④ 사람 판정</span><p>점수가 같은 과제도 결과물 2개를 직접 열어 읽고 O / X · 자동 채점과 다른 판정을 적기</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 되돌리기</span></div><pre><code>work_harness/harness/CLAUDE.md 를 CLAUDE.md.bak 내용으로 되돌려 줘</code></pre></div></div><div class="dbnote"><span>참고</span> 자동 채점은 사람이 볼 곳을 좁혀 줌 · 합격 여부는 사람이</div></div></div>
 </section>
 
 <section class="slide lt" data-title="운영: 실패 유형 정의">
@@ -2806,18 +2734,18 @@ lab7_eval_regression/run_suite.py -n 10 --k 3 을 다시 실행해 결과 파일
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>장치</th><th>방법</th></tr></thead><tbody><tr><td><b>근거 로깅</b></td><td>PostToolUse · SubagentStop Hook으로 한 줄씩</td></tr><tr><td><b>사람 확인 (HITL)</b></td><td>확신 낮음 · 되돌릴 수 없음 · 고위험 도메인</td></tr><tr><td><b>롤백</b></td><td>하네스를 git으로 버전 관리 → 이전 태그로</td></tr><tr><td><b>재시도</b></td><td>일시 오류만 · 최대 횟수 · 대기 늘리며</td></tr><tr><td><b>단계적 배포</b></td><td>일부 사용자 → 지표 확인 → 전체</td></tr></tbody></table></div></div>
 </section>
 
-<section class="slide dk bridge" data-title="다음: 개발 멀티에이전트 하네스">
+<section class="slide dk bridge" data-title="다음: 내 하네스 만들기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="kick">Ch7 정리</div>
-  <h2>다음: 개발 멀티에이전트 하네스</h2>
+  <h2>다음: 내 하네스 만들기</h2>
   
-  <div class="nxt">→ Ch8 최종 과제</div>
+  <div class="nxt">→ Ch8 사전 과제 주제로</div>
 </section>
 
-<section class="slide dk divider" data-title="[Ch8] 개발 멀티에이전트 하네스">
+<section class="slide dk divider" data-title="[Ch8] 내 하네스 만들기">
   <div class="ghost">08</div>
   <div class="kick">Ch8</div>
-  <h2 class="big">개발 멀티에이전트 하네스</h2>
+  <h2 class="big">내 하네스 만들기</h2>
   
 </section>
 
@@ -2846,6 +2774,74 @@ lab7_eval_regression/run_suite.py -n 10 --k 3 을 다시 실행해 결과 파일
   <div class="icons"><span class="nm">평가셋 · 회귀 · 토큰</span></div>
 </div>
   <div class="hub hubtxt" style="left:566px; top:356px">모델</div>
+</section>
+
+<section class="slide lt" data-title="하네스 브레인스토밍">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">하네스 브레인스토밍</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>질문</th><th>왜 묻나</th><th>예 · 주간 설비 점검 보고서</th></tr></thead><tbody><tr><td><b>① 어떤 업무 · 얼마나 자주</b></td><td>반복되지 않으면 하네스보다 그때그때 요청</td><td>매주 월요일 · 팀장에게 보고</td></tr><tr><td><b>② 무엇이 들어오나</b></td><td>입력 형식이 Skill의 첫 단계</td><td>점검 기록 CSV · 점검 기준 문서</td></tr><tr><td><b>③ 무엇이 나가야 하나</b></td><td>결과 양식 · 위치 → CLAUDE.md · Skill</td><td>요약 3줄 · 정비 요청 · 경고 표</td></tr><tr><td><b>④ 판단 기준 · 사내 규칙</b></td><td>모델이 모르는 회사 기준 → Skill</td><td>7.0 초과면 경고 · 이틀 연속이면 정비 요청</td></tr><tr><td><b>⑤ 절대 하면 안 되는 것</b></td><td>어기면 사고 → Hook</td><td>원본 기록 수정 · 외부 메일 발송</td></tr><tr><td><b>⑥ 사람이 꼭 볼 곳</b></td><td>HITL 지점 → 승인 · 판정</td><td>발송 전 팀장 확인</td></tr><tr><td><b>⑦ 잘했다의 기준 · 자주 나는 실수</b></td><td>평가 문항 · 엣지 케이스</td><td>누락 0건 · 빈 값을 0으로 읽는 실수</td></tr></tbody></table><div class="dbnote"><span>다음</span> 답이 곧 하네스 재료 · 메타 하네스의 인터뷰가 이 질문을 대신 던진다</div></div></div>
+</section>
+
+<section class="slide lt" data-title="하네스 만드는 순서">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">하네스 만드는 순서</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 브레인스토밍</b><span>업무 · 막을 것 · 잘했다의 기준</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>work_harness에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (하네스 미적용 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
+</section>
+
+<section class="slide lt" data-title="메타 하네스란">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">메타 하네스란</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>인터뷰</b><span>업무 · 입력 · 금지</span></div><div class="fa">→</div><div class="fs"><b>설계</b><span>유형 · 필요한 부품만</span></div><div class="fa">→</div><div class="fs hl"><b>사람 승인</b><span>APPROVED</span></div><div class="fa">→</div><div class="fs"><b>생성 · 검토</b><span>하네스 파일</span></div><div class="fa">→</div><div class="fs"><b>시험</b><span>미적용 vs 적용</span></div><div class="fa">→</div><div class="fs"><b>사람 판정</b><span>고치기</span></div></div><table class="dbt"><thead><tr><th></th><th>범용 하네스</th><th>메타 하네스가 만든 하네스</th></tr></thead><tbody><tr><td><b>규칙</b></td><td>누구에게나 맞는 일반 규칙</td><td>인터뷰에서 나온 내 업무 규칙만</td></tr><tr><td><b>부품</b></td><td>전부 다</td><td>필요한 것만 · 넣지 않은 이유도 기록</td></tr><tr><td><b>막을 것</b></td><td>rm -rf · .env 같은 공통</td><td>내 업무에서 사고 나는 지점</td></tr><tr><td><b>평가</b></td><td>없음</td><td>내 예시 입력 3 + 엣지 케이스 2</td></tr><tr><td><b>재사용</b></td><td>한 번 설치</td><td>새 업무 · 새 상황마다 다시 인터뷰</td></tr></tbody></table><div class="dbnote"><span>주제에 따라</span> 업무 처리 주제 → 업무 하네스 · 개발 주제 → 같은 메타 하네스로 개발 하네스</div></div></div>
+</section>
+
+<section class="slide lt" data-title="메타 하네스 구조">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">메타 하네스 구조</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="twocol"><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">폴더 구조</span></div><pre><code>meta_harness/
+├── CLAUDE.md                 순서 · 원칙
+├── templates/                유형별 예시 (업무 · 개발)
+├── docs/&lt;하네스 이름&gt;/
+│   ├── interview.md          인터뷰 답
+│   ├── design.md             설계안
+│   └── APPROVED              사람만 만듦
+├── out/&lt;하네스 이름&gt;/          만들어진 하네스
+└── .claude/
+    ├── skills/interview/     질문 → interview.md
+    ├── skills/design/        유형 · 부품 → design.md
+    ├── skills/build/         하네스 파일 생성
+    ├── skills/try/           미적용 vs 적용 시험
+    ├── agents/harness-reviewer.md  지어낸 규칙 검토
+    └── hooks/guard.py · settings.json  승인 전 생성 차단</code></pre></div></div><table class="dbt"><thead><tr><th>단계</th><th>담당</th><th>결과</th></tr></thead><tbody><tr><td><b>① 인터뷰</b></td><td>interview Skill · 사람이 답함</td><td>interview.md</td></tr><tr><td><b>② 설계</b></td><td>design Skill · templates/ 참고</td><td>design.md · 유형 · 부품</td></tr><tr><td><b>③ 승인</b></td><td><b>사람</b> · APPROVED</td><td>승인 전 생성은 Hook이 차단</td></tr><tr><td><b>④ 생성</b></td><td>build Skill</td><td>대상 폴더에 하네스</td></tr><tr><td><b>⑤ 검토</b></td><td>harness-reviewer</td><td>지어낸 규칙 · 빠진 차단</td></tr><tr><td><b>⑥ 시험</b></td><td>try Skill</td><td>미적용 vs 적용 비교표</td></tr><tr><td><b>⑦ 판정</b></td><td><b>사람</b></td><td>합격 · 고칠 점</td></tr></tbody></table></div></div></div>
+</section>
+
+<section class="slide lt" data-title="메타 하네스를 만드는 요청문">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">메타 하네스를 만드는 요청문</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">labs/meta_harness 에서 붙여 넣기</span></div><pre><code>이 폴더에 「하네스를 만드는 하네스(메타 하네스)」를 만들어 줘.
+
+1. CLAUDE.md — 순서: 인터뷰 → 설계 → 사용자 승인 → 생성 → 검토 → 시험 → 판정은 사람
+   원칙: 범용 규칙 금지 · 인터뷰에 나온 것만 · 부품은 필요한 것만 · 하네스마다 docs/&lt;이름&gt;/
+2. .claude/skills/interview/SKILL.md — 질문은 한 번에 하나 · 최대 7개
+   (업무 · 입력 · 결과물 · 판단 기준 · 하면 안 되는 것 · 사람 확인 지점 · 잘했다의 기준)
+3. .claude/skills/design/SKILL.md — 유형 판별 (문의 응대 · 추출 · 보고 · 비교 · 작성 · 개발)
+   → templates/ 예시 참고 → 부품별 설계 + 넣지 않는 것과 이유 → design.md → 요약을 보여 주고 멈춤
+4. .claude/skills/build/SKILL.md — 승인된 설계대로 대상 폴더(기본 out/&lt;이름&gt;/)에 파일 생성
+5. .claude/skills/try/SKILL.md — eval 입력마다 미적용 · 적용으로 claude -p → 비교표 · 판정은 하지 않음
+6. .claude/agents/harness-reviewer.md — 읽기 전용 · 지어낸 규칙 · 빠진 차단 검토
+7. .claude/hooks/guard.py + .claude/settings.json — APPROVED 전에는 docs/ 밖에 쓰기 차단 ·
+   APPROVED 는 Claude가 만들지 못하게
+
+다 만들면 파일 목록과 역할을 표로 보여 줘.</code></pre></div></div><div class="dbnote"><span>막히면</span> 부록 ⑨ ⑩의 파일 그대로 「파일로 저장」 · .claude 쓰기 승인 요청은 읽고 승인</div></div></div>
 </section>
 
 <section class="slide lt" data-title="TDD (테스트 주도 개발)">
@@ -2908,18 +2904,18 @@ export const total = (n) =>
 - 흐름: 브레인스토밍 → 구현 기획 → 사람 승인 → 작업마다 Sub Agent가 각자 워크트리에서 TDD
   → 병합 · 리뷰 → 사람 판정
 - 승인 전에는 src/ · test/ 쓰기를 Hook으로 막기
-예시는 templates/dev/ 참고 · 인터뷰는 위에 없는 것만 물어봐</code></pre></div></div><table class="dbt"><thead><tr><th></th><th>Ch7 · 내 업무</th><th>Ch8 · 개발</th></tr></thead><tbody><tr><td><b>메타 하네스</b></td><td>같은 것</td><td>같은 것</td></tr><tr><td><b>인터뷰 · 설계</b></td><td>업무 유형 · 막을 것</td><td>개발 유형 · 작업 나누기 · 워크트리 · TDD</td></tr><tr><td><b>결과</b></td><td>업무 하네스</td><td>개발 멀티에이전트 하네스 (앞 장 구조)</td></tr></tbody></table><div class="dbnote"><span>막히면</span> 부록 ⑦ ⑧의 개발 하네스 파일 그대로</div></div></div>
+예시는 templates/dev/ 참고 · 인터뷰는 위에 없는 것만 물어봐</code></pre></div></div><table class="dbt"><thead><tr><th></th><th>업무 처리 주제</th><th>개발 주제</th></tr></thead><tbody><tr><td><b>메타 하네스</b></td><td>같은 것</td><td>같은 것</td></tr><tr><td><b>인터뷰 · 설계</b></td><td>업무 유형 · 막을 것</td><td>개발 유형 · 작업 나누기 · 워크트리 · TDD</td></tr><tr><td><b>결과</b></td><td>업무 하네스</td><td>개발 멀티에이전트 하네스 (앞 장 구조)</td></tr></tbody></table><div class="dbnote"><span>막히면</span> 부록 ⑦ ⑧의 개발 하네스 파일 그대로</div></div></div>
 </section>
 
-<section class="slide lt labs" data-title="[실습 8-1] 개발 멀티에이전트 하네스로 내 업무 툴">
+<section class="slide lt labs" data-title="[실습 8-1] 메타 하네스로 내 하네스 만들기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch8</span><span class="labtag">실습 8-1</span></div>
-  <h2 class="s-title sm">개발 멀티에이전트 하네스로 내 업무 툴</h2>
+  <div class="eyebrow"><span class="tag">Ch8</span><span class="labtag">실습 8-1</span><span class="kindtag k필수">필수 · 90분</span></div>
+  <h2 class="s-title sm">메타 하네스로 내 하네스 만들기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>기획 → 사람 승인 → 병렬 TDD로 내가 쓸 툴 만들기 · 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/final_dev_harness</code></div><div class="mine"><span>내 업무 적용</span>평소 손으로 하던 업무 하나를 툴로</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>final_dev_harness를 git 저장소로 (첫 커밋)</li><li>메타 하네스로 개발 하네스 만들기 (인터뷰 · 승인 · 생성)</li><li>아이디어.md → 브레인스토밍 · 구현 기획</li><li>plan.md 검토 → docs/APPROVED 직접 만들기 (사람 승인)</li><li>병렬 TDD 구현 → 통합 · 리뷰</li><li>직접 써 보고 판정 → 2분 발표</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>node --test 전부 통과</li><li>내 합격 기준으로 직접 판정한 기록</li><li>툴 시연 2분</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>사전 과제 주제로 · 업무 처리면 업무 하네스, 개발이면 개발 하네스 · 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/meta_harness</code> · <code class="lfold">labs/samples</code></div><div class="mine"><span>내 업무 적용</span>사전 과제: 반복 업무 하나 + 결과 확인 방법</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>메타 하네스 만들기 (요청문)</li><li>사전 과제 주제 · 샘플 데이터로 인터뷰 → design.md</li><li>설계 검토 → APPROVED 직접 (사람 승인)</li><li>생성 · 검토 · 하네스 미적용 vs 적용 시험</li><li>개발 주제면 final_dev_harness에서 기획 → 승인 → 병렬 TDD</li><li>사람 판정 → 패들릿 · 1~2분 발표</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>내 하네스 폴더 · 비교표</li><li>사람 판정 · 패들릿 게시</li></ul></div>
   </div></div>
 </section>
 
@@ -2928,15 +2924,30 @@ export const total = (n) =>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">실습 8-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/meta_harness → labs/final_dev_harness</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 첫 커밋</span></div><pre><code>../final_dev_harness 폴더를 git 저장소로 만들고 첫 커밋 해 줘</code></pre></div><div class="kdo"><span>② 개발 하네스 설계</span><p>앞 장 「메타 하네스로 개발 하네스 만들기」 붙여 넣기 → 인터뷰 답 → design.md 검토 → <b>docs/〈이름〉/APPROVED</b> 직접</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 생성</span></div><pre><code>docs/〈이름〉/APPROVED 만들었어. ../final_dev_harness 에 하네스를 만들고 검토한 뒤 커밋해 줘</code></pre></div><div class="kdo"><span>④ 폴더 바꾸기</span><p>VS Code로 <b>labs/final_dev_harness</b> 열기 → Claude Code 새로 열기</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 브레인스토밍 · 기획</span></div><pre><code>아이디어.md 를 읽고 브레인스토밍부터 시작해 줘</code></pre></div><div class="kdo"><span>⑥ 사람 승인</span><p>docs/plan.md 검토 → 괜찮으면 새 파일 <b>docs/APPROVED</b> (사람만)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑦ 병렬 구현</span></div><pre><code>docs/APPROVED 만들었어. CLAUDE.md 순서대로 구현을 진행해 줘</code></pre></div><div class="kdo"><span>⑧ 사람 판정</span><p>직접 실행해 보고 내 합격 기준으로 판정 · 아니면 무엇이 틀렸는지 말하고 다시</p></div></div><div class="dbnote"><span>참고</span> Node 18 이상 · git · 워크트리 · .claude 쓰기 승인 요청은 내용을 읽고 승인</div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/meta_harness</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="kdo"><span>① 메타 하네스 만들기</span><p>Ch8 「메타 하네스를 만드는 요청문」 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 내 주제로 시작</span></div><pre><code>내 하네스를 만들고 싶어: 〈사전 과제 주제 한 줄〉.
+예시 입력은 ../samples/〈분야〉/ 를 써. 인터뷰부터 시작해 줘</code></pre></div><div class="kdo"><span>③ 사람 승인</span><p>인터뷰 답 → docs/〈이름〉/design.md 검토 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 생성 · 시험</span></div><pre><code>docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘</code></pre></div><div class="kdo"><span>⑤ 개발 주제라면</span><p>생성 대상을 <b>../final_dev_harness</b> 로 · 그 폴더를 VS Code로 열고 「아이디어.md 를 읽고 브레인스토밍부터 시작해 줘」 → plan 승인 → 구현</p></div><div class="kdo"><span>⑥ 사람 판정 · 공유</span><p>비교표 · 결과물을 직접 판정 → 다음 장 양식으로 패들릿에 올리기</p></div></div><div class="dbnote"><span>참고</span> 샘플 데이터 labs/samples/ · 요청문이 막히면 부록 ⑦~⑩ 「파일로 저장」</div></div></div>
 </section>
 
-<section class="slide lt" data-title="발표 2분">
+<section class="slide lt" data-title="패들릿 공유 양식">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
-  <h2 class="s-title sm">발표 2분</h2>
+  <h2 class="s-title sm">패들릿 공유 양식</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>툴 시연</b><span>무엇을 만들었나</span></div><div class="fa">→</div><div class="fs"><b>하네스</b><span>단계 · 사람 승인 지점</span></div><div class="fa">→</div><div class="fs hl"><b>판정</b><span>내 기준으로 합격인가</span></div><div class="fa">→</div><div class="fs"><b>다음</b><span>더 맡길 일</span></div></div></div></div>
+  <div class="body"><div class="mid"><div class="twocol"><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">패들릿에 붙여 넣기</span></div><pre><code>[이름 · 분야]
+업무 한 줄:
+하네스 구성: CLAUDE.md · Skill 〈이름〉 · Hook 〈막은 것〉 · Agent 〈있으면〉
+하네스 미적용 → 적용: 〈무엇이 달라졌나 한 줄〉
+사람 판정: 합격 / 보완 · 이유
+막힌 점 · 다음에 할 것:</code></pre></div></div><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Claude에게 정리 요청</span></div><pre><code>만든 하네스와 시험 결과를 패들릿 양식으로 정리해 줘:
+이름 · 분야 / 업무 한 줄 / 하네스 구성 / 미적용 → 적용 / 사람 판정은 비워 둠 / 막힌 점</code></pre></div></div></div><div class="dbnote"><span>사람 판정</span> 합격 여부와 이유는 본인이 직접 · Claude가 쓴 판정은 올리지 않음</div></div></div>
+</section>
+
+<section class="slide lt" data-title="발표 1~2분">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">발표 1~2분</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>업무</b><span>무엇을 맡겼나</span></div><div class="fa">→</div><div class="fs"><b>하네스</b><span>부품 · 사람 승인 지점</span></div><div class="fa">→</div><div class="fs"><b>전후</b><span>미적용 vs 적용</span></div><div class="fa">→</div><div class="fs hl"><b>판정</b><span>내 기준으로 합격인가</span></div></div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="정리: 하네스 개선 루프">

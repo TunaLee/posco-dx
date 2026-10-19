@@ -98,31 +98,20 @@ KITS = {
         ("④ 고르기", "p", "세 결과를 합쳐 품질이 떨어지지 않은 레버만 골라\n내 업무에 쓸 순서로 추천해 줘"),
     ], files=[("quiz.md", "quiz.md · 먼저 예상", "lab6_tokens/quiz.md")]),
 
-    "7-1": dict(folder="", steps=[
-        ("① judge 일치도", "p", "lab7_eval_regression/agreement.py 를 실행해\njudge와 사람 채점 일치도를 설명해 줘"),
-        ("② 기준선", "p", "lab7_eval_regression/run_suite.py -n 10 --k 3 실행 →\n결과 파일 경로와 점수 요약"),
-        ("③ 일부러 나쁘게", "p", "lab1_harness_vs_bare/harness/CLAUDE.md 에서 환불 · 징계를 약속하지 않는다는 줄을 지우고\nlab7_eval_regression/run_suite.py -n 10 --k 3 을 다시 실행해 결과 파일 경로를 알려 줘"),
-        ("④ 회귀 확인", "p", "lab7_eval_regression/compare.py 로 CLAUDE.md 수정 전 · 후 run_suite 결과 파일을 비교해\n무엇이 나빠졌는지 · 회귀로 실패했는지 알려 줘. 끝나면 CLAUDE.md 되돌려 줘"),
-        ("⑤ 내 평가 문항", "p", "내 업무 평가 문항 5개 (엣지 케이스 2개 포함) 를 eval/cases.jsonl 로 만들어 줘:\n입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말"),
-    ]),
+    "7-1": dict(folder="work_harness", steps=[
+        ("① 기준선", "p", "work_harness/run_tasks.py --cond single --tasks T1 T2 T3 T4 T5 T6 을 실행하고\n과제별 점수 · 시간 · 토큰을 표로 정리해 줘"),
+        ("② 일부러 나쁘게", "p", "work_harness/harness/CLAUDE.md 를 CLAUDE.md.bak 으로 복사해 두고\n「결과는 out/<과제번호>/ 에 만든다」 줄을 지워 줘"),
+        ("③ 회귀 찾기", "p", "work_harness/run_tasks.py --cond single --tasks T1 T2 T3 T4 T5 T6 을 다시 실행해\n바로 전 실행과 과제별 점수를 비교하고 나빠진 과제와 이유를 표로 정리해 줘"),
+        ("④ 사람 판정", "do", "점수가 같은 과제도 결과물 2개를 직접 열어 읽고 O / X · 자동 채점과 다른 판정을 적기"),
+        ("⑤ 되돌리기", "p", "work_harness/harness/CLAUDE.md 를 CLAUDE.md.bak 내용으로 되돌려 줘"),
+    ], tip="자동 채점은 사람이 볼 곳을 좁혀 줌 · 합격 여부는 사람이"),
 
-    "7-2": dict(folder="meta_harness", open="labs/meta_harness", steps=[
-        ("① 메타 하네스 만들기", "do", "앞 장 요청문 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기"),
-        ("② 내 업무로 시작", "p", "내 업무용 하네스를 만들고 싶어: 〈업무 한 줄 설명〉. 인터뷰부터 시작해 줘"),
-        ("③ 인터뷰", "do", "질문에 답하기 · 예시 입력은 가상 값 · 모르면 「모름」"),
-        ("④ 사람 승인", "do", "docs/〈이름〉/design.md 검토 · 고칠 점은 대화로 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)"),
-        ("⑤ 생성 · 검토 · 시험", "p", "docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘"),
-        ("⑥ 사람 판정", "do", "비교표를 인터뷰의 「잘했다의 기준」으로 직접 판정 · 고칠 점을 말하면 다시"),
-    ], tip="요청문이 막히면 부록 ⑨ ⑩ 「파일로 저장」 · 이 메타 하네스는 Ch8에서 다시 씀"),
-
-    "8-1": dict(folder="final_dev_harness", open="labs/meta_harness → labs/final_dev_harness", steps=[
-        ("① 첫 커밋", "p", "../final_dev_harness 폴더를 git 저장소로 만들고 첫 커밋 해 줘"),
-        ("② 개발 하네스 설계", "do", "앞 장 「메타 하네스로 개발 하네스 만들기」 붙여 넣기 → 인터뷰 답 → design.md 검토 → <b>docs/〈이름〉/APPROVED</b> 직접"),
-        ("③ 생성", "p", "docs/〈이름〉/APPROVED 만들었어. ../final_dev_harness 에 하네스를 만들고 검토한 뒤 커밋해 줘"),
-        ("④ 폴더 바꾸기", "do", "VS Code로 <b>labs/final_dev_harness</b> 열기 → Claude Code 새로 열기"),
-        ("⑤ 브레인스토밍 · 기획", "p", "아이디어.md 를 읽고 브레인스토밍부터 시작해 줘"),
-        ("⑥ 사람 승인", "do", "docs/plan.md 검토 → 괜찮으면 새 파일 <b>docs/APPROVED</b> (사람만)"),
-        ("⑦ 병렬 구현", "p", "docs/APPROVED 만들었어. CLAUDE.md 순서대로 구현을 진행해 줘"),
-        ("⑧ 사람 판정", "do", "직접 실행해 보고 내 합격 기준으로 판정 · 아니면 무엇이 틀렸는지 말하고 다시"),
-    ], tip="Node 18 이상 · git · 워크트리 · .claude 쓰기 승인 요청은 내용을 읽고 승인"),
+    "8-1": dict(folder="meta_harness", open="labs/meta_harness", steps=[
+        ("① 메타 하네스 만들기", "do", "Ch8 「메타 하네스를 만드는 요청문」 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기"),
+        ("② 내 주제로 시작", "p", "내 하네스를 만들고 싶어: 〈사전 과제 주제 한 줄〉.\n예시 입력은 ../samples/〈분야〉/ 를 써. 인터뷰부터 시작해 줘"),
+        ("③ 사람 승인", "do", "인터뷰 답 → docs/〈이름〉/design.md 검토 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)"),
+        ("④ 생성 · 시험", "p", "docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘"),
+        ("⑤ 개발 주제라면", "do", "생성 대상을 <b>../final_dev_harness</b> 로 · 그 폴더를 VS Code로 열고 「아이디어.md 를 읽고 브레인스토밍부터 시작해 줘」 → plan 승인 → 구현"),
+        ("⑥ 사람 판정 · 공유", "do", "비교표 · 결과물을 직접 판정 → 다음 장 양식으로 패들릿에 올리기"),
+    ], tip="샘플 데이터 labs/samples/ · 요청문이 막히면 부록 ⑦~⑩ 「파일로 저장」"),
 }
