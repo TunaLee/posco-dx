@@ -154,7 +154,8 @@ EVO = [
     ("긴 입력 · 검색", "2023~", "문서를 함께 읽고 답", "무엇을 보여 줄지", "컨텍스트 엔지니어링 · RAG"),
     ("도구 호출", "2023~24", "조회 · 계산 · 실행", "시스템 연결 방식 통일", "함수 호출 · MCP"),
     ("에이전트", "2025~", "계획 · 실행 · 확인을 스스로 반복", "반복해도 같은 품질 · 안전 · 비용", "하네스 엔지니어링"),
-    ("멀티에이전트", "2026~", "여러 Agent가 나눠 동시에 · 스스로 반복", "지휘 · 검증 · 멈춤 규칙", "루프 · 그래프 엔지니어링"),
+    ("멀티에이전트", "2026~", "여러 Agent가 나눠 동시에", "지휘 · 검증 · 측정", "오케스트레이션 · 평가"),
+    ("루프", "2026~", "사람 없이 일정 · 이벤트로 반복", "멈춤 규칙 · 상태 기록 · 사람 판정", "루프 엔지니어링"),
 ]
 
 
@@ -1592,7 +1593,7 @@ CSS = '''
   .ucurve .udraw{stroke-dasharray:1400; animation:udraw 1.6s ease-out both;}
   @keyframes udraw{from{stroke-dashoffset:1400}}
   @media print{.ucurve .udraw{animation:none}}
-  .evo{display:grid; grid-template-columns:140px repeat(5, 1fr); gap:14px 16px; margin:4px 0 6px;}
+  .evo{display:grid; grid-template-columns:120px repeat(6, 1fr); gap:12px 12px; margin:4px 0 6px;}
   .evo .ev-rl{font-size:16px; font-weight:700; color:#6B7785; display:flex; align-items:center;}
   .evo .ev-h{background:#1F3A5F; color:#fff; border-radius:12px; padding:16px 16px; position:relative; animation:bnIn .6s both; animation-delay:var(--d);}
   .evo .ev-h b{display:block; font-size:22px;} .evo .ev-h span{font-size:15px; opacity:.75;}
