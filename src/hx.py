@@ -13,7 +13,7 @@ import intro
 import labkits
 
 deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("선택", 15), "2-2": ("필수", 20), "2-3": ("선택", 25),
-                      "3-1": ("선택", 15), "4-1": ("시연", 10), "5-1": ("시연", 10), "5-2": ("선택", 20),
+                      "3-1": ("선택", 15), "4-1": ("선택", 20), "5-1": ("시연", 10), "5-2": ("선택", 20),
                       "6-1": ("시연", 10), "6-2": ("선택", 20), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
 from stats_hx import big, hbars, quote, rings, stat
@@ -990,9 +990,10 @@ def ba_like(before, after):
 def ch4():
     sp = ("/plugin marketplace add obra/superpowers-marketplace\n"
           "/plugin install superpowers@superpowers-marketplace\n\n"
-          "/superpowers:brainstorm      # 설계 질문\n"
-          "/superpowers:write-plan      # 구현 계획\n"
-          "/superpowers:execute-plan    # Sub Agent 실행 · TDD · 리뷰")
+          "# Skill이 상황에 맞춰 자동 호출 · 직접 부르려면 이름을 말하기\n"
+          "brainstorming                # 질문으로 설계 확정\n"
+          "writing-plans                # 2~5분 단위 구현 계획\n"
+          "subagent-driven-development  # 작업마다 Sub Agent · TDD · 리뷰")
     gs = ("git clone --single-branch --depth 1 \\\n"
           "  https://github.com/garrytan/gstack.git ~/.claude/skills/gstack \\\n"
           "  && cd ~/.claude/skills/gstack && ./setup\n\n"
@@ -1050,7 +1051,7 @@ def ch4():
             ["<b>claude-flow</b>", "코드로 짜는 다수 Agent 오케스트레이션", "본격 멀티에이전트"],
             ["<b>공식 플러그인 마켓</b>", "Anthropic 공식 Skill · 플러그인", "용도별"],
         ]) + note("고르는 기준", "내 업무 흐름과 맞는가 · 강제 vs 선택 · 토큰 비용"), "Ch4"),
-        light("Superpowers 설치와 명령", code("Claude Code", sp), "Ch4"),
+        light("Superpowers 설치와 Skill", code("Claude Code", sp), "Ch4"),
         light("gstack 설치와 명령", code("터미널 · Claude Code", gs), "Ch4"),
         light("두 하네스의 성격", table(["", "Superpowers", "gstack"], [
             ["<b>방식</b>", "적은 명령 · 강제 흐름", "많은 명령 · 골라 쓰기"],
@@ -1064,10 +1065,12 @@ def ch4():
             ["<b>토큰</b>", "상시 로드되는 Skill · 지침 양"],
             ["<b>사내 규정</b>", "외부 저장소 설치 허용 여부"],
         ]) + note("원칙", "공개 하네스도 내 평가셋으로 잰 뒤에 쓴다"), "Ch4"),
-        lab("4-1", "같은 과제, 네 가지 하네스", "Ch4",
-            "하네스 미적용 · 내 하네스 · Superpowers · gstack 비교",
-            ["sample_app 과제 카드 읽기 (버그 2개)", "하네스 미적용 상태로 해결 → 기록", "Superpowers · gstack 각각 설치 후 해결", "토큰 · 시간 · 테스트 통과 · 건너뛴 단계 비교"],
-            ["compare.md 4열 완성", "내 하네스에 가져올 점 3개"], files=labdir("lab4_public_harness"), mine="공개 하네스에서 내 업무에 가져올 것 하나"),
+        lab("4-1", "공개 하네스 설치 · Skill 불러 보기", "Ch4",
+            "같은 주제를 gstack · Superpowers에 각각 맡겨 보고 무엇을 묻는지 비교",
+            ["Superpowers · gstack 설치", "gstack /office-hours 로 사전 과제 주제 다듬기", "Superpowers brainstorming 으로 같은 주제",
+             "두 하네스가 물은 것 · 결과물 비교", "내 하네스에 가져올 점 고르기"],
+            ["두 하네스의 질문 · 결과물 비교표", "가져올 점 하나 (Ch8에서 사용)"], files=labdir("my_tool"),
+            mine="사전 과제 주제를 그대로 넣어 보기"),
         *labkit('4-1', 'Ch4'),
         bridge("다음: 멀티에이전트", "", "Ch4", "→ Ch5 멀티에이전트"),
     ]
@@ -1457,7 +1460,7 @@ def ch8():
                 ["<b>막을 것</b>", "rm -rf · .env 같은 공통", "내 업무에서 사고 나는 지점"],
                 ["<b>평가</b>", "없음", "내 예시 입력 3 + 엣지 케이스 2"],
                 ["<b>재사용</b>", "한 번 설치", "새 업무 · 새 상황마다 다시 인터뷰"],
-            ]) + note("주제에 따라", "업무 처리 주제 → 업무 하네스 · 개발 주제 → 같은 메타 하네스로 개발 하네스"), "Ch8"),
+            ]) + note("주제에 따라", "업무 처리 주제 → 메타 하네스로 업무 하네스 · 개발 주제 → Superpowers"), "Ch8"),
         light("메타 하네스 구조", two(
             '<div class="ctree">' + code("폴더 구조", 'meta_harness/\n├── CLAUDE.md                 순서 · 원칙\n├── templates/                유형별 예시 (업무 · 개발)\n├── docs/&lt;하네스 이름&gt;/\n│   ├── interview.md          인터뷰 답\n│   ├── spec.md             설계안\n│   └── APPROVED              사람만 만듦\n├── out/&lt;하네스 이름&gt;/          만들어진 하네스\n└── .claude/\n    ├── skills/interview/     질문 → interview.md\n    ├── skills/spec/        유형 · 부품 → spec.md\n    ├── skills/build/         하네스 파일 생성\n    ├── skills/try/           미적용 vs 적용 시험\n    ├── agents/harness-reviewer.md  지어낸 규칙 검토\n    └── hooks/guard.py · settings.json  승인 전 생성 차단') + "</div>",
             table(["단계", "담당", "결과"], [

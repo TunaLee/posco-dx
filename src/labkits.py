@@ -52,13 +52,14 @@ KITS = {
         ("⑥ 확인", "do", "/context 다시 · 답 첫 줄에 [확인]이 남았나 · 숫자 · 지시 중 빠진 것 → 앞 장 표와 맞춰 보기"),
     ], tip="해 보기: 다시 쌓인 뒤 /compact 실습 결과 숫자와 내 지시를 남겨 → 차이 비교"),
 
-    "4-1": dict(folder="", steps=[
+    "4-1": dict(folder="my_tool", open="labs/my_tool", steps=[
         ("① Superpowers 설치", "p", "/plugin marketplace add obra/superpowers-marketplace\n/plugin install superpowers@superpowers-marketplace"),
         ("② gstack 설치", "p", "gstack 을 ~/.claude/skills/gstack 에 설치해 줘\n(github.com/garrytan/gstack 을 --depth 1 로 받고 ./setup)"),
-        ("③ 네 가지로 실행", "p", "lab4_public_harness/run_task.py 를 bare · mine · superpowers · gstack 순서로\n실행하고 토큰 · 시간 · 테스트 통과 · 건너뛴 단계를 compare.md 에 채워 줘"),
-        ("④ 가져올 점", "p", "compare.md 를 보고 내 하네스에 가져올 점 3개를 이유와 함께 적어 줘"),
-    ], files=[("task.md", "과제 카드", "lab4_public_harness/task.md")],
-        tip="플러그인 설치가 막혀 있으면 bare · mine 두 가지만"),
+        ("③ 다시 열기", "do", "Claude Code 창을 닫고 새로 열기 → <b>/plugin</b> · <b>/help</b> 로 설치된 Skill · 명령 확인"),
+        ("④ gstack", "p", "/office-hours 〈사전 과제 주제 한 줄〉 을 툴로 만들고 싶어"),
+        ("⑤ Superpowers", "p", "/clear 후: 〈같은 주제〉 를 툴로 만들고 싶어. brainstorming 부터 해 줘"),
+        ("⑥ 비교", "p", "두 번의 대화에서 각 하네스가 무엇을 물었는지 · 질문 수 · 만든 문서 · 다음 단계 제안을 표로 비교해 줘"),
+    ], tip="질문에는 실제로 답해 보기 · 플러그인 설치가 막히면 강사 시연 · 결과 문서는 Ch8에서 이어서 씀"),
 
     "5-1": dict(folder="lab5_multiagent", split=True, harness_note="이미 들어 있는 파일 · VS Code 탐색기에서 열어 확인", tree=("lab5_multiagent/project/ 구조",
         "lab5_multiagent/project/\n"

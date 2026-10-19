@@ -1929,17 +1929,18 @@ runs/3-1/압축전.md 와 비교해 빠지거나 달라진 것을 표로 보여 
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>하네스</th><th>성격</th><th>멀티에이전트</th></tr></thead><tbody><tr><td><b>Superpowers</b></td><td>방법론 강제 (설계 → 계획 → TDD → 리뷰)</td><td>계획 후 Sub Agent 위임</td></tr><tr><td><b>gstack</b></td><td>역할 페르소나 (CEO · EM · QA · 보안)</td><td>역할 분업</td></tr><tr><td><b>Everything Claude Code</b></td><td>Agent · Skill · Hook · 명령 한 벌</td><td>역할별 Agent 다수</td></tr><tr><td><b>wshobson/agents</b></td><td>여러 도구 공용 플러그인 마켓</td><td>전문 Agent 묶음</td></tr><tr><td><b>claude-flow</b></td><td>코드로 짜는 다수 Agent 오케스트레이션</td><td>본격 멀티에이전트</td></tr><tr><td><b>공식 플러그인 마켓</b></td><td>Anthropic 공식 Skill · 플러그인</td><td>용도별</td></tr></tbody></table><div class="dbnote"><span>고르는 기준</span> 내 업무 흐름과 맞는가 · 강제 vs 선택 · 토큰 비용</div></div></div>
 </section>
 
-<section class="slide lt" data-title="Superpowers 설치와 명령">
+<section class="slide lt" data-title="Superpowers 설치와 Skill">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch4</span></div>
-  <h2 class="s-title sm">Superpowers 설치와 명령</h2>
+  <h2 class="s-title sm">Superpowers 설치와 Skill</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Claude Code</span></div><pre><code>/plugin marketplace add obra/superpowers-marketplace
 /plugin install superpowers@superpowers-marketplace
 
-/superpowers:brainstorm      # 설계 질문
-/superpowers:write-plan      # 구현 계획
-/superpowers:execute-plan    # Sub Agent 실행 · TDD · 리뷰</code></pre></div></div></div>
+# Skill이 상황에 맞춰 자동 호출 · 직접 부르려면 이름을 말하기
+brainstorming                # 질문으로 설계 확정
+writing-plans                # 2~5분 단위 구현 계획
+subagent-driven-development  # 작업마다 Sub Agent · TDD · 리뷰</code></pre></div></div></div>
 </section>
 
 <section class="slide lt" data-title="gstack 설치와 명령">
@@ -1971,15 +1972,15 @@ runs/3-1/압축전.md 와 비교해 빠지거나 달라진 것을 표로 보여 
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>항목</th><th>확인</th></tr></thead><tbody><tr><td><b>Hook · 명령</b></td><td>어떤 명령을 실행하는가 · 외부 전송은 없는가</td></tr><tr><td><b>권한</b></td><td>자동 허용 범위가 넓지 않은가</td></tr><tr><td><b>토큰</b></td><td>상시 로드되는 Skill · 지침 양</td></tr><tr><td><b>사내 규정</b></td><td>외부 저장소 설치 허용 여부</td></tr></tbody></table><div class="dbnote"><span>원칙</span> 공개 하네스도 내 평가셋으로 잰 뒤에 쓴다</div></div></div>
 </section>
 
-<section class="slide lt labs" data-title="[실습 4-1] 같은 과제, 네 가지 하네스">
+<section class="slide lt labs" data-title="[실습 4-1] 공개 하네스 설치 · Skill 불러 보기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch4</span><span class="labtag">실습 4-1</span><span class="kindtag k시연">시연 · 10분</span></div>
-  <h2 class="s-title sm">같은 과제, 네 가지 하네스</h2>
+  <div class="eyebrow"><span class="tag">Ch4</span><span class="labtag">실습 4-1</span><span class="kindtag k선택">선택 · 20분</span></div>
+  <h2 class="s-title sm">공개 하네스 설치 · Skill 불러 보기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>하네스 미적용 · 내 하네스 · Superpowers · gstack 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/lab4_public_harness</code></div><div class="mine"><span>내 업무 적용</span>공개 하네스에서 내 업무에 가져올 것 하나</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>sample_app 과제 카드 읽기 (버그 2개)</li><li>하네스 미적용 상태로 해결 → 기록</li><li>Superpowers · gstack 각각 설치 후 해결</li><li>토큰 · 시간 · 테스트 통과 · 건너뛴 단계 비교</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>compare.md 4열 완성</li><li>내 하네스에 가져올 점 3개</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>같은 주제를 gstack · Superpowers에 각각 맡겨 보고 무엇을 묻는지 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/my_tool</code></div><div class="mine"><span>내 업무 적용</span>사전 과제 주제를 그대로 넣어 보기</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>Superpowers · gstack 설치</li><li>gstack /office-hours 로 사전 과제 주제 다듬기</li><li>Superpowers brainstorming 으로 같은 주제</li><li>두 하네스가 물은 것 · 결과물 비교</li><li>내 하네스에 가져올 점 고르기</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>두 하네스의 질문 · 결과물 비교표</li><li>가져올 점 하나 (Ch8에서 사용)</li></ul></div>
   </div></div>
 </section>
 
@@ -1988,17 +1989,9 @@ runs/3-1/압축전.md 와 비교해 빠지거나 달라진 것을 표로 보여 
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">실습 4-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① Superpowers 설치</span></div><pre><code>/plugin marketplace add obra/superpowers-marketplace
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/my_tool</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① Superpowers 설치</span></div><pre><code>/plugin marketplace add obra/superpowers-marketplace
 /plugin install superpowers@superpowers-marketplace</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② gstack 설치</span></div><pre><code>gstack 을 ~/.claude/skills/gstack 에 설치해 줘
-(github.com/garrytan/gstack 을 --depth 1 로 받고 ./setup)</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 네 가지로 실행</span></div><pre><code>lab4_public_harness/run_task.py 를 bare · mine · superpowers · gstack 순서로
-실행하고 토큰 · 시간 · 테스트 통과 · 건너뛴 단계를 compare.md 에 채워 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 가져올 점</span></div><pre><code>compare.md 를 보고 내 하네스에 가져올 점 3개를 이유와 함께 적어 줘</code></pre></div></div><div class="kf"><div data-file="task.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">과제 카드</span></div><pre><code>&lt;!-- 과제 카드 — 네 가지 하네스에 글자 하나 바꾸지 않고 똑같이 준다. run_task.py 는 이 주석을 빼고 넘긴다. --&gt;
-이 저장소는 자재 재고·문의 분류 앱이다. 다음을 해라.
-
-1. `python -m unittest` 가 실패한다. 원인을 찾아 고친다. 테스트 파일은 고치지 않는다.
-2. 기능 추가: `Inventory.history(item)` — 그 품목의 변경 기록을 오래된 순으로 `[("add", 10), ("remove", 3)]` 처럼 돌려준다.
-   실패한 출고(재고 부족·0 이하 수량)는 기록하지 않는다. 기록이 없으면 `[]`.
-3. 새 기능의 테스트를 `tests/` 에 추가한다.
-4. 마지막에 `python -m unittest` 로 전부 통과하는 것을 보이고, 바꾼 내용을 세 줄로 요약한다.</code></pre></div></div></div><div class="dbnote"><span>참고</span> 플러그인 설치가 막혀 있으면 bare · mine 두 가지만</div></div></div>
+(github.com/garrytan/gstack 을 --depth 1 로 받고 ./setup)</code></pre></div><div class="kdo"><span>③ 다시 열기</span><p>Claude Code 창을 닫고 새로 열기 → <b>/plugin</b> · <b>/help</b> 로 설치된 Skill · 명령 확인</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ gstack</span></div><pre><code>/office-hours 〈사전 과제 주제 한 줄〉 을 툴로 만들고 싶어</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ Superpowers</span></div><pre><code>/clear 후: 〈같은 주제〉 를 툴로 만들고 싶어. brainstorming 부터 해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑥ 비교</span></div><pre><code>두 번의 대화에서 각 하네스가 무엇을 물었는지 · 질문 수 · 만든 문서 · 다음 단계 제안을 표로 비교해 줘</code></pre></div></div><div class="dbnote"><span>참고</span> 질문에는 실제로 답해 보기 · 플러그인 설치가 막히면 강사 시연 · 결과 문서는 Ch8에서 이어서 씀</div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="다음: 멀티에이전트">
@@ -2922,7 +2915,7 @@ python compare.py results/before.json results/after.json
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">메타 하네스란</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>인터뷰</b><span>업무 · 입력 · 금지</span></div><div class="fa">→</div><div class="fs"><b>설계</b><span>유형 · 필요한 부품만</span></div><div class="fa">→</div><div class="fs hl"><b>사람 승인</b><span>APPROVED</span></div><div class="fa">→</div><div class="fs"><b>생성 · 검토</b><span>하네스 파일</span></div><div class="fa">→</div><div class="fs"><b>시험</b><span>미적용 vs 적용</span></div><div class="fa">→</div><div class="fs"><b>사람 판정</b><span>고치기</span></div></div><table class="dbt"><thead><tr><th></th><th>범용 하네스</th><th>메타 하네스가 만든 하네스</th></tr></thead><tbody><tr><td><b>규칙</b></td><td>누구에게나 맞는 일반 규칙</td><td>인터뷰에서 나온 내 업무 규칙만</td></tr><tr><td><b>부품</b></td><td>전부 다</td><td>필요한 것만 · 넣지 않은 이유도 기록</td></tr><tr><td><b>막을 것</b></td><td>rm -rf · .env 같은 공통</td><td>내 업무에서 사고 나는 지점</td></tr><tr><td><b>평가</b></td><td>없음</td><td>내 예시 입력 3 + 엣지 케이스 2</td></tr><tr><td><b>재사용</b></td><td>한 번 설치</td><td>새 업무 · 새 상황마다 다시 인터뷰</td></tr></tbody></table><div class="dbnote"><span>주제에 따라</span> 업무 처리 주제 → 업무 하네스 · 개발 주제 → 같은 메타 하네스로 개발 하네스</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>인터뷰</b><span>업무 · 입력 · 금지</span></div><div class="fa">→</div><div class="fs"><b>설계</b><span>유형 · 필요한 부품만</span></div><div class="fa">→</div><div class="fs hl"><b>사람 승인</b><span>APPROVED</span></div><div class="fa">→</div><div class="fs"><b>생성 · 검토</b><span>하네스 파일</span></div><div class="fa">→</div><div class="fs"><b>시험</b><span>미적용 vs 적용</span></div><div class="fa">→</div><div class="fs"><b>사람 판정</b><span>고치기</span></div></div><table class="dbt"><thead><tr><th></th><th>범용 하네스</th><th>메타 하네스가 만든 하네스</th></tr></thead><tbody><tr><td><b>규칙</b></td><td>누구에게나 맞는 일반 규칙</td><td>인터뷰에서 나온 내 업무 규칙만</td></tr><tr><td><b>부품</b></td><td>전부 다</td><td>필요한 것만 · 넣지 않은 이유도 기록</td></tr><tr><td><b>막을 것</b></td><td>rm -rf · .env 같은 공통</td><td>내 업무에서 사고 나는 지점</td></tr><tr><td><b>평가</b></td><td>없음</td><td>내 예시 입력 3 + 엣지 케이스 2</td></tr><tr><td><b>재사용</b></td><td>한 번 설치</td><td>새 업무 · 새 상황마다 다시 인터뷰</td></tr></tbody></table><div class="dbnote"><span>주제에 따라</span> 업무 처리 주제 → 메타 하네스로 업무 하네스 · 개발 주제 → Superpowers</div></div></div>
 </section>
 
 <section class="slide lt" data-title="메타 하네스 구조">

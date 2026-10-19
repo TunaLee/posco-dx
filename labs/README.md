@@ -16,7 +16,7 @@
 | 2-2 Claude로 Hook 만들기 | `db_guard/project/` | Hook 요청문 |
 | 2-3 업무 처리 하네스 | `office_work/workspace/` | CLAUDE.md · Skill 두 개 |
 | 3-1 압축 전후 비교 | labs (실습 1~2 세션 그대로) | — |
-| 4-1 공개 하네스 | `lab4_public_harness/` | — |
+| 4-1 공개 하네스 설치 · Skill 불러 보기 | `my_tool/` (이 폴더를 VS Code로) | Superpowers · gstack |
 | 5-1 · 5-2 멀티에이전트 | `lab5_multiagent/` · `office_work/workspace/` | extractor · verifier · 나누기 규칙 |
 | 6-1 토큰 | `lab6_tokens/` | — |
 | 6-2 토큰 아끼는 하네스 (선택) | `mes_logs/` | Skill + 스크립트 (Claude가 만듦) |
