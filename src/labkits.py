@@ -44,12 +44,13 @@ KITS = {
         tip="다른 과제 · T1 문의 답변 · T2 견적 · T5 정책 비교 · T6 지연 안내 메일 · 나머지 Skill은 부록 ②~④"),
 
     "3-1": dict(folder="", steps=[
-        ("① 실험 네 가지", "p", "lab3_context/run.py --exp all 을 실행하고 변형별\n메인 토큰 · 전체 토큰 · 턴을 표로, 답이 달라진 변형은 표시해 줘"),
-        ("② 지금 대화의 컨텍스트", "p", "/context"),
-        ("③ 압축", "p", "/compact 결정 사항과 설비 ID만 남겨"),
-        ("④ Skill 설명 줄이기", "p", "lab3_context/a_lean/SKILL.md 의 description 을 「매뉴얼」 한 단어로,\nrun.py 의 QUESTION[\"a\"] 를 「P-210 점검 주기는?」 으로 바꿔\n실험 a 다시 → Skill이 호출됐는지 · 끝나면 되돌려 줘"),
-    ], files=[("CLAUDE.md", "a_lean/CLAUDE.md", "lab3_context/a_lean/CLAUDE.md"),
-              ("SKILL.md", "a_lean/SKILL.md", "lab3_context/a_lean/SKILL.md")]),
+        ("① 압축 전 정리", "p", "지금까지 이 대화에서 한 일을 정리해 줘.\n실습별로 만든 파일 · 비교 결과 숫자 · 내가 준 지시를 빠짐없이.\nlabs 바로 아래 runs/3-1/압축전.md 로 저장해 줘"),
+        ("② 대화로만 규칙", "p", "앞으로 모든 답의 첫 줄에 [확인] 이라고 붙여 줘"),
+        ("③ 토큰 보기", "do", "<b>/context</b> → 전체 · Messages 토큰을 적어 두기"),
+        ("④ 압축", "do", "<b>/compact</b> (지시 없이 그대로)"),
+        ("⑤ 압축 후 정리", "p", "지금까지 이 대화에서 한 일을 다시 정리해서 runs/3-1/압축후.md 로 저장하고,\nruns/3-1/압축전.md 와 비교해 빠지거나 달라진 것을 표로 보여 줘"),
+        ("⑥ 확인", "do", "/context 다시 · 답 첫 줄에 [확인]이 남았나 · 숫자 · 지시 중 빠진 것 → 앞 장 표와 맞춰 보기"),
+    ], tip="해 보기: 다시 쌓인 뒤 /compact 실습 결과 숫자와 내 지시를 남겨 → 차이 비교"),
 
     "4-1": dict(folder="", steps=[
         ("① Superpowers 설치", "p", "/plugin marketplace add obra/superpowers-marketplace\n/plugin install superpowers@superpowers-marketplace"),

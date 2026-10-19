@@ -1800,6 +1800,14 @@ python3 office_work/grade.py office_work/workspace --task T3 T4 로 채점해 �
   <div class="body"><div class="mid"><div class="qt"><p>압축할 때마다 왜 고치기에 실패했는지, 부품이 어떻게 동작하는지 같은 세부가 빠질 수 있다</p><span>OpenAI, GPT-6 Astra 발표 2026.9</span></div><div class="bns c3"><div class="bn" style="--d:0.00s"><div class="bv">400K<small></small></div><div class="bl">Codex에서 실제 쓰는 창 (API는 1M)</div></div><div class="bn hl" style="--d:0.12s"><div class="bv">272K<small>토큰</small></div><div class="bl">넘으면 입력 가격 2배 (GPT-6 Astra)</div></div><div class="bn" style="--d:0.24s"><div class="bv">100K<small>토큰</small></div><div class="bl">넘으면 서버에서 압축 (Anthropic OSWorld 하네스)</div></div></div><div class="dbnote"><span>하네스로</span> 압축만 믿지 말고 노트 · 진행 기록 파일 · Sub Agent로 책상을 나눈다</div><div class="src">출처 · <a href="https://openai.com/index/gpt-6-astra/" target="_blank" rel="noopener">OpenAI · GPT-6 Astra 2026.9</a> · <a href="https://openai.com/index/introducing-gpt-5-5/" target="_blank" rel="noopener">OpenAI · Introducing GPT-5.5 2026.4</a> · <a href="https://developers.openai.com/api/docs/models/gpt-6-astra" target="_blank" rel="noopener">OpenAI · GPT-6 Astra 모델 문서</a> · <a href="https://www.anthropic.com/claude-opus-5-5-system-card" target="_blank" rel="noopener">Claude Opus 5.5 System Card 2026.9</a></div></div></div>
 </section>
 
+<section class="slide lt" data-title="압축 때 하네스는 어떻게 되나">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span></div>
+  <h2 class="s-title sm">압축 때 하네스는 어떻게 되나</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>하네스 부품</th><th>압축하면</th></tr></thead><tbody><tr><td><b>프로젝트 CLAUDE.md · 자동 메모리</b></td><td>디스크에서 다시 읽어 넣음 · 요약되지 않음</td></tr><tr><td><b>이미 호출된 Skill</b></td><td>다시 붙임 · Skill마다 앞 5,000토큰 · 합계 25,000토큰 · 오래된 것부터 빠짐</td></tr><tr><td><b>Hook · 권한</b></td><td>모델 밖 코드라 그대로 매번 작동</td></tr><tr><td><b>최근 읽고 고친 파일</b></td><td>최근 수정순 5개까지 다시 읽음</td></tr><tr><td><b>대화로만 준 지시</b></td><td>요약되며 빠질 수 있음</td></tr></tbody></table><div class="dbnote"><span>그래서</span> 계속 지킬 규칙은 CLAUDE.md · 꼭 막을 것은 Hook · Skill은 중요한 내용을 앞쪽에 · 남길 것은 /compact 〈지시〉</div><div class="src">출처 · <a href="https://code.claude.com/docs/en/context-window.md" target="_blank" rel="noopener">Claude Code 문서 · Context window (What survives compaction)</a> · <a href="https://code.claude.com/docs/en/memory.md" target="_blank" rel="noopener">Claude Code 문서 · Memory</a></div></div></div>
+</section>
+
 <section class="slide lt" data-title="긴 세션의 문제와 처방">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch3</span></div>
@@ -1808,15 +1816,15 @@ python3 office_work/grade.py office_work/workspace --task T3 T4 로 채점해 �
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>증상</th><th>원인</th><th>처방</th></tr></thead><tbody><tr><td><b>앞 지시를 잊음</b></td><td>이력이 길어 중요한 줄이 묻힘</td><td>새 작업 = 새 세션</td></tr><tr><td><b>엉뚱한 파일 수정</b></td><td>예전 작업의 흔적이 남음</td><td>/clear 또는 세션 분리</td></tr><tr><td><b>점점 느리고 비쌈</b></td><td>매 턴 전체 이력 재전송</td><td>/compact · 요약 후 이어가기</td></tr></tbody></table></div></div>
 </section>
 
-<section class="slide lt labs" data-title="[실습 3-1] 컨텍스트 실험 네 가지">
+<section class="slide lt labs" data-title="[실습 3-1] 압축 전후 비교">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch3</span><span class="labtag">실습 3-1</span><span class="kindtag k시연">시연 · 10분</span></div>
-  <h2 class="s-title sm">컨텍스트 실험 네 가지</h2>
+  <div class="eyebrow"><span class="tag">Ch3</span><span class="labtag">실습 3-1</span><span class="kindtag k선택">선택 · 15분</span></div>
+  <h2 class="s-title sm">압축 전후 비교</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>같은 작업, 책상 상태만 바꿔 토큰 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/lab3_context</code></div><div class="mine"><span>내 업무 적용</span>내 업무 입력 중 항상 올릴 것 vs 필요할 때만 올릴 것</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>CLAUDE.md 600줄 vs 30줄 + Skill</li><li>폴더 통째 읽기 vs 검색해서 읽기</li><li>직접 조사 vs Sub Agent 위임</li><li>긴 세션 vs 새 세션 · 결과표 채우기</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>변형 4종 입력 · 캐시 · 출력 토큰 표</li><li>품질이 떨어진 변형 표시</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>실습 1~2 동안 쌓인 대화를 압축해 보고 무엇이 남고 무엇이 빠지는지 확인</p><div class="lf">사용 파일 · <code class="lfold">labs</code> (실습 1~2를 하던 그 세션 그대로)</div><div class="mine"><span>내 업무 적용</span>내 업무에서 압축돼도 꼭 남아야 할 것 세 가지</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>압축 전: 지금까지 한 일 정리 → 파일로 · /context 토큰 기록</li><li>대화로만 규칙 하나 주기</li><li>/compact</li><li>압축 후: /context · 같은 정리 다시 → 압축 전과 비교</li><li>빠진 것 중 남겨야 할 것은 CLAUDE.md 또는 /compact 〈지시〉로</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>압축 전후 토큰 · 빠진 항목 표</li><li>대화로만 준 규칙이 남았는지</li></ul></div>
   </div></div>
 </section>
 
@@ -1825,16 +1833,10 @@ python3 office_work/grade.py office_work/workspace --task T3 T4 로 채점해 �
   <div class="eyebrow"><span class="tag">Ch3</span></div>
   <h2 class="s-title sm">실습 3-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 실험 네 가지</span></div><pre><code>lab3_context/run.py --exp all 을 실행하고 변형별
-메인 토큰 · 전체 토큰 · 턴을 표로, 답이 달라진 변형은 표시해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 지금 대화의 컨텍스트</span></div><pre><code>/context</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 압축</span></div><pre><code>/compact 결정 사항과 설비 ID만 남겨</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ Skill 설명 줄이기</span></div><pre><code>lab3_context/a_lean/SKILL.md 의 description 을 「매뉴얼」 한 단어로,
-run.py 의 QUESTION["a"] 를 「P-210 점검 주기는?」 으로 바꿔
-실험 a 다시 → Skill이 호출됐는지 · 끝나면 되돌려 줘</code></pre></div></div><div class="kf"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">a_lean/CLAUDE.md</span></div><pre><code># 한빛스틸 업무 Agent
-
-너는 한빛스틸 사내 업무 Agent 다. 답은 짧게, 근거 조항 번호를 붙인다.
-사내 규정·점검 기준·예비품 재고가 필요할 때만 `hanbit-manual` 스킬을 쓴다.</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">a_lean/SKILL.md</span></div><pre><code>---
-name: hanbit-manual
-description: 한빛스틸 사내 업무 매뉴얼 — 부서별 FAQ 조항(IT·BUY·HR·SEC·GEN), 설비 정비 기준, 안전 수칙, 출장 경비, 설비별 점검 주기(부록 A), 예비품 최소 재고(부록 B). 사내 규정이나 기준 수치가 필요할 때 쓴다.
----</code></pre></div></div></div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 압축 전 정리</span></div><pre><code>지금까지 이 대화에서 한 일을 정리해 줘.
+실습별로 만든 파일 · 비교 결과 숫자 · 내가 준 지시를 빠짐없이.
+labs 바로 아래 runs/3-1/압축전.md 로 저장해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 대화로만 규칙</span></div><pre><code>앞으로 모든 답의 첫 줄에 [확인] 이라고 붙여 줘</code></pre></div><div class="kdo"><span>③ 토큰 보기</span><p><b>/context</b> → 전체 · Messages 토큰을 적어 두기</p></div><div class="kdo"><span>④ 압축</span><p><b>/compact</b> (지시 없이 그대로)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">⑤ 압축 후 정리</span></div><pre><code>지금까지 이 대화에서 한 일을 다시 정리해서 runs/3-1/압축후.md 로 저장하고,
+runs/3-1/압축전.md 와 비교해 빠지거나 달라진 것을 표로 보여 줘</code></pre></div><div class="kdo"><span>⑥ 확인</span><p>/context 다시 · 답 첫 줄에 [확인]이 남았나 · 숫자 · 지시 중 빠진 것 → 앞 장 표와 맞춰 보기</p></div></div><div class="dbnote"><span>참고</span> 해 보기: 다시 쌓인 뒤 /compact 실습 결과 숫자와 내 지시를 남겨 → 차이 비교</div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="다음: 공개 하네스">

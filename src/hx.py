@@ -13,7 +13,7 @@ import intro
 import labkits
 
 deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("선택", 15), "2-2": ("필수", 20), "2-3": ("선택", 25),
-                      "3-1": ("시연", 10), "4-1": ("시연", 10), "5-1": ("시연", 10), "5-2": ("선택", 20),
+                      "3-1": ("선택", 15), "4-1": ("시연", 10), "5-1": ("시연", 10), "5-2": ("선택", 20),
                       "6-1": ("시연", 10), "6-2": ("선택", 20), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
 from stats_hx import big, hbars, quote, rings, stat
@@ -99,6 +99,8 @@ A_GRAPHENG = ("arXiv 2608.21156 · Graph Engineering 2026.8", "https://arxiv.org
 A_LOOPENG = ("arXiv 2608.21884 · Loop Engineering 2026.8", "https://arxiv.org/abs/2608.21884")
 ADT_LOOP = ("ADTmag · Loop engineering 2026.7", "https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx")
 OWN_LAB11 = ("직접 실측 2026.10.19 · Sonnet 5.5 · 실습 1-1 요청 그대로 · 각 3회", "https://github.com/TunaLee/posco-dx")
+D_CTXWIN = ("Claude Code 문서 · Context window (What survives compaction)", "https://code.claude.com/docs/en/context-window.md")
+D_MEMORY = ("Claude Code 문서 · Memory", "https://code.claude.com/docs/en/memory.md")
 INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
 INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
 INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
@@ -952,15 +954,25 @@ def ch3():
                     ("100K", "토큰", "넘으면 서버에서 압축 (Anthropic OSWorld 하네스)")])
              + note("하네스로", "압축만 믿지 말고 노트 · 진행 기록 파일 · Sub Agent로 책상을 나눈다"),
              OAI_GPT6, OAI_GPT55, OAI_GPT6DOC, SC_OPUS55),
+        stat("압축 때 하네스는 어떻게 되나", "Ch3", table(["하네스 부품", "압축하면"], [
+            ["<b>프로젝트 CLAUDE.md · 자동 메모리</b>", "디스크에서 다시 읽어 넣음 · 요약되지 않음"],
+            ["<b>이미 호출된 Skill</b>", "다시 붙임 · Skill마다 앞 5,000토큰 · 합계 25,000토큰 · 오래된 것부터 빠짐"],
+            ["<b>Hook · 권한</b>", "모델 밖 코드라 그대로 매번 작동"],
+            ["<b>최근 읽고 고친 파일</b>", "최근 수정순 5개까지 다시 읽음"],
+            ["<b>대화로만 준 지시</b>", "요약되며 빠질 수 있음"],
+        ]) + note("그래서", "계속 지킬 규칙은 CLAUDE.md · 꼭 막을 것은 Hook · Skill은 중요한 내용을 앞쪽에 · 남길 것은 /compact 〈지시〉"),
+             D_CTXWIN, D_MEMORY),
         light("긴 세션의 문제와 처방", table(["증상", "원인", "처방"], [
             ["<b>앞 지시를 잊음</b>", "이력이 길어 중요한 줄이 묻힘", "새 작업 = 새 세션"],
             ["<b>엉뚱한 파일 수정</b>", "예전 작업의 흔적이 남음", "/clear 또는 세션 분리"],
             ["<b>점점 느리고 비쌈</b>", "매 턴 전체 이력 재전송", "/compact · 요약 후 이어가기"],
         ]), "Ch3"),
-        lab("3-1", "컨텍스트 실험 네 가지", "Ch3",
-            "같은 작업, 책상 상태만 바꿔 토큰 비교",
-            ["CLAUDE.md 600줄 vs 30줄 + Skill", "폴더 통째 읽기 vs 검색해서 읽기", "직접 조사 vs Sub Agent 위임", "긴 세션 vs 새 세션 · 결과표 채우기"],
-            ["변형 4종 입력 · 캐시 · 출력 토큰 표", "품질이 떨어진 변형 표시"], files=labdir("lab3_context"), mine="내 업무 입력 중 항상 올릴 것 vs 필요할 때만 올릴 것"),
+        lab("3-1", "압축 전후 비교", "Ch3",
+            "실습 1~2 동안 쌓인 대화를 압축해 보고 무엇이 남고 무엇이 빠지는지 확인",
+            ["압축 전: 지금까지 한 일 정리 → 파일로 · /context 토큰 기록", "대화로만 규칙 하나 주기", "/compact",
+             "압축 후: /context · 같은 정리 다시 → 압축 전과 비교", "빠진 것 중 남겨야 할 것은 CLAUDE.md 또는 /compact 〈지시〉로"],
+            ["압축 전후 토큰 · 빠진 항목 표", "대화로만 준 규칙이 남았는지"], files='<code class="lfold">labs</code> (실습 1~2를 하던 그 세션 그대로)',
+            mine="내 업무에서 압축돼도 꼭 남아야 할 것 세 가지"),
         *labkit('3-1', 'Ch3'),
         bridge("다음: 공개 하네스", "", "Ch3", "→ Ch4 공개 하네스"),
     ]
