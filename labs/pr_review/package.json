@@ -1,0 +1,7 @@
+{
+  "name": "settle-service",
+  "version": "0.3.0",
+  "type": "module",
+  "private": true,
+  "scripts": { "test": "node --test" }
+}

@@ -13,7 +13,7 @@ import intro
 import labkits
 
 deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("선택", 15), "2-2": ("필수", 20), "2-3": ("선택", 25),
-                      "3-1": ("선택", 15), "4-1": ("선택", 20), "5-1": ("시연", 10), "5-2": ("선택", 20),
+                      "3-1": ("선택", 15), "4-1": ("선택", 20), "5-1": ("선택", 25), "5-2": ("선택", 20),
                       "6-1": ("시연", 10), "6-2": ("선택", 20), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
 from stats_hx import big, hbars, quote, rings, stat
@@ -101,6 +101,7 @@ ADT_LOOP = ("ADTmag · Loop engineering 2026.7", "https://adtmag.com/articles/20
 OWN_LAB11 = ("직접 실측 2026.10.19 · Sonnet 5.5 · 실습 1-1 요청 그대로 · 각 3회", "https://github.com/TunaLee/posco-dx")
 D_CTXWIN = ("Claude Code 문서 · Context window (What survives compaction)", "https://code.claude.com/docs/en/context-window.md")
 D_MEMORY = ("Claude Code 문서 · Memory", "https://code.claude.com/docs/en/memory.md")
+OWN_LAB51 = ("직접 실측 2026.10.20 · Sonnet 5.5 · 실습 5-1 PR · 각 2회 · 키워드 + 직접 확인", "https://github.com/TunaLee/posco-dx")
 INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
 INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
 INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
@@ -366,7 +367,7 @@ def labkit(no, ch):
             grid = (f'<div class="kit ktree"><div class="ctree">{code(k["tree"][0], esc(k["tree"][1]))}</div>'
                     f'<div class="kf">{"".join(files)}</div></div>')
         else:
-            grid = f'<div class="kgrid">{"".join(files)}</div>'
+            grid = f'<div class="kgrid{" kg3" if len(files) >= 5 else ""}">{"".join(files)}</div>'
         head2 = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>{k.get("open", "labs")}</code>{sub}'
                  f'<em>{k.get("harness_note", "탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장")}</em></div>')
         return [light(f"실습 {no} 하네스", head2 + grid, ch),
@@ -1117,16 +1118,23 @@ def ch5():
             flow([("분류", "classifier"), ("응대", "domain"), ("검증", "verifier"), ("통과 → 답", "")], hl=2),
             flow([("추출", "extractor"), ("견적", "estimator"), ("검증", "verifier"), ("통과 → 결과", "")], hl=2))
               + note("verifier", "읽기 전용 · 근거 · 숫자 · 정책만 판정 · 고치지 않음"), "Ch5"),
-        ill("scenes_hx", "router_desk", "left40", "예제 A: 문의 라우팅", ["분류 → 영역별 응대 → 검증", "검증 실패 → 재작업 · 사람"]),
-        ill("scenes_hx", "spec_extract", "left40", "예제 B: 사양서 추출 · 견적", ["추출 → 견적 → 검증", "원문에 없는 숫자는 실패"]),
         light("실행 타임라인", viz("timeline_lanes") + note("만드는 법", "실행 기록 → visualize.py → 타임라인 HTML · 실시간은 Agent Watch"), "Ch5"),
         light("실시간 대시보드: Agent Watch", '<img class="shot" src="img/agent_watch.png" alt="Agent Watch 화면">'
               + note("구성", "Hook → 로컬 서버 → 브라우저 · 메인 · Sub Agent 레인 · 에이전트별 토큰 · 효율 점검 · " + labdir("agent_watch")), "Ch5"),
-        lab("5-1", "Supervisor + Sub Agent + 검증", "Ch5",
-            "예제 하나를 멀티에이전트로 · 실행을 시각화",
-            ["예제 고르기 (라우팅 · 추출)", ".claude/agents 역할 · 도구 · 반환 형식 손보기", "run.py로 실행 · 실행 기록 저장", "visualize.py → 타임라인에서 병목 · 실패 찾기"],
-            ["verifier가 오답 1건 이상 차단", "타임라인 HTML · 레인별 토큰"], files=labdir("lab5_multiagent"), mine="내 업무를 나눌 Agent 역할 (나눌 필요 없으면 「단일」)"),
+        lab("5-1", "코드 리뷰 멀티에이전트 하네스", "Ch5",
+            "reviewer · qa · security를 동시에 · 나눌 때 얻는 것과 드는 비용을 숫자로",
+            ["하네스 미적용 상태로 PR 리뷰 → 시간 · 토큰 기록", "장표의 CLAUDE.md · Skill · Agent 세 개 만들기",
+             "같은 PR 리뷰 → /tasks 로 세 Agent 동시 실행 보기", "찾은 문제 · 시간 · 토큰 · 결과 파일 비교", "해 보기: 큰 PR(18파일)로 같은 비교"],
+            ["/tasks 에서 세 Agent 동시 실행 확인", "미적용 · 적용 비교표"], files=labdir("pr_review") + " · " + labdir("pr_review_large"),
+            mine="내 업무에서 역할을 나눌 검토 담당 셋"),
         *labkit('5-1', 'Ch5'),
+        stat("실측: 코드 리뷰를 나눌 때와 안 나눌 때", "Ch5", table(["", "작은 PR · 5파일 · 100줄 · 문제 10", "큰 PR · 18파일 · 1,731줄 · 문제 20"], [
+            ["<b>하네스 미적용</b>", "10 / 10 · 42초 · 22만 토큰", "20 / 20 · 76초 · 41만 토큰"],
+            ["<b>멀티에이전트 리뷰</b>", "10 / 10 · 75초 · 36만 토큰", "20 / 20 · 141초 · 65만 토큰"],
+            ["<b>결과 파일</b>", "미적용: 대화창에만 · 하네스: 담당 · 심각도별 표", "같음"],
+        ]) + note("배운 점", "Sonnet 5.5는 1,700줄 PR도 혼자 다 찾음 · 나누면 시간 약 1.8배 · 토큰 약 1.6배")
+             + note("나눌 가치", "속도보다 역할 분리 · 기록 · 컨텍스트를 넘는 규모 (저장소 전체 · 여러 PR 동시)"),
+             OWN_LAB51),
         stat("멀티에이전트의 효과와 한계", "Ch5",
              big([("2.7", "배", "Opus 5.5 5인 팀 · 같은 점수에 도달하는 속도", True),
                   ("+5.3", "점", "Mythos 5 · 멀티에이전트 구성 (88.0 → 93.3)"),
@@ -1155,6 +1163,7 @@ def ch5():
                      title="평균 토큰")
              + note("이 규모에선", "점수는 하네스 미적용 → 단일 하네스에서 오름 · 40건은 한 Agent로 충분 → 나누면 시간 · 토큰만 늘어남"),
              OWN_WORK, SC_OPUS55),
+        ill("scenes_hx", "spec_extract", "left40", "예제 B: 사양서 추출 · 견적", ["추출 → 견적 → 검증", "원문에 없는 숫자는 실패"]),
         light("멀티에이전트를 입히는 요청문", '<div class="pgrid2">' + code("멀티에이전트 추가", '여러 건 처리용으로 이 하네스에 멀티에이전트를 추가해 줘.\n- .claude/agents/extractor.md: 맡은 문서만 읽고 Skill 절차대로 추출 · 계산 (Read · Grep · Glob)\n- .claude/agents/verifier.md: 원본과 대조 · 금액 재계산 · 고치지 않음\n- CLAUDE.md에 추가: 10건 넘으면 10건씩 나눠 extractor 여러 개에 동시에 → verifier 대조\n  → 틀린 것만 한 번 더 · 몇 건 안 되는 일은 나누지 않음\n끝나면 같은 과제를 단일 하네스와 비교해 점수 · 시간 · 토큰을 표로')
               + table(["나눌 때", "나누지 않을 때"], [
                   ["한 Agent 책상에 다 안 올라가는 양", "몇십 건 · 짧은 문서"],
@@ -1695,6 +1704,7 @@ CSS = '''
   .eq-v.sm{font-size:24px; line-height:1.35;} .eq-c.hl .eq-v{color:#F28C28;}
   .eq-d{font-size:15px; color:#555; line-height:1.5; margin-top:auto;}
   .eq-op{display:flex; align-items:center; justify-content:center; font-size:44px; font-weight:800; color:#F28C28;}
+  .kgrid.kg3{grid-template-columns:1fr 1fr 1fr;} .kgrid.kg3 .code .bar .fn{font-size:10.5px; margin-left:4px;} .kgrid.kg3 .code .bar .copybtn, .kgrid.kg3 .code .bar .savebtn{font-size:10.5px; padding:3px 6px;} .kgrid.kg3 .code .bar .dot{display:none;} .kgrid.kg3 .code pre{max-height:165px;} .kgrid.kg3 .code code{font-size:11px;}
   .kithead{display:flex; align-items:center; gap:10px; margin:-4px 0 12px; font-size:14px; color:var(--ink-2, #555);}
   .kithead span{font-weight:700; color:#1F3A5F;} .kithead .ks{margin-left:10px;} .kithead code{font-family:var(--mono); font-size:13px; background:#EEF2F8; padding:3px 9px; border-radius:6px;}
   .kithead em{margin-left:auto; font-style:normal; font-size:13px; color:#8A8FA0;}

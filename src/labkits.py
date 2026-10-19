@@ -61,27 +61,19 @@ KITS = {
         ("⑥ 비교", "p", "두 번의 대화에서 각 하네스가 무엇을 물었는지 · 질문 수 · 만든 문서 · 다음 단계 제안을 표로 비교해 줘"),
     ], tip="질문에는 실제로 답해 보기 · 플러그인 설치가 막히면 강사 시연 · 결과 문서는 Ch8에서 이어서 씀"),
 
-    "5-1": dict(folder="lab5_multiagent", split=True, harness_note="이미 들어 있는 파일 · VS Code 탐색기에서 열어 확인", tree=("lab5_multiagent/project/ 구조",
-        "lab5_multiagent/project/\n"
-        "├── CLAUDE.md                     「지휘 Skill 순서대로 · 메인은 직접 답 안 씀」\n"
-        "└── .claude/\n"
-        "    ├── skills/\n"
-        "    │   ├── orchestrate-inquiry/\n"
-        "    │   │   └── SKILL.md          지휘: 분류 → 응대 → 검증\n"
-        "    │   └── orchestrate-quote/\n"
-        "    │       └── SKILL.md          지휘: 추출 → 견적 → 검증\n"
-        "    └── agents/                   Sub Agent 하나 = 파일 하나\n"
-        "        ├── classifier.md         분류 (haiku)\n"
-        "        ├── responder-it.md 외 4개  분야별 응대 (Read · Grep)\n"
-        "        ├── verifier-inquiry.md   문의 답 검증 (읽기 전용)\n"
-        "        ├── extractor.md · estimator.md\n"
-        "        └── verifier-quote.md     견적 검증 (읽기 전용)"), steps=[
-        ("① 실행", "p", "lab5_multiagent/run.py --ids Q10 을 실행하고\n위임 순서 · 줄별 토큰 · 검증 결과를 정리해 줘"),
-        ("② 타임라인", "p", "방금 저장된 lab5_multiagent/runs/ 기록으로 lab5_multiagent/visualize.py 를 돌려\n타임라인 HTML을 만들고 열어 줘"),
-        ("③ 검증 빼 보기", "p", "lab5_multiagent/project/.claude/skills/orchestrate-inquiry/SKILL.md 에서 검증 단계를 지우고\nlab5_multiagent/run.py --ids Q10 을 다시 실행해 타임라인을 비교해 줘 · 끝나면 되돌려 줘"),
-        ("④ 까다로운 입력", "p", "lab5_multiagent/run.py --ids Q26 (프롬프트 주입) 을 실행해\nverifier-inquiry 가 막았는지 알려 줘"),
-    ], files=[("SKILL.md", "lab5_multiagent/project/.claude/skills/orchestrate-inquiry/SKILL.md", "lab5_multiagent/project/.claude/skills/orchestrate-inquiry/SKILL.md"),
-              ("verifier-inquiry.md", "lab5_multiagent/project/.claude/agents/verifier-inquiry.md", "lab5_multiagent/project/.claude/agents/verifier-inquiry.md")]),
+    "5-1": dict(folder="pr_review", open="labs/pr_review", split=True, steps=[
+        ("① 하네스 미적용 리뷰", "p", "이 변경(CHANGES.md)을 코드 리뷰해 줘. 끝나면 답을 review_미적용.md 로 저장하고 걸린 시간도 알려 줘"),
+        ("② 토큰 보기", "do", "<b>/context</b> 로 토큰 적어 두기"),
+        ("③ 하네스 만들기", "do", "앞 장 파일 다섯 개를 화면의 경로대로 만들기 → Claude Code 새로 열기"),
+        ("④ 멀티에이전트 리뷰", "p", "이 변경(CHANGES.md)을 코드 리뷰해 줘."),
+        ("⑤ 동시 실행 보기", "do", "입력창 아래 <b>N agents</b> 클릭 또는 <b>/tasks</b> → reviewer · qa · security 상태 · 도구 · 토큰"),
+        ("⑥ 비교", "p", "review_미적용.md 와 review/리뷰결과.md 를 비교해서\n찾은 문제 수 · 하나만 찾은 문제 · 시간 · 토큰을 표로 정리해 줘"),
+    ], files=[("CLAUDE.md", "CLAUDE.md", "@5-1/CLAUDE.md"),
+              ("SKILL.md", ".claude/skills/code-review/SKILL.md", "@5-1/skills/code-review/SKILL.md"),
+              ("reviewer.md", ".claude/agents/reviewer.md", "@5-1/agents/reviewer.md"),
+              ("qa.md", ".claude/agents/qa.md", "@5-1/agents/qa.md"),
+              ("security.md", ".claude/agents/security.md", "@5-1/agents/security.md")],
+        tip="해 보기: labs/pr_review_large (18파일)로 같은 비교 · 결과는 다음 장 실측과 맞춰 보기"),
 
     "5-2": dict(folder="office_work/workspace", steps=[
         ("① 단일 하네스 완성", "do", "2-3 하네스에 앞 장 <b>spec-quote</b> Skill 추가"),
