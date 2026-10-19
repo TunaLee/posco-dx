@@ -21,10 +21,10 @@ KITS = {
     ], files=[("SKILL.md", "lab2_1_parts/.claude/skills/incident-report/SKILL.md", "@2-1/SKILL.md"),
               ("reviewer.md", "lab2_1_parts/.claude/agents/reviewer.md", "@2-1/reviewer.md")]),
 
-    "2-2": dict(folder="lab2_hook_by_claude", steps=[
+    "2-2": dict(folder="lab2_hook_by_claude", split=True, harness_note="③ 단계에서 대화창에 붙여 넣는 요청문 · 내 말로 바꿔도 됨", steps=[
         ("① 준비", "p", "lab2_hook_by_claude/project 폴더에서 python3 tools/make_db.py 로 DB를 만들고\npython3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘"),
         ("② 하네스 미적용 · 채점", "p", "python3 lab2_hook_by_claude/check_hook.py 를 실행해 점수를 보여 줘"),
-        ("③ 하네스 만들기", "do", "오른쪽 요청문 「복사」 → 대화창에 붙여 넣기 · .claude 쓰기 승인 요청은 내용을 읽고 승인"),
+        ("③ 하네스 만들기", "do", "앞 장 요청문 「복사」 → 대화창에 붙여 넣기 · .claude 쓰기 승인 요청은 내용을 읽고 승인"),
         ("④ 하네스 적용 · 채점", "p", "python3 lab2_hook_by_claude/check_hook.py 를 다시 실행해 Hook 만들기 전 점수와 비교하고\n놓친 사례가 있으면 Hook을 고쳐서 다시 채점해 줘"),
         ("⑤ 실제 차단", "p", "lab2_hook_by_claude/project 폴더 안에서\nclaude -p --setting-sources project --permission-mode acceptEdits \"리포트 오류 고쳐 줘\" 를 실행하고\n운영 DB 쓰기가 Hook에 막혔는지 · 허락을 구했는지 알려 줘"),
     ], files=[("prompt.md", "Hook 만들기 요청문", "@PROMPT22")],
@@ -97,6 +97,16 @@ KITS = {
         ("③ 캐시 · Sub Agent", "p", "bench.py --levers cache,subagent 실행 → 기준선 대비 변화"),
         ("④ 고르기", "p", "세 결과를 합쳐 품질이 떨어지지 않은 레버만 골라\n내 업무에 쓸 순서로 추천해 줘"),
     ], files=[("quiz.md", "quiz.md · 먼저 예상", "lab6_tokens/quiz.md")]),
+
+    "6-2": dict(folder="token_harness", steps=[
+        ("① 하네스 미적용", "p", "token_harness 폴더 안에서, 하네스 없이(claude -p --setting-sources \"\" --output-format json) 아래 요청을 실행하고\n토큰 · 턴 · 시간 · 답을 알려 줘.\n「data 폴더 자료로 이번 주 MES 장애를 코드별 건수와 지속 시간 합계로 정리하고,\n건수가 가장 많은 코드의 처리 기준을 매뉴얼에서 찾아 알려 줘.」"),
+        ("② 하네스 만들기", "p", "방금 그 집계와 처리 기준 찾기를 다음부터 한 번에 끝낼 수 있게,\npython 스크립트로 만들어 token_harness/.claude/skills/mes-summary 에 Skill로 등록해 줘.\nCLAUDE.md 에는 「이 일은 그 Skill부터 쓰고 답은 5줄 안으로」라고 적어 줘."),
+        ("③ 하네스 적용", "p", "같은 요청을 이번엔 token_harness 폴더 안에서 claude -p --setting-sources project --output-format json 으로 실행해서\n하네스 없을 때와 토큰 · 턴 · 시간 · 정답을 표로 비교해 줘."),
+        ("④ 해 보기", "do", "Skill 대신 「300줄 넘는 파일 통째 읽기 금지」 Hook만 넣으면 토큰이 어떻게 되는지 · 다음 장 결과와 비교"),
+    ], files=[("CLAUDE.md", "token_harness/CLAUDE.md (예)", "@6-2/CLAUDE.md"),
+              ("SKILL.md", "token_harness/.claude/skills/mes-summary/SKILL.md (예)", "@6-2/skills/mes-summary/SKILL.md"),
+              ("summary.py", "token_harness/.claude/skills/mes-summary/summary.py (예)", "@6-2/skills/mes-summary/summary.py")],
+        split=True, harness_note="②에서 Claude가 만든 결과의 예 · 막히면 「파일로 저장」"),
 
     "7-1": dict(folder="work_harness", steps=[
         ("① 기준선", "p", "work_harness/run_tasks.py --cond single --tasks T1 T2 T3 T4 T5 T6 을 실행하고\n과제별 점수 · 시간 · 토큰을 표로 정리해 줘"),

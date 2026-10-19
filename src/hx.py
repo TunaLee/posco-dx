@@ -14,7 +14,7 @@ import labkits
 
 deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("선택", 15), "2-2": ("필수", 20), "2-3": ("선택", 25),
                       "3-1": ("시연", 10), "4-1": ("시연", 10), "5-1": ("시연", 10), "5-2": ("선택", 20),
-                      "6-1": ("시연", 10), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
+                      "6-1": ("시연", 10), "6-2": ("선택", 20), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
 from stats_hx import big, hbars, quote, rings, stat
 
@@ -94,6 +94,7 @@ D_HOOKS_STOP = ("Claude Code 문서 · Hooks (Stop)", "https://code.claude.com/d
 D_HEADLESS = ("Claude Code 문서 · Headless", "https://code.claude.com/docs/en/headless")
 HUNTLEY = ("Geoffrey Huntley · Ralph", "https://ghuntley.com/ralph/")
 C_SUPERPOWERS = ("obra/superpowers · Skills", "https://github.com/obra/superpowers")
+OWN_TOK62 = ("직접 실측 2026.10.19 · Sonnet 5.5 · 실습 6-2 과제 그대로", "https://github.com/TunaLee/posco-dx")
 INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
 INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
 INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
@@ -298,7 +299,7 @@ def metr_chart():
     return f'<svg class="mchart" viewBox="0 0 {W} {H}">{g}</svg>'
 
 
-PROMPTS_HX = {'CLAUDE.md': '이 프로젝트의 CLAUDE.md를 만들어 줘. 모든 작업에 공통인 원칙만 30줄 이내로.\n- 결과는 〈out/작업명/〉 에 파일로 남긴다\n- 〈원본 폴더〉 는 수정하지 않는다\n- 숫자 · 이름 · 날짜는 원본에 있는 것만. 없거나 다르면 「확인 필요」\n- 근거(파일명 · 조항 번호)를 함께 적는다\n- 〈사람이 판단할 일: 승인 · 환불 · 외부 발송〉 은 담당자 확인으로 넘긴다\n작업별 절차는 여기 쓰지 말고 Skill로 분리한다.', 'Skill': '〈업무 이름〉 절차를 Skill로 만들어 줘.\n- 위치: .claude/skills/〈skill-이름〉/SKILL.md\n- description: 〈언제 쓰는지 한 줄〉\n- 본문: 단계(번호) · 판단 기준 〈기준〉 · 결과 양식 〈양식〉 · 하면 안 되는 것\n- 긴 규정 · 양식 원본은 같은 폴더의 참고 파일로 빼고 본문에서 가리킨다\n만든 뒤 예시 입력 하나로 시험하고 결과를 보여 줘.', 'Hook': 'PreToolUse Hook을 만들어 줘.\n막을 것: 〈운영 DB 쓰기 · 원본 폴더 수정 · 외부 전송 · 비밀 파일 읽기〉\n허용할 것: 〈조회 · 개발 환경 쓰기 · 일반 작업〉\n- .claude/hooks/guard.py 에 만들고 .claude/settings.json 에 등록\n- 막을 때는 exit 2 + 이유 한 줄\n- 표준 라이브러리만\n- 막아야 할 예 5개 · 허용해야 할 예 5개로 직접 시험해 결과를 표로', '검증 Agent': '읽기 전용 검증 Sub Agent를 만들어 줘.\n- .claude/agents/verifier.md · 도구는 Read · Grep · Glob만\n- 할 일: 결과물을 원본과 대조 — 숫자 · 날짜 · 빠진 항목 · 지어낸 내용 · 확정 아닌 걸 확정처럼 쓴 곳\n- 고치지 않고 판정만 · 반환: 항목별 통과 / 실패 · 근거(파일:줄)\nCLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.', '평가': '이 업무의 평가셋과 채점 스크립트를 만들어 줘.\n- eval/cases.jsonl: 과거 사례 〈5〉건 + 엣지 케이스 〈2〉건\n  (입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말)\n- eval/grade.py: 결과 파일을 읽어 항목별 O / X와 점수 출력 (표준 라이브러리만)\n지금 하네스로 한 번 돌려 점수를 보여 줘.', '고치기': '방금 채점에서 틀린 항목을 보고 하네스를 고쳐 줘.\n- 원인이 절차면 Skill, 공통 원칙이면 CLAUDE.md, 꼭 막아야 할 것이면 Hook\n- 무엇을 왜 바꿨는지 한 줄씩 남기고\n- 다시 채점해 전후 점수를 비교해 줘'}
+PROMPTS_HX = {'CLAUDE.md': '이 프로젝트의 CLAUDE.md를 만들어 줘. 모든 작업에 공통인 원칙만 짧게, 30줄 안으로.\n결과는 〈out/작업명/〉 에 파일로 남기고, 〈원본 폴더〉 는 고치지 말고,\n숫자 · 이름 · 날짜는 원본에 있는 것만 써서 없으면 「확인 필요」로 표시하고,\n근거(파일명 · 조항)를 꼭 달고, 〈승인 · 환불 · 외부 발송〉 같은 건 담당자 확인으로 넘기게 해 줘.\n작업별 절차는 여기 말고 Skill로 빼 줘.', 'Skill': '〈업무 이름〉 을 Skill로 만들어 줘. 〈언제 쓰는지〉 할 때 알아서 쓰이게 설명을 달아 주고,\n본문에는 순서, 판단 기준 〈기준〉, 결과 양식 〈양식〉, 하면 안 되는 것을 넣어 줘.\n긴 규정은 같은 폴더에 참고 파일로 빼 두고, 다 만들면 예시 입력 하나로 시험해서 보여 줘.', 'Hook': '〈막을 것〉 은 Hook으로 막아 줘. 〈허용할 것〉 은 그대로 두고.\n막을 때는 왜 막았는지 한 줄 보여 주고, 외부 패키지는 쓰지 말아 줘.\n다 만들면 막아야 할 예 다섯 개, 허용해야 할 예 다섯 개로 직접 시험해서 결과를 표로 보여 줘.', '검증 Agent': '결과물을 원본과 대조하는 읽기 전용 검증 Agent를 만들어 줘.\n숫자 · 날짜 · 빠진 항목 · 지어낸 내용을 찾아서 통과 / 실패와 근거(파일:줄)만 알려 주고, 고치지는 않게.\nCLAUDE.md에도 「끝내기 전에 검증 Agent에게 대조를 맡긴다」를 넣어 줘.', '평가': '이 업무를 채점할 수 있게 평가 문항을 만들어 줘.\n과거 사례 〈5〉건에 까다로운 경우 〈2〉건을 더해서, 각각 입력 · 기대 결과 · 꼭 들어갈 말 · 들어가면 안 되는 말을\neval/cases.jsonl 에 넣고, O / X로 채점하는 스크립트도 만들어 줘. 지금 하네스로 한 번 돌려서 점수를 보여 줘.', '고치기': '방금 채점에서 틀린 걸 보고 하네스를 고쳐 줘.\n원인이 절차면 Skill, 공통 원칙이면 CLAUDE.md, 꼭 막아야 하는 거면 Hook을 고치고,\n무엇을 왜 바꿨는지 한 줄씩 남겨 줘. 다시 채점해서 전후 점수도 비교해 줘.'}
 
 
 LAB_FILES = set()   # build.py가 docs/dl/ 에 zip · 파일로 만든다
@@ -374,7 +375,7 @@ def esc(x):
     return x.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-KIT_TEXT = {"PROMPT22": 'lab2_hook_by_claude/project 에 PreToolUse Hook을 만들어 줘.\n\n막을 것:\n- 운영 DB(db/prod.db, `--env prod`)에 쓰는 모든 동작 — UPDATE · INSERT · DELETE · DROP, sqlite3 직접 실행, python으로 직접 접속, 파일 덮어쓰기(cp · mv · Write)\n- `rm -rf`\n- `.env` 읽기 · 출력 (Read 도구, cat 등)\n- `git push --force`\n\n허용할 것:\n- 운영 DB 조회(SELECT)\n- 개발 DB(dev)는 읽기 · 쓰기 모두\n- 일반 코드 수정, 리포트 실행, 일반 git push\n\n조건:\n- `lab2_hook_by_claude/project/.claude/hooks/guard.py`에 만들고 같은 폴더 `.claude/settings.json`에 등록\n- 막을 때는 exit 2와 함께 이유를 한 줄로 (「운영 DB 쓰기는 사용자 허락 필요」처럼)\n- 표준 라이브러리만\n- 다 만들면 `python3 lab2_hook_by_claude/check_hook.py`로 시험하고, 실패한 사례가 있으면 고쳐서 다시 시험'}
+KIT_TEXT = {"PROMPT22": 'lab2_hook_by_claude/project 에 운영 DB를 지키는 Hook을 만들어 줘.\n운영 DB(db/prod.db)를 바꾸는 건 어떤 방법이든 막고, 조회는 허용해 줘. 개발 DB는 마음대로 써도 돼.\n그 밖에 rm -rf, .env 읽기, git push --force 도 막아 줘.\n막을 때는 「운영 DB 쓰기는 사용자 허락 필요」처럼 이유를 한 줄로 알려 주고, 외부 패키지는 쓰지 말아 줘.\n다 만들면 python3 lab2_hook_by_claude/check_hook.py 로 시험해서, 실패한 게 있으면 고치고 다시 시험해 줘.'}
 
 
 
@@ -489,7 +490,7 @@ def opening():
             ["<b>10:30</b>", "Ch2 Claude Code 하네스 분해 · Skill · Hook", "<b>2-2 필수</b> · Claude로 Hook 만들기 · 2-1 · 2-3 선택"],
             ["<b>11:40</b>", "Ch3 컨텍스트 엔지니어링", "3-1 시연"],
             ["<b>13:10</b>", "Ch4 공개 하네스 · 다른 회사 사례 · Ch5 멀티에이전트", "4-1 · 5-1 시연 · 5-2 선택"],
-            ["<b>14:20</b>", "Ch6 토큰 경제학", "6-1 시연"],
+            ["<b>14:20</b>", "Ch6 토큰 경제학", "6-1 시연 · 6-2 선택 · 토큰 아끼는 하네스"],
             ["<b>14:50</b>", "Ch7 평가 · HITL · 회귀 테스트", "<b>7-1 필수</b> · 회귀 테스트 · 사람 판정"],
             ["<b>15:50</b>", "Ch8 내 하네스 만들기 (사전 과제 주제)", "<b>8-1 필수</b> · 메타 하네스로 내 하네스 · 90분"],
             ["<b>17:20</b>", "패들릿 공유 · 1~2분 발표", "—"],
@@ -498,6 +499,15 @@ def opening():
               + '<div class="kit wide" style="margin-top:22px">' + code("처음 한 번 · labs 폴더에서", esc("python3 · claude 버전을 확인하고\nlabs 폴더의 실습 폴더 목록을 보여 줘"))
               + code("막히면", esc("방금 오류를 보고 원인과 고칠 방법을 알려 줘. 내 PC 설정은 바꾸기 전에 물어봐"))
               + '</div>' + note("실습 자료", labdir("") + " · 설치할 패키지 없음 (표준 라이브러리만) · 코드는 직접 쓰지 않음"), "시작"),
+        light("요청문은 내 말로", two(
+            '<div class="pgrid2">' + code("양식처럼", 'PreToolUse Hook 생성\n- 막을 것: 〈운영 DB 쓰기 · rm -rf〉\n- 허용: 〈조회〉\n- 위치: .claude/hooks/guard.py · settings.json 등록\n- 차단 시 exit 2 + 이유 한 줄\n- 표준 라이브러리만 · 예 5개씩 시험') + code("말하듯이", '운영 DB를 바꾸는 건 어떤 방법이든 Hook으로 막아 줘.\n조회는 괜찮아. 막을 땐 이유를 한 줄 보여 주고,\n막아야 할 예랑 허용할 예 다섯 개씩으로 직접 시험해서 결과를 보여 줘.') + '</div>',
+            table(["꼭 들어갈 것", "예"], [
+                ["<b>목표</b>", "운영 DB를 지키는 Hook"],
+                ["<b>범위 · 자료</b>", "막을 것 · 허용할 것 · 어느 폴더"],
+                ["<b>확인 방법</b>", "예 다섯 개씩 직접 시험"],
+                ["<b>하지 말 것</b>", "외부 패키지 · 원본 수정"],
+            ]))
+              + note("장표의 요청문", "예시일 뿐 · 이 네 가지만 들어가면 내 말로 바꿔도 같은 결과"), "시작"),
     ]
 
 
@@ -718,7 +728,7 @@ def ch2():
                 ["<b>강제 · 검사</b>", "npx @google/design.md lint DESIGN.md · 토큰 밖 색 검사"],
                 ["<b>평가</b>", "화면 캡처를 사람이 보고 판정"],
             ]) + '</div>',
-            '<div class="ptall">' + code("DESIGN.md 만들기 요청문", "이 화면(또는 첨부한 스크린샷)의 스타일로 DESIGN.md 를 만들어 줘.\n- 맨 위 YAML: colors · typography · rounded · spacing 토큰\n- 섹션 순서: Overview · Colors · Typography · Layout · Elevation &amp; Depth · Shapes · Components · Do's and Don'ts\n그리고 CLAUDE.md 에 「화면을 만들거나 고칠 땐 DESIGN.md 를 읽고 따른다」 한 줄을 추가해 줘.") + "</div>")
+            '<div class="ptall">' + code("DESIGN.md 만들기 · 이렇게 말하면 됨", "이 화면(또는 첨부한 스크린샷)의 스타일을 정리해서 DESIGN.md 를 만들어 줘.\n맨 위에는 색 · 글꼴 · 모서리 · 간격을 YAML 토큰으로, 아래는 Overview부터 Do's and Don'ts까지 형식 순서대로.\n그리고 앞으로 화면을 만들거나 고칠 땐 DESIGN.md 를 따르라고 CLAUDE.md 에 적어 줘.") + "</div>")
               + note("어디에", "Ch8 내 업무 툴에 화면이 있으면 같이 넣기 · 형식이 alpha라 바뀔 수 있음"), "Ch2"),
         light("Sub Agent 경계 설계", table(["경계", "정하는 것", "예: reviewer"], [
             ["<b>도구 집합</b>", "쓸 수 있는 도구", "Read · Grep · Glob"],
@@ -1237,6 +1247,20 @@ def ch6():
             ["quiz.md로 먼저 예상", "기준선 5개 과제 실행 (bench.py)", "레버 켜기: 간결 지시 · caveman · 모델 나누기 · Sub Agent", "토큰 · 정확도 함께 비교 → 남길 레버 고르기"],
             ["레버별 토큰 · 정확도 표", "품질이 떨어진 레버는 제외"], files=labdir("lab6_tokens"), mine="내 업무 1회 토큰 예상 · 쓸 레버 하나"),
         *labkit('6-1', 'Ch6'),
+        lab("6-2", "토큰 아끼는 하네스 만들기", "Ch6",
+            "같은 일을 더 적은 턴 · 토큰으로 · 한 번 알아낸 방법을 Skill + 스크립트로",
+            ["하네스 미적용 상태로 MES 로그 집계 · 매뉴얼 찾기 → 토큰 · 턴 기록", "방금 한 방법을 스크립트 + Skill로 저장해 달라고 요청",
+             "같은 요청을 하네스 적용 상태로 → 토큰 · 턴 비교", "해 보기: 「통째 읽기 금지」 Hook만 넣으면?"],
+            ["미적용 · 적용 토큰 · 턴 · 정답 비교표", "줄어든 이유 한 줄"], files=labdir("token_harness"),
+            mine="내 업무에서 매번 같은 방법으로 찾는 일 하나"),
+        *labkit('6-2', 'Ch6'),
+        stat("실측: 토큰 아끼는 하네스", "Ch6",
+             hbars([("하네스 미적용 ×3", 23.5, False, "23.5만 · 7턴"),
+                    ("「통째 읽기 금지」 Hook ×2", 39, False, "39만 · +66%"),
+                    ("Skill + 스크립트 ×2", 10, True, "10만 · −57%")], top=40,
+                   title="MES 로그 4천 줄 집계 + 매뉴얼에서 처리 기준 찾기 · 정답 모두 맞음 · 턴: 7 → 11 → 4 · Claude Sonnet 5.5")
+             + note("배운 점", "토큰은 대부분 「턴 수 × 매번 다시 읽는 기본 컨텍스트」 · 막기보다 턴을 줄이는 쪽이 절감 · 반복 작업은 스크립트로"),
+             OWN_TOK62, C_WOOWA),
         bridge("다음: 평가 · HITL", "", "Ch6", "→ Ch7 평가 · HITL"),
     ]
 
@@ -1434,8 +1458,8 @@ def ch8():
                 ["<b>⑥ 시험</b>", "try Skill", "미적용 vs 적용 비교표"],
                 ["<b>⑦ 판정</b>", "<b>사람</b>", "합격 · 고칠 점"],
             ])), "Ch8"),
-        light("메타 하네스를 만드는 요청문", '<div class="ptall">' + code("labs/meta_harness 에서 붙여 넣기", '이 폴더에 「하네스를 만드는 하네스(메타 하네스)」를 만들어 줘.\n\n1. CLAUDE.md — 순서: 인터뷰 → 설계 → 사용자 승인 → 생성 → 검토 → 시험 → 판정은 사람\n   원칙: 범용 규칙 금지 · 인터뷰에 나온 것만 · 부품은 필요한 것만 · 하네스마다 docs/&lt;이름&gt;/\n2. .claude/skills/interview/SKILL.md — 질문은 한 번에 하나 · 최대 7개\n   (업무 · 입력 · 결과물 · 판단 기준 · 하면 안 되는 것 · 사람 확인 지점 · 잘했다의 기준)\n3. .claude/skills/spec/SKILL.md — 유형 판별 (문의 응대 · 추출 · 보고 · 비교 · 작성 · 개발)\n   → templates/ 예시 참고 → 부품별 설계 + 넣지 않는 것과 이유 → spec.md → 요약을 보여 주고 멈춤\n4. .claude/skills/build/SKILL.md — 승인된 설계대로 대상 폴더(기본 out/&lt;이름&gt;/)에 파일 생성\n5. .claude/skills/try/SKILL.md — eval 입력마다 미적용 · 적용으로 claude -p → 비교표 · 판정은 하지 않음\n6. .claude/agents/harness-reviewer.md — 읽기 전용 · 지어낸 규칙 · 빠진 차단 검토\n7. .claude/hooks/guard.py + .claude/settings.json — APPROVED 전에는 docs/ 밖에 쓰기 차단 ·\n   APPROVED 는 Claude가 만들지 못하게\n\n다 만들면 파일 목록과 역할을 표로 보여 줘.') + "</div>"
-              + note("막히면", "부록 ⑦ ⑩의 파일 그대로 「파일로 저장」 · .claude 쓰기 승인 요청은 읽고 승인"), "Ch8"),
+        light("메타 하네스를 만드는 요청문", '<div class="ptall">' + code("labs/meta_harness 에서 · 이렇게 말하면 됨", '이 폴더에 「하네스를 만들어 주는 하네스」를 만들어 줘.\n\n내가 어떤 업무를 말하면, 먼저 질문을 한 번에 하나씩(최대 일곱 개) 해서\n업무 · 입력 · 결과물 · 판단 기준 · 하면 안 되는 것 · 사람이 확인할 곳 · 잘했다의 기준을 파악해 줘.\n그걸로 설계안(docs/&lt;이름&gt;/spec.md)을 만들어 보여 주고, 내가 docs/&lt;이름&gt;/APPROVED 를 만들 때까지 기다려.\n\n승인하면 그 업무에 꼭 필요한 부품만 골라 하네스 파일을 만들고, 검토 담당 Agent가 지어낸 규칙이 없는지 본 다음,\n하네스 없이 · 있게 돌려서 비교표를 보여 줘. 판정은 내가 할게.\n승인 전에는 docs/ 밖에 아무것도 못 쓰게 Hook으로 막아 주고, 유형별 예시는 templates/ 를 참고해.\n다 만들면 만든 파일과 역할을 표로 보여 줘.') + "</div>"
+              + note("내 말로", "문장은 바꿔도 됨 · 순서 · 사람 승인 · 승인 전 차단만 들어가면 · 막히면 부록 ⑦ ⑧ 파일 그대로"), "Ch8"),
         light("TDD (테스트 주도 개발)", two(
             '<div>' + flow([("① 빨강", "실패하는 테스트 먼저"), ("② 초록", "통과할 만큼만 구현"), ("③ 정리", "테스트는 그대로 통과")], hl=0)
             + table(["에이전트에게 좋은 이유", ""], [
