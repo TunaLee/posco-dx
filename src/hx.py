@@ -95,6 +95,9 @@ D_HEADLESS = ("Claude Code 문서 · Headless", "https://code.claude.com/docs/en
 HUNTLEY = ("Geoffrey Huntley · Ralph", "https://ghuntley.com/ralph/")
 C_SUPERPOWERS = ("obra/superpowers · Skills", "https://github.com/obra/superpowers")
 OWN_TOK62 = ("직접 실측 2026.10.19 · Sonnet 5.5 · 실습 6-2 과제 그대로", "https://github.com/TunaLee/posco-dx")
+A_GRAPHENG = ("arXiv 2608.21156 · Graph Engineering 2026.8", "https://arxiv.org/abs/2608.21156")
+A_LOOPENG = ("arXiv 2608.21884 · Loop Engineering 2026.8", "https://arxiv.org/abs/2608.21884")
+ADT_LOOP = ("ADTmag · Loop engineering 2026.7", "https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx")
 INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
 INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
 INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
@@ -151,7 +154,7 @@ EVO = [
     ("긴 입력 · 검색", "2023~", "문서를 함께 읽고 답", "무엇을 보여 줄지", "컨텍스트 엔지니어링 · RAG"),
     ("도구 호출", "2023~24", "조회 · 계산 · 실행", "시스템 연결 방식 통일", "함수 호출 · MCP"),
     ("에이전트", "2025~", "계획 · 실행 · 확인을 스스로 반복", "반복해도 같은 품질 · 안전 · 비용", "하네스 엔지니어링"),
-    ("멀티에이전트", "2026~", "여러 Agent가 나눠 동시에", "지휘 · 검증 · 측정", "오케스트레이션 · 평가"),
+    ("멀티에이전트", "2026~", "여러 Agent가 나눠 동시에 · 스스로 반복", "지휘 · 검증 · 멈춤 규칙", "루프 · 그래프 엔지니어링"),
 ]
 
 
@@ -528,6 +531,33 @@ def ch1():
             ["옆 팀 협업", "Sub Agent"], ["결재 · 보안 규정", "Hook · 권한"], ["수습 평가", "평가셋 · 회귀 테스트"],
         ]), "Ch1"),
         light("모델 발전과 요구의 변화", evolution(), "Ch1"),
+        stat("프롬프트에서 그래프까지", "Ch1", flow([
+            ("프롬프트", "한 번의 지시"), ("컨텍스트", "무엇을 보여 줄지"), ("하네스", "모델을 감싸는 장치"),
+            ("루프", "사람 없이 반복"), ("그래프", "여러 Agent 연결")], hl=2)
+            + table(["엔지니어링", "무엇을 설계하나", "이 강의에서"], [
+                ["<b>프롬프트</b>", "질문 · 지시문 하나", "요청문 (자연어)"],
+                ["<b>컨텍스트</b>", "무엇을 언제 보여 줄지 · RAG", "Ch3"],
+                ["<b>하네스</b>", "규칙 · 도구 · 검사 · 권한 · 평가", "Ch1~Ch7 전체"],
+                ["<b>루프</b>", "트리거 · 멈춤 규칙 · 상태 파일 · 검증 Agent · 토큰 예산", "Ch8 루프 하네스"],
+                ["<b>그래프</b>", "작업 · Agent · 검증기 · 사람을 잇는 구조", "Ch5 오케스트레이션 · Superpowers 흐름"],
+            ]) + note("관계", "뒤 단계는 앞 단계를 품음 · 하네스가 약하면 루프 · 그래프도 같이 무너짐"),
+             A_GRAPHENG, A_LOOPENG),
+        stat("루프 엔지니어링 · 그래프 엔지니어링", "Ch1", two(
+            table(["", "루프 엔지니어링"], [
+                ["<b>뜻</b>", "사람이 매번 시키지 않아도 일정 · 저장소 이벤트로 Agent가 도는 구조"],
+                ["<b>부품</b>", "트리거 · 멈춤 조건 · 상태 파일 · 검증 Agent · 토큰 예산 · 사람이 넘겨받는 지점"],
+                ["<b>현황</b>", "저장소 36,710개 조사 → 자율 루프 217개 확인 · 설정은 커밋, 상태 파일은 거의 안 함"],
+                ["<b>도구</b>", "Claude Code /loop (2026.3) · 루프 스크립트 · Stop Hook"],
+                ["<b>주의</b>", "무인 루프는 무인 실수도 반복 (Addy Osmani)"],
+            ]),
+            table(["", "그래프 엔지니어링"], [
+                ["<b>뜻</b>", "작업 · Agent · 시스템 상태를 명시적인 그래프로 설계해 여러 Agent를 조율"],
+                ["<b>왜</b>", "Agent 하나를 키우는 것으로는 복잡한 일의 구조 문제가 안 풀림 → 「시스템 지능」"],
+                ["<b>예</b>", "분류 → 응대 → 검증 (Ch5) · 설계 → 계획 → 구현 → 리뷰 (Superpowers) · LangGraph"],
+                ["<b>주의</b>", "2026년 여름에 생긴 용어 · 이름보다 구조를 볼 것"],
+            ]))
+             + note("공통", "둘 다 하네스 위에 올라감 · 멈춤 규칙 · 검증 · 사람 승인이 없으면 그냥 빨리 틀리는 장치"),
+             A_LOOPENG, A_GRAPHENG, ADT_LOOP),
         light("대화형 작업과 위임형 작업", two(
             cards([("대화형", "질문 → 답 → 사람이 읽고 다음 질문", []),
                    ("사람의 역할", "매 답을 확인 · 실수는 다음 턴에 바로잡음", [])], 1),
