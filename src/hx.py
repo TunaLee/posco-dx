@@ -98,6 +98,7 @@ OWN_TOK62 = ("직접 실측 2026.10.19 · Sonnet 5.5 · 실습 6-2 과제 그대
 A_GRAPHENG = ("arXiv 2608.21156 · Graph Engineering 2026.8", "https://arxiv.org/abs/2608.21156")
 A_LOOPENG = ("arXiv 2608.21884 · Loop Engineering 2026.8", "https://arxiv.org/abs/2608.21884")
 ADT_LOOP = ("ADTmag · Loop engineering 2026.7", "https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx")
+OWN_LAB11 = ("직접 실측 2026.10.19 · Sonnet 5.5 · 실습 1-1 요청 그대로 · 각 3회", "https://github.com/TunaLee/posco-dx")
 INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
 INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
 INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
@@ -583,6 +584,21 @@ def ch1():
                      title="BrowseComp · 같은 모델, 구성만 다름")
              + note("그래서", "하네스는 한 번 만들고 끝이 아니라, 모델이 바뀔 때마다 재고 덜어 낸다"),
              A_FABLE5, SC_FABLE5),
+        ba("CLAUDE.md 한 장 전후 비교", "Ch1",
+           "data 폴더의 운송비 청구를 검증해 줘\n\n→ 대화창에 긴 설명 (약 1,000자)\n→ 결과 파일 없음\n→ 「5건은 지급을 보류하세요」까지 판단",
+           "CLAUDE.md\n결과: out/검증결과.md 표 (운송번호 · 청구 · 정산 · 차이 · 판정)\n지급 · 보류 결정은 하지 않고 담당자 확인으로\n끝내기 전 검산 · 답은 3줄\n\n→ 40건 전체 표 파일 · 3줄 답 · 결정은 사람에게"),
+        lab("1-1", "운송비 청구 검증 · 하네스 전후", "Ch1",
+            "같은 요청 · 같은 자료 · 바뀌는 것은 CLAUDE.md 한 장",
+            ["하네스 미적용 상태로 「운송비 청구를 검증해 줘」", "장표의 CLAUDE.md를 직접 만들기", "하네스 적용 상태로 같은 요청", "정답 · 결과 파일 · 결정 범위 · 답 길이 비교"],
+            ["전후 비교표", "하네스가 바꾼 것 한 줄"], files=labdir("lab1_1_bill_check"), mine="내 업무에서 「결과는 어디에 · 무엇은 사람이」 두 줄"),
+        *labkit('1-1', 'Ch1'),
+        stat("실측: 운송비 청구 검증 전후", "Ch1", table(["", "하네스 미적용 ×3", "CLAUDE.md 한 장 ×3"], [
+            ["<b>이의 제기 5건 찾기</b>", "3 / 3", "3 / 3"],
+            ["<b>결과를 파일로 남김</b>", "0 / 3 · 대화창에만", "<b>3 / 3 · 40건 전체 표</b>"],
+            ["<b>「지급 보류」까지 결정</b>", "2 / 3", "<b>0 / 3 · 담당자 확인으로</b>"],
+            ["<b>대화 답 길이</b>", "약 1,000자", "약 130자 (3줄)"],
+        ]) + note("배운 점", "정답은 둘 다 맞힘 · 하네스가 바꾼 건 일하는 방식 — 기록 · 결정 범위 · 형식"),
+             OWN_LAB11),
         stat("루프 엔지니어링이 가능해진 이유", "Ch1",
              '<div class="eqn">'
              '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div>'
@@ -596,20 +612,6 @@ def ch1():
              '</div>'
              + note("다음 단계", "그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)"),
              C_ANTH_WORK, A_LOOPENG, A_GRAPHENG),
-        light("일관성 측정 지표", table(["지표", "재는 법"], [
-            ["<b>답 일치율</b>", "같은 질문 N번 → 가장 많은 답의 비율"],
-            ["<b>형식 준수율</b>", "정해진 JSON · 표 형식을 지킨 비율"],
-            ["<b>근거 일치</b>", "답의 숫자 · 조항이 원문에 있는 비율"],
-            ["<b>토큰</b>", "실행 1회당 입력 · 캐시 · 출력"],
-        ]), "Ch1"),
-        ba("CLAUDE.md 한 장 전후 비교", "Ch1",
-           "이 사양서에서 품목과 수량 알려 줘\n\n→ 1회: 표 · 2회: 문장 · 3회: 수량 단위 누락",
-           "CLAUDE.md\n역할: 사양서 추출 담당\n출력: JSON {품목, 규격, 재질, 수량, 단위, 비고}\n규칙: 원문에 없는 숫자는 쓰지 않음, 없으면 null\n\n→ 10회 모두 같은 JSON"),
-        lab("1-1", "같은 질문 열 번", "Ch1",
-            "하네스 미적용 vs CLAUDE.md 한 장 · 같은 질문 열 번",
-            ["하네스 미적용 상태로 같은 질문 10번", "장표의 CLAUDE.md를 직접 만들기", "하네스 적용 상태로 같은 질문 10번", "답 종류 · 형식 · 약속 여부 비교"],
-            ["형식이 같은 답 10 / 10", "비교표를 최종 산출물 폴더에 저장"], files=labdir("lab1_1_same_question"), mine="내 업무의 답 형식 · 규칙을 CLAUDE.md 세 줄로"),
-        *labkit('1-1', 'Ch1'),
         bridge("다음: Claude Code 하네스 구조", "", "Ch1", "→ Ch2"),
     ]
 

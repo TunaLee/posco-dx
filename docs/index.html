@@ -1029,43 +1029,27 @@ labs 폴더의 실습 폴더 목록을 보여 줘</code></pre></div><div class="
   <div class="body"><div class="mid"><div class="qt"><p>예전 Claude 모델은 포켓몬을 하려면 복잡한 도우미 하네스가 필요했다. Claude Fable 5는 화면만 보고 게임을 끝냈다</p><span>Anthropic, Claude Fable 5 발표 2026.6</span></div><div class="hbars"><div class="hbt">BrowseComp · 같은 모델, 구성만 다름</div><div class="hb" style="--d:0.00s"><span class="hn">Mythos 5 · 단일 Agent</span><span class="ht"><span class="hf" style="width:88.0%"></span></span><span class="hv">88.0%</span></div><div class="hb hl" style="--d:0.10s"><span class="hn">Mythos 5 · 멀티에이전트</span><span class="ht"><span class="hf" style="width:93.3%"></span></span><span class="hv">93.3%</span></div></div><div class="dbnote"><span>그래서</span> 하네스는 한 번 만들고 끝이 아니라, 모델이 바뀔 때마다 재고 덜어 낸다</div><div class="src">출처 · <a href="https://www.anthropic.com/news/claude-fable-5-mythos-5" target="_blank" rel="noopener">Anthropic · Claude Fable 5 발표 2026.6</a> · <a href="https://anthropic.com/claude-fable-5-mythos-5-system-card" target="_blank" rel="noopener">Claude Fable 5 · Mythos 5 System Card 2026.6</a></div></div></div>
 </section>
 
-<section class="slide lt" data-title="루프 엔지니어링이 가능해진 이유">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch1</span></div>
-  <h2 class="s-title sm">루프 엔지니어링이 가능해진 이유</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="eqn"><div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div><div class="eq-d">사람 없이 이어서 하는 도구 호출 · 최대 연속 (Anthropic 사내 조사)</div></div><div class="eq-op">+</div><div class="eq-c"><div class="eq-h">하네스가 좋아짐</div><div class="eq-v sm">기록 · 테스트 · 검증 · 멈춤 규칙</div><div class="eq-d">사람이 중간에 안 봐도 품질을 지키는 장치</div></div><div class="eq-op">=</div><div class="eq-c hl"><div class="eq-h">루프 엔지니어링</div><div class="eq-v sm">사람 없이 반복</div><div class="eq-d">일정 · 이벤트로 Agent가 스스로 돌고 사람은 끝에 판정</div></div></div><div class="dbnote"><span>다음 단계</span> 그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)</div><div class="src">출처 · <a href="https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic" target="_blank" rel="noopener">Anthropic · How AI is transforming work 2025.12</a> · <a href="https://arxiv.org/abs/2608.21884" target="_blank" rel="noopener">arXiv 2608.21884 · Loop Engineering 2026.8</a> · <a href="https://arxiv.org/abs/2608.21156" target="_blank" rel="noopener">arXiv 2608.21156 · Graph Engineering 2026.8</a></div></div></div>
-</section>
-
-<section class="slide lt" data-title="일관성 측정 지표">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch1</span></div>
-  <h2 class="s-title sm">일관성 측정 지표</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>지표</th><th>재는 법</th></tr></thead><tbody><tr><td><b>답 일치율</b></td><td>같은 질문 N번 → 가장 많은 답의 비율</td></tr><tr><td><b>형식 준수율</b></td><td>정해진 JSON · 표 형식을 지킨 비율</td></tr><tr><td><b>근거 일치</b></td><td>답의 숫자 · 조항이 원문에 있는 비율</td></tr><tr><td><b>토큰</b></td><td>실행 1회당 입력 · 캐시 · 출력</td></tr></tbody></table></div></div>
-</section>
-
 <section class="slide lt" data-title="CLAUDE.md 한 장 전후 비교">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch1</span></div>
   <h2 class="s-title sm">CLAUDE.md 한 장 전후 비교</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="ba">
-  <div class="b"><div class="lab">Before</div><div class="q">이 사양서에서 품목과 수량 알려 줘<br/><br/>→ 1회: 표 · 2회: 문장 · 3회: 수량 단위 누락</div></div>
+  <div class="b"><div class="lab">Before</div><div class="q">data 폴더의 운송비 청구를 검증해 줘<br/><br/>→ 대화창에 긴 설명 (약 1,000자)<br/>→ 결과 파일 없음<br/>→ 「5건은 지급을 보류하세요」까지 판단</div></div>
   <div class="arr">→</div>
-  <div class="a"><div class="lab">After</div><div class="q">CLAUDE.md<br/>역할: 사양서 추출 담당<br/>출력: JSON {품목, 규격, 재질, 수량, 단위, 비고}<br/>규칙: 원문에 없는 숫자는 쓰지 않음, 없으면 null<br/><br/>→ 10회 모두 같은 JSON</div></div>
+  <div class="a"><div class="lab">After</div><div class="q">CLAUDE.md<br/>결과: out/검증결과.md 표 (운송번호 · 청구 · 정산 · 차이 · 판정)<br/>지급 · 보류 결정은 하지 않고 담당자 확인으로<br/>끝내기 전 검산 · 답은 3줄<br/><br/>→ 40건 전체 표 파일 · 3줄 답 · 결정은 사람에게</div></div>
 </div></div></div>
 </section>
 
-<section class="slide lt labs" data-title="[실습 1-1] 같은 질문 열 번">
+<section class="slide lt labs" data-title="[실습 1-1] 운송비 청구 검증 · 하네스 전후">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch1</span><span class="labtag">실습 1-1</span><span class="kindtag k필수">필수 · 15분</span></div>
-  <h2 class="s-title sm">같은 질문 열 번</h2>
+  <h2 class="s-title sm">운송비 청구 검증 · 하네스 전후</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>하네스 미적용 vs CLAUDE.md 한 장 · 같은 질문 열 번</p><div class="lf">사용 파일 · <code class="lfold">labs/lab1_1_same_question</code></div><div class="mine"><span>내 업무 적용</span>내 업무의 답 형식 · 규칙을 CLAUDE.md 세 줄로</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 같은 질문 10번</li><li>장표의 CLAUDE.md를 직접 만들기</li><li>하네스 적용 상태로 같은 질문 10번</li><li>답 종류 · 형식 · 약속 여부 비교</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>형식이 같은 답 10 / 10</li><li>비교표를 최종 산출물 폴더에 저장</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>같은 요청 · 같은 자료 · 바뀌는 것은 CLAUDE.md 한 장</p><div class="lf">사용 파일 · <code class="lfold">labs/lab1_1_bill_check</code></div><div class="mine"><span>내 업무 적용</span>내 업무에서 「결과는 어디에 · 무엇은 사람이」 두 줄</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 「운송비 청구를 검증해 줘」</li><li>장표의 CLAUDE.md를 직접 만들기</li><li>하네스 적용 상태로 같은 요청</li><li>정답 · 결과 파일 · 결정 범위 · 답 길이 비교</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>전후 비교표</li><li>하네스가 바꾼 것 한 줄</li></ul></div>
   </div></div>
 </section>
 
@@ -1074,23 +1058,33 @@ labs 폴더의 실습 폴더 목록을 보여 줘</code></pre></div><div class="
   <div class="eyebrow"><span class="tag">Ch1</span></div>
   <h2 class="s-title sm">실습 1-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>lab1_1_same_question/</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용 · 10번</span></div><pre><code>lab1_1_same_question 폴더 안에서 질문.txt 의 질문을
-claude -p --setting-sources "" --tools "" 로 10번 실행해
-답을 labs 바로 아래 runs/1-1/미적용_01.txt ~ 10.txt 로 저장해 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>탐색기에서 새 파일 <b>lab1_1_same_question/CLAUDE.md</b> → 오른쪽 「복사」 → 붙여 넣기 → 저장</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 하네스 적용 · 10번</span></div><pre><code>lab1_1_same_question 폴더 안에서 질문.txt 의 질문을
-claude -p --setting-sources project --tools "" 로 10번 실행해
-답을 labs 바로 아래 runs/1-1/적용_01.txt ~ 10.txt 로 저장해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 비교</span></div><pre><code>runs/1-1/ 의 미적용 · 적용 답을 비교해 표로 정리해 줘:
-분야 판단 종류 수 · 같은 형식(JSON) 답 수 · 교체를 약속한 답 수 · 평균 글자 수</code></pre></div></div><div class="kf"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">lab1_1_same_question/CLAUDE.md</span></div><pre><code># 사내 문의 응대
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>lab1_1_bill_check/</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit"><div class="kp"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용</span></div><pre><code>lab1_1_bill_check 폴더 안에서 하네스 없이(claude -p --setting-sources "") 「data 폴더의 운송비 청구를 검증해 줘.」를 실행하고
+답을 labs 바로 아래 runs/1-1/미적용.md 로 저장해 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>탐색기에서 새 파일 <b>lab1_1_bill_check/CLAUDE.md</b> → 오른쪽 「복사」 → 붙여 넣기 → 저장</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 하네스 적용</span></div><pre><code>lab1_1_bill_check 폴더 안에서 같은 요청을 claude -p --setting-sources project 로 실행하고
+답을 labs 바로 아래 runs/1-1/적용.md 로 저장해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 비교</span></div><pre><code>runs/1-1/ 의 두 답과 lab1_1_bill_check/out/ 을 보고 표로 비교해 줘:
+이의 제기 건 · 결과 파일이 있는지 · 지급 여부까지 판단했는지 · 답 길이</code></pre></div></div><div class="kf"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">lab1_1_bill_check/CLAUDE.md</span></div><pre><code># 운송비 청구 검증
 
-너는 사내 헬프데스크 담당이다. 문의 하나에 아래 형식의 JSON 한 줄만 답한다.
-JSON 밖에 다른 글이나 코드 블록 표시를 쓰지 않는다.
+- 결과는 out/검증결과.md 에 표로 남긴다: 운송번호 · 청구액 · 정산액 · 차이(%) · 판정
+- 판정은 「정상」 또는 「이의 제기」 두 가지만. 기준은 data/정산기준.md
+- 지급 · 보류 결정은 하지 않는다. 이의 제기 건은 「담당자 확인 필요」로 넘긴다
+- 원본(data/)은 고치지 않는다
+- 끝내기 전에 이의 제기 건의 정산액을 한 번 더 계산해 검산한다
+- 대화창 답은 3줄: 전체 건수 · 이의 제기 건수 · 결과 파일 경로</code></pre></div></div></div><div class="dbnote"><span>참고</span> 미적용을 다시 할 땐 CLAUDE.md를 잠시 다른 이름으로</div></div></div>
+</section>
 
-{"분야": "IT", "답변": "3문장 이내", "담당": "IT지원팀", "사람확인": false}
+<section class="slide lt" data-title="실측: 운송비 청구 검증 전후">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">실측: 운송비 청구 검증 전후</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th></th><th>하네스 미적용 ×3</th><th>CLAUDE.md 한 장 ×3</th></tr></thead><tbody><tr><td><b>이의 제기 5건 찾기</b></td><td>3 / 3</td><td>3 / 3</td></tr><tr><td><b>결과를 파일로 남김</b></td><td>0 / 3 · 대화창에만</td><td><b>3 / 3 · 40건 전체 표</b></td></tr><tr><td><b>「지급 보류」까지 결정</b></td><td>2 / 3</td><td><b>0 / 3 · 담당자 확인으로</b></td></tr><tr><td><b>대화 답 길이</b></td><td>약 1,000자</td><td>약 130자 (3줄)</td></tr></tbody></table><div class="dbnote"><span>배운 점</span> 정답은 둘 다 맞힘 · 하네스가 바꾼 건 일하는 방식 — 기록 · 결정 범위 · 형식</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx" target="_blank" rel="noopener">직접 실측 2026.10.19 · Sonnet 5.5 · 실습 1-1 요청 그대로 · 각 3회</a></div></div></div>
+</section>
 
-## 규칙
-- 분야는 IT · 구매 · 인사 · 보안 · 기타 중 하나. 섞여 있으면 먼저 처리할 쪽
-- 교체 · 환불 · 승인처럼 담당 부서가 정할 일은 약속하지 않고 사람확인 true
-- 개인 기기의 업무 사용은 보안 규정 확인 대상으로 안내한다
-- 모르는 규정 번호 · 날짜 · 연락처는 지어내지 않는다</code></pre></div></div></div><div class="dbnote"><span>참고</span> 결과는 lab 폴더 밖 runs/ 에 · 미적용을 다시 하려면 CLAUDE.md를 잠시 다른 이름으로 (폴더 안 파일은 Claude가 읽음)</div></div></div>
+<section class="slide lt" data-title="루프 엔지니어링이 가능해진 이유">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">루프 엔지니어링이 가능해진 이유</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="eqn"><div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div><div class="eq-d">사람 없이 이어서 하는 도구 호출 · 최대 연속 (Anthropic 사내 조사)</div></div><div class="eq-op">+</div><div class="eq-c"><div class="eq-h">하네스가 좋아짐</div><div class="eq-v sm">기록 · 테스트 · 검증 · 멈춤 규칙</div><div class="eq-d">사람이 중간에 안 봐도 품질을 지키는 장치</div></div><div class="eq-op">=</div><div class="eq-c hl"><div class="eq-h">루프 엔지니어링</div><div class="eq-v sm">사람 없이 반복</div><div class="eq-d">일정 · 이벤트로 Agent가 스스로 돌고 사람은 끝에 판정</div></div></div><div class="dbnote"><span>다음 단계</span> 그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)</div><div class="src">출처 · <a href="https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic" target="_blank" rel="noopener">Anthropic · How AI is transforming work 2025.12</a> · <a href="https://arxiv.org/abs/2608.21884" target="_blank" rel="noopener">arXiv 2608.21884 · Loop Engineering 2026.8</a> · <a href="https://arxiv.org/abs/2608.21156" target="_blank" rel="noopener">arXiv 2608.21156 · Graph Engineering 2026.8</a></div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="다음: Claude Code 하네스 구조">

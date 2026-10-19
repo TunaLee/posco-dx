@@ -5,13 +5,13 @@ files: (저장 이름, 화면 경로, 원본) · 원본이 @로 시작하면 src
 """
 
 KITS = {
-    "1-1": dict(folder="lab1_1_same_question", steps=[
-        ("① 하네스 미적용 · 10번", "p", "lab1_1_same_question 폴더 안에서 질문.txt 의 질문을\nclaude -p --setting-sources \"\" --tools \"\" 로 10번 실행해\n답을 labs 바로 아래 runs/1-1/미적용_01.txt ~ 10.txt 로 저장해 줘"),
-        ("② 하네스 만들기", "do", "탐색기에서 새 파일 <b>lab1_1_same_question/CLAUDE.md</b> → 오른쪽 「복사」 → 붙여 넣기 → 저장"),
-        ("③ 하네스 적용 · 10번", "p", "lab1_1_same_question 폴더 안에서 질문.txt 의 질문을\nclaude -p --setting-sources project --tools \"\" 로 10번 실행해\n답을 labs 바로 아래 runs/1-1/적용_01.txt ~ 10.txt 로 저장해 줘"),
-        ("④ 비교", "p", "runs/1-1/ 의 미적용 · 적용 답을 비교해 표로 정리해 줘:\n분야 판단 종류 수 · 같은 형식(JSON) 답 수 · 교체를 약속한 답 수 · 평균 글자 수"),
-    ], files=[("CLAUDE.md", "lab1_1_same_question/CLAUDE.md", "@1-1/CLAUDE.md")],
-        tip="결과는 lab 폴더 밖 runs/ 에 · 미적용을 다시 하려면 CLAUDE.md를 잠시 다른 이름으로 (폴더 안 파일은 Claude가 읽음)"),
+    "1-1": dict(folder="lab1_1_bill_check", steps=[
+        ("① 하네스 미적용", "p", "lab1_1_bill_check 폴더 안에서 하네스 없이(claude -p --setting-sources \"\") 「data 폴더의 운송비 청구를 검증해 줘.」를 실행하고\n답을 labs 바로 아래 runs/1-1/미적용.md 로 저장해 줘"),
+        ("② 하네스 만들기", "do", "탐색기에서 새 파일 <b>lab1_1_bill_check/CLAUDE.md</b> → 오른쪽 「복사」 → 붙여 넣기 → 저장"),
+        ("③ 하네스 적용", "p", "lab1_1_bill_check 폴더 안에서 같은 요청을 claude -p --setting-sources project 로 실행하고\n답을 labs 바로 아래 runs/1-1/적용.md 로 저장해 줘"),
+        ("④ 비교", "p", "runs/1-1/ 의 두 답과 lab1_1_bill_check/out/ 을 보고 표로 비교해 줘:\n이의 제기 건 · 결과 파일이 있는지 · 지급 여부까지 판단했는지 · 답 길이"),
+    ], files=[("CLAUDE.md", "lab1_1_bill_check/CLAUDE.md", "@1-1/CLAUDE.md")],
+        tip="미적용을 다시 할 땐 CLAUDE.md를 잠시 다른 이름으로"),
 
     "2-1": dict(folder="lab2_1_parts", split=True, steps=[
         ("① 하네스 미적용", "p", "lab2_1_parts 폴더 안에서 아래 두 요청을 하나씩\nclaude -p --setting-sources \"\" --output-format stream-json --verbose 로 실행해\nlabs 바로 아래 runs/2-1/미적용_1.jsonl · 2.jsonl 로 저장해 줘\n1. 어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘\n2. src/order_api.py 리뷰해 줘"),

@@ -11,7 +11,7 @@
 
 | 장표 | 실습 폴더 | 하네스 (장표에 있음) |
 |---|---|---|
-| 1-1 같은 질문 열 번 | `lab1_1_same_question/` | CLAUDE.md |
+| 1-1 운송비 청구 검증 · 하네스 전후 | `lab1_1_bill_check/` | CLAUDE.md |
 | 2-1 Skill · Sub Agent | `lab2_1_parts/` | SKILL.md · reviewer.md |
 | 2-2 Claude로 Hook 만들기 | `lab2_hook_by_claude/project/` | Hook 요청문 |
 | 2-3 업무 처리 하네스 | `work_harness/workspace/` | CLAUDE.md · Skill 두 개 |
