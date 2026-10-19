@@ -111,9 +111,9 @@ KITS = {
         ("② 내 주제로 시작", "p", "내 하네스를 만들고 싶어: 〈사전 과제 주제 한 줄〉.\n예시 입력은 ../samples/〈분야〉/ 를 써. 인터뷰부터 시작해 줘"),
         ("③ 사람 승인", "do", "인터뷰 답 → docs/〈이름〉/spec.md 검토 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)"),
         ("④ 생성 · 시험", "p", "docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘"),
-        ("⑤ 개발 주제라면", "do", "생성 대상을 <b>../final_dev_harness</b> 로 · 그 폴더를 VS Code로 열고 「아이디어.md 를 읽고 브레인스토밍부터 시작해 줘」 → plan 승인 → 구현"),
+        ("⑤ 개발 주제라면", "do", "<b>labs/final_dev_harness</b> 를 열고 Superpowers 설치 → 「Superpowers로 개발하기」 요청문 → 설계 승인 · DESIGN.md · 계획 승인 → 구현"),
         ("⑥ 사람 판정 · 공유", "do", "비교표 · 결과물을 직접 판정 → 다음 장 양식으로 패들릿에 올리기"),
-    ], tip="샘플 데이터 labs/samples/ · 요청문이 막히면 부록 ⑦~⑩ 「파일로 저장」"),
+    ], tip="샘플 데이터 labs/samples/ · 요청문이 막히면 부록 ⑦ ⑧ 「파일로 저장」 · 플러그인 설치가 막히면 Superpowers는 강사 시연"),
     "8-2": dict(folder="loop_harness", open="labs/loop_harness", steps=[
         ("① 첫 커밋", "p", "이 폴더를 git 저장소로 만들고 첫 커밋 해 줘"),
         ("② 하네스 만들기", "do", "앞 장 파일 네 개(CLAUDE.md · PROMPT.md · features.json · progress.md)를 같은 이름으로 만들기 → 커밋"),

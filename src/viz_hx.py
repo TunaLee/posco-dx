@@ -462,9 +462,10 @@ def timeline_lanes():
 # 5-2. 개발 하네스 타임라인 — 사람 승인 · 워크트리별 TDD · 병합 · 리뷰
 # ════════════════════════════════════════════════════════════
 def dev_timeline():
+    """Superpowers 개발 흐름 — 설계 승인 · 계획 승인 · 작업마다 새 Sub Agent · 두 단계 리뷰 · 사람 판정."""
     d = _D("dt", 14)
-    lanes = ["사람", "메인", "작업 A", "작업 B", "작업 C", "reviewer"]
-    L0, LH, TX0, TX1 = 40, 64, 150, 1130
+    lanes = ["사람", "메인", "구현 Agent", "스펙 리뷰", "코드 리뷰"]
+    L0, LH, TX0, TX1 = 40, 72, 150, 1130
     TW = TX1 - TX0
     P = .86
 
@@ -480,14 +481,14 @@ def dev_timeline():
         if i % 2 == 0:
             s += f'<rect x="0" y="{y}" width="1160" height="{LH}" fill="{G}" fill-opacity=".28"/>'
         s += _t(128, y + LH / 2, name, "tt", "end", 'style="font-size:17px"')
-    s += _t(128, L0 + 3 * LH + 52, "각자 워크트리", "ts", "end", 'style="font-size:12px"')
+    s += _t(128, L0 + 2 * LH + 56, "작업마다 새로", "ts", "end", 'style="font-size:12px"')
     s += f'<line x1="{TX0-6}" y1="{L0}" x2="{TX0-6}" y2="{L0+len(lanes)*LH}" stroke="{N}" stroke-width="2"/>'
 
     def fade_in(u):
         return [(0, "opacity:0"), (tp(u), "opacity:0"), (tp(u) + 1, "opacity:1"), (96, "opacity:1"), (100, "opacity:0")]
 
     def bar(lane, a, b, label, kind="n"):
-        y = L0 + lane * LH + 12
+        y = L0 + lane * LH + 16
         x, w = tx(a), tx(b) - tx(a)
         fill, stroke, cls = {"n": (N, N, "tw"), "o": (O, O, "tw"), "r": (W, O, "to")}[kind]
         grow = [(0, "transform:scaleX(0);opacity:1"), (tp(a), "transform:scaleX(0);opacity:1"),
@@ -498,23 +499,24 @@ def dev_timeline():
 
     def arrow(u, l1, l2, c=N):
         if l2 > l1:
-            y1, y2 = L0 + l1 * LH + 54, L0 + l2 * LH + 10
+            y1, y2 = L0 + l1 * LH + 58, L0 + l2 * LH + 14
         else:
-            y1, y2 = L0 + l1 * LH + 10, L0 + l2 * LH + 54
+            y1, y2 = L0 + l1 * LH + 14, L0 + l2 * LH + 58
         m = d.id("aho" if c == O else "ah")
         return (f'<line x1="{tx(u):g}" y1="{y1}" x2="{tx(u):g}" y2="{y2}" stroke="{c}" stroke-width="2.5" '
                 f'stroke-dasharray="5 4" marker-end="url(#{m})" {d.a(fade_in(u))}/>')
 
-    s += bar(1, 0, 12, "브레인스토밍") + arrow(12.5, 1, 0) + bar(0, 13, 18, "답")
-    s += arrow(18.5, 0, 1) + bar(1, 19, 31, "구현 기획") + arrow(31.5, 1, 0, O)
-    s += bar(0, 32, 41, "승인", "o") + arrow(41.5, 0, 1, O) + bar(1, 42, 47, "위임")
-    s += arrow(47.5, 1, 2) + arrow(48.5, 1, 3) + arrow(49.5, 1, 4)
-    s += bar(2, 49, 58, "테스트 ✗", "r") + bar(2, 58, 71, "구현 ✓")
-    s += bar(3, 50, 57, "테스트 ✗", "r") + bar(3, 57, 66, "구현 ✓")
-    s += bar(4, 51, 61, "테스트 ✗", "r") + bar(4, 61, 73, "구현 ✓")
-    s += arrow(66.5, 3, 1) + arrow(71.5, 2, 1) + arrow(73.5, 4, 1)
-    s += bar(1, 74, 82, "병합 · 테스트") + arrow(82.5, 1, 5) + bar(5, 83, 88, "검토")
-    s += arrow(88.5, 5, 1) + bar(1, 89, 92, "반영") + arrow(92.5, 1, 0, O) + bar(0, 93, 100, "판정", "o")
+    s += bar(1, 0, 10, "brainstorming") + arrow(10.5, 1, 0) + bar(0, 11, 17, "설계 승인", "o")
+    s += arrow(17.5, 0, 1, O) + bar(1, 18, 30, "worktree · 계획") + arrow(30.5, 1, 0, O) + bar(0, 31, 38, "계획 승인", "o")
+    s += arrow(38.5, 0, 1, O)
+    x = 39
+    for k in (1, 2):
+        s += arrow(x + .5, 1, 2) + bar(2, x + 1, x + 7, "테스트 ✗", "r") + bar(2, x + 7, x + 14, "구현 ✓")
+        s += arrow(x + 14.5, 2, 3) + bar(3, x + 15, x + 20, "스펙") + arrow(x + 20.5, 3, 4) + bar(4, x + 21, x + 26, "품질")
+        s += arrow(x + 26.5, 4, 1)
+        s += _t(tx(x + 7), L0 + 2 * LH + 8, f"작업 {k}", "ts", "middle", 'style="font-size:12px"')
+        x += 27
+    s += bar(1, 93, 96.5, "PR") + arrow(96.8, 1, 0, O) + bar(0, 97, 100, "판정", "o")
     ph = (f'<line x1="0" y1="{L0-6}" x2="0" y2="{L0+len(lanes)*LH+6}" stroke="{O}" stroke-width="3"/>'
           f'<circle cx="0" cy="{L0-6}" r="6" fill="{O}"/>')
     s += (f'<g class="mv" {d.a([(0, f"{_tr(TX0, 0)};opacity:1"), (P * 100, f"{_tr(TX1, 0)};opacity:1"), (92, f"{_tr(TX1, 0)};opacity:1"), (96, f"{_tr(TX1, 0)};opacity:0"), (100, f"{_tr(TX0, 0)};opacity:0")])}>{ph}</g>')

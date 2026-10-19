@@ -835,7 +835,7 @@
   <div class="eyebrow"><span class="tag">시작</span></div>
   <h2 class="s-title sm">최종 산출물</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>산출물</th><th>내용</th></tr></thead><tbody><tr><td><b>메타 하네스</b></td><td>인터뷰 → 설계 → 사람 승인 → 상황에 맞는 하네스 생성 · 시험</td></tr><tr><td><b>내 업무 하네스</b></td><td>메타 하네스로 만든 업무 전용 하네스 · 하네스 미적용과 전후 비교</td></tr><tr><td><b>개발 멀티에이전트 하네스</b></td><td>브레인스토밍 → 기획 → 사람 승인 → 병렬 TDD → 리뷰</td></tr><tr><td><b>내 업무 툴</b></td><td>위 하네스로 만든 Node 툴 · 테스트 통과</td></tr><tr><td><b>사람 판정 기록</b></td><td>내가 정한 합격 기준으로 직접 판정 · 2분 발표</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>산출물</th><th>내용</th></tr></thead><tbody><tr><td><b>메타 하네스</b></td><td>인터뷰 → 설계 → 사람 승인 → 상황에 맞는 하네스 생성 · 시험</td></tr><tr><td><b>내 업무 하네스</b></td><td>메타 하네스로 만든 업무 전용 하네스 · 하네스 미적용과 전후 비교</td></tr><tr><td><b>내 업무 툴</b></td><td>Superpowers로 설계 · 계획 승인 · TDD · 화면은 DESIGN.md</td></tr><tr><td><b>사람 판정 기록</b></td><td>내가 정한 합격 기준으로 직접 판정 · 2분 발표</td></tr></tbody></table></div></div>
 </section>
 
 <section class="slide lt" data-title="실습 환경">
@@ -1550,7 +1550,7 @@ claude -p --setting-sources project --permission-mode acceptEdits "리포트 오
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">하네스 적용 예시 여섯 유형</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>유형</th><th>실습 예시</th><th>내 업무라면 (예)</th><th>하네스 핵심</th></tr></thead><tbody><tr><td><b>문의 응대형</b></td><td>사내 문의 답변</td><td>고객 클레임 1차 답변 · 시스템 사용 문의</td><td>규정 근거 Skill · 승인 필요 건은 사람에게 · 발송 차단</td></tr><tr><td><b>문서 추출 · 계산형</b></td><td>사양서 → 견적</td><td>발주서 검토 · 계약 조항 추출</td><td>추출 양식 Skill · 불일치면 보류 · 원본 수정 차단</td></tr><tr><td><b>기록 → 보고서형</b></td><td>점검 기록 → 주간 보고서</td><td>장애 주간 보고 · 생산 실적 보고</td><td>기준값 · 양식 Skill · 빈 값은 확인 필요 · 수치 대조</td></tr><tr><td><b>비교 · 검토형</b></td><td>규정 개정 비교 · 코드 리뷰</td><td>계약 변경점 · 설정 변경 리뷰</td><td>비교 절차 Skill · 검증 Agent · 고치지 않고 판정</td></tr><tr><td><b>정리 · 작성형</b></td><td>회의록 → 할 일 · 안내 메일</td><td>회의 후속 조치 · 공지 · 협력사 메일</td><td>필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지</td></tr><tr><td><b>개발형</b></td><td>내 업무 툴 (Ch8)</td><td>MES 로그 분석 · 정산 검증 배치 · 테스트 보강</td><td>기획 → 사람 승인 → 워크트리 TDD · 리뷰 Agent</td></tr></tbody></table><div class="dbnote"><span>샘플</span> <code class="lfold">labs/samples</code> · 11개 업무 분야 가상 데이터 · 분야마다 하네스 주제 예시 3개</div></div></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>유형</th><th>실습 예시</th><th>내 업무라면 (예)</th><th>하네스 핵심</th></tr></thead><tbody><tr><td><b>문의 응대형</b></td><td>사내 문의 답변</td><td>고객 클레임 1차 답변 · 시스템 사용 문의</td><td>규정 근거 Skill · 승인 필요 건은 사람에게 · 발송 차단</td></tr><tr><td><b>문서 추출 · 계산형</b></td><td>사양서 → 견적</td><td>발주서 검토 · 계약 조항 추출</td><td>추출 양식 Skill · 불일치면 보류 · 원본 수정 차단</td></tr><tr><td><b>기록 → 보고서형</b></td><td>점검 기록 → 주간 보고서</td><td>장애 주간 보고 · 생산 실적 보고</td><td>기준값 · 양식 Skill · 빈 값은 확인 필요 · 수치 대조</td></tr><tr><td><b>비교 · 검토형</b></td><td>규정 개정 비교 · 코드 리뷰</td><td>계약 변경점 · 설정 변경 리뷰</td><td>비교 절차 Skill · 검증 Agent · 고치지 않고 판정</td></tr><tr><td><b>정리 · 작성형</b></td><td>회의록 → 할 일 · 안내 메일</td><td>회의 후속 조치 · 공지 · 협력사 메일</td><td>필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지</td></tr><tr><td><b>개발형</b></td><td>내 업무 툴 (Ch8)</td><td>MES 로그 분석 · 정산 검증 배치 · 테스트 보강</td><td>Superpowers: 설계 → 계획 → Sub Agent TDD · 리뷰</td></tr></tbody></table><div class="dbnote"><span>샘플</span> <code class="lfold">labs/samples</code> · 11개 업무 분야 가상 데이터 · 분야마다 하네스 주제 예시 3개</div></div></div>
 </section>
 
 <section class="slide lt" data-title="업무 처리 하네스 구성">
@@ -2841,6 +2841,14 @@ python compare.py results/before.json results/after.json
   <div class="hub hubtxt" style="left:566px; top:356px">모델</div>
 </section>
 
+<section class="slide lt" data-title="AI에게 일 시키기 전 계획">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">AI에게 일 시키기 전 계획</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="twocol"><table class="dbt"><thead><tr><th>계획 없이 바로 시키면</th><th>계획을 먼저 세우면</th></tr></thead><tbody><tr><td>한 번에 다 만들려다 중간에 흐트러짐</td><td>작은 작업 단위 · 순서가 정해짐</td></tr><tr><td>다 되기 전에 「완료」 선언</td><td>완료 기준 · 테스트가 먼저 정해짐</td></tr><tr><td>요구를 잘못 이해한 채 끝까지 감</td><td>설계 단계에서 사람이 바로잡음</td></tr><tr><td>다시 만들기 · 토큰 낭비</td><td>승인한 계획대로 · 범위 밖 작업 없음</td></tr></tbody></table><div><div class="flow"><div class="fs"><b>탐색</b><span>읽기만</span></div><div class="fa">→</div><div class="fs"><b>계획</b><span>질문 · 설계</span></div><div class="fa">→</div><div class="fs hl"><b>사람 승인</b><span>범위 · 기준</span></div><div class="fa">→</div><div class="fs"><b>구현</b><span>작게 · 테스트</span></div></div><table class="dbt"><thead><tr><th>계획 도구</th><th>어떻게</th></tr></thead><tbody><tr><td><b>플랜 모드</b></td><td>Shift+Tab · 읽기만 하며 계획 → 승인 후 실행</td></tr><tr><td><b>Superpowers</b></td><td>brainstorming → writing-plans</td></tr><tr><td><b>메타 하네스</b></td><td>인터뷰 → spec.md → APPROVED</td></tr></tbody></table></div></div><div class="dbnote"><span>근거</span> Anthropic: 한 번에 다 하려 함 · 일찍 완료 선언이 긴 작업의 주된 실패 · Shopify: 구조 없이 풀어 둔 AI는 실패</div><div class="src">출처 · <a href="https://anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener">Anthropic · Effective harnesses for long-running agents</a> · <a href="https://shopify.engineering/introducing-roast" target="_blank" rel="noopener">Shopify Engineering · Roast 2025.6</a> · <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code Best practices</a></div></div></div>
+</section>
+
 <section class="slide lt" data-title="하네스 브레인스토밍">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
@@ -2906,7 +2914,7 @@ python compare.py results/before.json results/after.json
 7. .claude/hooks/guard.py + .claude/settings.json — APPROVED 전에는 docs/ 밖에 쓰기 차단 ·
    APPROVED 는 Claude가 만들지 못하게
 
-다 만들면 파일 목록과 역할을 표로 보여 줘.</code></pre></div></div><div class="dbnote"><span>막히면</span> 부록 ⑨ ⑩의 파일 그대로 「파일로 저장」 · .claude 쓰기 승인 요청은 읽고 승인</div></div></div>
+다 만들면 파일 목록과 역할을 표로 보여 줘.</code></pre></div></div><div class="dbnote"><span>막히면</span> 부록 ⑦ ⑩의 파일 그대로 「파일로 저장」 · .claude 쓰기 승인 요청은 읽고 승인</div></div></div>
 </section>
 
 <section class="slide lt" data-title="TDD (테스트 주도 개발)">
@@ -2928,48 +2936,22 @@ export const total = (n) =>
   Math.floor(n / 10) * 10;</code></pre></div></div></div></div></div>
 </section>
 
-<section class="slide lt" data-title="개발 멀티에이전트 하네스 구조">
+<section class="slide lt" data-title="Superpowers로 개발하기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
-  <h2 class="s-title sm">개발 멀티에이전트 하네스 구조</h2>
+  <h2 class="s-title sm">Superpowers로 개발하기</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">폴더 구조</span></div><pre><code>final_dev_harness/
-├── CLAUDE.md                  순서 · 원칙
-├── 아이디어.md                만들고 싶은 툴
-├── docs/
-│   ├── brief.md               브레인스토밍 결과
-│   ├── plan.md                구현 기획
-│   └── APPROVED               사람만 만듦
-├── src/ · test/
-└── .claude/
-    ├── settings.json          Hook 등록
-    ├── hooks/plan_gate.mjs    승인 전 구현 차단
-    ├── skills/brainstorm/     질문 → brief
-    ├── skills/plan/           작업 나누기 → plan
-    └── agents/
-        ├── implementer.md     워크트리 · TDD
-        └── reviewer.md        읽기 전용 검토</code></pre></div></div><table class="dbt"><thead><tr><th>단계</th><th>담당</th><th>결과</th></tr></thead><tbody><tr><td><b>① 브레인스토밍</b></td><td>메인 · 사람이 답함</td><td>docs/brief.md</td></tr><tr><td><b>② 구현 기획</b></td><td>메인 (plan Skill)</td><td>docs/plan.md · 작업 2~4개</td></tr><tr><td><b>③ 승인</b></td><td><b>사람</b> · docs/APPROVED</td><td>승인 전 구현은 Hook이 차단</td></tr><tr><td><b>④ 병렬 구현</b></td><td>implementer × 작업 수</td><td>각자 워크트리 · TDD · 커밋</td></tr><tr><td><b>⑤ 통합 · 리뷰</b></td><td>메인 · reviewer</td><td>병합 · 전체 테스트 · 지적 반영</td></tr><tr><td><b>⑥ 최종 판정</b></td><td><b>사람</b> · 직접 써 보기</td><td>합격 · 다시</td></tr></tbody></table></div><div class="dbnote"><span>IT 팀 비유</span> 기획자(사람) → 팀장(메인) → 팀원 여럿(implementer · 각자 브랜치) → QA(reviewer) → 사람이 최종 판정</div></div></div>
+  <div class="body"><div class="mid"><div class="twocol"><table class="dbt"><thead><tr><th>Superpowers Skill</th><th>하는 일</th><th>사람이 할 일</th></tr></thead><tbody><tr><td><b>brainstorming</b></td><td>질문으로 요구 정리 · 설계를 나눠 보여 줌</td><td><b>설계 승인</b></td></tr><tr><td><b>(화면이 있으면)</b></td><td>DESIGN.md로 화면 규칙 먼저 (Ch2)</td><td>색 · 화면 규칙 확인</td></tr><tr><td><b>using-git-worktrees</b></td><td>새 브랜치 · 워크트리 · 테스트 기준선</td><td>—</td></tr><tr><td><b>writing-plans</b></td><td>2~5분 단위 작업 · 파일 경로 · 확인 방법</td><td><b>계획 승인</b></td></tr><tr><td><b>subagent-driven-development</b></td><td>작업마다 새 Sub Agent · TDD · 스펙 리뷰 → 코드 리뷰</td><td>—</td></tr><tr><td><b>finishing-a-development-branch</b></td><td>테스트 확인 · 병합 · PR 정리</td><td><b>최종 판정</b></td></tr></tbody></table><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">final_dev_harness 에서 붙여 넣기</span></div><pre><code>〈만들 웹 앱 한 줄〉 을 만들고 싶어. superpowers 의 brainstorming 부터 시작해 줘.
+화면이 있으니 계획 전에 DESIGN.md 를 먼저 만들고, 화면은 DESIGN.md 를 따르게 해 줘.
+예시 데이터는 ../samples/〈분야〉/ 를 써.</code></pre></div></div></div><div class="dbnote"><span>직접 만들지 않는 이유</span> 개발 멀티에이전트 흐름은 공개 하네스가 이미 잘 갖춤 · 우리는 설치하고 승인 지점을 지키는 데 집중</div><div class="src">출처 · <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers · Skills</a></div></div></div>
 </section>
 
-<section class="slide lt" data-title="개발 하네스 실행 타임라인">
+<section class="slide lt" data-title="Superpowers 실행 타임라인">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
-  <h2 class="s-title sm">개발 하네스 실행 타임라인</h2>
+  <h2 class="s-title sm">Superpowers 실행 타임라인</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><svg class="hxv hx-dt" viewBox="0 0 1160 440" xmlns="http://www.w3.org/2000/svg"><style>.hx-dt{width:100%;height:auto;max-height:470px;display:block;margin:0 auto;overflow:visible}.hx-dt text{font-family:var(--serif);dominant-baseline:middle}.hx-dt .tt{font-size:19px;font-weight:800;fill:#1F3A5F}.hx-dt .ts{font-size:15px;fill:#44506A}.hx-dt .to{font-size:15px;font-weight:700;fill:#F28C28}.hx-dt .tw{font-size:15px;font-weight:700;fill:#FFFFFF}.hx-dt .tn{font-size:15px;font-weight:700;fill:#1F3A5F}@media print{.hx-dt *{animation:none!important}.hx-dt .mv{display:none}}@media (prefers-reduced-motion:reduce){.hx-dt *{animation:none!important}.hx-dt .mv{display:none}}@keyframes hxdt1{0%{transform:scaleX(0);opacity:1}0%{transform:scaleX(0);opacity:1}10.32%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt2{0%{opacity:0}10.32%{opacity:0}11.32%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt3{0%{opacity:0}10.75%{opacity:0}11.75%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt4{0%{transform:scaleX(0);opacity:1}11.18%{transform:scaleX(0);opacity:1}15.48%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt5{0%{opacity:0}15.48%{opacity:0}16.48%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt6{0%{opacity:0}15.91%{opacity:0}16.91%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt7{0%{transform:scaleX(0);opacity:1}16.34%{transform:scaleX(0);opacity:1}26.66%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt8{0%{opacity:0}26.66%{opacity:0}27.66%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt9{0%{opacity:0}27.09%{opacity:0}28.09%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt10{0%{transform:scaleX(0);opacity:1}27.52%{transform:scaleX(0);opacity:1}35.26%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt11{0%{opacity:0}35.26%{opacity:0}36.26%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt12{0%{opacity:0}35.69%{opacity:0}36.69%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt13{0%{transform:scaleX(0);opacity:1}36.12%{transform:scaleX(0);opacity:1}40.42%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt14{0%{opacity:0}40.42%{opacity:0}41.42%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt15{0%{opacity:0}40.85%{opacity:0}41.85%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt16{0%{opacity:0}41.71%{opacity:0}42.71%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt17{0%{opacity:0}42.57%{opacity:0}43.57%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt18{0%{transform:scaleX(0);opacity:1}42.14%{transform:scaleX(0);opacity:1}49.88%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt19{0%{opacity:0}49.88%{opacity:0}50.88%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt20{0%{transform:scaleX(0);opacity:1}49.88%{transform:scaleX(0);opacity:1}61.06%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt21{0%{opacity:0}61.06%{opacity:0}62.06%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt22{0%{transform:scaleX(0);opacity:1}43%{transform:scaleX(0);opacity:1}49.02%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt23{0%{opacity:0}49.02%{opacity:0}50.02%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt24{0%{transform:scaleX(0);opacity:1}49.02%{transform:scaleX(0);opacity:1}56.76%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt25{0%{opacity:0}56.76%{opacity:0}57.76%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt26{0%{transform:scaleX(0);opacity:1}43.86%{transform:scaleX(0);opacity:1}52.46%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt27{0%{opacity:0}52.46%{opacity:0}53.46%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt28{0%{transform:scaleX(0);opacity:1}52.46%{transform:scaleX(0);opacity:1}62.78%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt29{0%{opacity:0}62.78%{opacity:0}63.78%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt30{0%{opacity:0}57.19%{opacity:0}58.19%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt31{0%{opacity:0}61.49%{opacity:0}62.49%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt32{0%{opacity:0}63.21%{opacity:0}64.21%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt33{0%{transform:scaleX(0);opacity:1}63.64%{transform:scaleX(0);opacity:1}70.52%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt34{0%{opacity:0}70.52%{opacity:0}71.52%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt35{0%{opacity:0}70.95%{opacity:0}71.95%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt36{0%{transform:scaleX(0);opacity:1}71.38%{transform:scaleX(0);opacity:1}75.68%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt37{0%{opacity:0}75.68%{opacity:0}76.68%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt38{0%{opacity:0}76.11%{opacity:0}77.11%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt39{0%{transform:scaleX(0);opacity:1}76.54%{transform:scaleX(0);opacity:1}79.12%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt40{0%{opacity:0}79.12%{opacity:0}80.12%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt41{0%{opacity:0}79.55%{opacity:0}80.55%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt42{0%{transform:scaleX(0);opacity:1}79.98%{transform:scaleX(0);opacity:1}86%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt43{0%{opacity:0}86%{opacity:0}87%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt44{0%{transform:translate(150px,0px);opacity:1}86%{transform:translate(1130px,0px);opacity:1}92%{transform:translate(1130px,0px);opacity:1}96%{transform:translate(1130px,0px);opacity:0}100%{transform:translate(150px,0px);opacity:0}}</style><defs><marker id="hxdtah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#1F3A5F"/></marker><marker id="hxdtaho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#F28C28"/></marker><marker id="hxdtahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#9AA3B0"/></marker></defs><text x="150" y="18" text-anchor="start" class="ts" >시간 →</text><rect x="0" y="40" width="1160" height="64" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="72" text-anchor="end" class="tt" style="font-size:17px">사람</text><text x="128" y="136" text-anchor="end" class="tt" style="font-size:17px">메인</text><rect x="0" y="168" width="1160" height="64" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="200" text-anchor="end" class="tt" style="font-size:17px">작업 A</text><text x="128" y="264" text-anchor="end" class="tt" style="font-size:17px">작업 B</text><rect x="0" y="296" width="1160" height="64" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="328" text-anchor="end" class="tt" style="font-size:17px">작업 C</text><text x="128" y="392" text-anchor="end" class="tt" style="font-size:17px">reviewer</text><text x="128" y="284" text-anchor="end" class="ts" style="font-size:12px">각자 워크트리</text><line x1="144" y1="40" x2="144" y2="424" stroke="#1F3A5F" stroke-width="2"/><rect x="150" y="116" width="117.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt1 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="208.8" y="137" text-anchor="middle" class="tw" style="animation:hxdt2 14s linear infinite both;">브레인스토밍</text><line x1="272.5" y1="114" x2="272.5" y2="94" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt3 14s linear infinite both;"/><rect x="277.4" y="52" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt4 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="301.9" y="73" text-anchor="middle" class="tw" style="animation:hxdt5 14s linear infinite both;">답</text><line x1="331.3" y1="94" x2="331.3" y2="114" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt6 14s linear infinite both;"/><rect x="336.2" y="116" width="117.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt7 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="395" y="137" text-anchor="middle" class="tw" style="animation:hxdt8 14s linear infinite both;">구현 기획</text><line x1="458.7" y1="114" x2="458.7" y2="94" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt9 14s linear infinite both;"/><rect x="463.6" y="52" width="88.2" height="40" rx="8" fill="#F28C28" stroke="#F28C28" stroke-width="3" style="animation:hxdt10 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="507.7" y="73" text-anchor="middle" class="tw" style="animation:hxdt11 14s linear infinite both;">승인</text><line x1="556.7" y1="94" x2="556.7" y2="114" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt12 14s linear infinite both;"/><rect x="561.6" y="116" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt13 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="586.1" y="137" text-anchor="middle" class="tw" style="animation:hxdt14 14s linear infinite both;">위임</text><line x1="615.5" y1="158" x2="615.5" y2="178" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt15 14s linear infinite both;"/><line x1="625.3" y1="158" x2="625.3" y2="242" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt16 14s linear infinite both;"/><line x1="635.1" y1="158" x2="635.1" y2="306" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt17 14s linear infinite both;"/><rect x="630.2" y="180" width="88.2" height="40" rx="8" fill="#FFFFFF" stroke="#F28C28" stroke-width="3" style="animation:hxdt18 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="674.3" y="201" text-anchor="middle" class="to" style="animation:hxdt19 14s linear infinite both;">테스트 ✗</text><rect x="718.4" y="180" width="127.4" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt20 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="782.1" y="201" text-anchor="middle" class="tw" style="animation:hxdt21 14s linear infinite both;">구현 ✓</text><rect x="640" y="244" width="68.6" height="40" rx="8" fill="#FFFFFF" stroke="#F28C28" stroke-width="3" style="animation:hxdt22 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="674.3" y="265" text-anchor="middle" class="to" style="animation:hxdt23 14s linear infinite both;">테스트 ✗</text><rect x="708.6" y="244" width="88.2" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt24 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="752.7" y="265" text-anchor="middle" class="tw" style="animation:hxdt25 14s linear infinite both;">구현 ✓</text><rect x="649.8" y="308" width="98" height="40" rx="8" fill="#FFFFFF" stroke="#F28C28" stroke-width="3" style="animation:hxdt26 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="698.8" y="329" text-anchor="middle" class="to" style="animation:hxdt27 14s linear infinite both;">테스트 ✗</text><rect x="747.8" y="308" width="117.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt28 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="806.6" y="329" text-anchor="middle" class="tw" style="animation:hxdt29 14s linear infinite both;">구현 ✓</text><line x1="801.7" y1="242" x2="801.7" y2="158" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt30 14s linear infinite both;"/><line x1="850.7" y1="178" x2="850.7" y2="158" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt31 14s linear infinite both;"/><line x1="870.3" y1="306" x2="870.3" y2="158" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt32 14s linear infinite both;"/><rect x="875.2" y="116" width="78.4" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt33 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="914.4" y="137" text-anchor="middle" class="tw" style="animation:hxdt34 14s linear infinite both;">병합 · 테스트</text><line x1="958.5" y1="158" x2="958.5" y2="370" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt35 14s linear infinite both;"/><rect x="963.4" y="372" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt36 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="987.9" y="393" text-anchor="middle" class="tw" style="animation:hxdt37 14s linear infinite both;">검토</text><line x1="1017.3" y1="370" x2="1017.3" y2="158" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt38 14s linear infinite both;"/><rect x="1022.2" y="116" width="29.4" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt39 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="1036.9" y="137" text-anchor="middle" class="tw" style="animation:hxdt40 14s linear infinite both;">반영</text><line x1="1056.5" y1="114" x2="1056.5" y2="94" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt41 14s linear infinite both;"/><rect x="1061.4" y="52" width="68.6" height="40" rx="8" fill="#F28C28" stroke="#F28C28" stroke-width="3" style="animation:hxdt42 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="1095.7" y="73" text-anchor="middle" class="tw" style="animation:hxdt43 14s linear infinite both;">판정</text><g class="mv" style="animation:hxdt44 14s linear infinite both;"><line x1="0" y1="34" x2="0" y2="430" stroke="#F28C28" stroke-width="3"/><circle cx="0" cy="34" r="6" fill="#F28C28"/></g></svg><div class="dbnote"><span>읽는 법</span> 주황 = 사람 (승인 · 판정) · 주황 테두리 = 실패하는 테스트 먼저 · 작업 A · B · C는 각자 워크트리에서 동시에</div></div></div>
-</section>
-
-<section class="slide lt" data-title="메타 하네스로 개발 하네스 만들기">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch8</span></div>
-  <h2 class="s-title sm">메타 하네스로 개발 하네스 만들기</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">labs/meta_harness 에서 붙여 넣기</span></div><pre><code>개발용 하네스를 만들어 줘. 대상 폴더는 ../final_dev_harness
-- Node.js · 외부 패키지 없음 · 테스트는 node --test
-- 흐름: 브레인스토밍 → 구현 기획 → 사람 승인 → 작업마다 Sub Agent가 각자 워크트리에서 TDD
-  → 병합 · 리뷰 → 사람 판정
-- 승인 전에는 src/ · test/ 쓰기를 Hook으로 막기
-예시는 templates/dev/ 참고 · 인터뷰는 위에 없는 것만 물어봐</code></pre></div></div><table class="dbt"><thead><tr><th></th><th>업무 처리 주제</th><th>개발 주제</th></tr></thead><tbody><tr><td><b>메타 하네스</b></td><td>같은 것</td><td>같은 것</td></tr><tr><td><b>인터뷰 · 설계</b></td><td>업무 유형 · 막을 것</td><td>개발 유형 · 작업 나누기 · 워크트리 · TDD</td></tr><tr><td><b>결과</b></td><td>업무 하네스</td><td>개발 멀티에이전트 하네스 (앞 장 구조)</td></tr></tbody></table><div class="dbnote"><span>막히면</span> 부록 ⑦ ⑧의 개발 하네스 파일 그대로</div></div></div>
+  <div class="body"><div class="mid"><svg class="hxv hx-dt" viewBox="0 0 1160 440" xmlns="http://www.w3.org/2000/svg"><style>.hx-dt{width:100%;height:auto;max-height:470px;display:block;margin:0 auto;overflow:visible}.hx-dt text{font-family:var(--serif);dominant-baseline:middle}.hx-dt .tt{font-size:19px;font-weight:800;fill:#1F3A5F}.hx-dt .ts{font-size:15px;fill:#44506A}.hx-dt .to{font-size:15px;font-weight:700;fill:#F28C28}.hx-dt .tw{font-size:15px;font-weight:700;fill:#FFFFFF}.hx-dt .tn{font-size:15px;font-weight:700;fill:#1F3A5F}@media print{.hx-dt *{animation:none!important}.hx-dt .mv{display:none}}@media (prefers-reduced-motion:reduce){.hx-dt *{animation:none!important}.hx-dt .mv{display:none}}@keyframes hxdt1{0%{transform:scaleX(0);opacity:1}0%{transform:scaleX(0);opacity:1}8.6%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt2{0%{opacity:0}8.6%{opacity:0}9.6%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt3{0%{opacity:0}9.03%{opacity:0}10.03%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt4{0%{transform:scaleX(0);opacity:1}9.46%{transform:scaleX(0);opacity:1}14.62%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt5{0%{opacity:0}14.62%{opacity:0}15.62%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt6{0%{opacity:0}15.05%{opacity:0}16.05%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt7{0%{transform:scaleX(0);opacity:1}15.48%{transform:scaleX(0);opacity:1}25.8%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt8{0%{opacity:0}25.8%{opacity:0}26.8%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt9{0%{opacity:0}26.23%{opacity:0}27.23%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt10{0%{transform:scaleX(0);opacity:1}26.66%{transform:scaleX(0);opacity:1}32.68%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt11{0%{opacity:0}32.68%{opacity:0}33.68%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt12{0%{opacity:0}33.11%{opacity:0}34.11%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt13{0%{opacity:0}33.97%{opacity:0}34.97%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt14{0%{transform:scaleX(0);opacity:1}34.4%{transform:scaleX(0);opacity:1}39.56%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt15{0%{opacity:0}39.56%{opacity:0}40.56%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt16{0%{transform:scaleX(0);opacity:1}39.56%{transform:scaleX(0);opacity:1}45.58%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt17{0%{opacity:0}45.58%{opacity:0}46.58%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt18{0%{opacity:0}46.01%{opacity:0}47.01%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt19{0%{transform:scaleX(0);opacity:1}46.44%{transform:scaleX(0);opacity:1}50.74%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt20{0%{opacity:0}50.74%{opacity:0}51.74%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt21{0%{opacity:0}51.17%{opacity:0}52.17%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt22{0%{transform:scaleX(0);opacity:1}51.6%{transform:scaleX(0);opacity:1}55.9%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt23{0%{opacity:0}55.9%{opacity:0}56.9%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt24{0%{opacity:0}56.33%{opacity:0}57.33%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt25{0%{opacity:0}57.19%{opacity:0}58.19%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt26{0%{transform:scaleX(0);opacity:1}57.62%{transform:scaleX(0);opacity:1}62.78%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt27{0%{opacity:0}62.78%{opacity:0}63.78%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt28{0%{transform:scaleX(0);opacity:1}62.78%{transform:scaleX(0);opacity:1}68.8%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt29{0%{opacity:0}68.8%{opacity:0}69.8%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt30{0%{opacity:0}69.23%{opacity:0}70.23%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt31{0%{transform:scaleX(0);opacity:1}69.66%{transform:scaleX(0);opacity:1}73.96%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt32{0%{opacity:0}73.96%{opacity:0}74.96%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt33{0%{opacity:0}74.39%{opacity:0}75.39%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt34{0%{transform:scaleX(0);opacity:1}74.82%{transform:scaleX(0);opacity:1}79.12%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt35{0%{opacity:0}79.12%{opacity:0}80.12%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt36{0%{opacity:0}79.55%{opacity:0}80.55%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt37{0%{transform:scaleX(0);opacity:1}79.98%{transform:scaleX(0);opacity:1}82.99%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt38{0%{opacity:0}82.99%{opacity:0}83.99%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt39{0%{opacity:0}83.248%{opacity:0}84.248%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt40{0%{transform:scaleX(0);opacity:1}83.42%{transform:scaleX(0);opacity:1}86%{transform:scaleX(1);opacity:1}96%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}@keyframes hxdt41{0%{opacity:0}86%{opacity:0}87%{opacity:1}96%{opacity:1}100%{opacity:0}}@keyframes hxdt42{0%{transform:translate(150px,0px);opacity:1}86%{transform:translate(1130px,0px);opacity:1}92%{transform:translate(1130px,0px);opacity:1}96%{transform:translate(1130px,0px);opacity:0}100%{transform:translate(150px,0px);opacity:0}}</style><defs><marker id="hxdtah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#1F3A5F"/></marker><marker id="hxdtaho" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#F28C28"/></marker><marker id="hxdtahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#9AA3B0"/></marker></defs><text x="150" y="18" text-anchor="start" class="ts" >시간 →</text><rect x="0" y="40" width="1160" height="72" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="76" text-anchor="end" class="tt" style="font-size:17px">사람</text><text x="128" y="148" text-anchor="end" class="tt" style="font-size:17px">메인</text><rect x="0" y="184" width="1160" height="72" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="220" text-anchor="end" class="tt" style="font-size:17px">구현 Agent</text><text x="128" y="292" text-anchor="end" class="tt" style="font-size:17px">스펙 리뷰</text><rect x="0" y="328" width="1160" height="72" fill="#D9DDE3" fill-opacity=".28"/><text x="128" y="364" text-anchor="end" class="tt" style="font-size:17px">코드 리뷰</text><text x="128" y="240" text-anchor="end" class="ts" style="font-size:12px">작업마다 새로</text><line x1="144" y1="40" x2="144" y2="400" stroke="#1F3A5F" stroke-width="2"/><rect x="150" y="128" width="98" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt1 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="199" y="149" text-anchor="middle" class="tw" style="animation:hxdt2 14s linear infinite both;">brainstorming</text><line x1="252.9" y1="126" x2="252.9" y2="98" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt3 14s linear infinite both;"/><rect x="257.8" y="56" width="58.8" height="40" rx="8" fill="#F28C28" stroke="#F28C28" stroke-width="3" style="animation:hxdt4 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="287.2" y="77" text-anchor="middle" class="tw" style="animation:hxdt5 14s linear infinite both;">설계 승인</text><line x1="321.5" y1="98" x2="321.5" y2="126" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt6 14s linear infinite both;"/><rect x="326.4" y="128" width="117.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt7 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="385.2" y="149" text-anchor="middle" class="tw" style="animation:hxdt8 14s linear infinite both;">worktree · 계획</text><line x1="448.9" y1="126" x2="448.9" y2="98" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt9 14s linear infinite both;"/><rect x="453.8" y="56" width="68.6" height="40" rx="8" fill="#F28C28" stroke="#F28C28" stroke-width="3" style="animation:hxdt10 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="488.1" y="77" text-anchor="middle" class="tw" style="animation:hxdt11 14s linear infinite both;">계획 승인</text><line x1="527.3" y1="98" x2="527.3" y2="126" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt12 14s linear infinite both;"/><line x1="537.1" y1="170" x2="537.1" y2="198" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt13 14s linear infinite both;"/><rect x="542" y="200" width="58.8" height="40" rx="8" fill="#FFFFFF" stroke="#F28C28" stroke-width="3" style="animation:hxdt14 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="571.4" y="221" text-anchor="middle" class="to" style="animation:hxdt15 14s linear infinite both;">테스트 ✗</text><rect x="600.8" y="200" width="68.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt16 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="635.1" y="221" text-anchor="middle" class="tw" style="animation:hxdt17 14s linear infinite both;">구현 ✓</text><line x1="674.3" y1="242" x2="674.3" y2="270" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt18 14s linear infinite both;"/><rect x="679.2" y="272" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt19 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="703.7" y="293" text-anchor="middle" class="tw" style="animation:hxdt20 14s linear infinite both;">스펙</text><line x1="733.1" y1="314" x2="733.1" y2="342" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt21 14s linear infinite both;"/><rect x="738" y="344" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt22 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="762.5" y="365" text-anchor="middle" class="tw" style="animation:hxdt23 14s linear infinite both;">품질</text><line x1="791.9" y1="342" x2="791.9" y2="170" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt24 14s linear infinite both;"/><text x="600.8" y="192" text-anchor="middle" class="ts" style="font-size:12px">작업 1</text><line x1="801.7" y1="170" x2="801.7" y2="198" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt25 14s linear infinite both;"/><rect x="806.6" y="200" width="58.8" height="40" rx="8" fill="#FFFFFF" stroke="#F28C28" stroke-width="3" style="animation:hxdt26 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="836" y="221" text-anchor="middle" class="to" style="animation:hxdt27 14s linear infinite both;">테스트 ✗</text><rect x="865.4" y="200" width="68.6" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt28 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="899.7" y="221" text-anchor="middle" class="tw" style="animation:hxdt29 14s linear infinite both;">구현 ✓</text><line x1="938.9" y1="242" x2="938.9" y2="270" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt30 14s linear infinite both;"/><rect x="943.8" y="272" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt31 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="968.3" y="293" text-anchor="middle" class="tw" style="animation:hxdt32 14s linear infinite both;">스펙</text><line x1="997.7" y1="314" x2="997.7" y2="342" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt33 14s linear infinite both;"/><rect x="1002.6" y="344" width="49" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt34 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="1027.1" y="365" text-anchor="middle" class="tw" style="animation:hxdt35 14s linear infinite both;">품질</text><line x1="1056.5" y1="342" x2="1056.5" y2="170" stroke="#1F3A5F" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtah)" style="animation:hxdt36 14s linear infinite both;"/><text x="865.4" y="192" text-anchor="middle" class="ts" style="font-size:12px">작업 2</text><rect x="1061.4" y="128" width="34.3" height="40" rx="8" fill="#1F3A5F" stroke="#1F3A5F" stroke-width="3" style="animation:hxdt37 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="1078.55" y="149" text-anchor="middle" class="tw" style="animation:hxdt38 14s linear infinite both;">PR</text><line x1="1098.64" y1="126" x2="1098.64" y2="98" stroke="#F28C28" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#hxdtaho)" style="animation:hxdt39 14s linear infinite both;"/><rect x="1100.6" y="56" width="29.4" height="40" rx="8" fill="#F28C28" stroke="#F28C28" stroke-width="3" style="animation:hxdt40 14s linear infinite both;transform-box:fill-box;transform-origin:0 50%"/><text x="1115.3" y="77" text-anchor="middle" class="tw" style="animation:hxdt41 14s linear infinite both;">판정</text><g class="mv" style="animation:hxdt42 14s linear infinite both;"><line x1="0" y1="34" x2="0" y2="406" stroke="#F28C28" stroke-width="3"/><circle cx="0" cy="34" r="6" fill="#F28C28"/></g></svg><div class="dbnote"><span>읽는 법</span> 주황 = 사람 (설계 · 계획 승인 · 판정) · 작업마다 새 Sub Agent가 테스트 먼저 → 구현 · 리뷰는 스펙 → 코드 품질 두 단계</div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 8-1] 메타 하네스로 내 하네스 만들기">
@@ -2978,8 +2960,8 @@ export const total = (n) =>
   <h2 class="s-title sm">메타 하네스로 내 하네스 만들기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>사전 과제 주제로 · 업무 처리면 업무 하네스, 개발이면 개발 하네스 · 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/meta_harness</code> · <code class="lfold">labs/samples</code></div><div class="mine"><span>내 업무 적용</span>사전 과제: 반복 업무 하나 + 결과 확인 방법</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>메타 하네스 만들기 (요청문)</li><li>사전 과제 주제 · 샘플 데이터로 인터뷰 → spec.md</li><li>설계 검토 → APPROVED 직접 (사람 승인)</li><li>생성 · 검토 · 하네스 미적용 vs 적용 시험</li><li>개발 주제면 final_dev_harness에서 기획 → 승인 → 병렬 TDD</li><li>사람 판정 → 패들릿 · 1~2분 발표</li></ol></div>
+    <div class="lc goal"><div class="lh">목표</div><p>사전 과제 주제로 · 업무 처리면 메타 하네스로 업무 하네스, 개발이면 Superpowers · 판정은 사람</p><div class="lf">사용 파일 · <code class="lfold">labs/meta_harness</code> · <code class="lfold">labs/samples</code></div><div class="mine"><span>내 업무 적용</span>사전 과제: 반복 업무 하나 + 결과 확인 방법</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>메타 하네스 만들기 (요청문)</li><li>사전 과제 주제 · 샘플 데이터로 인터뷰 → spec.md</li><li>설계 검토 → APPROVED 직접 (사람 승인)</li><li>생성 · 검토 · 하네스 미적용 vs 적용 시험</li><li>개발 주제면 Superpowers로 (설계 · 계획 승인 · 화면은 DESIGN.md 먼저)</li><li>사람 판정 → 패들릿 · 1~2분 발표</li></ol></div>
     <div class="lc done"><div class="lh">완료 기준</div><ul><li>내 하네스 폴더 · 비교표</li><li>사람 판정 · 패들릿 게시</li></ul></div>
   </div></div>
 </section>
@@ -2990,7 +2972,7 @@ export const total = (n) =>
   <h2 class="s-title sm">실습 8-1 진행</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/meta_harness</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="kdo"><span>① 메타 하네스 만들기</span><p>Ch8 「메타 하네스를 만드는 요청문」 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">② 내 주제로 시작</span></div><pre><code>내 하네스를 만들고 싶어: 〈사전 과제 주제 한 줄〉.
-예시 입력은 ../samples/〈분야〉/ 를 써. 인터뷰부터 시작해 줘</code></pre></div><div class="kdo"><span>③ 사람 승인</span><p>인터뷰 답 → docs/〈이름〉/spec.md 검토 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 생성 · 시험</span></div><pre><code>docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘</code></pre></div><div class="kdo"><span>⑤ 개발 주제라면</span><p>생성 대상을 <b>../final_dev_harness</b> 로 · 그 폴더를 VS Code로 열고 「아이디어.md 를 읽고 브레인스토밍부터 시작해 줘」 → plan 승인 → 구현</p></div><div class="kdo"><span>⑥ 사람 판정 · 공유</span><p>비교표 · 결과물을 직접 판정 → 다음 장 양식으로 패들릿에 올리기</p></div></div><div class="dbnote"><span>참고</span> 샘플 데이터 labs/samples/ · 요청문이 막히면 부록 ⑦~⑩ 「파일로 저장」</div></div></div>
+예시 입력은 ../samples/〈분야〉/ 를 써. 인터뷰부터 시작해 줘</code></pre></div><div class="kdo"><span>③ 사람 승인</span><p>인터뷰 답 → docs/〈이름〉/spec.md 검토 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 생성 · 시험</span></div><pre><code>docs/〈이름〉/APPROVED 만들었어. 하네스를 만들고 검토 · 시험까지 해 줘</code></pre></div><div class="kdo"><span>⑤ 개발 주제라면</span><p><b>labs/final_dev_harness</b> 를 열고 Superpowers 설치 → 「Superpowers로 개발하기」 요청문 → 설계 승인 · DESIGN.md · 계획 승인 → 구현</p></div><div class="kdo"><span>⑥ 사람 판정 · 공유</span><p>비교표 · 결과물을 직접 판정 → 다음 장 양식으로 패들릿에 올리기</p></div></div><div class="dbnote"><span>참고</span> 샘플 데이터 labs/samples/ · 요청문이 막히면 부록 ⑦ ⑧ 「파일로 저장」 · 플러그인 설치가 막히면 Superpowers는 강사 시연</div></div></div>
 </section>
 
 <section class="slide lt" data-title="오래 일하는 루프 하네스">
@@ -3323,127 +3305,13 @@ if re.search(r"(^|[;&amp;|(]\s*)(mail|sendmail|mutt|curl|wget|scp|sftp|ftp|nc)\s
     sys.exit(2)
 if re.search(r"(&gt;&gt;?|\brm\b|\bmv\b|sed -i|\btee\b)\s*[^|;&amp;]*(^|[\s/'\"])inputs/", cmd):
     print("차단: inputs/ 원본은 고치지 않는다.", file=sys.stderr)
-    sys.exit(2)</code></pre></div></div><div class="dbnote"><span>주의</span> 막을 것 목록은 내 업무에 맞게 · 직접 고치기 어려우면 부록 ⑫ 요청문으로 Claude에게</div></div></div>
+    sys.exit(2)</code></pre></div></div><div class="dbnote"><span>주의</span> 막을 것 목록은 내 업무에 맞게 · 직접 고치기 어려우면 부록 ⑩ 요청문으로 Claude에게</div></div></div>
 </section>
 
-<section class="slide lt" data-title="부록 ⑦ 개발 하네스 · 순서 · Skill">
+<section class="slide lt" data-title="부록 ⑦ 메타 하네스 · 순서 · 인터뷰 · 설계">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">부록</span></div>
-  <h2 class="s-title sm">부록 ⑦ 개발 하네스 · 순서 · Skill</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kgrid"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code># 개발 하네스 · 내 업무 툴
-
-Node.js · 외부 패키지 없음 · ES 모듈 · 테스트는 `node --test` (test/*.test.js)
-
-## 순서 (건너뛰지 않는다)
-1. 브레인스토밍 — brainstorm Skill → docs/brief.md
-2. 구현 기획 — plan Skill → docs/plan.md (서로 겹치지 않는 작업 2~4개)
-3. 사용자 컨펌 — 계획 요약을 보여 주고 멈춘다. 사용자가 docs/APPROVED 를 만들기 전에는 src/ · test/ 를 쓰지 않는다
-4. 병렬 구현 — docs/ 를 커밋한 뒤 작업마다 implementer Sub Agent에 동시에 맡긴다
-5. 통합 — 작업 브랜치를 차례로 병합 → npm test 전체 통과 → reviewer 검토 → 지적 반영
-6. 마무리 — README.md: 쓰는 법 · 예시 입력 · 출력 · 테스트 결과
-
-## 원칙
-- 테스트 먼저, 그다음 구현
-- 작업 범위 밖 파일은 고치지 않는다
-- docs/APPROVED 는 사람만 만든다</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/brainstorm/SKILL.md</span></div><pre><code>---
-name: brainstorm
-description: 새 툴 · 기능 아이디어를 구체화할 때. 구현 전에 쓴다.
----
-
-# brainstorm
-
-1. 한 번에 질문 하나씩, 최대 5개: 누가 쓰나 · 입력 · 출력 · 꼭 필요한 기능 · 하지 않을 것
-2. 이미 답이 주어진 항목은 묻지 않는다. 「알아서」면 가장 단순한 선택을 하고 가정으로 적는다
-3. 결과: docs/brief.md — 목적 한 줄 · 사용자 · 입력 예시 · 출력 예시 · 기능 (필수 / 나중) · 하지 않을 것 · 가정</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/plan/SKILL.md</span></div><pre><code>---
-name: plan
-description: docs/brief.md를 구현 작업으로 나눌 때.
----
-
-# plan
-
-1. 맨 위 「공통 약속」: 파일 구조 · 함수 이름 · 입력 · 출력 데이터 모양
-2. 작업 2~4개. 작업끼리 같은 파일을 고치지 않게 나눈다
-3. 작업마다: 이름 · 맡을 파일 (src/… · test/…) · 테스트할 사례 3개 이상 (경계값 · 잘못된 입력 포함) · 완료 기준
-4. 결과: docs/plan.md → 사용자에게 작업 목록을 요약해 보여 주고 승인(docs/APPROVED)을 기다린다</code></pre></div></div></div></div>
-</section>
-
-<section class="slide lt" data-title="부록 ⑧ 개발 하네스 · Agent · Hook">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">부록</span></div>
-  <h2 class="s-title sm">부록 ⑧ 개발 하네스 · Agent · Hook</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kgrid"><div data-file="implementer.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/agents/implementer.md</span></div><pre><code>---
-name: implementer
-description: docs/plan.md의 작업 하나를 TDD로 구현한다. 작업마다 하나씩 동시에 위임한다.
-tools: Read, Write, Edit, Bash, Grep, Glob
-isolation: worktree
----
-
-너는 맡은 작업 하나만 구현한다. docs/plan.md의 공통 약속을 그대로 지킨다.
-
-1. 맡은 사례대로 test/ 에 테스트를 먼저 쓰고 `node --test` 로 실패를 확인한다
-2. 테스트를 통과하는 구현을 src/ 에 쓴다
-3. `node --test` 전체 통과 → `git add` · `git commit -m "&lt;작업 이름&gt;"`
-4. 맡은 파일 밖은 고치지 않는다
-
-반환: 브랜치 이름 · 커밋 · 테스트 수 / 통과 수 · 남은 문제</code></pre></div><div data-file="reviewer.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/agents/reviewer.md</span></div><pre><code>---
-name: reviewer
-description: 병합된 결과를 plan.md와 대조해 검토한다. 고치지 않고 보고만 한다.
-tools: Read, Grep, Glob, Bash
----
-
-너는 검토 담당이다. 파일을 고치지 않는다.
-
-확인 순서
-1. docs/plan.md 의 작업 · 사례가 모두 구현 · 테스트됐는가
-2. 테스트 없는 분기 · 경계값 · 잘못된 입력 처리
-3. 공통 약속 (함수 이름 · 데이터 모양) 위반
-4. `node --test` 결과
-
-반환: | 파일:줄 | 심각도 | 문제 | 고칠 방향 | · 문제가 없으면 「문제 없음」</code></pre></div><div data-file="plan_gate.mjs" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/hooks/plan_gate.mjs</span></div><pre><code>// PreToolUse Hook — 사용자 승인(docs/APPROVED) 전에는 src/ · test/ 를 쓰지 못하게 막는다.
-import { readFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
-
-const e = JSON.parse(readFileSync(0, "utf8"));
-const inp = e.tool_input || {};
-const file = String(inp.file_path || "");
-const cmd = String(inp.command || "");
-const block = (msg) =&gt; { console.error(`[계획 승인] ${msg}`); process.exit(2); };
-
-// 승인 표시는 사람만
-if (/APPROVED/.test(file) || (/APPROVED/.test(cmd) &amp;&amp; /(&gt;|touch|cp |mv |tee|rm )/.test(cmd)))
-  block("docs/APPROVED 는 사용자가 직접 만든다 · 계획을 보여 주고 기다릴 것");
-
-// 워크트리 안이면 원래 저장소에서도 찾는다
-const roots = [process.env.CLAUDE_PROJECT_DIR, e.cwd].filter(Boolean)
-  .flatMap((r) =&gt; [r, r.split(/[\\/]\.claude[\\/]worktrees[\\/]/)[0]]);
-const approved = roots.some((r) =&gt; existsSync(join(r, "docs", "APPROVED")));
-
-const writesCode = ["Write", "Edit", "MultiEdit"].includes(e.tool_name) &amp;&amp; /(^|[\\/])(src|test)[\\/]/.test(file);
-if (writesCode &amp;&amp; !approved)
-  block("아직 승인 전 · docs/plan.md 요약을 보여 주고 사용자가 docs/APPROVED 를 만들 때까지 구현하지 않는다");
-process.exit(0);</code></pre></div><div data-file="settings.json" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/settings.json</span></div><pre><code>{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit|MultiEdit|Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/plan_gate.mjs\""
-          }
-        ]
-      }
-    ]
-  }
-}</code></pre></div></div></div></div>
-</section>
-
-<section class="slide lt" data-title="부록 ⑨ 메타 하네스 · 순서 · 인터뷰 · 설계">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">부록</span></div>
-  <h2 class="s-title sm">부록 ⑨ 메타 하네스 · 순서 · 인터뷰 · 설계</h2>
+  <h2 class="s-title sm">부록 ⑦ 메타 하네스 · 순서 · 인터뷰 · 설계</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="kgrid"><div data-file="CLAUDE.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code># 메타 하네스 · 상황에 맞는 하네스를 만드는 하네스
 
@@ -3492,7 +3360,8 @@ description: interview.md를 바탕으로 상황에 맞는 하네스 설계안(s
    - Skill: 절차 · 판단 기준 · 결과 양식
    - Hook: 「하면 안 되는 것」 중 코드로 막을 수 있는 것
    - 검증 Agent: 숫자 · 발송 · 고객 대상이면
-   - Sub Agent 나누기: 여러 건 · 독립 작업이면 (개발이면 작업별 워크트리 · TDD)
+   - Sub Agent 나누기: 여러 건 · 독립 작업이면
+   - 개발 유형이면 직접 만들지 않고 Superpowers 사용을 안내한다
    - 평가 문항: 예시 3개 + 엣지 케이스 2개
 4. 「넣지 않는 것」과 이유
 5. 결과: docs/&lt;이름&gt;/spec.md → 요약을 보여 주고 승인(docs/&lt;이름&gt;/APPROVED)을 기다린다</code></pre></div><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/build/SKILL.md</span></div><pre><code>---
@@ -3509,10 +3378,10 @@ description: 승인된 spec.md대로 하네스 파일을 만들 때.
 4. 만든 파일 목록과 각 파일이 spec.md 어느 줄에서 왔는지 표로</code></pre></div></div></div></div>
 </section>
 
-<section class="slide lt" data-title="부록 ⑩ 메타 하네스 · 시험 · 검토 · Hook">
+<section class="slide lt" data-title="부록 ⑧ 메타 하네스 · 시험 · 검토 · Hook">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">부록</span></div>
-  <h2 class="s-title sm">부록 ⑩ 메타 하네스 · 시험 · 검토 · Hook</h2>
+  <h2 class="s-title sm">부록 ⑧ 메타 하네스 · 시험 · 검토 · Hook</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="kgrid"><div data-file="SKILL.md" class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/skills/try/SKILL.md</span></div><pre><code>---
 name: try
@@ -3580,10 +3449,10 @@ sys.exit(0)</code></pre></div><div data-file="settings.json" class="code sm"><di
 }</code></pre></div></div></div></div>
 </section>
 
-<section class="slide lt" data-title="부록 ⑪ 요청문 ① CLAUDE.md · Skill">
+<section class="slide lt" data-title="부록 ⑨ 요청문 ① CLAUDE.md · Skill">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">부록</span></div>
-  <h2 class="s-title sm">부록 ⑪ 요청문 ① CLAUDE.md · Skill</h2>
+  <h2 class="s-title sm">부록 ⑨ 요청문 ① CLAUDE.md · Skill</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">CLAUDE.md</span></div><pre><code>이 프로젝트의 CLAUDE.md를 만들어 줘. 모든 작업에 공통인 원칙만 30줄 이내로.
 - 결과는 〈out/작업명/〉 에 파일로 남긴다
@@ -3599,10 +3468,10 @@ sys.exit(0)</code></pre></div><div data-file="settings.json" class="code sm"><di
 만든 뒤 예시 입력 하나로 시험하고 결과를 보여 줘.</code></pre></div></div><div class="dbnote"><span>쓰는 법</span> 〈 〉 안만 내 업무로 바꿔 Claude Code 대화창에 붙여 넣기 · 플러그인 없이 기본 기능만</div></div></div>
 </section>
 
-<section class="slide lt" data-title="부록 ⑫ 요청문 ② Hook · 검증 Agent">
+<section class="slide lt" data-title="부록 ⑩ 요청문 ② Hook · 검증 Agent">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">부록</span></div>
-  <h2 class="s-title sm">부록 ⑫ 요청문 ② Hook · 검증 Agent</h2>
+  <h2 class="s-title sm">부록 ⑩ 요청문 ② Hook · 검증 Agent</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">Hook</span></div><pre><code>PreToolUse Hook을 만들어 줘.
 막을 것: 〈운영 DB 쓰기 · 원본 폴더 수정 · 외부 전송 · 비밀 파일 읽기〉
@@ -3617,10 +3486,10 @@ sys.exit(0)</code></pre></div><div data-file="settings.json" class="code sm"><di
 CLAUDE.md에 「끝내기 전 verifier에 대조를 맡긴다」 한 줄 추가.</code></pre></div></div><div class="dbnote"><span>.claude 쓰기</span> Hook · 설정 파일은 보호 경로라 승인 요청이 뜸 · 내용을 읽고 승인</div></div></div>
 </section>
 
-<section class="slide lt" data-title="부록 ⑬ 요청문 ③ 평가 · 고치기">
+<section class="slide lt" data-title="부록 ⑪ 요청문 ③ 평가 · 고치기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">부록</span></div>
-  <h2 class="s-title sm">부록 ⑬ 요청문 ③ 평가 · 고치기</h2>
+  <h2 class="s-title sm">부록 ⑪ 요청문 ③ 평가 · 고치기</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="pgrid2"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">평가</span></div><pre><code>이 업무의 평가셋과 채점 스크립트를 만들어 줘.
 - eval/cases.jsonl: 과거 사례 〈5〉건 + 엣지 케이스 〈2〉건

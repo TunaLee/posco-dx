@@ -9,6 +9,6 @@
 | 정리 · 작성 | ../work_harness/harness/.claude/skills/meeting-actions/ · mail-draft/ |
 | 업무 공통 원칙 · Hook | ../work_harness/harness/CLAUDE.md · .claude/hooks/guard.py |
 | 여러 건 나누기 (멀티에이전트) | ../work_harness/harness_multi/ |
-| 개발 (기획 → 승인 → 워크트리 TDD) | dev/ |
+| 개발 | 직접 만들지 않음 · Superpowers 플러그인 사용 |
 
 예시는 그대로 복사하지 않는다. 인터뷰에 맞게 필요한 부분만 가져온다.
