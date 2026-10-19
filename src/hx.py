@@ -533,8 +533,8 @@ def ch1():
         light("모델 발전과 요구의 변화", evolution(), "Ch1"),
         stat("루프 엔지니어링이 가능해진 이유", "Ch1",
              '<div class="eqn">'
-             '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">105<small>일</small></div>'
-             '<div class="eq-d">혼자 맡을 수 있는 작업 길이가 2배 되는 기간</div></div>'
+             '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div>'
+             '<div class="eq-d">사람 없이 이어서 하는 도구 호출 · 최대 연속 (Anthropic 사내 조사)</div></div>'
              '<div class="eq-op">+</div>'
              '<div class="eq-c"><div class="eq-h">하네스가 좋아짐</div><div class="eq-v sm">기록 · 테스트 · 검증 · 멈춤 규칙</div>'
              '<div class="eq-d">사람이 중간에 안 봐도 품질을 지키는 장치</div></div>'
@@ -543,7 +543,7 @@ def ch1():
              '<div class="eq-d">일정 · 이벤트로 Agent가 스스로 돌고 사람은 끝에 판정</div></div>'
              '</div>'
              + note("다음 단계", "그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)"),
-             METR_TH, A_LOOPENG, A_GRAPHENG),
+             C_ANTH_WORK, A_LOOPENG, A_GRAPHENG),
         light("대화형 작업과 위임형 작업", two(
             cards([("대화형", "질문 → 답 → 사람이 읽고 다음 질문", []),
                    ("사람의 역할", "매 답을 확인 · 실수는 다음 턴에 바로잡음", [])], 1),
