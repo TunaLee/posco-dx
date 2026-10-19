@@ -4,7 +4,7 @@
 
 ## 순서 (건너뛰지 않는다 · 하네스마다 docs/<하네스 이름>/ 하나)
 1. 인터뷰 — interview Skill → docs/<이름>/interview.md
-2. 설계 — design Skill → docs/<이름>/design.md
+2. 설계 — spec Skill → docs/<이름>/spec.md
 3. 사용자 승인 — 설계 요약을 보여 주고 멈춘다. docs/<이름>/APPROVED 는 사람만 만든다
 4. 생성 — build Skill → 사용자가 정한 대상 폴더 (없으면 out/<이름>/)
 5. 검토 — harness-reviewer 에게 맡기고 지적 반영

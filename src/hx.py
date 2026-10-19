@@ -14,7 +14,7 @@ import labkits
 
 deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("선택", 15), "2-2": ("필수", 20), "2-3": ("선택", 25),
                       "3-1": ("시연", 10), "4-1": ("시연", 10), "5-1": ("시연", 10), "5-2": ("선택", 20),
-                      "6-1": ("시연", 10), "7-1": ("필수", 30), "8-1": ("필수", 90)})
+                      "6-1": ("시연", 10), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
 from stats_hx import big, hbars, quote, rings, stat
 
@@ -87,6 +87,12 @@ C_LONGRUN = ("Anthropic · Effective harnesses for long-running agents", "https:
 C_METR = ("METR · 숙련 개발자 연구 2025.7", "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/")
 C_DORA = ("Google · DORA 2025", "https://blog.google/technology/developers/dora-report-2025/")
 C_FOWLER = ("martinfowler.com · Harness engineering 2026.2", "https://www.martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html")
+D_DESIGNMD = ("Google Labs · DESIGN.md 형식 (alpha)", "https://github.com/google-labs-code/design.md")
+D_RALPH = ("Claude Code 플러그인 · ralph-wiggum", "https://github.com/anthropics/claude-code/tree/main/plugins/ralph-wiggum")
+D_LOOPCMD = ("Claude Code 문서 · Scheduled tasks (/loop)", "https://code.claude.com/docs/en/scheduled-tasks")
+D_HOOKS_STOP = ("Claude Code 문서 · Hooks (Stop)", "https://code.claude.com/docs/en/hooks")
+D_HEADLESS = ("Claude Code 문서 · Headless", "https://code.claude.com/docs/en/headless")
+HUNTLEY = ("Geoffrey Huntley · Ralph", "https://ghuntley.com/ralph/")
 INC_SUPERHUMAN = ("Simon Willison · Superhuman AI 2026.1", "https://simonwillison.net/2026/Jan/12/superhuman-ai-exfiltrates-emails/")
 INC_CODEXMAIL = ("PromptArmor · Codex 메일 유출 2026.4", "https://www.promptarmor.com/resources/codex-for-everything-exfiltrates-connected-data")
 INC_ECHOLEAK = ("The Hacker News · EchoLeak 2025.6", "https://thehackernews.com/2025/06/zero-click-ai-vulnerability-exposes.html")
@@ -352,7 +358,7 @@ def labkit(no, ch):
                     f'<div class="kf">{"".join(files)}</div></div>')
         else:
             grid = f'<div class="kgrid">{"".join(files)}</div>'
-        head2 = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code>{sub}'
+        head2 = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>{k.get("open", "labs")}</code>{sub}'
                  f'<em>{k.get("harness_note", "탐색기 새 파일에 화면의 경로째 입력 → 「복사」 → 붙여 넣기 → 저장")}</em></div>')
         return [light(f"실습 {no} 하네스", head2 + grid, ch),
                 light(f"실습 {no} 진행", head + f'<div class="kit wide">{steps}</div>' + tip, ch)]
@@ -693,6 +699,27 @@ def ch2():
             ["<b>비유</b>", "버튼", "업무 매뉴얼"],
         ]) + note("최근", "command는 Skill로 합쳐진 예전 방식 · 둘 다 /이름을 만들고 똑같이 동작 · 새로 만들 땐 Skill")
               + note("자동 호출 끄기", "SKILL.md에 disable-model-invocation: true → 사람만 /이름으로 부름 (배포 · 발송처럼 사람이 시작할 일)"), "Ch2"),
+        stat("DESIGN.md · 디자인 하네스", "Ch2", two(
+            '<div class="ctree">' + code("DESIGN.md (예 · 이 강의 장표)", '---\ncolors: { primary: "#1F3A5F", accent: "#F28C28" }\ntypography: { body: Pretendard 15, heading: Pretendard 800 }\nrounded: { card: 12 }\nspacing: { unit: 8 }\n---\n## Overview\n사내 업무 도구 · 정보는 빽빽하게 · 강조는 주황 하나\n\n## Components\n- 표: 헤더 primary · 숫자는 오른쪽 정렬\n\n## Do\'s and Don\'ts\n- Do: 상태는 색 + 글자 함께\n- Don\'t: 그라데이션 · 그림자 남발') + "</div>",
+            table(["섹션 (이 순서)", "담는 것"], [
+                ["<b>YAML 토큰</b>", "색 · 글꼴 · 모서리 · 간격 기준값"],
+                ["<b>Overview</b>", "화면의 성격 한두 줄"],
+                ["<b>Colors · Typography</b>", "토큰을 어디에 쓰는지"],
+                ["<b>Layout · Elevation · Shapes</b>", "배치 · 깊이 · 모양 규칙"],
+                ["<b>Components</b>", "버튼 · 표 · 카드 규칙"],
+                ["<b>Do's and Don'ts</b>", "하지 말 것"],
+            ]))
+             + note("DESIGN.md", "에이전트에게 디자인 규칙을 알려 주는 파일 형식 (Google Labs · alpha)"),
+             D_DESIGNMD),
+        light("개인 디자인 하네스 적용", two(
+            '<div>' + flow([("DESIGN.md", "내 디자인 규칙"), ("CLAUDE.md", "따르라는 한 줄"), ("검사", "lint"), ("판정", "사람")], hl=0)
+            + table(["하네스 부품", "디자인에서는"], [
+                ["<b>지침</b>", "DESIGN.md · CLAUDE.md 한 줄"],
+                ["<b>강제 · 검사</b>", "npx @google/design.md lint DESIGN.md · 토큰 밖 색 검사"],
+                ["<b>평가</b>", "화면 캡처를 사람이 보고 판정"],
+            ]) + '</div>',
+            '<div class="ptall">' + code("DESIGN.md 만들기 요청문", "이 화면(또는 첨부한 스크린샷)의 스타일로 DESIGN.md 를 만들어 줘.\n- 맨 위 YAML: colors · typography · rounded · spacing 토큰\n- 섹션 순서: Overview · Colors · Typography · Layout · Elevation &amp; Depth · Shapes · Components · Do's and Don'ts\n그리고 CLAUDE.md 에 「화면을 만들거나 고칠 땐 DESIGN.md 를 읽고 따른다」 한 줄을 추가해 줘.") + "</div>")
+              + note("어디에", "Ch8 내 업무 툴에 화면이 있으면 같이 넣기 · 형식이 alpha라 바뀔 수 있음"), "Ch2"),
         light("Sub Agent 경계 설계", table(["경계", "정하는 것", "예: reviewer"], [
             ["<b>도구 집합</b>", "쓸 수 있는 도구", "Read · Grep · Glob"],
             ["<b>권한</b>", "쓰기 · 실행 허용 여부", "쓰기 금지"],
@@ -1382,17 +1409,17 @@ def ch8():
                 ["<b>재사용</b>", "한 번 설치", "새 업무 · 새 상황마다 다시 인터뷰"],
             ]) + note("주제에 따라", "업무 처리 주제 → 업무 하네스 · 개발 주제 → 같은 메타 하네스로 개발 하네스"), "Ch8"),
         light("메타 하네스 구조", two(
-            '<div class="ctree">' + code("폴더 구조", 'meta_harness/\n├── CLAUDE.md                 순서 · 원칙\n├── templates/                유형별 예시 (업무 · 개발)\n├── docs/&lt;하네스 이름&gt;/\n│   ├── interview.md          인터뷰 답\n│   ├── design.md             설계안\n│   └── APPROVED              사람만 만듦\n├── out/&lt;하네스 이름&gt;/          만들어진 하네스\n└── .claude/\n    ├── skills/interview/     질문 → interview.md\n    ├── skills/design/        유형 · 부품 → design.md\n    ├── skills/build/         하네스 파일 생성\n    ├── skills/try/           미적용 vs 적용 시험\n    ├── agents/harness-reviewer.md  지어낸 규칙 검토\n    └── hooks/guard.py · settings.json  승인 전 생성 차단') + "</div>",
+            '<div class="ctree">' + code("폴더 구조", 'meta_harness/\n├── CLAUDE.md                 순서 · 원칙\n├── templates/                유형별 예시 (업무 · 개발)\n├── docs/&lt;하네스 이름&gt;/\n│   ├── interview.md          인터뷰 답\n│   ├── spec.md             설계안\n│   └── APPROVED              사람만 만듦\n├── out/&lt;하네스 이름&gt;/          만들어진 하네스\n└── .claude/\n    ├── skills/interview/     질문 → interview.md\n    ├── skills/spec/        유형 · 부품 → spec.md\n    ├── skills/build/         하네스 파일 생성\n    ├── skills/try/           미적용 vs 적용 시험\n    ├── agents/harness-reviewer.md  지어낸 규칙 검토\n    └── hooks/guard.py · settings.json  승인 전 생성 차단') + "</div>",
             table(["단계", "담당", "결과"], [
                 ["<b>① 인터뷰</b>", "interview Skill · 사람이 답함", "interview.md"],
-                ["<b>② 설계</b>", "design Skill · templates/ 참고", "design.md · 유형 · 부품"],
+                ["<b>② 설계</b>", "spec Skill · templates/ 참고", "spec.md · 유형 · 부품"],
                 ["<b>③ 승인</b>", "<b>사람</b> · APPROVED", "승인 전 생성은 Hook이 차단"],
                 ["<b>④ 생성</b>", "build Skill", "대상 폴더에 하네스"],
                 ["<b>⑤ 검토</b>", "harness-reviewer", "지어낸 규칙 · 빠진 차단"],
                 ["<b>⑥ 시험</b>", "try Skill", "미적용 vs 적용 비교표"],
                 ["<b>⑦ 판정</b>", "<b>사람</b>", "합격 · 고칠 점"],
             ])), "Ch8"),
-        light("메타 하네스를 만드는 요청문", '<div class="ptall">' + code("labs/meta_harness 에서 붙여 넣기", '이 폴더에 「하네스를 만드는 하네스(메타 하네스)」를 만들어 줘.\n\n1. CLAUDE.md — 순서: 인터뷰 → 설계 → 사용자 승인 → 생성 → 검토 → 시험 → 판정은 사람\n   원칙: 범용 규칙 금지 · 인터뷰에 나온 것만 · 부품은 필요한 것만 · 하네스마다 docs/&lt;이름&gt;/\n2. .claude/skills/interview/SKILL.md — 질문은 한 번에 하나 · 최대 7개\n   (업무 · 입력 · 결과물 · 판단 기준 · 하면 안 되는 것 · 사람 확인 지점 · 잘했다의 기준)\n3. .claude/skills/design/SKILL.md — 유형 판별 (문의 응대 · 추출 · 보고 · 비교 · 작성 · 개발)\n   → templates/ 예시 참고 → 부품별 설계 + 넣지 않는 것과 이유 → design.md → 요약을 보여 주고 멈춤\n4. .claude/skills/build/SKILL.md — 승인된 설계대로 대상 폴더(기본 out/&lt;이름&gt;/)에 파일 생성\n5. .claude/skills/try/SKILL.md — eval 입력마다 미적용 · 적용으로 claude -p → 비교표 · 판정은 하지 않음\n6. .claude/agents/harness-reviewer.md — 읽기 전용 · 지어낸 규칙 · 빠진 차단 검토\n7. .claude/hooks/guard.py + .claude/settings.json — APPROVED 전에는 docs/ 밖에 쓰기 차단 ·\n   APPROVED 는 Claude가 만들지 못하게\n\n다 만들면 파일 목록과 역할을 표로 보여 줘.') + "</div>"
+        light("메타 하네스를 만드는 요청문", '<div class="ptall">' + code("labs/meta_harness 에서 붙여 넣기", '이 폴더에 「하네스를 만드는 하네스(메타 하네스)」를 만들어 줘.\n\n1. CLAUDE.md — 순서: 인터뷰 → 설계 → 사용자 승인 → 생성 → 검토 → 시험 → 판정은 사람\n   원칙: 범용 규칙 금지 · 인터뷰에 나온 것만 · 부품은 필요한 것만 · 하네스마다 docs/&lt;이름&gt;/\n2. .claude/skills/interview/SKILL.md — 질문은 한 번에 하나 · 최대 7개\n   (업무 · 입력 · 결과물 · 판단 기준 · 하면 안 되는 것 · 사람 확인 지점 · 잘했다의 기준)\n3. .claude/skills/spec/SKILL.md — 유형 판별 (문의 응대 · 추출 · 보고 · 비교 · 작성 · 개발)\n   → templates/ 예시 참고 → 부품별 설계 + 넣지 않는 것과 이유 → spec.md → 요약을 보여 주고 멈춤\n4. .claude/skills/build/SKILL.md — 승인된 설계대로 대상 폴더(기본 out/&lt;이름&gt;/)에 파일 생성\n5. .claude/skills/try/SKILL.md — eval 입력마다 미적용 · 적용으로 claude -p → 비교표 · 판정은 하지 않음\n6. .claude/agents/harness-reviewer.md — 읽기 전용 · 지어낸 규칙 · 빠진 차단 검토\n7. .claude/hooks/guard.py + .claude/settings.json — APPROVED 전에는 docs/ 밖에 쓰기 차단 ·\n   APPROVED 는 Claude가 만들지 못하게\n\n다 만들면 파일 목록과 역할을 표로 보여 줘.') + "</div>"
               + note("막히면", "부록 ⑨ ⑩의 파일 그대로 「파일로 저장」 · .claude 쓰기 승인 요청은 읽고 승인"), "Ch8"),
         light("TDD (테스트 주도 개발)", two(
             '<div>' + flow([("① 빨강", "실패하는 테스트 먼저"), ("② 초록", "통과할 만큼만 구현"), ("③ 정리", "테스트는 그대로 통과")], hl=0)
@@ -1424,11 +1451,36 @@ def ch8():
               ]) + note("막히면", "부록 ⑦ ⑧의 개발 하네스 파일 그대로"), "Ch8"),
         lab("8-1", "메타 하네스로 내 하네스 만들기", "Ch8",
             "사전 과제 주제로 · 업무 처리면 업무 하네스, 개발이면 개발 하네스 · 판정은 사람",
-            ["메타 하네스 만들기 (요청문)", "사전 과제 주제 · 샘플 데이터로 인터뷰 → design.md", "설계 검토 → APPROVED 직접 (사람 승인)",
+            ["메타 하네스 만들기 (요청문)", "사전 과제 주제 · 샘플 데이터로 인터뷰 → spec.md", "설계 검토 → APPROVED 직접 (사람 승인)",
              "생성 · 검토 · 하네스 미적용 vs 적용 시험", "개발 주제면 final_dev_harness에서 기획 → 승인 → 병렬 TDD", "사람 판정 → 패들릿 · 1~2분 발표"],
             ["내 하네스 폴더 · 비교표", "사람 판정 · 패들릿 게시"], files=labdir("meta_harness") + " · " + labdir("samples"),
             mine="사전 과제: 반복 업무 하나 + 결과 확인 방법"),
         *labkit('8-1', 'Ch8'),
+        stat("오래 일하는 루프 하네스", "Ch8", two(
+            table(["오래 일할 때 생기는 문제", "하네스 장치"], [
+                ["<b>한 번에 다 하려 함</b>", "기능 목록 · 한 번에 하나만"],
+                ["<b>일찍 「다 했다」 선언</b>", "passes 는 테스트 통과 뒤에만 · JSON이라 덜 고침"],
+                ["<b>진행이 사라짐</b>", "진행 기록 파일 + git 커밋"],
+                ["<b>컨텍스트가 쌓여 흐려짐</b>", "매번 새 세션 · 기록에서 이어받기"],
+                ["<b>끝없이 돎</b>", "최대 횟수 · 허용 도구 · 비용 상한"],
+            ]),
+            '<div>' + flow([("기록 읽기", "progress · git log"), ("하나 고르기", "passes: false"), ("TDD", "테스트 → 구현"), ("기록 · 커밋", "passes: true")], hl=2)
+            + note("반복", "모두 통과하거나 최대 횟수까지 · 사람은 끝난 뒤 판정") + '</div>')
+             + note("근거", "Anthropic 장기 작업 하네스 (기능 목록 JSON · 진행 기록 · 커밋) · Ralph 루프 (매번 새 컨텍스트 · 한 번에 하나)"),
+             C_LONGRUN, HUNTLEY),
+        stat("루프를 돌리는 세 가지 방법", "Ch8", '<div class="ptall">' + code("예", '# ① 바깥 스크립트 (매번 새 세션)\nnode loop.mjs 8\n\n# ② Stop Hook 루프 (한 세션 · 플러그인)\n/ralph-loop "features.json 을 모두 통과시켜" --max-iterations 20 --completion-promise "ALL PASS"\n\n# ③ 정해진 간격 반복 (감시용)\n/loop 10m 빌드 상태 확인') + "</div>"
+             + table(["방법", "특징", "주의"], [
+                 ["<b>① 바깥 스크립트</b>", "while 루프로 claude -p 반복 · 매번 컨텍스트 깨끗", "--allowedTools 로 허용 도구만"],
+                 ["<b>② Stop Hook</b>", "끝내려 할 때 Hook이 막고 같은 요청을 다시 (공식 ralph-loop 플러그인)", "--max-iterations 꼭 · 8번 연속 막으면 무시됨"],
+                 ["<b>③ /loop</b>", "정해진 간격으로 같은 요청 · 7일 뒤 만료", "개발보다 감시 · 점검용"],
+             ]), D_RALPH, D_HOOKS_STOP, D_LOOPCMD, D_HEADLESS),
+        lab("8-2", "루프 하네스로 오래 일 시키기", "Ch8",
+            "기능 목록 · 진행 기록 · 테스트로 사람 없이 여러 번 이어서 일하게",
+            ["loop_harness를 git 저장소로", "장표의 CLAUDE.md · PROMPT.md · features.json · progress.md 만들기",
+             "터미널에서 node loop.mjs 8 실행", "features.json · progress.md · git log 로 진행 보기", "직접 실행해 보고 판정"],
+            ["기능 6개 중 통과 수 · 반복 횟수 · 토큰", "사람 판정 (CLI 직접 실행)"], files=labdir("loop_harness"),
+            mine="내 업무 툴을 기능 목록으로 쪼개 루프에 맡기기"),
+        *labkit('8-2', 'Ch8'),
         light("패들릿 공유 양식", two(
             '<div class="ptall">' + code("패들릿에 붙여 넣기", '[이름 · 분야]\n업무 한 줄:\n하네스 구성: CLAUDE.md · Skill 〈이름〉 · Hook 〈막은 것〉 · Agent 〈있으면〉\n하네스 미적용 → 적용: 〈무엇이 달라졌나 한 줄〉\n사람 판정: 합격 / 보완 · 이유\n막힌 점 · 다음에 할 것:') + "</div>",
             '<div class="ptall">' + code("Claude에게 정리 요청", '만든 하네스와 시험 결과를 패들릿 양식으로 정리해 줘:\n이름 · 분야 / 업무 한 줄 / 하네스 구성 / 미적용 → 적용 / 사람 판정은 비워 둠 / 막힌 점') + "</div>")
@@ -1491,7 +1543,7 @@ def materials():
               + filecode("settings.json", _kitsrc("@8-1/settings.json"), ".claude/settings.json") + "</div>", "부록"),
         light("부록 ⑨ 메타 하네스 · 순서 · 인터뷰 · 설계", '<div class="kgrid">' + filecode("CLAUDE.md", _kitsrc("@7-2/CLAUDE.md"), "CLAUDE.md")
               + filecode("SKILL.md", _kitsrc("@7-2/skills/interview/SKILL.md"), ".claude/skills/interview/SKILL.md")
-              + filecode("SKILL.md", _kitsrc("@7-2/skills/design/SKILL.md"), ".claude/skills/design/SKILL.md")
+              + filecode("SKILL.md", _kitsrc("@7-2/skills/spec/SKILL.md"), ".claude/skills/spec/SKILL.md")
               + filecode("SKILL.md", _kitsrc("@7-2/skills/build/SKILL.md"), ".claude/skills/build/SKILL.md") + "</div>", "부록"),
         light("부록 ⑩ 메타 하네스 · 시험 · 검토 · Hook", '<div class="kgrid">' + filecode("SKILL.md", _kitsrc("@7-2/skills/try/SKILL.md"), ".claude/skills/try/SKILL.md")
               + filecode("harness-reviewer.md", _kitsrc("@7-2/agents/harness-reviewer.md"), ".claude/agents/harness-reviewer.md")

@@ -1,9 +1,9 @@
 ---
-name: design
-description: interview.md를 바탕으로 상황에 맞는 하네스 설계안을 만들 때.
+name: spec
+description: interview.md를 바탕으로 상황에 맞는 하네스 설계안(spec.md)을 만들 때.
 ---
 
-# design
+# spec
 
 1. 유형 판별: 문의 응대 · 추출 · 계산 · 기록 → 보고 · 비교 · 검토 · 정리 · 작성 · 개발 (섞이면 주 유형 하나)
 2. templates/README.md 에서 그 유형의 예시를 읽는다
@@ -15,4 +15,4 @@ description: interview.md를 바탕으로 상황에 맞는 하네스 설계안�
    - Sub Agent 나누기: 여러 건 · 독립 작업이면 (개발이면 작업별 워크트리 · TDD)
    - 평가 문항: 예시 3개 + 엣지 케이스 2개
 4. 「넣지 않는 것」과 이유
-5. 결과: docs/<이름>/design.md → 요약을 보여 주고 승인(docs/<이름>/APPROVED)을 기다린다
+5. 결과: docs/<이름>/spec.md → 요약을 보여 주고 승인(docs/<이름>/APPROVED)을 기다린다

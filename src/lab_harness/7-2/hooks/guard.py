@@ -25,5 +25,5 @@ if e.get("tool_name") in ("Write", "Edit", "MultiEdit") and path:
     in_docs = str(target).startswith(str((root / "docs").resolve()))
     approved = any(root.glob("docs/*/APPROVED"))
     if not in_docs and not approved:
-        block("아직 설계 승인 전 · docs/<이름>/design.md 를 보여 주고 사용자가 APPROVED 를 만들 때까지 생성하지 않는다")
+        block("아직 설계 승인 전 · docs/<이름>/spec.md 를 보여 주고 사용자가 APPROVED 를 만들 때까지 생성하지 않는다")
 sys.exit(0)

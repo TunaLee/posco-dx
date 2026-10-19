@@ -21,6 +21,7 @@
 | 6-1 토큰 | `lab6_tokens/` | — |
 | 7-1 회귀 테스트 · 사람 판정 | `work_harness/` | — |
 | 8-1 메타 하네스로 내 하네스 | `meta_harness/` (이 폴더를 VS Code로) · `samples/` · 개발 주제면 `final_dev_harness/` | 요청문 · 부록 ⑦~⑩ |
+| 8-2 루프 하네스 (선택) | `loop_harness/` (이 폴더를 VS Code로) | CLAUDE.md · PROMPT.md · features.json · progress.md |
 
 ## 강사용 참고
 

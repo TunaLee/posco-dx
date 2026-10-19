@@ -1,0 +1,8 @@
+[
+  {"id": "F1", "설명": "src/csv.js parseCsv(text): 헤더 기준 객체 배열 · 빈 줄 무시", "확인": "헤더만 있으면 [] · 빈 줄 섞여도 행 수 맞음", "passes": false},
+  {"id": "F2", "설명": "src/settle.js settle(row): 정산액 = 거리 × 중량 × 톤km단가, 원 미만 절사", "확인": "소수 중량 · 절사 경계", "passes": false},
+  {"id": "F3", "설명": "src/settle.js check(row): 청구액과 정산액 차이가 1% 넘으면 이의 제기", "확인": "정확히 1%는 정상 · 1.01%는 이의 제기", "passes": false},
+  {"id": "F4", "설명": "src/validate.js validate(row): 빈 값 · 음수 · 숫자 아님 → 오류 목록", "확인": "오류 줄은 계산에서 빠짐", "passes": false},
+  {"id": "F5", "설명": "src/report.js report(rows): 이의 제기 건만 마크다운 표 + 건수 · 차액 합계", "확인": "이의 제기 0건이면 「이의 제기 없음」", "passes": false},
+  {"id": "F6", "설명": "src/cli.js: node src/cli.js data/운송비청구.csv → 보고서 출력", "확인": "파일 없음이면 종료 코드 1 · 안내 한 줄", "passes": false}
+]
