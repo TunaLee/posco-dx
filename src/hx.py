@@ -14,7 +14,7 @@ import labkits
 
 deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("선택", 15), "2-2": ("필수", 20), "2-3": ("선택", 25),
                       "3-1": ("선택", 15), "4-1": ("선택", 20), "5-1": ("선택", 25), "5-2": ("선택", 20),
-                      "6-1": ("시연", 10), "6-2": ("선택", 20), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
+                      "6-1": ("시연", 10), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
 from stats_hx import big, hbars, quote, rings, stat
 
@@ -94,7 +94,6 @@ D_HOOKS_STOP = ("Claude Code 문서 · Hooks (Stop)", "https://code.claude.com/d
 D_HEADLESS = ("Claude Code 문서 · Headless", "https://code.claude.com/docs/en/headless")
 HUNTLEY = ("Geoffrey Huntley · Ralph", "https://ghuntley.com/ralph/")
 C_SUPERPOWERS = ("obra/superpowers · Skills", "https://github.com/obra/superpowers")
-OWN_TOK62 = ("직접 실측 2026.10.19 · Sonnet 5.5 · 실습 6-2 과제 그대로", "https://github.com/TunaLee/posco-dx")
 A_GRAPHENG = ("arXiv 2608.21156 · Graph Engineering 2026.8", "https://arxiv.org/abs/2608.21156")
 A_LOOPENG = ("arXiv 2608.21884 · Loop Engineering 2026.8", "https://arxiv.org/abs/2608.21884")
 ADT_LOOP = ("ADTmag · Loop engineering 2026.7", "https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx")
@@ -1270,20 +1269,6 @@ def ch6():
             ["quiz.md로 먼저 예상", "기준선 5개 과제 실행 (bench.py)", "레버 켜기: 간결 지시 · caveman · 모델 나누기 · Sub Agent", "토큰 · 정확도 함께 비교 → 남길 레버 고르기"],
             ["레버별 토큰 · 정확도 표", "품질이 떨어진 레버는 제외"], files=labdir("lab6_tokens"), mine="내 업무 1회 토큰 예상 · 쓸 레버 하나"),
         *labkit('6-1', 'Ch6'),
-        lab("6-2", "토큰 아끼는 하네스 만들기", "Ch6",
-            "같은 일을 더 적은 턴 · 토큰으로 · 한 번 알아낸 방법을 Skill + 스크립트로",
-            ["하네스 미적용 상태로 MES 로그 집계 · 매뉴얼 찾기 → 토큰 · 턴 기록", "방금 한 방법을 스크립트 + Skill로 저장해 달라고 요청",
-             "같은 요청을 하네스 적용 상태로 → 토큰 · 턴 비교", "해 보기: 「통째 읽기 금지」 Hook만 넣으면?"],
-            ["미적용 · 적용 토큰 · 턴 · 정답 비교표", "줄어든 이유 한 줄"], files=labdir("mes_logs"),
-            mine="내 업무에서 매번 같은 방법으로 찾는 일 하나"),
-        *labkit('6-2', 'Ch6'),
-        stat("실측: 토큰 아끼는 하네스", "Ch6",
-             hbars([("하네스 미적용 ×3", 23.5, False, "23.5만 · 7턴"),
-                    ("「통째 읽기 금지」 Hook ×2", 39, False, "39만 · +66%"),
-                    ("Skill + 스크립트 ×2", 10, True, "10만 · −57%")], top=40,
-                   title="MES 로그 4천 줄 집계 + 매뉴얼에서 처리 기준 찾기 · 정답 모두 맞음 · 턴: 7 → 11 → 4 · Claude Sonnet 5.5")
-             + note("배운 점", "토큰은 대부분 「턴 수 × 매번 다시 읽는 기본 컨텍스트」 · 막기보다 턴을 줄이는 쪽이 절감 · 반복 작업은 스크립트로"),
-             OWN_TOK62, C_WOOWA),
         bridge("다음: 평가 · HITL", "", "Ch6", "→ Ch7 평가 · HITL"),
     ]
 

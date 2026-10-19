@@ -94,16 +94,6 @@ KITS = {
         ("④ 고르기", "p", "세 결과를 합쳐 품질이 떨어지지 않은 레버만 골라\n내 업무에 쓸 순서로 추천해 줘"),
     ], files=[("quiz.md", "quiz.md · 먼저 예상", "lab6_tokens/quiz.md")]),
 
-    "6-2": dict(folder="mes_logs", steps=[
-        ("① 하네스 미적용", "p", "mes_logs 폴더 안에서, 하네스 없이(claude -p --setting-sources \"\" --output-format json) 아래 요청을 실행하고\n토큰 · 턴 · 시간 · 답을 알려 줘.\n「data 폴더 자료로 이번 주 MES 장애를 코드별 건수와 지속 시간 합계로 정리하고,\n건수가 가장 많은 코드의 처리 기준을 매뉴얼에서 찾아 알려 줘.」"),
-        ("② 하네스 만들기", "p", "방금 그 집계와 처리 기준 찾기를 다음부터 한 번에 끝낼 수 있게,\npython 스크립트로 만들어 mes_logs/.claude/skills/mes-summary 에 Skill로 등록해 줘.\nCLAUDE.md 에는 「이 일은 그 Skill부터 쓰고 답은 5줄 안으로」라고 적어 줘."),
-        ("③ 하네스 적용", "p", "같은 요청을 이번엔 mes_logs 폴더 안에서 claude -p --setting-sources project --output-format json 으로 실행해서\n하네스 없을 때와 토큰 · 턴 · 시간 · 정답을 표로 비교해 줘."),
-        ("④ 해 보기", "do", "Skill 대신 「300줄 넘는 파일 통째 읽기 금지」 Hook만 넣으면 토큰이 어떻게 되는지 · 다음 장 결과와 비교"),
-    ], files=[("CLAUDE.md", "mes_logs/CLAUDE.md (예)", "@6-2/CLAUDE.md"),
-              ("SKILL.md", "mes_logs/.claude/skills/mes-summary/SKILL.md (예)", "@6-2/skills/mes-summary/SKILL.md"),
-              ("summary.py", "mes_logs/.claude/skills/mes-summary/summary.py (예)", "@6-2/skills/mes-summary/summary.py")],
-        split=True, harness_note="②에서 Claude가 만든 결과의 예 · 막히면 「파일로 저장」"),
-
     "7-1": dict(folder="office_work", steps=[
         ("① 기준선", "p", "office_work/run_tasks.py --cond single --tasks T1 T2 T3 T4 T5 T6 을 실행하고\n과제별 점수 · 시간 · 토큰을 표로 정리해 줘"),
         ("② 일부러 나쁘게", "p", "office_work/harness/CLAUDE.md 를 CLAUDE.md.bak 으로 복사해 두고\n「결과는 out/<과제번호>/ 에 만든다」 줄을 지워 줘"),

@@ -20,7 +20,6 @@
 | 5-1 코드 리뷰 멀티에이전트 | `pr_review/` · `pr_review_large/` (이 폴더를 VS Code로) | CLAUDE.md · Skill · reviewer · qa · security |
 | 5-2 업무 하네스에 멀티에이전트 | `office_work/workspace/` | extractor · verifier · 나누기 규칙 |
 | 6-1 토큰 | `lab6_tokens/` | — |
-| 6-2 토큰 아끼는 하네스 (선택) | `mes_logs/` | Skill + 스크립트 (Claude가 만듦) |
 | 7-1 회귀 테스트 · 사람 판정 | `office_work/` | — |
 | 8-1 메타 하네스로 내 하네스 | `meta_harness/` (이 폴더를 VS Code로) · `samples/` · 개발 주제면 `my_tool/` | 요청문 · 부록 ⑦ ⑧ · 개발 주제는 Superpowers |
 | 8-2 루프 하네스 (선택) | `settle_check/` (이 폴더를 VS Code로) | CLAUDE.md · PROMPT.md · features.json · progress.md |
