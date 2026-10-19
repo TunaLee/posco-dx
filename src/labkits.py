@@ -14,12 +14,14 @@ KITS = {
         tip="미적용을 다시 할 땐 CLAUDE.md를 잠시 다른 이름으로"),
 
     "2-1": dict(folder="order_api", split=True, steps=[
-        ("① 하네스 미적용", "p", "order_api 폴더 안에서 아래 두 요청을 하나씩\nclaude -p --setting-sources \"\" --output-format stream-json --verbose 로 실행해\nlabs 바로 아래 runs/2-1/미적용_1.jsonl · 2.jsonl 로 저장해 줘\n1. 어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘\n2. src/order_api.py 리뷰해 줘"),
+        ("① Skill · 하네스 미적용", "p", "order_api 폴더 안에서 하네스 없이(claude -p --setting-sources \"\") 「어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘」를 실행하고\n답을 labs 바로 아래 runs/2-1/미적용.md 로 저장해 줘"),
         ("② 하네스 만들기", "do", "앞 장 파일 두 개를 화면의 경로대로 · 탐색기 새 파일에 <b>order_api/.claude/skills/incident-report/SKILL.md</b> 처럼 경로째 입력"),
-        ("③ 하네스 적용", "p", "order_api 폴더 안에서 아래 두 요청을 하나씩\nclaude -p --setting-sources project --output-format stream-json --verbose 로 실행해\nlabs 바로 아래 runs/2-1/적용_1.jsonl · 2.jsonl 로 저장해 줘\n1. 어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘\n2. src/order_api.py 리뷰해 줘"),
-        ("④ 비교", "p", "runs/2-1/ 의 미적용 · 적용 기록을 비교해 표로 정리해 줘:\n보고서 양식 · 「(확인 필요)」 표시 · Skill 호출 여부 · reviewer 위임 여부 · 파일 수정 여부"),
+        ("③ Skill · 하네스 적용", "p", "order_api 폴더 안에서 같은 요청을 claude -p --setting-sources project 로 실행해 runs/2-1/적용.md 로 저장하고\n미적용과 양식 · 「(확인 필요)」 표시를 비교해 줘"),
+        ("④ Sub Agent 보기", "do", "VS Code로 <b>labs/order_api</b> 를 열고 Claude Code에 「src/order_api.py 리뷰해 줘」 → 입력창 아래 <b>N agents</b> 클릭 또는 <b>/tasks</b>"),
+        ("⑤ 확인", "do", "reviewer가 따로 돌고 있는지 · 쓴 도구가 Read · Grep · Glob뿐인지 · 토큰 · 메인은 결과만 받는지"),
     ], files=[("SKILL.md", "order_api/.claude/skills/incident-report/SKILL.md", "@2-1/SKILL.md"),
-              ("reviewer.md", "order_api/.claude/agents/reviewer.md", "@2-1/reviewer.md")]),
+              ("reviewer.md", "order_api/.claude/agents/reviewer.md", "@2-1/reviewer.md")],
+        tip="/tasks · agent map은 VS Code 확장 v2.1.269 이상 · 안 보이면 확장 업데이트"),
 
     "2-2": dict(folder="db_guard", split=True, harness_note="③ 단계에서 대화창에 붙여 넣는 요청문 · 내 말로 바꿔도 됨", steps=[
         ("① 준비", "p", "db_guard/project 폴더에서 python3 tools/make_db.py 로 DB를 만들고\npython3 scripts/report.py 가 어떤 오류로 멈추는지 보여 줘"),

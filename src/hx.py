@@ -717,9 +717,9 @@ def ch2():
         light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),
                                           vl("자기 컨텍스트에서 일함", "부모는 결과만 받음", "도구를 줄이면 권한도 줄어듦")), "Ch2"),
         lab("2-1", "Skill · Sub Agent 붙이기", "Ch2",
-            "Skill · Sub Agent를 직접 붙이고 전후 비교",
-            ["하네스 미적용 상태로 요청 두 개 (장애 보고서 · 코드 리뷰)", "장표의 SKILL.md · reviewer.md를 같은 경로로 만들기", "같은 요청 두 개 다시", "양식 · 위임 비교 → 내 업무 Skill 하나 추가"],
-            ["보고서가 Skill 양식대로", "리뷰가 reviewer로 위임 · 파일은 그대로"], files=labdir("order_api"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
+            "Skill은 전후 비교 · Sub Agent는 /tasks 로 도는 모습 보기",
+            ["하네스 미적용 상태로 장애 보고서 요청", "장표의 SKILL.md · reviewer.md 만들기", "하네스 적용 상태로 같은 요청 → 양식 비교", "대화창에서 코드 리뷰 요청 → /tasks 로 reviewer 보기"],
+            ["보고서가 Skill 양식대로", "/tasks 에서 reviewer · 읽기 도구만 · 토큰 확인"], files=labdir("order_api"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
         *labkit('2-1', 'Ch2'),
         stat("DESIGN.md · 디자인 하네스", "Ch2", two(
             '<div class="ctree">' + code("DESIGN.md (예 · 이 강의 장표)", '---\ncolors: { primary: "#1F3A5F", accent: "#F28C28" }\ntypography: { body: Pretendard 15, heading: Pretendard 800 }\nrounded: { card: 12 }\nspacing: { unit: 8 }\n---\n## Overview\n사내 업무 도구 · 정보는 빽빽하게 · 강조는 주황 하나\n\n## Components\n- 표: 헤더 primary · 숫자는 오른쪽 정렬\n\n## Do\'s and Don\'ts\n- Do: 상태는 색 + 글자 함께\n- Don\'t: 그라데이션 · 그림자 남발') + "</div>",

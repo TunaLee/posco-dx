@@ -1261,9 +1261,9 @@ model: sonnet
   <h2 class="s-title sm">Skill · Sub Agent 붙이기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>Skill · Sub Agent를 직접 붙이고 전후 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/order_api</code></div><div class="mine"><span>내 업무 적용</span>내 업무 절차 하나를 Skill 이름 · 단계로</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 요청 두 개 (장애 보고서 · 코드 리뷰)</li><li>장표의 SKILL.md · reviewer.md를 같은 경로로 만들기</li><li>같은 요청 두 개 다시</li><li>양식 · 위임 비교 → 내 업무 Skill 하나 추가</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>보고서가 Skill 양식대로</li><li>리뷰가 reviewer로 위임 · 파일은 그대로</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>Skill은 전후 비교 · Sub Agent는 /tasks 로 도는 모습 보기</p><div class="lf">사용 파일 · <code class="lfold">labs/order_api</code></div><div class="mine"><span>내 업무 적용</span>내 업무 절차 하나를 Skill 이름 · 단계로</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 미적용 상태로 장애 보고서 요청</li><li>장표의 SKILL.md · reviewer.md 만들기</li><li>하네스 적용 상태로 같은 요청 → 양식 비교</li><li>대화창에서 코드 리뷰 요청 → /tasks 로 reviewer 보기</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>보고서가 Skill 양식대로</li><li>/tasks 에서 reviewer · 읽기 도구만 · 토큰 확인</li></ul></div>
   </div></div>
 </section>
 
@@ -1331,16 +1331,9 @@ model: haiku
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">실습 2-1 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>order_api/</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 하네스 미적용</span></div><pre><code>order_api 폴더 안에서 아래 두 요청을 하나씩
-claude -p --setting-sources "" --output-format stream-json --verbose 로 실행해
-labs 바로 아래 runs/2-1/미적용_1.jsonl · 2.jsonl 로 저장해 줘
-1. 어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘
-2. src/order_api.py 리뷰해 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>앞 장 파일 두 개를 화면의 경로대로 · 탐색기 새 파일에 <b>order_api/.claude/skills/incident-report/SKILL.md</b> 처럼 경로째 입력</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ 하네스 적용</span></div><pre><code>order_api 폴더 안에서 아래 두 요청을 하나씩
-claude -p --setting-sources project --output-format stream-json --verbose 로 실행해
-labs 바로 아래 runs/2-1/적용_1.jsonl · 2.jsonl 로 저장해 줘
-1. 어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘
-2. src/order_api.py 리뷰해 줘</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">④ 비교</span></div><pre><code>runs/2-1/ 의 미적용 · 적용 기록을 비교해 표로 정리해 줘:
-보고서 양식 · 「(확인 필요)」 표시 · Skill 호출 여부 · reviewer 위임 여부 · 파일 수정 여부</code></pre></div></div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs</code><span class="ks">이번 실습</span><code>order_api/</code><em>〈 〉 안만 바꿔 대화창에 붙여 넣기</em></div><div class="kit wide"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① Skill · 하네스 미적용</span></div><pre><code>order_api 폴더 안에서 하네스 없이(claude -p --setting-sources "") 「어제 14시에 MES가 20분 멈췄어. 장애 보고서 양식으로 정리해 줘」를 실행하고
+답을 labs 바로 아래 runs/2-1/미적용.md 로 저장해 줘</code></pre></div><div class="kdo"><span>② 하네스 만들기</span><p>앞 장 파일 두 개를 화면의 경로대로 · 탐색기 새 파일에 <b>order_api/.claude/skills/incident-report/SKILL.md</b> 처럼 경로째 입력</p></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">③ Skill · 하네스 적용</span></div><pre><code>order_api 폴더 안에서 같은 요청을 claude -p --setting-sources project 로 실행해 runs/2-1/적용.md 로 저장하고
+미적용과 양식 · 「(확인 필요)」 표시를 비교해 줘</code></pre></div><div class="kdo"><span>④ Sub Agent 보기</span><p>VS Code로 <b>labs/order_api</b> 를 열고 Claude Code에 「src/order_api.py 리뷰해 줘」 → 입력창 아래 <b>N agents</b> 클릭 또는 <b>/tasks</b></p></div><div class="kdo"><span>⑤ 확인</span><p>reviewer가 따로 돌고 있는지 · 쓴 도구가 Read · Grep · Glob뿐인지 · 토큰 · 메인은 결과만 받는지</p></div></div><div class="dbnote"><span>참고</span> /tasks · agent map은 VS Code 확장 v2.1.269 이상 · 안 보이면 확장 업데이트</div></div></div>
 </section>
 
 <section class="slide lt" data-title="DESIGN.md · 디자인 하네스">
