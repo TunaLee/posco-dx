@@ -2793,6 +2793,14 @@ node --test 결과를 알려 주고 ①과 표로 비교해 줘</code></pre></di
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th></th><th>하네스 미적용 ×2</th><th>CLAUDE.md + Stop Hook ×2</th></tr></thead><tbody><tr><td><b>끝난 뒤 node --test</b></td><td>실패 1건 남음 · 2 / 2</td><td><b>3 / 3 통과 · 2 / 2</b></td></tr><tr><td><b>남긴 말</b></td><td>「테스트는 실행하지 않았습니다」</td><td>틀린 기대값을 계산 근거와 함께 수정</td></tr><tr><td><b>턴 · 시간</b></td><td>5턴 · 17초</td><td>10턴 · 28초</td></tr></tbody></table><div class="dbnote"><span>배운 점</span> 「테스트 통과가 완료 기준」은 Hook이 코드로 지킴 · 기대값을 바꾼 근거는 사람이 확인 (HITL)</div><div class="dbnote"><span>CI</span> 같은 검사를 PR마다 · Claude로 PR 리뷰까지 넣으려면 claude-code-action · API 키 필요</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx" target="_blank" rel="noopener">직접 실측 2026.10.20 · Sonnet 5.5 · 실습 7-1 요청 그대로 · 각 2회</a></div></div></div>
 </section>
 
+<section class="slide lt" data-title="HITL로 하네스를 키우는 고리">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch7</span></div>
+  <h2 class="s-title sm">HITL로 하네스를 키우는 고리</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>실행</b><span>Agent가 일함</span></div><div class="fa">→</div><div class="fs hl"><b>사람 판정</b><span>맞나 · 넘었나</span></div><div class="fa">→</div><div class="fs"><b>기록</b><span>틀린 사례 · 이유</span></div><div class="fa">→</div><div class="fs"><b>하네스에 반영</b><span>원인별 부품</span></div><div class="fa">→</div><div class="fs"><b>다시 실행</b><span>회귀 테스트</span></div></div><table class="dbt"><thead><tr><th>사람이 본 것 (이 강의 실습)</th><th>원인</th><th>하네스에 반영</th></tr></thead><tbody><tr><td><b>1-1</b> 「지급 보류」까지 Agent가 결정</td><td>결정 범위가 안 정해짐</td><td>CLAUDE.md 한 줄 · 결정은 담당자</td></tr><tr><td><b>3-1</b> 압축 뒤 대화로 준 규칙이 사라짐</td><td>규칙이 파일에 없음</td><td>CLAUDE.md · /compact 지시</td></tr><tr><td><b>7-1</b> 테스트 실패를 남긴 채 「완료」</td><td>완료 기준이 부탁뿐</td><td>Stop Hook으로 강제</td></tr><tr><td><b>7-1</b> 테스트 기대값을 Agent가 바꿈</td><td>근거 확인이 필요</td><td>평가 문항 추가 · 사람 확인</td></tr></tbody></table><div class="dbnote"><span>핵심</span> 판정 기록이 쌓이면 평가셋이 됨 · 같은 실수는 하네스가 막고 사람은 새로운 실수만 봄</div></div></div>
+</section>
+
 <section class="slide lt" data-title="운영: 실패 유형 정의">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch7</span></div>
