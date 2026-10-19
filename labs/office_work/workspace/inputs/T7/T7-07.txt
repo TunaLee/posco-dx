@@ -1,0 +1,4 @@
+[Material Spec] Doc No. HB-SPEC-707
+
+Item: 게이트밸브   Size: 50A 10K   Material: SCS13   Q'ty: 40 EA
+

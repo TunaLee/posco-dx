@@ -5,8 +5,6 @@ description: 사양서를 extractor → estimator → verifier-quote 순서로 �
 
 # 사양서 처리 순서 (건너뛰지 않는다)
 
-<!-- TODO(실습): 순서·재시도 횟수·출력 칸을 바꿔 보세요. -->
-
 1. `extractor` 에게 사양서 원문 전체를 넘긴다 → 품목 JSON.
 2. `estimator` 에게 품목 JSON 을 넘긴다 → 견적.
 3. `verifier-quote` 에게 원문 + 품목 JSON + 견적을 넘긴다.

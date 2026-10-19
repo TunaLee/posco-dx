@@ -3,8 +3,6 @@ description: (판교) 사내 문의 한 건을 분류하고 담당 부서와 다
 argument-hint: <문의 내용>
 ---
 
-<!-- TODO(실습): 분류 기준·출력 칸을 바꿔 보세요. $ARGUMENTS 자리에 /triage 뒤의 글이 들어간다. -->
-
 다음 사내 문의를 정리해라.
 
 문의: $ARGUMENTS

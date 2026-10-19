@@ -3,8 +3,6 @@ description: (포항) 사양서 본문에서 수량·단위가 서로 맞는지 
 argument-hint: <사양서 본문 또는 파일 경로>
 ---
 
-<!-- TODO(실습): 점검 항목을 바꿔 보세요. $ARGUMENTS 자리에 /spec-check 뒤의 글이 들어간다. -->
-
 다음 사양서를 점검해라. 파일 경로면 Read 로 읽는다.
 
 $ARGUMENTS

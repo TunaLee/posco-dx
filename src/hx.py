@@ -111,9 +111,9 @@ INC_REPLIT = ("The Register · Replit 2025.7", "https://www.theregister.com/2025
 INC_ANTIG = ("The Register · Antigravity 2025.12", "https://www.theregister.com/2025/12/01/google_antigravity_wipes_d_drive/")
 INC_CVE = ("The Register · Claude Code CVE 2026.2", "https://www.theregister.com/2026/02/26/clade_code_cves/")
 CYERA = ("Cyera · Agent-Inflicted Damage 2026.5", "https://www.cyera.com/research/agent-inflicted-damage-inside-the-real-world-failures-of-enterprise-ai-systems")
-OWN_GUARD = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/lab2_hook_by_claude", "https://github.com/TunaLee/posco-dx/tree/main/labs/lab2_hook_by_claude")
+OWN_GUARD = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/db_guard", "https://github.com/TunaLee/posco-dx/tree/main/labs/db_guard")
 OWN_TOK = ("직접 실측 2026.10.14 · Sonnet 5.5 · Claude Code 세션 기록", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
-OWN_WORK = ("직접 실측 2026.10.15 · Sonnet 5.5 · labs/work_harness", "https://github.com/TunaLee/posco-dx/tree/main/labs/work_harness")
+OWN_WORK = ("직접 실측 2026.10.15 · Sonnet 5.5 · labs/office_work", "https://github.com/TunaLee/posco-dx/tree/main/labs/office_work")
 PH_WILD = ("사진 · U.S. Fish and Wildlife Service (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:Running_wild_horse_-_DPLA_-_cf88630cfe76c58a265153acb3defd01.jpg")
 PH_HARNESS = ("사진 · Jude, CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Clydesdale_wagon.jpg")
 PH_PARTS = ("그림 · Nouveau Larousse illustré 1898 (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:Parts_of_horse_harness_(in_French,_1898).jpg")
@@ -380,7 +380,7 @@ def esc(x):
     return x.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-KIT_TEXT = {"PROMPT22": 'lab2_hook_by_claude/project 에 운영 DB를 지키는 Hook을 만들어 줘.\n운영 DB(db/prod.db)를 바꾸는 건 어떤 방법이든 막고, 조회는 허용해 줘. 개발 DB는 마음대로 써도 돼.\n그 밖에 rm -rf, .env 읽기, git push --force 도 막아 줘.\n막을 때는 「운영 DB 쓰기는 사용자 허락 필요」처럼 이유를 한 줄로 알려 주고, 외부 패키지는 쓰지 말아 줘.\n다 만들면 python3 lab2_hook_by_claude/check_hook.py 로 시험해서, 실패한 게 있으면 고치고 다시 시험해 줘.'}
+KIT_TEXT = {"PROMPT22": 'db_guard/project 에 운영 DB를 지키는 Hook을 만들어 줘.\n운영 DB(db/prod.db)를 바꾸는 건 어떤 방법이든 막고, 조회는 허용해 줘. 개발 DB는 마음대로 써도 돼.\n그 밖에 rm -rf, .env 읽기, git push --force 도 막아 줘.\n막을 때는 「운영 DB 쓰기는 사용자 허락 필요」처럼 이유를 한 줄로 알려 주고, 외부 패키지는 쓰지 말아 줘.\n다 만들면 python3 db_guard/check_hook.py 로 시험해서, 실패한 게 있으면 고치고 다시 시험해 줘.'}
 
 
 
@@ -590,7 +590,7 @@ def ch1():
         lab("1-1", "운송비 청구 검증 · 하네스 전후", "Ch1",
             "같은 요청 · 같은 자료 · 바뀌는 것은 CLAUDE.md 한 장",
             ["하네스 미적용 상태로 「운송비 청구를 검증해 줘」", "장표의 CLAUDE.md를 직접 만들기", "하네스 적용 상태로 같은 요청", "정답 · 결과 파일 · 결정 범위 · 답 길이 비교"],
-            ["전후 비교표", "하네스가 바꾼 것 한 줄"], files=labdir("lab1_1_bill_check"), mine="내 업무에서 「결과는 어디에 · 무엇은 사람이」 두 줄"),
+            ["전후 비교표", "하네스가 바꾼 것 한 줄"], files=labdir("transport_bill"), mine="내 업무에서 「결과는 어디에 · 무엇은 사람이」 두 줄"),
         *labkit('1-1', 'Ch1'),
         stat("실측: 운송비 청구 검증 전후", "Ch1", table(["", "하네스 미적용 ×3", "CLAUDE.md 한 장 ×3"], [
             ["<b>이의 제기 5건 찾기</b>", "3 / 3", "3 / 3"],
@@ -719,7 +719,7 @@ def ch2():
         lab("2-1", "Skill · Sub Agent 붙이기", "Ch2",
             "Skill · Sub Agent를 직접 붙이고 전후 비교",
             ["하네스 미적용 상태로 요청 두 개 (장애 보고서 · 코드 리뷰)", "장표의 SKILL.md · reviewer.md를 같은 경로로 만들기", "같은 요청 두 개 다시", "양식 · 위임 비교 → 내 업무 Skill 하나 추가"],
-            ["보고서가 Skill 양식대로", "리뷰가 reviewer로 위임 · 파일은 그대로"], files=labdir("lab2_1_parts"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
+            ["보고서가 Skill 양식대로", "리뷰가 reviewer로 위임 · 파일은 그대로"], files=labdir("order_api"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
         *labkit('2-1', 'Ch2'),
         stat("DESIGN.md · 디자인 하네스", "Ch2", two(
             '<div class="ctree">' + code("DESIGN.md (예 · 이 강의 장표)", '---\ncolors: { primary: "#1F3A5F", accent: "#F28C28" }\ntypography: { body: Pretendard 15, heading: Pretendard 800 }\nrounded: { card: 12 }\nspacing: { unit: 8 }\n---\n## Overview\n사내 업무 도구 · 정보는 빽빽하게 · 강조는 주황 하나\n\n## Components\n- 표: 헤더 primary · 숫자는 오른쪽 정렬\n\n## Do\'s and Don\'ts\n- Do: 상태는 색 + 글자 함께\n- Don\'t: 그라데이션 · 그림자 남발') + "</div>",
@@ -827,7 +827,7 @@ def ch2():
         lab("2-2", "Claude로 Hook 만들기", "Ch2",
             "「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로",
             ["Hook 없이 채점 (하네스 미적용)", "장표의 요청문으로 Claude에게 Hook 생성 요청", "다시 채점 → 놓친 사례를 Claude가 수정", "대화에서 실제 차단 확인"],
-            ["check_hook.py 15/15", "운영 DB 쓰기가 Hook으로 막히는 것 확인"], files=labdir("lab2_hook_by_claude"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
+            ["check_hook.py 15/15", "운영 DB 쓰기가 Hook으로 막히는 것 확인"], files=labdir("db_guard"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
         *labkit('2-2', 'Ch2'),
         stat("Claude Code로 하는 두 종류의 일", "Ch2", two(
             cards([("코드 작업", "기능 구현 · 테스트 · 코드 리뷰 · 배포 전 점검", [])], 1),
@@ -857,7 +857,7 @@ def ch2():
             ["<b>정리 · 작성형</b>", "회의록 → 할 일 · 안내 메일", "회의 후속 조치 · 공지 · 협력사 메일", "필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지"],
             ["<b>개발형</b>", "내 업무 툴 (Ch8)", "MES 로그 분석 · 정산 검증 배치 · 테스트 보강", "Superpowers: 설계 → 계획 → Sub Agent TDD · 리뷰"],
         ]) + note("샘플", labdir("samples") + " · 11개 업무 분야 가상 데이터 · 분야마다 하네스 주제 예시 3개"), "Ch2"),
-        light("업무 처리 하네스 구성", code("labs/work_harness", 'workspace/\n├── CLAUDE.md              # 업무 원칙: 결과는 out/ · 원본 수정 금지 · 근거 표기 · 확정 아닌 건 표시\n├── .claude/\n│   ├── skills/            # 업무 종류마다 절차 · 결과 양식\n│   │   ├── inquiry-answer · spec-quote · meeting-actions\n│   │   └── weekly-report · doc-diff · mail-draft\n│   ├── agents/verifier.md # 원본과 대조 · 고치지 않음\n│   └── hooks/guard.py     # 원본(inputs/) 수정 · 메일 발송 · 외부 전송 차단\n└── inputs/T1 ~ T6         # 업무 자료 (원본)'), "Ch2"),
+        light("업무 처리 하네스 구성", code("labs/office_work", 'workspace/\n├── CLAUDE.md              # 업무 원칙: 결과는 out/ · 원본 수정 금지 · 근거 표기 · 확정 아닌 건 표시\n├── .claude/\n│   ├── skills/            # 업무 종류마다 절차 · 결과 양식\n│   │   ├── inquiry-answer · spec-quote · meeting-actions\n│   │   └── weekly-report · doc-diff · mail-draft\n│   ├── agents/verifier.md # 원본과 대조 · 고치지 않음\n│   └── hooks/guard.py     # 원본(inputs/) 수정 · 메일 발송 · 외부 전송 차단\n└── inputs/T1 ~ T6         # 업무 자료 (원본)'), "Ch2"),
         light("실무 과제 여섯 가지", table(["과제", "요청 한마디", "검증 포인트"], [
             ["<b>T1 문의 답변</b>", "「사내 문의 5건에 답변 초안 써 줘」", "규정 조항 근거 · 환불 문의는 담당자에게"],
             ["<b>T2 사양서 견적</b>", "「사양서 두 건으로 견적 내 줘」", "단가표 대조 · 수량 불일치 사양서는 보류"],
@@ -865,11 +865,11 @@ def ch2():
             ["<b>T4 점검 → 주간 보고서</b>", "「점검 기록으로 주간 보고서 만들어 줘」", "「초과」 기준 · 빈 값 · 이틀 연속 → 정비 요청"],
             ["<b>T5 규정 개정 비교</b>", "「작년이랑 뭐가 달라졌는지 정리해 줘」", "초안 + 확정 회의록 반영"],
             ["<b>T6 납기 지연 메일</b>", "「고객사에 납기 지연 안내 메일 초안」", "확정 안 된 날짜 · 보상 약속 금지"],
-        ]) + note("자료", labdir("work_harness") + " · 모든 회사 · 인물 · 수치는 가상"), "Ch2"),
+        ]) + note("자료", labdir("office_work") + " · 모든 회사 · 인물 · 수치는 가상"), "Ch2"),
         lab("2-3", "업무 처리 하네스로 실무 과제", "Ch2",
             "코드가 아닌 업무도 같은 하네스로 · 하네스 미적용과 비교",
             ["하네스 미적용 상태로 과제 2개 → 채점", "장표의 CLAUDE.md · Skill 두 개 직접 만들기", "새 대화로 같은 과제 → 채점 · 결과 위치 · 근거 비교", "내 업무용 Skill 하나를 Claude에게 만들게 하고 처리"],
-            ["과제 2개 이상 하네스로 처리 · 채점", "내 업무 Skill 1개"], files=labdir("work_harness"),
+            ["과제 2개 이상 하네스로 처리 · 채점", "내 업무 Skill 1개"], files=labdir("office_work"),
             mine="내 업무 하나를 이 하네스에 Skill로 추가"),
         *labkit('2-3', 'Ch2'),
         stat("실측: 하네스 미적용 vs 업무 처리 하네스", "Ch2",
@@ -1149,7 +1149,7 @@ def ch5():
         lab("5-2", "업무 하네스에 멀티에이전트 입히기", "Ch5",
             "같은 과제를 단일 vs 멀티로 · 숫자로 고르기",
             ["단일 하네스로 T7 (사양서 40건) 처리 → 채점", "장표의 extractor · verifier · 나누기 규칙 직접 만들기", "같은 과제 다시 → 점수 · 시간 · 토큰 비교 (Agent Watch)", "내 업무는 어느 쪽이 맞는지 기록"],
-            ["비교표 (단일 vs 멀티)", "고른 구성과 이유 한 줄"], files=labdir("work_harness"),
+            ["비교표 (단일 vs 멀티)", "고른 구성과 이유 한 줄"], files=labdir("office_work"),
             mine="내 업무 하네스를 나눌지 말지 · 이유"),
         *labkit('5-2', 'Ch5'),
         bridge("다음: 토큰 경제학", "", "Ch5", "→ Ch6 토큰 경제학"),
@@ -1250,7 +1250,7 @@ def ch6():
             "같은 일을 더 적은 턴 · 토큰으로 · 한 번 알아낸 방법을 Skill + 스크립트로",
             ["하네스 미적용 상태로 MES 로그 집계 · 매뉴얼 찾기 → 토큰 · 턴 기록", "방금 한 방법을 스크립트 + Skill로 저장해 달라고 요청",
              "같은 요청을 하네스 적용 상태로 → 토큰 · 턴 비교", "해 보기: 「통째 읽기 금지」 Hook만 넣으면?"],
-            ["미적용 · 적용 토큰 · 턴 · 정답 비교표", "줄어든 이유 한 줄"], files=labdir("token_harness"),
+            ["미적용 · 적용 토큰 · 턴 · 정답 비교표", "줄어든 이유 한 줄"], files=labdir("mes_logs"),
             mine="내 업무에서 매번 같은 방법으로 찾는 일 하나"),
         *labkit('6-2', 'Ch6'),
         stat("실측: 토큰 아끼는 하네스", "Ch6",
@@ -1365,7 +1365,7 @@ def ch7():
             "하네스를 고친 뒤 나빠진 곳을 찾고 · 최종 판정은 사람",
             ["기준선: 업무 하네스로 과제 6개 실행 → 자동 채점", "CLAUDE.md 규칙 한 줄을 일부러 지우기", "같은 과제 다시 → 점수 비교 (회귀 찾기)",
              "점수가 같아도 결과물 2개는 직접 읽고 판정 → 되돌리기"],
-            ["전후 점수표 · 나빠진 과제와 이유", "사람 판정 기록 (자동 채점과 다른 점)"], files=labdir("work_harness"),
+            ["전후 점수표 · 나빠진 과제와 이유", "사람 판정 기록 (자동 채점과 다른 점)"], files=labdir("office_work"),
             mine="내 업무에서 「점수는 같은데 사람이 보면 틀린」 경우 하나"),
         *labkit('7-1', 'Ch7'),
         light("운영: 실패 유형 정의", table(["실패", "판정", "대응"], [
@@ -1430,7 +1430,7 @@ def ch8():
             ("④ Hook · 권한", "어기면 사고인 것만 차단"),
             ("⑤ 검증 Agent", "숫자 · 발송 등 틀리면 곤란한 일"),
             ("⑥ 평가 → 고치기", "과거 사례 5~10건으로 채점"),
-        ], hl=2) + table(["단계", "work_harness에서 한 일", "결과"], [
+        ], hl=2) + table(["단계", "office_work에서 한 일", "결과"], [
             ["<b>② CLAUDE.md</b>", "결과는 out/과제/ · 원본 수정 금지 · 근거 표기", "파일로 남김 12/12 (하네스 미적용 2/12)"],
             ["<b>③ Skill</b>", "spec-quote: 「수량 불일치면 견적 보류」", "회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)"],
             ["<b>④ Hook</b>", "inputs/ 수정 · 메일 발송 · 외부 전송 차단", "원본 보존 12/12"],
@@ -1477,7 +1477,7 @@ def ch8():
                 ["<b>subagent-driven-development</b>", "작업마다 새 Sub Agent · TDD · 스펙 리뷰 → 코드 리뷰", "—"],
                 ["<b>finishing-a-development-branch</b>", "테스트 확인 · 병합 · PR 정리", "<b>최종 판정</b>"],
             ]),
-            '<div class="ptall">' + code("final_dev_harness 에서 붙여 넣기", '〈만들 웹 앱 한 줄〉 을 만들고 싶어. superpowers 의 brainstorming 부터 시작해 줘.\n화면이 있으니 계획 전에 DESIGN.md 를 먼저 만들고, 화면은 DESIGN.md 를 따르게 해 줘.\n예시 데이터는 ../samples/〈분야〉/ 를 써.') + "</div>")
+            '<div class="ptall">' + code("my_tool 에서 붙여 넣기", '〈만들 웹 앱 한 줄〉 을 만들고 싶어. superpowers 의 brainstorming 부터 시작해 줘.\n화면이 있으니 계획 전에 DESIGN.md 를 먼저 만들고, 화면은 DESIGN.md 를 따르게 해 줘.\n예시 데이터는 ../samples/〈분야〉/ 를 써.') + "</div>")
               + note("직접 만들지 않는 이유", "개발 멀티에이전트 흐름은 공개 하네스가 이미 잘 갖춤 · 우리는 설치하고 승인 지점을 지키는 데 집중"),
              C_SUPERPOWERS),
         light("Superpowers 실행 타임라인", viz("dev_timeline")
@@ -1509,9 +1509,9 @@ def ch8():
              ]), D_RALPH, D_HOOKS_STOP, D_LOOPCMD, D_HEADLESS),
         lab("8-2", "루프 하네스로 오래 일 시키기", "Ch8",
             "기능 목록 · 진행 기록 · 테스트로 사람 없이 여러 번 이어서 일하게",
-            ["loop_harness를 git 저장소로", "장표의 CLAUDE.md · PROMPT.md · features.json · progress.md 만들기",
+            ["settle_check를 git 저장소로", "장표의 CLAUDE.md · PROMPT.md · features.json · progress.md 만들기",
              "터미널에서 node loop.mjs 8 실행", "features.json · progress.md · git log 로 진행 보기", "직접 실행해 보고 판정"],
-            ["기능 6개 중 통과 수 · 반복 횟수 · 토큰", "사람 판정 (CLI 직접 실행)"], files=labdir("loop_harness"),
+            ["기능 6개 중 통과 수 · 반복 횟수 · 토큰", "사람 판정 (CLI 직접 실행)"], files=labdir("settle_check"),
             mine="내 업무 툴을 기능 목록으로 쪼개 루프에 맡기기"),
         *labkit('8-2', 'Ch8'),
         light("패들릿 공유 양식", two(
@@ -1547,8 +1547,8 @@ def advanced():
 
 # ── 부록: 하네스 재료 (복사 · 파일로 저장) ─────────────────
 def materials():
-    W = "work_harness/harness/"
-    M = "work_harness/harness_multi/"
+    W = "office_work/harness/"
+    M = "office_work/harness_multi/"
     sk = lambda n: labfile(W + f".claude/skills/{n}/SKILL.md")
     css = '<div class="pgrid2 mat">'
     return [divider("부록", "하네스 재료", "")] + [

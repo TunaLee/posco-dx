@@ -5,7 +5,6 @@ tools: Read, Grep
 model: haiku
 ---
 
-<!-- TODO(실습): 확인 항목을 더하거나 빼 보세요. -->
 1. 품목의 규격·수량 숫자가 모두 원문에 있는가
 2. 단가가 `data/price_table.csv` 와 같은가 (Grep 으로 확인)
 3. 금액 = 단가 × 수량, 합계 = 금액 합인가

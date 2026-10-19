@@ -11,18 +11,18 @@
 
 | 장표 | 실습 폴더 | 하네스 (장표에 있음) |
 |---|---|---|
-| 1-1 운송비 청구 검증 · 하네스 전후 | `lab1_1_bill_check/` | CLAUDE.md |
-| 2-1 Skill · Sub Agent | `lab2_1_parts/` | SKILL.md · reviewer.md |
-| 2-2 Claude로 Hook 만들기 | `lab2_hook_by_claude/project/` | Hook 요청문 |
-| 2-3 업무 처리 하네스 | `work_harness/workspace/` | CLAUDE.md · Skill 두 개 |
+| 1-1 운송비 청구 검증 · 하네스 전후 | `transport_bill/` | CLAUDE.md |
+| 2-1 Skill · Sub Agent | `order_api/` | SKILL.md · reviewer.md |
+| 2-2 Claude로 Hook 만들기 | `db_guard/project/` | Hook 요청문 |
+| 2-3 업무 처리 하네스 | `office_work/workspace/` | CLAUDE.md · Skill 두 개 |
 | 3-1 컨텍스트 | `lab3_context/` | — |
 | 4-1 공개 하네스 | `lab4_public_harness/` | — |
-| 5-1 · 5-2 멀티에이전트 | `lab5_multiagent/` · `work_harness/workspace/` | extractor · verifier · 나누기 규칙 |
+| 5-1 · 5-2 멀티에이전트 | `lab5_multiagent/` · `office_work/workspace/` | extractor · verifier · 나누기 규칙 |
 | 6-1 토큰 | `lab6_tokens/` | — |
-| 6-2 토큰 아끼는 하네스 (선택) | `token_harness/` | Skill + 스크립트 (Claude가 만듦) |
-| 7-1 회귀 테스트 · 사람 판정 | `work_harness/` | — |
-| 8-1 메타 하네스로 내 하네스 | `meta_harness/` (이 폴더를 VS Code로) · `samples/` · 개발 주제면 `final_dev_harness/` | 요청문 · 부록 ⑦ ⑧ · 개발 주제는 Superpowers |
-| 8-2 루프 하네스 (선택) | `loop_harness/` (이 폴더를 VS Code로) | CLAUDE.md · PROMPT.md · features.json · progress.md |
+| 6-2 토큰 아끼는 하네스 (선택) | `mes_logs/` | Skill + 스크립트 (Claude가 만듦) |
+| 7-1 회귀 테스트 · 사람 판정 | `office_work/` | — |
+| 8-1 메타 하네스로 내 하네스 | `meta_harness/` (이 폴더를 VS Code로) · `samples/` · 개발 주제면 `my_tool/` | 요청문 · 부록 ⑦ ⑧ · 개발 주제는 Superpowers |
+| 8-2 루프 하네스 (선택) | `settle_check/` (이 폴더를 VS Code로) | CLAUDE.md · PROMPT.md · features.json · progress.md |
 
 ## 강사용 참고
 
