@@ -432,6 +432,7 @@ def chapter(ch, title, active, map_title):
 
 # ── 시작 ────────────────────────────────────────────────
 AGENDA = [
+    ("Ch0", "AI 에이전트", "등장 배경 · 도구 사용 · 작업 길이"),
     ("Ch1", "하네스 개념", "하네스 전후 비교표"),
     ("Ch2", "Claude Code 하네스 분해", "Skill · Sub Agent · Hook · 명령"),
     ("Ch3", "컨텍스트 엔지니어링", "컨텍스트 실험표"),
@@ -501,6 +502,47 @@ def opening():
     ]
 
 
+# ── Ch0 AI 에이전트 ─────────────────────────────────────
+def ch0():
+    tl = "".join(f'<div class="tl{" hl" if hl else ""}"><b>{y}</b><span>{t}</span></div>' for y, t, hl in [
+        ("2022.11", "채팅 · ChatGPT 공개", False), ("2023.06", "도구 호출 · Function Calling", True),
+        ("2024.11", "연결 표준 · MCP", False), ("2025.02", "코딩 에이전트 · Claude Code", True),
+        ("2025.07", "범용 에이전트 · ChatGPT agent", False), ("2025.10", "스킬 · Agent Skills", False)])
+    return [divider("Ch0", "AI 에이전트", "")] + [
+        light("에이전트 등장 배경", cards([
+            ("도구 호출", "2023.06 Function Calling · 모델이 부를 함수와 값을 고름", []),
+            ("긴 작업", "맡길 수 있는 작업 길이가 약 105일마다 2배", []),
+            ("연결 표준", "2024.11 MCP · 사내 시스템을 같은 방식으로 연결", []),
+        ], 3) + note("정리", "고를 수 있게 됨 + 오래 이어 감 + 붙이기 쉬워짐 → 에이전트"), "Ch0"),
+        light("대화형 작업과 위임형 작업", two(
+            cards([("대화형", "질문 → 답 → 사람이 읽고 다음 질문", []),
+                   ("사람의 역할", "매 답을 확인 · 실수는 다음 턴에 바로잡음", [])], 1),
+            cards([("위임형", "지시 1번 → 도구 수십 번 → 결과 보고", []),
+                   ("사람의 역할", "최종 결과만 확인 · 같은 일을 매일 반복", [])], 1))
+              + note("달라진 점", "중간 과정을 사람이 보지 않음 → 품질 · 안전을 확인하는 장치가 작업 안에 있어야 함"), "Ch0"),
+        stat("채팅과 Claude Code의 작업 방식 차이", "Ch0",
+             hbars([("채팅", 13, False, "13번 주고받음"), ("Claude Code", 1, True, "지시 1번")], top=14, title="블로그 글 하나 완성까지 (중앙값)")
+             + big([("86", "%", "일이 빨라짐"), ("82", "%", "맡는 일의 범위가 넓어짐"), ("69", "%", "품질이 좋아짐")]),
+             A_ECON26),
+        light("도구 사용", two(
+            cards([("도구 없는 AI", "다음 글자를 확률로 이어 씀 · 계산 · 최신 정보 · 사내 자료 · 실행 불가", [])], 1),
+            cards([("도구를 쓰는 AI", "필요할 때 스스로 골라 호출 · 결과를 읽고 다음 행동", [])], 1))
+              + flow([("판단", "무엇이 필요한가"), ("도구 호출", "검색 · 파일 · 계산 · 시스템"), ("결과 확인", "충분한가 · 맞는가"), ("다음 행동", "다시 호출 또는 끝")], hl=1), "Ch0"),
+        stat("AI가 맡을 수 있는 작업 길이 (METR)", "Ch0",
+             '<div class="mwrap">' + metr_chart() + '<div class="mcards">'
+             + '<div class="bn hl"><div class="bv">105<small>일</small></div><div class="bl">작업 길이가 2배 되는 기간 (2024년 이후)</div></div>'
+             + '<div class="bn"><div class="bv">약 2<small>년</small></div><div class="bl">무어의 법칙 · 칩 성능 2배 주기</div></div>'
+             + '<div class="bn"><div class="bv">5.7<small>시간</small> → 54<small>분</small></div><div class="bl">GPT-5.4 · 50% 기준 vs 80% 기준</div></div>'
+             + '</div></div>'
+             + note("읽는 법", "작업 길이 = 사람이 하면 걸리는 시간 · 법칙이 아닌 측정 추세 · 두 선 사이 = 믿고 맡기기까지의 차이"),
+             METR_FRR, METR_TH),
+        light("에이전트 구성 요소", flow([("모델", "읽기 · 판단 · 작성"), ("도구", "검색 · 파일 · 실행"), ("지침", "팀 규칙 · 절차"), ("자료", "양식 · 예시 · 참고")], hl=0)
+              + note("다음", "모델을 뺀 나머지 전부 = 하네스"), "Ch0"),
+        light("채팅 → 에이전트 연표", f'<div class="tline" style="grid-template-columns:repeat(6,1fr)">{tl}</div>'
+              + note("출처", "OpenAI (2023.06 · 2025.07) · Anthropic (2024.11 · 2025.02 · 2025.10)"), "Ch0"),
+    ]
+
+
 # ── Ch1 하네스 개념 ─────────────────────────────────────
 def ch1():
     return [divider("Ch1", "하네스 엔지니어링 개념", "")] + [
@@ -538,24 +580,6 @@ def ch1():
             ["옆 팀 협업", "Sub Agent"], ["결재 · 보안 규정", "Hook · 권한"], ["수습 평가", "평가셋"],
         ]), "Ch1"),
         light("모델 발전과 요구의 변화", evolution(), "Ch1"),
-        light("대화형 작업과 위임형 작업", two(
-            cards([("대화형", "질문 → 답 → 사람이 읽고 다음 질문", []),
-                   ("사람의 역할", "매 답을 확인 · 실수는 다음 턴에 바로잡음", [])], 1),
-            cards([("위임형", "지시 1번 → 도구 수십 번 → 결과 보고", []),
-                   ("사람의 역할", "최종 결과만 확인 · 같은 일을 매일 반복", [])], 1))
-              + note("달라진 점", "중간 과정을 사람이 보지 않음 → 품질 · 안전을 확인하는 장치가 작업 안에 있어야 함"), "Ch1"),
-        stat("채팅과 Claude Code의 작업 방식 차이", "Ch1",
-             hbars([("채팅", 13, False, "13번 주고받음"), ("Claude Code", 1, True, "지시 1번")], top=14, title="블로그 글 하나 완성까지 (중앙값)")
-             + big([("86", "%", "일이 빨라짐"), ("82", "%", "맡는 일의 범위가 넓어짐"), ("69", "%", "품질이 좋아짐")]),
-             A_ECON26),
-        stat("AI가 맡을 수 있는 작업 길이 (METR)", "Ch1",
-             '<div class="mwrap">' + metr_chart() + '<div class="mcards">'
-             + '<div class="bn hl"><div class="bv">105<small>일</small></div><div class="bl">작업 길이가 2배 되는 기간 (2024년 이후)</div></div>'
-             + '<div class="bn"><div class="bv">약 2<small>년</small></div><div class="bl">무어의 법칙 · 칩 성능 2배 주기</div></div>'
-             + '<div class="bn"><div class="bv">5.7<small>시간</small> → 54<small>분</small></div><div class="bl">GPT-5.4 · 50% 기준 vs 80% 기준</div></div>'
-             + '</div></div>'
-             + note("읽는 법", "작업 길이 = 사람이 하면 걸리는 시간 · 법칙이 아닌 측정 추세 · 두 선 사이를 하네스가 메움"),
-             METR_FRR, METR_TH),
         light("하네스가 필요해진 이유", table(["위임형 작업의 문제", "필요해진 것", "하네스 부품"], [
             ["<b>같은 일을 반복</b>", "매번 같은 형식 · 같은 기준", "지침 · Skill · 평가"],
             ["<b>사람이 중간을 안 봄</b>", "위험한 실행은 강제로 차단", "Hook · 권한"],
@@ -1572,7 +1596,7 @@ def ch8():
 
 
 def slides():
-    return opening() + ch1() + ch2() + ch3() + ch4() + ch5() + ch6() + ch7() + ch8()
+    return opening() + ch0() + ch1() + ch2() + ch3() + ch4() + ch5() + ch6() + ch7() + ch8()
 
 
 CSS = '''
@@ -1685,6 +1709,7 @@ CSS = '''
   .kit .kf .code code{font-size:11.5px;}
   .pgrid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   .dl{color:#F28C28; font-weight:800; font-family:var(--mono); text-decoration:underline;}
-  .days.two{grid-template-columns:1fr; max-width:900px;}
-  .days.two .daycol{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .days.two{grid-template-columns:1fr; max-width:1150px;}
+  .days.two .daycol{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; align-content:start; grid-auto-rows:min-content;}
+  .days.two{align-items:start; align-self:start;}
 '''
