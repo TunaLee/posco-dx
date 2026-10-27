@@ -957,6 +957,8 @@ def ch4():
             ]) + '</div>',
             '<div class="ptall">' + code("DESIGN.md 만들기 · 이렇게 말하면 됨", "이 화면(또는 첨부한 스크린샷)의 스타일을 정리해서 DESIGN.md 를 만들어 줘.\n맨 위에는 색 · 글꼴 · 모서리 · 간격을 YAML 토큰으로, 아래는 Overview부터 Do's and Don'ts까지 형식 순서대로.\n그리고 앞으로 화면을 만들거나 고칠 땐 DESIGN.md 를 따르라고 CLAUDE.md 에 적어 줘.") + "</div>")
               + note("어디에", "실습 3-1 미니 깃 페이지 · Ch9 내 업무 툴 · 형식이 alpha라 바뀔 수 있음"), "Ch3"),
+        light("리뷰용 shop 저장소", viz2.shop_repo()
+              + note("미니 깃", "데이터 파일 하나로 시작 · 서버를 처음 켜면 팀원 커밋 · 브랜치가 있는 진짜 git 저장소가 생김"), "Ch3"),
         lab("3-1", "Superpowers로 미니 깃에 기능 더하기", "Ch3",
             "뼈대(미니 깃)에 리뷰 현황 페이지를 설계 → 계획 → TDD로 · 내 코드는 미니 깃에 push",
             ["미니 깃 켜기 · 화면 둘러보기", "Superpowers 설치", "브레인스토밍 → 설계 · 계획 승인", "구현 → 브랜치 push → 미니 깃에 내 PR"],

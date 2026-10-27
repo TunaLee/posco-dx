@@ -321,6 +321,51 @@ def scopes():
     return f'<div class="scp">{"".join(out)}</div>'
 
 
+def shop_repo():
+    """리뷰용 shop 저장소 — 데이터 파일 하나 → 처음 켤 때 진짜 git 저장소 · ISSUES 는 강사만."""
+    AUTH = {"김하늘": "#1F3A5F", "이준호": "#2E7D32", "박서연": "#6F42C1", "최민재": "#00838F"}
+    PRS = [(101, "김하늘"), (102, "이준호"), (103, "박서연"), (104, "최민재"), (105, "김하늘"), (106, "이준호"),
+           (107, "박서연"), (108, "최민재"), (109, "김하늘"), (110, "이준호"), (111, "박서연"), (112, "최민재")]
+    BAD = {101, 102, 103, 104, 105, 106, 108, 109, 110, 111}
+    s = [f"<defs>{_defs('shp')}</defs>"]
+    # 왼쪽: 데이터 파일
+    s.append('<g class="v2-in" style="--d:0s"><rect x="20" y="20" width="300" height="350" rx="16" fill="#1E1E2E"/>'
+             '<text x="40" y="52" class="v2-code" style="fill:#C9CFD8;font-size:16px">seed/shop_data.py</text></g>')
+    for i, (h, sub, col, d) in enumerate([("BASE", "main 코드 · 주문 · 가격 · 로그인 · DB · 테스트", "#3A4A66", .2),
+                                          ("PRS", "팀원 4명 · PR 12개 · 제목 · 작성자 · 시각 · 바뀐 코드", "#3A4A66", .4),
+                                          ("ISSUES", "심어 둔 문제 14개 · PR 10개에", "#5A2A2A", .6)]):
+        y = 72 + i * 98
+        s.append(f'<g class="v2-in" style="--d:{d:.2f}s"><rect x="38" y="{y}" width="264" height="84" rx="10" fill="{col}"/>'
+                 f'<text x="54" y="{y + 30}" class="v2-t" style="fill:#fff;font-family:var(--mono,monospace)">{h}</text>'
+                 f'<foreignObject x="54" y="{y + 40}" width="236" height="44"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;color:#C9CFD8;line-height:1.35">{sub}</div></foreignObject></g>')
+    # 가운데 화살표
+    s.append(_arrow(330, 160, 420, 160, c=O, d=.9, label="처음 켤 때"))
+    s.append('<g class="v2-in" style="--d:1s"><text x="375" y="185" text-anchor="middle" class="v2-s" style="font-size:12px">make_shop.py</text></g>')
+    # 오른쪽: git 그래프
+    s.append('<g class="v2-in" style="--d:1.1s"><text x="440" y="40" class="v2-h">repos/shop.git</text>'
+             '<line x1="450" y1="90" x2="1150" y2="90" stroke="#1F3A5F" stroke-width="5" stroke-linecap="round"/>'
+             '<circle cx="470" cy="90" r="11" fill="#fff" stroke="#1F3A5F" stroke-width="4"/>'
+             '<text x="490" y="76" class="v2-l" style="fill:#16233A">main · 첫 커밋 (BASE)</text></g>')
+    for i, (n, who) in enumerate(PRS):
+        x = 520 + (i % 6) * 105; y = 165 if i < 6 else 260; c = AUTH[who]; d = 1.4 + i * .12
+        g = [f'<g class="v2-in" style="--d:{d:.2f}s">',
+             f'<path d="M{x - 20} 90 C {x - 20} {y - 30}, {x} {y - 40}, {x} {y - 14}" fill="none" stroke="{c}" stroke-width="2.4" opacity=".55"/>',
+             f'<circle cx="{x}" cy="{y}" r="14" fill="{c}"/>',
+             f'<text x="{x}" y="{y + 36}" text-anchor="middle" class="v2-l" style="fill:#16233A">pr-{n}</text>']
+        if n in BAD:
+            g.append(f'<circle cx="{x + 12}" cy="{y - 11}" r="6" fill="#C62828" stroke="#fff" stroke-width="2"/>')
+        g.append("</g>")
+        s.append("".join(g))
+    # 범례 · 출구
+    leg = "".join(f'<circle cx="{450 + k * 110}" cy="345" r="8" fill="{c}"/><text x="{463 + k * 110}" y="350" class="v2-s" style="fill:#16233A">{a}</text>'
+                  for k, (a, c) in enumerate(AUTH.items()))
+    s.append(f'<g class="v2-in" style="--d:3s">{leg}<circle cx="905" cy="345" r="6" fill="#C62828"/><text x="917" y="350" class="v2-s" style="fill:#C62828">문제 심은 PR</text></g>')
+    s.append('<g class="v2-in" style="--d:3.2s"><rect x="38" y="380" width="264" height="30" rx="8" fill="#FDECEC"/>'
+             '<text x="170" y="400" text-anchor="middle" class="v2-l" style="fill:#C62828">🔒 ISSUES 는 화면 · API로 안 나감</text></g>')
+    s.append('<g class="v2-in" style="--d:3.4s"><text x="1150" y="400" text-anchor="end" class="v2-l" style="fill:#1F3A5F">보는 곳: 미니 깃 /r/shop · git clone …/shop.git</text></g>')
+    return f'<svg viewBox="0 0 1180 420" class="v2">{"".join(s)}</svg>'
+
+
 CSS = """
   /* 표 대신 그림 */
   .v2{width:100%; height:auto; display:block; margin:4px 0 12px;}
