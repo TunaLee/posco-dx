@@ -25,5 +25,4 @@ Ch2 에서 더미 코드로 `.claude/`(Skill · Agent · Hook)를 Claude 와 함
 |---|---|
 | `review_lab/` | Ch2 · 리뷰용 더미 코드 · 완성본(`solution/dot_claude/`) |
 | `mini_git/` | 미니 깃 뼈대 · 리뷰용 팀 PR(`seed/`) · 계산 도구(`tools/`) · 완성본(`solution/`) |
-| `agent_watch/` | Ch6 · Ch7 · 에이전트 실행 타임라인 · 토큰 대시보드 |
 | `meta_harness/` · `samples/` | Ch9 실습 9-1 · 내 업무 하네스 |

@@ -506,7 +506,7 @@ def opening():
              + note("그래서", "느낌 대신 우리 과제 · 우리 평가셋으로 잰다"),
              METR26S, METR26),
         light("최종 산출물", viz2.tiles([('미니 깃에 올린 내 코드', '기능 · MCP 서버 · 리뷰 기록'), ('메타 하네스', '인터뷰 → 승인 → 하네스 생성'), ('내 업무 하네스', '미적용 vs 적용 비교'), ('사람 판정 기록', '내 기준으로 판정 · 2분 발표')], 4), "시작"),
-        light("실습 환경", viz2.tiles([('Claude Code', '회사 계정 로그인'), ('VS Code · Python 3.10+', '표준 라이브러리만'), ('Agent Watch', '실행 흐름 · 토큰'), ('Git', '버전 관리 · 공유')], 4)
+        light("실습 환경", viz2.tiles([('Claude Code', '회사 계정 로그인'), ('VS Code · Python 3.10+', '표준 라이브러리만'), ('/context', '컨텍스트 · 토큰 확인'), ('Git', '버전 관리 · 공유')], 4)
               + note("실습 자료", labdir("") + " · 미니 깃 뼈대만 준비 · 기능 · MCP · 리뷰는 직접"), "시작"),
         light("실습 진행 방식", flow([("labs.zip 받기", "아래 링크 · 덱과 같은 곳"), ("압축 풀기", "바탕화면 등"), ("VS Code로 폴더 열기", "실습마다 열 폴더 표시"), ("Claude Code 패널", "왼쪽 위 아이콘"), ("미니 깃 켜기", "python server.py")])
               + '<div class="kit wide" style="margin-top:22px">' + code("처음 한 번 · labs/mini_git 에서", esc("python3 · claude 버전을 확인하고\n미니 깃(server.py)을 켜 줘"))
@@ -988,16 +988,10 @@ def ch5():
             "Sub Agent", [("부모 ↔ 자식 한 방향", "부모가 순서 강제"), ("맞는 일", "독립 조사 · 검증 · 분업"), ("비용", "자식마다 컨텍스트")],
             "Agent Teams", [("구성원끼리 직접", "공유 작업 목록"), ("맞는 일", "서로 반박 · 보완"), ("비용", "구성원마다 세션 · 더 큼")], hl="l"), "Ch6"),
         light("위임문 4요소", viz2.tiles([('목표 · 완료 기준', '없으면 어디서 멈출지 모름'), ('입력 범위', '없으면 필요 없는 것까지 읽음'), ('허용 도구', '없으면 권한 밖 작업'), ('반환 형식', '없으면 부모가 못 합침')], 4), "Ch6"),
-        light("검증 Agent 분리", two(
-            flow([("분류", "classifier"), ("응대", "domain"), ("검증", "verifier"), ("통과 → 답", "")], hl=2),
-            flow([("추출", "extractor"), ("견적", "estimator"), ("검증", "verifier"), ("통과 → 결과", "")], hl=2))
-              + note("verifier", "읽기 전용 · 근거 · 숫자 · 정책만 판정 · 고치지 않음"), "Ch6"),
-        light("실행 타임라인", viz("timeline_lanes") + note("만드는 법", "실행 기록 → visualize.py → 타임라인 HTML · 실시간은 Agent Watch"), "Ch6"),
-        light("실시간 대시보드: Agent Watch", '<img class="shot" src="img/agent_watch.png" alt="Agent Watch 화면">'
-              + note("구성", "Hook → 로컬 서버 → 브라우저 · 메인 · Sub Agent 레인 · 에이전트별 토큰 · 효율 점검 · " + labdir("agent_watch")), "Ch6"),
+        light("실행 타임라인", viz("timeline_lanes") + note("만드는 법", "Agent마다 언제 시작 · 끝났는지 · 겹쳐 돈 구간"), "Ch6"),
         lab("6-1", "보안 · 버그 · 테스트 리뷰어 팀", "Ch6",
             "한 Agent가 다 하던 리뷰를 역할별로 · 검증 Agent가 확인",
-            ["단일 Agent로 전체 리뷰", "리뷰어 3 + 검증 Agent 팀", "같은 요청을 팀으로 · Agent Watch", "미니 깃 PR 화면에서 코멘트 비교"],
+            ["단일 Agent로 전체 리뷰", "리뷰어 3 + 검증 Agent 팀", "같은 요청을 팀으로 · <code>/context</code> 비교", "미니 깃 PR 화면에서 코멘트 비교"],
             ["PR마다 종합 코멘트", "단일 vs 팀 비교"], files=labdir("mini_git"), mine="내 업무를 역할 셋으로 나누면"),
         quest("6-1", "Ch6",
               ["「shop PR 101~112 리뷰해 줘」", "「보안 · 버그 · 테스트 리뷰어와 검증 Agent 팀으로 나눠 줘」", "같은 요청을 팀으로", "미니 깃 PR 화면에서 코멘트 비교"],
@@ -1095,9 +1089,9 @@ def ch6():
             ["LLM이 PR 12개를 직접 읽기 → 토큰", "검사 스크립트 결과만 넘기기 → 토큰", "결과 · 토큰 비교"],
             ["토큰 실측표", "「코드로 할 일 · LLM에 맡길 일」 한 줄"], files=labdir("mini_git"), mine="내 업무에서 코드로 돌릴 반복 검사"),
         quest("7-1", "Ch7",
-              ["「PR 12개에서 비밀 키 · SQL 문자열 조립을 찾아 줘」 · 직접 읽기로", "「같은 걸 찾는 검사 스크립트를 만들고 결과만 보고 판단해 줘」", "Agent Watch로 토큰 비교"],
+              ["「PR 12개에서 비밀 키 · SQL 문자열 조립을 찾아 줘」 · 직접 읽기로", "「같은 걸 찾는 검사 스크립트를 만들고 결과만 보고 판단해 줘」", "두 대화의 <code>/context</code> 비교"],
               ["찾은 건이 같은가", "입력 · 출력 토큰 차이", "LLM이 놓치거나 지어낸 건", "어느 검사가 코드로 충분한가"],
-              "Agent Watch 는 Ch6 · <code>solution/checks.py</code>"),
+              "<code>solution/checks.py</code>"),
         bridge("다음: 평가 · HITL", "", "Ch7", "→ Ch8 평가 · HITL"),
     ]
 
