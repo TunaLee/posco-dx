@@ -47,7 +47,6 @@ git checkout -b feature/calc && git push team feature/calc    # main 이 아닌 
 | 7-1 | 「같은 걸 찾는 검사 스크립트를 만들고 결과만 보고 판단해 줘」 | 토큰 비교 |
 | 8-1 | 「작성자별 PR 현황 페이지를 만들어 PR 로 올려 줘」 → 화면 보고 PR 에 수정 요청 → 반영 | PR 에 요청 · 반영 이력 |
 | 8-2 | 「받은 수정 요청을 하네스에 반영해 줘」 → 다음 기능 PR | PR별 수정 요청 수 감소 |
-| 9-2 | 「기능을 하나씩 새 세션으로 구현해 브랜치로 push 하는 루프」 | PR 다섯 개 · 사람이 병합 |
 
 ## 막히면 — `solution/` (강사용 완성본)
 
@@ -57,7 +56,6 @@ git checkout -b feature/calc && git push team feature/calc    # main 이 아닌 
 | `mcp_server.py` | 4-3 · 5-1 · `claude mcp add repo -- python solution/mcp_server.py` |
 | `dot_claude/` (Skill · Agent · settings) · `hooks/merge_guard.py` | 4-4 · 4-5 · 6-1 · `.claude/` 로 복사 |
 | `checks.py` | 7-1 |
-| `CLAUDE.md` · `features.json` · `PROMPT.md` · `progress.md` · `loop.py` | 9-2 · 이 폴더 맨 위로 복사 후 `python loop.py 5` |
 
 - Windows 는 `python` 대신 `py` · Git for Windows 에 필요한 기능이 들어 있다
 - 처음부터 다시: 서버를 끄고 `repos/` 폴더를 지운 뒤 다시 켠다

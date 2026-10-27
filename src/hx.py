@@ -1226,20 +1226,10 @@ def ch8():
                           "오래 일할 때 생기는 문제", "하네스 장치")
              + note("근거", "Anthropic 장기 작업 하네스 · Ralph 루프 (매번 새 컨텍스트 · 한 번에 하나)"),
              C_LONGRUN, HUNTLEY),
-        stat("루프를 돌리는 세 가지 방법", "Ch9", '<div class="ptall">' + code("예", '# ① 바깥 스크립트 (매번 새 세션)\nnode loop.mjs 8\n\n# ② Stop Hook 루프 (한 세션 · 플러그인)\n/ralph-loop "features.json 을 모두 통과시켜" --max-iterations 20 --completion-promise "ALL PASS"\n\n# ③ 정해진 간격 반복 (감시용)\n/loop 10m 빌드 상태 확인') + "</div>"
-             + table(["방법", "특징", "주의"], [
-                 ["<b>① 바깥 스크립트</b>", "while 루프로 claude -p 반복 · 매번 컨텍스트 깨끗", "--allowedTools 로 허용 도구만"],
-                 ["<b>② Stop Hook</b>", "끝내려 할 때 Hook이 막고 같은 요청을 다시 (공식 ralph-loop 플러그인)", "--max-iterations 꼭 · 8번 연속 막으면 무시됨"],
-                 ["<b>③ /loop</b>", "정해진 간격으로 같은 요청 · 7일 뒤 만료", "개발보다 감시 · 점검용"],
-             ]), D_RALPH, D_HOOKS_STOP, D_LOOPCMD, D_HEADLESS),
-        lab("9-2", "루프 하네스 · PR 다섯 개 쌓기", "Ch9",
-            "사람 없이 기능을 하나씩 구현 · 테스트 · push · 병합은 사람이",
-            ["만들 기능 5개 목록", "기능마다 새 세션 · 브랜치 · push 하는 루프", "루프 실행", "사람이 미니 깃 화면에서 보고 병합"],
-            ["미니 깃에 PR 5개", "사람이 병합"], files=labdir("mini_git"), mine="내 업무 기능 목록을 루프로"),
-        quest("9-2", "Ch9",
-              ["「작성자별 리뷰 현황 · 위험 PR 순위 · 파일별 변경 빈도 · 리뷰 대기 시간 · 병합 후보를 기능 목록으로 정리해 줘」", "「기능을 하나씩 새 세션으로 구현해 브랜치로 push 하는 루프를 만들어 줘」", "루프 실행 → 미니 깃에 PR이 하나씩", "사람이 화면에서 보고 병합"],
-              ["미니 깃에 PR이 하나씩", "기능마다 테스트 · 커밋", "<code>progress.md</code> 진행 기록", "병합은 사람만"],
-              "<code>solution/features.json</code> · <code>PROMPT.md</code> · <code>loop.py</code>"),
+        light("루프 하네스의 네 부분", viz2.loop_parts()
+              + note("바깥으로 나가는 길은 둘", "멈춤 조건(끝 · 횟수 · 비용)과 사람 확인(병합 · 발송 · 배포)"), "Ch9"),
+        light("현업 루프 하네스 예시", viz2.loop_cases()
+              + note("공통", "할 일이 목록으로 쪼개지고 · 통과 기준이 코드로 확인되고 · 마지막 문은 사람이"), "Ch9"),
         stat("하네스는 사람이 키운다", "Ch9",
              '<div class="eqn">'
              '<div class="eq-c"><div class="eq-h">사람이 정한다</div><div class="eq-v sm">기준 · 막을 것 · 합격선</div>'

@@ -366,6 +366,38 @@ def shop_repo():
     return f'<svg viewBox="0 0 1180 420" class="v2">{"".join(s)}</svg>'
 
 
+def loop_parts():
+    """루프 하네스의 네 부분 — 트리거 → 할 일 하나 → 실행 · 확인 → 기록 → 다시 · 밖으로: 멈춤 · 사람."""
+    cx, cy = 470, 200
+    pts = [(cx, 60, "① 트리거", "일정 · 알림 · 이슈 · CI 실패"), (cx + 290, cy, "② 할 일 하나 고르기", "목록에서 안 끝난 것"),
+           (cx, 340, "③ 실행 · 확인", "테스트 · 검사 통과까지"), (cx - 290, cy, "④ 기록 · 커밋", "진행 기록 · git · PR")]
+    s = [f"<defs>{_defs('lp')}</defs>",
+         f'<ellipse cx="{cx}" cy="{cy}" rx="290" ry="140" fill="none" stroke="{O}" stroke-width="3" stroke-dasharray="14 10" class="tas-run"/>',
+         f'<text x="{cx}" y="{cy + 6}" text-anchor="middle" class="v2-h" style="fill:#EF6C00">매번 새 세션</text>']
+    for i, (x, y, h, sub) in enumerate(pts):
+        s.append(_box(x - 120, y - 38, 240, 76, h, sub, fill="#fff", stroke=K, d=i * .35))
+    s.append(_arrow(880, 150, 960, 110, c=R, d=1.6))
+    s.append(_box(965, 70, 200, 76, "멈춤 조건", "다 끝남 · 최대 횟수 · 비용", fill="#FDECEC", stroke=R, tc=R, d=1.7))
+    s.append(_arrow(880, 250, 960, 290, c=GR, d=1.9))
+    s.append(_box(965, 255, 200, 76, "사람 확인", "PR 병합 · 발송 · 배포", fill="#E8F5E9", stroke=GR, tc=GR, d=2.0))
+    return f'<svg viewBox="0 0 1180 390" class="v2">{"".join(s)}</svg>'
+
+
+def loop_cases():
+    """현업 루프 하네스 예시 — 언제 · 반복 · 멈춤 · 사람."""
+    cases = [("의존성 · 보안 패치", "매주 월요일", "라이브러리 하나씩 올리고 테스트", "전부 통과 · 실패 3회", "PR 병합"),
+             ("CI 실패 자동 수정", "테스트가 빨간불", "원인 찾기 · 고치기 · 다시 테스트", "초록불 · 최대 5회", "PR 리뷰"),
+             ("대규모 코드 이전", "파일 목록", "파일 하나씩 변환 · 린트 · 테스트", "목록 끝", "샘플 검토 · 병합"),
+             ("장애 알림 1차 분석", "알림 발생", "로그 · 지표 조회 · 원인 후보", "보고서 한 장", "담당자 판단"),
+             ("정기 보고서", "매일 아침 8시", "데이터 모으기 · 표 · 요약", "보고서 완성", "확인 후 발송"),
+             ("이슈 → PR", "라벨 붙은 이슈", "구현 · 테스트 · 리뷰 Agent", "테스트 통과", "PR 병합")]
+    cards = []
+    for i, (h, t, rep, stop, ppl) in enumerate(cases):
+        rows = "".join(f'<div class="lc-r"><i>{k}</i><span>{v}</span></div>' for k, v in (("언제", t), ("반복", rep), ("멈춤", stop), ("사람", ppl)))
+        cards.append(f'<div class="lc-c" style="--d:{i * .1:.2f}s"><b>{h}</b>{rows}</div>')
+    return f'<div class="lcs">{"".join(cards)}</div>'
+
+
 CSS = """
   /* 표 대신 그림 */
   .v2{width:100%; height:auto; display:block; margin:4px 0 12px;}
@@ -431,5 +463,10 @@ CSS = """
   .scp-h{display:flex; flex-direction:column; gap:1px; margin-bottom:2px;} .scp-h b{font-size:20px; color:#1F3A5F;} .scp-c.on .scp-h b{color:#EF6C00;}
   .scp-h code{font-size:14px; font-weight:800; background:none !important; padding:0 !important;} .scp-h span{font-size:12px; color:#6B7785;}
   .scp-r{background:#fff; border-radius:10px; padding:6px 12px; display:flex; flex-direction:column; gap:1px;} .scp-r b{font-size:12px; color:#6B7785;} .scp-r code{font-size:13px; background:none !important; padding:0 !important; color:#16233A; word-break:break-all;}
+  .lcs{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:4px 0 12px;}
+  .lc-c{background:#fff; border:1.5px solid #E1E5EB; border-top:5px solid #F28C28; border-radius:14px; padding:12px 16px; display:flex; flex-direction:column; gap:5px; animation:v2In .5s both; animation-delay:var(--d);}
+  .lc-c > b{font-size:19px; color:#16233A; margin-bottom:2px;}
+  .lc-r{display:grid; grid-template-columns:38px 1fr; align-items:baseline; font-size:14px;} .lc-r i{font-style:normal; font-weight:800; color:#8A94A3; font-size:12px;} .lc-r span{color:#16233A;}
+  .lc-r:last-child span{color:#2E7D32; font-weight:800;}
   .v2tile b{font-size:21px; color:#16233A;} .v2tile span{font-size:15px; color:#6B7785; line-height:1.45;}
 """
