@@ -38,9 +38,10 @@ git checkout -b feature/calc && git push team feature/calc    # main 이 아닌 
 |---|---|---|
 | 3-1 | Superpowers 로 「미니 깃에 PR 리뷰 현황 페이지를 추가하고 싶어」 | 새 페이지 · 내 PR |
 | 4-1 | `claude mcp add calc -- python tools/calc_server.py` → 「calc 도구로 계산해 줘」 | 호출 표시 |
-| 4-2 | 「GitHub MCP 와 같은 도구 이름으로 미니 깃 MCP 서버를 만들어 연결해 줘」 | MCP 서버 코드 PR |
-| 4-3 | 「코드 리뷰 절차를 Skill 로」 · 「shop PR 105 리뷰하고 코멘트 남겨 줘」 | PR 화면에 코멘트 |
-| 4-4 | 「승인 · 병합은 Hook 으로 막아 줘」 | Claude 병합 0건 · 사람이 버튼으로 |
+| 4-2 | 「Microsoft Learn MCP(https://learn.microsoft.com/api/mcp)를 연결해 줘」 → `/mcp` 로 도구 보기 | 호출 표시 · 출처 |
+| 4-3 | 「GitHub MCP 와 같은 도구 이름으로 미니 깃 MCP 서버를 만들어 연결해 줘」 | MCP 서버 코드 PR |
+| 4-4 | Ch2 의 `.claude/` 를 가져와 「코드 리뷰 절차를 Skill 로」 · 「shop PR 105 리뷰하고 코멘트 남겨 줘」 | PR 화면에 코멘트 |
+| 4-5 | 「승인 · 병합은 Hook 으로 막아 줘」 | Claude 병합 0건 · 사람이 버튼으로 |
 | 5-1 | 「바뀐 함수만 돌려주는 도구를 추가해 줘」 | 응답 크기 비교 |
 | 6-1 | 「보안 · 버그 · 테스트 리뷰어와 검증 Agent 팀으로」 | PR마다 종합 코멘트 |
 | 7-1 | 「같은 걸 찾는 검사 스크립트를 만들고 결과만 보고 판단해 줘」 | 토큰 비교 |
@@ -53,8 +54,8 @@ git checkout -b feature/calc && git push team feature/calc    # main 이 아닌 
 | 파일 | 쓰는 실습 |
 |---|---|
 | `web/review.html` | 3-1 · `web/` 로 복사 → `/web/review.html` |
-| `mcp_server.py` | 4-2 · 5-1 · `claude mcp add repo -- python solution/mcp_server.py` |
-| `dot_claude/` (Skill · Agent · settings) · `hooks/merge_guard.py` | 4-3 · 4-4 · 6-1 · `.claude/` 로 복사 |
+| `mcp_server.py` | 4-3 · 5-1 · `claude mcp add repo -- python solution/mcp_server.py` |
+| `dot_claude/` (Skill · Agent · settings) · `hooks/merge_guard.py` | 4-4 · 4-5 · 6-1 · `.claude/` 로 복사 |
 | `checks.py` | 7-1 |
 | `CLAUDE.md` · `features.json` · `PROMPT.md` · `progress.md` · `loop.py` | 9-2 · 이 폴더 맨 위로 복사 후 `python loop.py 5` |
 
