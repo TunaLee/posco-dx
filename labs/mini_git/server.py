@@ -186,7 +186,7 @@ class H(BaseHTTPRequestHandler):
         if path.startswith("/web/"):
             f = (WEB / path[5:]).resolve()
             if f.parent == WEB and f.is_file():
-                return self.send(f.read_bytes(), ctype="text/css" if f.suffix == ".css" else "application/javascript")
+                return self.send(f.read_bytes(), ctype={".css": "text/css", ".html": "text/html", ".json": "application/json"}.get(f.suffix, "application/javascript"))
         try:
             return self.api_get(path.strip("/").split("/"))
         except Exception as e:

@@ -2,7 +2,8 @@
 
 > ※ 사람 · 코드 · PR 은 모두 실습용 가상 자료입니다.
 
-준비된 것은 **미니 깃 뼈대**(내 PC 안의 작은 GitHub)다. 그 위에 Claude Code 로 기능 · MCP 서버를 만들어 push 하고, 팀원 PR 을 리뷰한다.
+준비된 것은 **리뷰용 더미 코드**(`review_lab/`)와 **미니 깃 뼈대**(`mini_git/` · 내 PC 안의 작은 GitHub)다.
+Ch2 에서 더미 코드로 `.claude/`(Skill · Agent · Hook)를 Claude 와 함께 만들고, Ch3 부터 미니 깃 위에서 기능 · MCP 서버를 만들어 push 하고 팀원 PR 을 리뷰한다.
 
 ## 준비 (한 번만)
 
@@ -14,12 +15,15 @@
 
 ## 실습 흐름
 
-`mini_git/README.md` 참고. 막히면 `mini_git/solution/` (강사용 완성본).
+- Ch2 실습 2-1 · 2-2: `review_lab/README.md`
+- Ch3 ~ Ch9: `mini_git/README.md`
+- 막히면 각 폴더의 `solution/` (강사용 완성본)
 
 ## 폴더
 
 | 폴더 | 내용 |
 |---|---|
+| `review_lab/` | Ch2 · 리뷰용 더미 코드 · 완성본(`solution/dot_claude/`) |
 | `mini_git/` | 미니 깃 뼈대 · 리뷰용 팀 PR(`seed/`) · 계산 도구(`tools/`) · 완성본(`solution/`) |
 | `agent_watch/` | Ch6 · Ch7 · 에이전트 실행 타임라인 · 토큰 대시보드 |
 | `meta_harness/` · `samples/` | Ch9 실습 9-1 · 내 업무 하네스 |

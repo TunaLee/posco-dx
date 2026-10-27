@@ -1314,6 +1314,26 @@ model: sonnet
 보고 형식: 파일:줄 · 문제 · 근거 · 제안</code></pre></div><div class="vl"><p>자기 컨텍스트에서 일함</p><p>부모는 결과만 받음</p><p>도구를 줄이면 권한도 줄어듦</p></div></div></div></div>
 </section>
 
+<section class="slide lt labs" data-title="[실습 2-1] 리뷰 Skill · 보안 Agent 만들기">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-1</span></div>
+  <h2 class="s-title sm">리뷰 Skill · 보안 Agent 만들기</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="labgrid">
+    <div class="lc goal"><div class="lh">목표</div><p>더미 코드로 .claude/ 를 Claude와 함께 · 하네스 전후 리뷰 비교</p><div class="lf">사용 파일 · <code class="lfold">labs/review_lab</code></div><div class="mine"><span>내 업무 적용</span>내 업무 검토 절차 하나를 Skill로</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>하네스 없이 「shop 코드 리뷰해 줘」</li><li>리뷰 절차를 Skill로</li><li>보안 검토 Sub Agent</li><li>새 대화에서 같은 요청 · 비교</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>.claude/skills · .claude/agents</li><li>전후 리뷰 비교</li></ul></div>
+  </div></div>
+</section>
+
+<section class="slide lt" data-title="실습 2-1 진행">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">실습 2-1 진행</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/review_lab</code><em>요청은 짧게 · 방법은 Claude가 정함</em></div><div class="qh2">Claude에게</div><div class="qas"><div class="qa2"><span>1</span><p>「shop 코드 리뷰해 줘」 · 하네스 없이</p></div><div class="qa2"><span>2</span><p>「코드 리뷰 절차를 Skill로 만들어 줘」</p></div><div class="qa2"><span>3</span><p>「보안 검토 Sub Agent를 만들어 줘」</p></div><div class="qa2"><span>4</span><p>새 대화: 「shop 코드 리뷰해 줘」</p></div></div><div class="qk2"><b>확인</b><ul><li><code>.claude/</code> 에 생긴 파일</li><li>Skill 이름이 호출 표시에</li><li><code>/tasks</code> 에 보안 Agent</li><li>전후 형식 · 근거 줄 차이</li></ul></div><div class="dbnote"><span>막히면</span> <code>solution/dot_claude/</code> → <code>.claude/</code> 로 복사</div></div></div>
+</section>
+
 <section class="slide lt" data-title="Replit 운영 DB 삭제 사고">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch2</span></div>
@@ -1344,15 +1364,36 @@ model: sonnet
   <h2 class="s-title sm">Hook 설정과 차단 코드</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/settings.json (hooks 부분)</span></div><pre><code>"PreToolUse": [{
-  "matcher": "mcp__repo__merge_pull_request|mcp__repo__pull_request_review_write",
+  "matcher": "Edit|Write|MultiEdit",
   "hooks": [{ "type": "command",
-             "command": "python solution/hooks/merge_guard.py" }]
-}]</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">solution/hooks/merge_guard.py (요점)</span></div><pre><code>event = json.load(sys.stdin)
-pr = event["tool_input"]["pr"]
-print(json.dumps({"hookSpecificOutput": {
-  "hookEventName": "PreToolUse",
-  "permissionDecision": "deny",
-  "permissionDecisionReason": f"PR {pr} 승인 · 병합은 사람이 직접"}}))</code></pre></div></div></div>
+             "command": "python .claude/hooks/guard.py" }]
+}]</code></pre></div><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">.claude/hooks/guard.py (요점)</span></div><pre><code>event = json.load(sys.stdin)
+path = event["tool_input"]["file_path"]
+if 상대경로(path).startswith(("shop/", "tests/")):
+    print(json.dumps({"hookSpecificOutput": {
+      "hookEventName": "PreToolUse",
+      "permissionDecision": "deny",
+      "permissionDecisionReason": "리뷰어는 코드를 고치지 않는다"}}))</code></pre></div></div></div>
+</section>
+
+<section class="slide lt labs" data-title="[실습 2-2] 리뷰어는 고치지 않는다 · Hook">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span><span class="labtag">실습 2-2</span></div>
+  <h2 class="s-title sm">리뷰어는 고치지 않는다 · Hook</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="labgrid">
+    <div class="lc goal"><div class="lh">목표</div><p>「고치지 마」를 지시가 아니라 코드로</p><div class="lf">사용 파일 · <code class="lfold">labs/review_lab</code></div><div class="mine"><span>내 업무 적용</span>내 업무에서 Hook으로 막을 것 세 가지</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>「리뷰하고 바로 고쳐 줘」 → 고쳐짐</li><li>Hook으로 shop/ · tests/ 수정 막기</li><li>새 대화에서 다시 → 막힘</li><li><code>git checkout</code> 으로 되돌리기</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li><code>.claude/settings.json</code> · <code>hooks/</code></li><li>수정 0건 · 리뷰만</li></ul></div>
+  </div></div>
+</section>
+
+<section class="slide lt" data-title="실습 2-2 진행">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">실습 2-2 진행</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/review_lab</code><em>요청은 짧게 · 방법은 Claude가 정함</em></div><div class="qh2">Claude에게</div><div class="qas"><div class="qa2"><span>1</span><p>「리뷰하고 바로 고쳐 줘」</p></div><div class="qa2"><span>2</span><p><code>git checkout -- shop</code> 으로 되돌리기</p></div><div class="qa2"><span>3</span><p>「리뷰 중에는 shop/ · tests/ 를 못 고치게 Hook으로 막아 줘」</p></div><div class="qa2"><span>4</span><p>새 대화: 「리뷰하고 바로 고쳐 줘」</p></div></div><div class="qk2"><b>확인</b><ul><li>Hook 전: 코드가 바뀌는가</li><li>Hook 후: 막힘 · 이유 한 줄</li><li><code>out/review.md</code> 는 써짐</li><li>settings.json 의 matcher</li></ul></div><div class="dbnote"><span>막히면</span> <code>solution/dot_claude/settings.json</code> · <code>hooks/guard.py</code></div></div></div>
 </section>
 
 <section class="slide lt" data-title="Claude Code로 하는 두 종류의 일">
@@ -1783,15 +1824,15 @@ spacing: { unit: 8 }
   <div class="body"><div class="mid"><div class="rgrid c4"><div class="rc" style="--d:0.00s"><b>MCP 서버 만들기</b><div class="rv"><span class="ra">169초 · 21턴</span></div></div><div class="rc" style="--d:0.12s"><b>만든 도구</b><div class="rv"><span class="ra">PR 목록 · diff · 파일 · 코멘트</span></div></div><div class="rc" style="--d:0.24s"><b>등록</b><div class="rv"><span class="ra"><code>.mcp.json</code> · 처음 한 번 승인</span></div></div><div class="rc" style="--d:0.36s"><b>「PR 101~112 리뷰」</b><div class="rv"><span class="ra">142초 · 붙여 넣기 0건</span></div></div></div><div class="dbnote"><span>정리</span> 요청 한 줄로 서버 · 연결까지 · 이름 · 구성은 Claude가 정함</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/mini_git" target="_blank" rel="noopener">직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/mini_git · 각 1회</a></div></div></div>
 </section>
 
-<section class="slide lt labs" data-title="[실습 4-3] 리뷰 Skill · 보안 검토 Sub Agent">
+<section class="slide lt labs" data-title="[실습 4-3] 만든 리뷰 하네스로 PR 리뷰">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch4</span><span class="labtag">실습 4-3</span></div>
-  <h2 class="s-title sm">리뷰 Skill · 보안 검토 Sub Agent</h2>
+  <h2 class="s-title sm">만든 리뷰 하네스로 PR 리뷰</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
-    <div class="lc goal"><div class="lh">목표</div><p>매번 같은 순서로 리뷰 · 보안 검토는 따로 맡김 · 코멘트는 미니 깃 PR에</p><div class="lf">사용 파일 · <code class="lfold">labs/mini_git</code></div><div class="mine"><span>내 업무 적용</span>내 업무 절차 하나를 Skill 이름 · 단계로</div></div>
-    <div class="lc steps"><div class="lh">단계</div><ol><li>리뷰 절차를 Skill로</li><li>보안 검토 Sub Agent</li><li>PR 리뷰 · 코멘트 요청</li><li>미니 깃 PR 화면에서 확인</li></ol></div>
-    <div class="lc done"><div class="lh">완료 기준</div><ul><li>PR 화면에 리뷰 코멘트</li><li>Skill 1 · Agent 1</li></ul></div>
+    <div class="lc goal"><div class="lh">목표</div><p>Ch2에서 만든 .claude/ 를 미니 깃 PR 리뷰에 그대로 · 코멘트는 PR 화면에</p><div class="lf">사용 파일 · <code class="lfold">labs/mini_git</code></div><div class="mine"><span>내 업무 적용</span>한 번 만든 하네스를 다른 곳에 옮겨 쓰기</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>Ch2의 .claude/ 를 mini_git 으로</li><li>리뷰 Skill이 MCP 도구를 쓰게 한 줄 고치기</li><li>PR 리뷰 · 코멘트 요청</li><li>미니 깃 PR 화면에서 확인</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>PR 화면에 리뷰 코멘트</li><li>같은 Skill · Agent 재사용</li></ul></div>
   </div></div>
 </section>
 
@@ -1800,7 +1841,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">실습 4-3 진행</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/mini_git</code><em>요청은 짧게 · 방법은 Claude가 정함</em></div><div class="qh2">Claude에게</div><div class="qas"><div class="qa2"><span>1</span><p>「코드 리뷰 절차를 Skill로 만들어 줘」</p></div><div class="qa2"><span>2</span><p>「보안 검토 Sub Agent를 만들어 줘」</p></div><div class="qa2"><span>3</span><p>「shop PR 105 리뷰하고 코멘트 남겨 줘」</p></div><div class="qa2"><span>4</span><p>미니 깃 PR 105 화면 열기</p></div></div><div class="qk2"><b>확인</b><ul><li>Skill 이름이 호출 표시에</li><li><code>/tasks</code> 에 보안 Agent</li><li>PR 화면에 Claude 코멘트</li><li><code>.claude/</code> 쓰기 승인은 내용을 읽고</li></ul></div><div class="dbnote"><span>막히면</span> <code>solution/dot_claude/</code></div></div></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/mini_git</code><em>요청은 짧게 · 방법은 Claude가 정함</em></div><div class="qh2">Claude에게</div><div class="qas"><div class="qa2"><span>1</span><p>Ch2에서 만든 <code>.claude/</code> 를 mini_git 폴더로 복사</p></div><div class="qa2"><span>2</span><p>「리뷰 Skill이 미니 깃 MCP 도구로 PR을 읽고 코멘트를 남기게 고쳐 줘」</p></div><div class="qa2"><span>3</span><p>「shop PR 105 리뷰하고 코멘트 남겨 줘」</p></div><div class="qa2"><span>4</span><p>미니 깃 PR 105 화면 열기</p></div></div><div class="qk2"><b>확인</b><ul><li>Skill 이름이 호출 표시에</li><li>보안 Agent가 따로 돔</li><li>PR 화면에 Claude 코멘트</li><li><code>.claude/</code> 쓰기 승인은 내용을 읽고</li></ul></div><div class="dbnote"><span>막히면</span> <code>mini_git/solution/dot_claude/</code></div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 4-4] 승인 · 병합은 사람만 · Hook">
