@@ -6,24 +6,22 @@
 
 1. 강의 첫 시간에 `labs.zip` 을 받아 압축을 푼다.
 2. 실습마다 강의 장표 「실습 N 진행」이 가리키는 폴더를 VS Code로 열고 Claude Code 를 켠다.
-3. **하네스 미적용**으로 먼저 실행 → 장표에 있는 하네스 파일(CLAUDE.md · Skill · Hook …)을 같은 경로로 직접 만든다 → **하네스 적용**으로 같은 요청 → 비교.
-4. 요청문은 장표에서 「복사」해 붙여 넣는다. 코드는 직접 쓰지 않는다.
+3. 처음 한 번 `steel_qc/` 에서 `python sim/lims_sim.py` 로 가상 시험실을 켠다.
+4. 장표의 「시킬 일」을 **내 말로** Claude Code 에 요청하고 「확인할 결과」를 본다. 코드는 직접 쓰지 않는다.
 
-| 장표 | 실습 폴더 | 하네스 (장표에 있음) |
+| 장표 | 실습 폴더 | 이 폴더에 붙이는 것 (막히면 `steel_qc/solution/`) |
 |---|---|---|
-| 1-1 운송비 청구 검증 · 하네스 전후 | `transport_bill/` | CLAUDE.md |
-| 2-1 Skill · Sub Agent | `order_api/` | SKILL.md · reviewer.md |
-| 2-2 Claude로 Hook 만들기 | `db_guard/project/` | Hook 요청문 |
-| 2-3 업무 처리 하네스 | `office_work/workspace/` | CLAUDE.md · Skill 두 개 |
-| 3-1 압축 전후 비교 | labs (실습 1~2 세션 그대로) | — |
-| 4-1 공개 하네스 설치 · Skill 불러 보기 | `my_tool/` (이 폴더를 VS Code로) | Superpowers · gstack |
-| 5-1 코드 리뷰 멀티에이전트 | `pr_review/` · `pr_review_large/` (이 폴더를 VS Code로) | CLAUDE.md · Skill · reviewer · qa · security |
-| 5-2 업무 하네스에 멀티에이전트 | `office_work/workspace/` | extractor · verifier · 나누기 규칙 |
-| 6-1 플러그인 토큰 비교 | `plugin_check/` (복사본에서) | caveman · ponytail |
-| 7-1 빌드 · 테스트 하네스 (CI 게이트) | `build_gate/` (복사본에서) | CLAUDE.md · Stop Hook · ci.yml |
-| 8-1 메타 하네스로 내 하네스 | `meta_harness/` (이 폴더를 VS Code로) · `samples/` · 개발 주제면 `my_tool/` | 요청문 · 개발 주제는 Superpowers |
-| 8-2 루프 하네스 (선택) | `settle_check/` (이 폴더를 VS Code로) | CLAUDE.md · PROMPT.md · features.json · progress.md |
-| (새 흐름) 코일 품질 판정 · Ch1 ~ Ch8 한 프로젝트 | `steel_qc/` (README 참고) | CLAUDE.md · MCP 서버 · Hook · 테스트 · 루프 |
+| 1-1 시험 결과 판정 · 하네스 전후 | `steel_qc/` | CLAUDE.md |
+| 2-1 사내 시스템을 MCP로 연결 | `steel_qc/` | MCP 서버 · `claude mcp add` |
+| 2-2 판정 보고 Skill · 원인 조사 Sub Agent | `steel_qc/` | Skill · investigator |
+| 2-3 출하 승인은 사람만 · Hook | `steel_qc/` | PreToolUse Hook |
+| 3-1 원문 도구 vs 요약 도구 · 컨텍스트 | `steel_qc/` | 도구 설계 |
+| 4-1 Superpowers로 실시간 대시보드 | `steel_qc/` | Superpowers |
+| 5-1 판정 · 조사 · 통보 Agent 팀 | `steel_qc/` | investigator · notifier · verifier |
+| 6-1 LLM은 예외만 · 토큰 비교 | `steel_qc/` | Agent Watch |
+| 7-1 판정 테스트 · Stop Hook 게이트 | `steel_qc/` | 테스트 · Stop Hook |
+| 8-1 메타 하네스로 내 하네스 만들기 | `meta_harness/` · `samples/` | 요청문 |
+| 8-2 루프 하네스 · 기능 다섯 개 쌓기 | `steel_qc/` | features.json · PROMPT.md · loop.py |
 
 ## 강사용 참고
 
