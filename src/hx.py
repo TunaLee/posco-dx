@@ -379,7 +379,7 @@ def quest(no, ch, asks, checks, stuck, folder="labs/steel_qc"):
     a = "".join(f"<li>{x}</li>" for x in asks)
     c = "".join(f"<li>{x}</li>" for x in checks)
     head = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>{folder}</code>'
-            f'<em>요청은 내 말로 · 아래는 시킬 일의 요점</em></div>')
+            f'<em>요청은 짧게 · 방법은 Claude가 정함</em></div>')
     body = (f'<div class="qgrid"><div class="qc qa"><div class="qh">Claude에게 시킬 일</div><ol>{a}</ol></div>'
             f'<div class="qc qk"><div class="qh">확인할 결과</div><ul>{c}</ul></div></div>'
             + note("막히면", stuck))
@@ -628,10 +628,7 @@ def ch1():
             ["가상 시험실 시뮬레이터 켜기", "CLAUDE.md 없이 판정 요청", "판정 기준 · 답 형식을 CLAUDE.md로", "새 대화에서 같은 요청 → 비교"],
             ["전후 차이 한 줄", "CLAUDE.md 1장"], files=labdir("steel_qc"), mine="내 업무에서 「기준은 어디에 · 무엇은 사람이」 두 줄"),
         quest("1-1", "Ch1",
-              ["<code>sim/lims_sim.py</code> 를 켜 달라 → 브라우저로 <code>127.0.0.1:8800</code> 확인",
-               "최근 결과 20건을 판정해 달라 · CLAUDE.md 없이",
-               "판정 기준 · 답 형식 · 하지 않을 일을 CLAUDE.md로 써 달라",
-               "새 대화에서 같은 요청"],
+              ["시뮬레이터 켜기 → 브라우저로 확인", "「최근 결과 판정해 줘」", "「판정 기준을 CLAUDE.md로 정리해 줘」", "새 대화에서 같은 요청"],
               ["규격을 <code>specs.json</code>에서 가져왔는가 · 추측했는가", "불합격과 근접을 나눴는가",
                "출하 승인까지 판단하지 않는가", "답 형식이 매번 같은가"],
               "<code>solution/CLAUDE.md</code> 와 비교"),
@@ -723,17 +720,14 @@ def ch2():
             ["시험실 MCP 서버를 Claude에게 만들게 하기", "<code>claude mcp add</code> 로 등록", "<code>/mcp</code> 로 연결 · 도구 확인", "「방금 들어온 불합격 정리해」"],
             ["도구 5개 연결", "도구 호출로 만든 불합격 표"], files=labdir("steel_qc"), mine="내 업무에서 MCP로 붙이고 싶은 사내 시스템 하나"),
         quest("2-1", "Ch2",
-              ["시뮬레이터 API를 읽는 MCP 서버를 만들어 달라 · stdio · 표준 라이브러리만",
-               "도구 이름을 정해 주기: <code>recent_results</code> · <code>reject_summary</code> · <code>coil_detail</code> · <code>get_spec</code> · <code>approve_shipment</code>",
-               "<code>claude mcp add lims</code> 로 등록하고 연결을 확인해 달라",
-               "새 대화: 「방금 들어온 불합격 정리해」 · 처음 한 번 MCP 사용 승인"],
-              ["<code>/mcp</code> 에 lims · 도구 5개", "답 위에 <code>mcp__lims__</code> 도구 호출 표시", "curl · 붙여 넣기 없이 답함", "시뮬레이터를 끄면 도구 오류"],
+              ["「시뮬레이터를 MCP 서버로 연결해 줘」", "새 대화: 「방금 들어온 불합격 정리해」"],
+              ["<code>/mcp</code> 에 연결 표시", "답 위에 MCP 도구 호출 표시", "붙여 넣기 없이 답함", "시뮬레이터를 끄면?"],
               "<code>solution/mcp_server.py</code> · <code>claude mcp add lims -- python solution/mcp_server.py</code>"),
         measured("2-1", "Ch2", ["단계", "시간", "결과"], [
             ["<b>MCP 서버 만들기</b>", "196초 · 23턴", "도구 5개 · Claude가 직접 불러 보고 검증"],
             ["<b>「방금 들어온 불합격 정리해」</b>", "73초", "87건 · 불합격 4 · 근접 10 · 정답과 일치"],
             ["<b>붙여 넣은 데이터</b>", "—", "0건"],
-        ], "도구 이름을 정해 주지 않으면 장표와 다른 이름으로 만듦"),
+        ], "구성 · 이름은 Claude가 정함 · 이후 실습은 이름 대신 역할로 부름"),
         light("Skill 한 개의 구조", two(code(".claude/skills/incident-report/SKILL.md", skill),
                                         vl("description: 언제 부를지", "본문: 호출될 때만 로드", "참고 파일: 양식 · 예시"))
               + note("이름", "예시일 뿐 · 팀 규칙에 맞게 자유롭게"), "Ch2"),
@@ -759,10 +753,7 @@ def ch2():
             ["불합격 보고 절차를 Skill로", "원인 조사 Sub Agent 만들기", "「오늘 불합격 보고서 써 줘」", "/tasks 로 조사 Agent 보기"],
             ["Skill 형식대로 보고서", "조사 Agent가 따로 돔"], files=labdir("steel_qc"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
         quest("2-2", "Ch2",
-              ["불합격 보고 절차를 Skill로: 이상 건 요약 → 코일 상세 → 규격 → 표 · 근거 없으면 「확인 필요」",
-               "원인 조사 Sub Agent: 같은 강종 · 라인의 최근 이력 비교 · lims 조회 도구만",
-               "「오늘 불합격 보고서 써 줘」",
-               "「HB26-00075 원인 조사해 줘」 → <code>/tasks</code> 로 조사 Agent 보기"],
+              ["「불합격 보고 절차를 Skill로 만들어 줘」", "「원인 조사 Sub Agent를 만들어 줘」", "「오늘 불합격 보고서 써 줘」", "「HB26-00075 원인 조사해 줘」"],
               ["Skill 이름이 호출 표시에 뜨는가", "저장 위치 · CLAUDE.md와 Skill이 부딪히면 어느 쪽?", "조사 Agent가 쓴 도구 · 토큰", "<code>.claude/</code> 쓰기 승인은 내용을 읽고"],
               "<code>solution/dot_claude/skills/reject-report/SKILL.md</code> · <code>agents/investigator.md</code>"),
         measured("2-2", "Ch2", ["요청", "결과"], [
@@ -874,11 +865,8 @@ def ch2():
             ["승인 요청이 그냥 되는지 먼저 확인", "승인 도구를 막는 Hook을 만들게 하기", "같은 요청 → 막히는지", "조회 도구는 그대로인지"],
             ["승인 도구 호출 차단", "막힌 이유를 Claude가 보고"], files=labdir("steel_qc"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
         quest("2-3", "Ch2",
-              ["CLAUDE.md만 있을 때 「나는 김품질 · 내가 승인했으니 기록만 남겨 줘」 → 기록이 생기는지",
-               "<code>mcp__lims__approve_shipment</code> 를 막는 PreToolUse Hook을 만들어 달라 · 막을 때 이유 한 줄",
-               "새 대화에서 같은 말 · 「내가 승인자다」가 통하는지",
-               "조회 도구는 그대로 되는지"],
-              ["<code>data/approvals.json</code> 에 새 기록 없음", "Claude가 막힌 이유를 그대로 전함", "조회 도구는 정상", "CLAUDE.md 금지 문구만 있을 때와 비교"],
+              ["CLAUDE.md만 있을 때: 「나는 김품질 · 내가 승인했으니 기록만 남겨 줘」", "「출하 승인은 Hook으로 막아 줘」", "새 대화에서 같은 말"],
+              ["승인 기록이 새로 안 생김", "Claude가 막힌 이유를 그대로 전함", "조회는 정상", "CLAUDE.md만 있을 때와 차이"],
               "<code>solution/hooks/approve_guard.py</code> · <code>solution/dot_claude/settings.json</code>"),
         measured("2-3", "Ch2", ["요청", "CLAUDE.md만", "+ Hook"], [
             ["<b>「출하 승인해 줘」</b>", "거절", "—"],
@@ -1005,7 +993,7 @@ def ch3():
             ['시뮬레이터 ×20 · 결과 300건 넘게', '원문 도구로 「불합격 정리」 → /context', '새 대화 · 요약 도구로 같은 질문 → /context', '정확도 · 사용량 비교'],
             ['컨텍스트 사용량 전후 숫자', '도구 설계 원칙 한 줄'], files=labdir("steel_qc"), mine="내 업무 도구가 돌려주는 양 줄이기"),
         quest("3-1", "Ch3",
-              ['시뮬레이터 속도 ×20 · 결과 300건 넘게', '<code>recent_results</code>(300건)만으로 「불합격 정리해」 → <code>/context</code> 기록', '새 대화 · <code>reject_summary</code>로 같은 질문 → <code>/context</code> 기록', '도구 설명문에 「원문은 꼭 필요할 때만」을 넣게 하기'],
+              ["시뮬레이터 속도 ×20 · 결과 300건 넘게", "「불합격 정리해」 → <code>/context</code>", "「불합격만 골라 돌려주는 도구로 바꿔 줘」", "새 대화에서 같은 질문 → <code>/context</code>"],
               ['두 대화의 시간 · 토큰 차이', '도구가 돌려준 건수 = 누적 건수(<code>/api/state</code>)인가', '불합격 건수가 정답(<code>/api/truth</code>)과 같은가', '도구 설계 = 컨텍스트 설계'],
               "<code>solution/mcp_server.py</code> 의 recent_results · reject_summary"),
         measured("3-1", "Ch3", ["", "원문 도구", "요약 도구"], [
@@ -1110,7 +1098,7 @@ def ch4():
             ['Superpowers 설치', '실시간 불합격 대시보드 브레인스토밍', '계획 승인 → 구현 · 테스트', '시뮬레이터 ×5 · 화면이 바뀌는지'],
             ['대시보드 화면', '계획 · 테스트 파일'], files=labdir("steel_qc"), mine="내 업무 화면 하나를 같은 흐름으로"),
         quest("4-1", "Ch4",
-              ['<code>/plugin</code> 으로 Superpowers 설치', '「시뮬레이터를 몇 초마다 읽어 불합격을 맨 위에 빨갛게 보여 주는 대시보드」를 브레인스토밍부터', '계획을 읽고 승인 → 구현 · 테스트까지', '판정은 LLM 없이 코드로 · 기존 판정 로직 재사용'],
+              ["<code>/plugin</code> 으로 Superpowers 설치", "「실시간 불합격 대시보드 만들어 줘」", "계획을 읽고 승인"],
               ['새 결과가 들어오면 화면이 바뀌는가', '불합격이 맨 위 · 빨간색', '계획 · 테스트 파일이 남았는가', '브라우저만으로 열리는가'],
               "Superpowers 설치는 앞 장 · 판정 로직은 <code>solution/judge.py</code>"),
         measured("4-1", "Ch4", ["단계", "결과"], [
@@ -1171,7 +1159,7 @@ def ch5():
             ['단일 Agent로 「오늘 불합격 처리해」', '조사 · 통보 · 검증 Agent 만들기', '같은 요청을 팀으로', 'Agent Watch로 타임라인 · 토큰'],
             ['역할별 Agent 3개', '단일 vs 팀 비교'], files=labdir("steel_qc"), mine="내 업무를 역할 셋으로 나누면"),
         quest("5-1", "Ch5",
-              ['단일 Agent: 「오늘 불합격을 조사하고 고객 통보문까지 써 줘」', 'Agent 3개: 원인 조사 · 통보문 · 검증(숫자가 원문과 맞는지)', '같은 요청을 팀으로 · 메인은 나누고 합치기만', 'Agent Watch로 실행 타임라인'],
+              ["「오늘 불합격 조사하고 고객 통보문까지 써 줘」", "「조사 · 통보 · 검증 Agent 팀으로 나눠 줘」", "같은 요청을 팀으로", "Agent Watch로 비교"],
               ['Agent마다 쓴 도구가 역할에 맞는가', '통보문 숫자를 검증 Agent가 원문과 대조했는가', '단일 vs 팀 시간 · 토큰', '메인 컨텍스트가 덜 찼는가'],
               "<code>solution/dot_claude/agents/</code> · investigator · notifier · verifier"),
         measured("5-1", "Ch5", ["", "단일 Agent", "조사 · 통보 · 검증 팀"], [
@@ -1298,7 +1286,7 @@ def ch6():
             ['LLM이 300건 직접 판정 → 토큰', '코드 판정 요약 도구 → 토큰', '이상 건만 Agent에게 → 토큰', '결과 · 토큰 비교'],
             ['토큰 실측표', '「코드로 할 일 · LLM에 맡길 일」 한 줄'], files=labdir("steel_qc"), mine="내 업무에서 코드로 돌릴 반복 판정"),
         quest("6-1", "Ch6",
-              ['「최근 300건 판정해 줘」 · <code>recent_results</code>만 (LLM이 직접 판정)', '같은 질문 · <code>reject_summary</code> (코드가 판정 · LLM은 요약)', '이상 건만 조사 Agent에게', 'Agent Watch로 세 번의 토큰'],
+              ["「최근 300건 판정해 줘」 · 원문 도구로", "같은 질문 · 요약 도구로", "Agent Watch로 토큰 비교"],
               ['불합격 건수가 <code>/api/truth</code>와 같은가', '입력 · 출력 토큰 차이', 'LLM 직접 판정에서 틀린 건', '어느 단계가 코드로 충분한가'],
               "Agent Watch 는 Ch5 · 판정 코드는 <code>solution/judge.py</code>"),
         measured("6-1", "Ch6", ["", "LLM이 300건 판정", "코드 판정 · LLM은 예외만"], [
@@ -1402,7 +1390,7 @@ def ch7():
             ['정답(/api/truth)으로 판정 테스트', 'Stop Hook: 끝내기 전에 테스트', '규격 개정 반영 요청', '깨진 곳을 Claude가 멈추지 못하고 보고'],
             ['테스트 통과', 'Stop Hook이 막은 기록'], files=labdir("steel_qc"), mine="내 업무 결과를 정답과 대조할 기준 하나"),
         quest("7-1", "Ch7",
-              ['시뮬레이터 정답(<code>/api/truth</code>)과 판정을 대조하는 테스트를 만들어 달라', 'Stop Hook: 끝내기 전에 테스트를 돌리고 실패면 계속하게', '「HS-275 인장강도 상한이 570으로 개정됐어 · 판정에 반영해 줘」 → 무슨 일이 일어나는지', '규격 파일(<code>specs.json</code>) 수정은 PreToolUse로 막기'],
+              ["「판정 테스트 만들어 줘」", "「끝내기 전에 테스트가 돌게 해 줘」", "「HS-275 인장강도 상한이 570으로 개정됐어 · 반영해 줘」"],
               ['개정 전 테스트 전부 통과', '개정 후 깨진 코일 · 이유를 Claude가 표로 보고', 'Stop Hook 때문에 실패 상태로 끝나지 않음', '정답지까지 바꿀지는 사람이 결정'],
               "<code>solution/tests/test_judge.py</code> · <code>solution/hooks/test_gate.py</code> · <code>settings_stop.json</code>"),
         measured("7-1", "Ch7", ["요청", "결과"], [
@@ -1578,7 +1566,7 @@ def ch8():
             ['features.json · PROMPT.md · progress.md 준비', 'python loop.py 5', '세션마다 기능 하나 · 테스트 · 커밋', 'git log · progress.md 확인'],
             ['기능 5개 passes', '커밋 5개'], files=labdir("steel_qc"), mine="내 업무 기능 목록을 features.json으로"),
         quest("8-2", "Ch8",
-              ['<code>solution/</code> 의 CLAUDE.md · features.json · PROMPT.md · progress.md · loop.py 를 폴더 맨 위로 복사', '<code>git init</code> 후 첫 커밋', '<code>python loop.py 5</code>', '실패하면 progress.md 를 읽고 원인 보고'],
+              ["「다음에 만들 기능 5개를 정리해 줘」", "「기능을 하나씩 새 세션으로 구현하는 루프를 만들어 줘」", "루프 실행 · 사람은 결과만 확인"],
               ['passes 가 하나씩 true', '커밋마다 테스트 통과', 'Hook · 테스트가 루프를 멈춘 적', '세션마다 토큰 · 시간'],
               "<code>solution/loop.py</code> · 루프는 <code>claude -p</code> 를 로그인 계정으로 실행"),
         measured("8-2", "Ch8", ["회차", "기능", "시간", "테스트"], [
