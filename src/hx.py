@@ -455,7 +455,7 @@ def chapter(ch, title, active, map_title):
 AGENDA = [
     ("Ch0", "AI 에이전트", "등장 배경 · 구조 · 작업 길이"),
     ("Ch1", "하네스 개념", "모델 밖의 모든 것"),
-    ("Ch2", "기성 하네스로 시작", "Superpowers로 리뷰 콘솔 개발"),
+    ("Ch2", "오픈 하네스 적용", "Superpowers로 리뷰 콘솔 개발"),
     ("Ch3", "Tool · MCP", "코드 저장소 MCP 서버"),
     ("Ch4", "Claude Code 하네스 분해", "Skill · Sub Agent · Hook"),
     ("Ch5", "컨텍스트 엔지니어링", "도구가 돌려주는 양"),
@@ -588,21 +588,18 @@ def ch1():
                    title="Terminal-Bench 2.1 · 같은 모델, 하네스만 다름")
              + note("최대 22.5점 차이", "Epoch AI도 「성능을 가장 크게 좌우하는 것은 스캐폴드 선택」 (GPT-5 기준 최대 11%)"),
              TB21, EPOCH),
-        stat("하네스 · 측정 환경에 따라 달라지는 것", "Ch1",
-             hbars([("Claude Code 하네스", 22.5, True, "도구 22.5번 · 11분"), ("Terminus-2 (터미널만)", 41, False, "도구 41번 · 19분")], top=45,
-                   title="같은 오픈 모델 6종 · 과제 1개당 · 푼 과제 수는 28 vs 26으로 비슷")
-             + big([("7", "%", "약한 모델: 하네스를 바꾸면 풀던 문제 중 다시 푸는 비율", True),
-                    ("6", "점", "서버 사양만 바꿨는데 같은 모델 점수 차이"),
-                    ("8.8", "점", "같은 Sonnet 5.5 · Anthropic 측정 70.6% vs 공개 순위표 61.8%")])
-             + note("그래서", "하네스는 비용도 바꾼다 · 남의 점수는 환경이 다르다 → 우리 환경 · 우리 과제로 직접 잰다 (Ch8)"),
-             HARBOR, A_NOISE, SC_SONNET55, TBLB),
+        stat("같은 문제 · 하네스별 작업량", "Ch1",
+             big([("11", "분", "Claude Code 하네스 · 도구 22번 · 28문제 풂", True), ("19", "분", "터미널만 · 도구 41번 · 26문제 풂")], 2)
+             + note("읽는 법", "같은 오픈 모델 6종 · 과제 1개당 평균 · 푼 문제 수는 비슷한데 시간 · 도구 호출이 거의 절반")
+             + note("그래서", "하네스는 정답률뿐 아니라 시간 · 비용도 바꾼다 · 남의 점수 대신 우리 과제로 직접 잰다 (Ch8)"),
+             HARBOR),
         stat("포켓몬 하네스 변화", "Ch1", pokemon(), A_37, A_FABLE5),
         stat("같은 모델 · 다른 하네스", "Ch1",
              hbars([("Mythos 5 · 단일 Agent", 88.0, False, "88.0%"), ("Mythos 5 · 멀티에이전트", 93.3, True, "93.3%")], top=100,
                      title="BrowseComp · 같은 모델, 구성만 다름")
              + note("그래서", "같은 모델도 하네스 구성에 따라 점수가 달라짐"),
              A_FABLE5, SC_FABLE5),
-        bridge("다음: 기성 하네스로 시작", "", "Ch1", "→ Ch2 Superpowers로 첫 개발"),
+        bridge("다음: 오픈 하네스 적용", "", "Ch1", "→ Ch2 Superpowers로 첫 개발"),
     ]
 
 
@@ -865,7 +862,7 @@ def ch4():
           "  && cd ~/.claude/skills/gstack && ./setup\n\n"
           "/office-hours · /plan-eng-review   # 기획 · 설계 검토\n"
           "/review · /qa · /cso               # 리뷰 · QA · 보안")
-    return chapter("Ch2", "기성 하네스로 시작", {"Skill · 명령", "Sub Agent · 팀", "Hook · 권한"}, "남이 만든 하네스") + [
+    return chapter("Ch2", "오픈 하네스 적용", {"Skill · 명령", "Sub Agent · 팀", "Hook · 권한"}, "남이 만든 하네스") + [
         stat("다른 회사의 하네스 ① 개발 자동화", "Ch2",
              big([("100만", "줄", "OpenAI Codex 팀 · 손코딩 0줄 · 5개월"), ("1,000+", "PR/주", "Stripe · 전부 사람 리뷰"),
                   ("60~90", "%", "Spotify 마이그레이션 시간 절감"), ("97", "%", "Airbnb 테스트 이전 자동 · 6주", True)], 4)
