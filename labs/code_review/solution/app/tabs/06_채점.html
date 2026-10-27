@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>채점</title>
+<style>
+  body{margin:0; padding:20px 24px; font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; color:#16233A;}
+  .top{display:flex; align-items:baseline; gap:12px; margin-bottom:12px;} .top b{font-size:22px;} .top span{color:#6B7785; font-size:13px;}
+  table{width:100%; border-collapse:collapse; font-size:14px;}
+  th{background:#F4F6F9; text-align:left; padding:8px 10px; color:#6B7785; font-weight:700;}
+  td{padding:7px 10px; border-bottom:1px solid #EEF1F5; font-variant-numeric:tabular-nums; vertical-align:top;}
+  .bad td{background:#FDECEC;} .near td{background:#FFF8F1;} .tag{display:inline-block; border-radius:6px; padding:1px 8px; font-weight:800; color:#fff; font-size:12px;}
+  .r{background:#C62828;} .o{background:#EF6C00;} .g{background:#2E7D32;}
+  .bar{height:10px; background:#F28C28; border-radius:5px;}
+  .cols{display:grid; grid-template-columns:260px 1fr; gap:18px;} .list div{padding:8px 10px; border-radius:8px; cursor:pointer; font-size:14px;} .list div.on{background:#EEF1F5; font-weight:800;}
+  pre{white-space:pre-wrap; font-family:inherit; font-size:14px; line-height:1.6; background:#F8F9FB; border-radius:10px; padding:16px 20px; margin:0;}
+  .big{font-size:44px; font-weight:900;} .empty{color:#8A94A3; padding:30px 0;}
+</style>
+</head>
+<body>
+<div style="display:flex;gap:14px;margin-bottom:16px" id="cards"></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div><div class="top"><b>놓친 문제</b></div><table><tbody id="ms"></tbody></table></div>
+<div><div class="top"><b>지어낸 지적</b><span>문제 없는 PR에 붙은 것</span></div><table><tbody id="fp"></tbody></table></div></div>
+<script>
+async function tick() {
+  const r = await fetch("/files/data/grade.json"); if (!r.ok) return;
+  const g = await r.json();
+  document.getElementById("cards").innerHTML = [["찾음", `${g.found} / ${g.total}`, "#2E7D32"], ["놓침", g.missed.length, "#EF6C00"], ["오탐", g.false_positive.length, "#C62828"]]
+    .map(([k, v, c]) => `<div style="flex:1;border:1.5px solid #E1E5EB;border-radius:12px;padding:12px 18px"><div class="big" style="color:${c}">${v}</div>${k} · ${g.at}</div>`).join("");
+  document.getElementById("ms").innerHTML = g.missed.map(m => `<tr class="near"><td>PR ${m.pr}</td><td>${m.kind}</td><td>${m.key}</td></tr>`).join("") || `<tr><td class="empty">없음</td></tr>`;
+  document.getElementById("fp").innerHTML = g.false_positive.map(f => `<tr class="bad"><td>PR ${f.pr}</td><td>${f.title || ""}</td></tr>`).join("") || `<tr><td class="empty">없음</td></tr>`;
+}
+tick(); setInterval(tick, 3000);
+</script>
+</body>
+</html>

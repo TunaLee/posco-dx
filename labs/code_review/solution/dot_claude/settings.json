@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__repo__approve_pr|mcp__repo__merge_pr",
+        "hooks": [{"type": "command", "command": "python solution/hooks/merge_guard.py"}]
+      }
+    ]
+  }
+}
