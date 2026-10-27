@@ -12,3 +12,7 @@ lab7_eval_regression/synthetic_*.jsonl
 sdk_optional/sandbox/*
 !sdk_optional/sandbox/.gitkeep
 runs/
+
+# steel_qc 실행 결과
+steel_qc/data/approvals.json
+steel_qc/runs/

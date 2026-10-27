@@ -23,6 +23,7 @@
 | 7-1 빌드 · 테스트 하네스 (CI 게이트) | `build_gate/` (복사본에서) | CLAUDE.md · Stop Hook · ci.yml |
 | 8-1 메타 하네스로 내 하네스 | `meta_harness/` (이 폴더를 VS Code로) · `samples/` · 개발 주제면 `my_tool/` | 요청문 · 개발 주제는 Superpowers |
 | 8-2 루프 하네스 (선택) | `settle_check/` (이 폴더를 VS Code로) | CLAUDE.md · PROMPT.md · features.json · progress.md |
+| (새 흐름) 코일 품질 판정 · Ch1 ~ Ch8 한 프로젝트 | `steel_qc/` (README 참고) | CLAUDE.md · MCP 서버 · Hook · 테스트 · 루프 |
 
 ## 강사용 참고
 
