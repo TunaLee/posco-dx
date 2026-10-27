@@ -14,7 +14,7 @@ import labkits
 import mcp_fig
 import viz2
 
-deck.LAB_KIND.update({"2-1": ("필수", 40), "3-1": ("필수", 30), "4-1": ("필수", 20), "4-2": ("필수", 15), "5-1": ("필수", 15),
+deck.LAB_KIND.update({"2-1": ("필수", 40), "3-1": ("필수", 10), "3-2": ("필수", 30), "4-1": ("필수", 20), "4-2": ("필수", 15), "5-1": ("필수", 15),
                       "6-1": ("필수", 25), "7-1": ("선택", 20), "8-1": ("필수", 20), "8-2": ("필수", 25), "9-1": ("필수", 90), "9-2": ("필수", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
 from stats_hx import big, hbars, quote, rings, stat
@@ -716,14 +716,21 @@ def ch2():
 # ── Ch3 Tool · MCP ──────────────────────────────────────
 def ch_tool():
     return chapter("Ch3", "Tool · MCP", {"Tool · MCP"}, "도구를 붙이고 제한하기") + [
-        stat("MCP · Skills 확산 현황", "Ch3",
-             big([("5억", "회", "MCP SDK 월 다운로드 (대표 SDK 합계)", True),
-                  ("10억+", "회", "TypeScript · Python SDK 각각 누적"),
-                  ("46", "개", "Agent Skills 형식을 지원하는 도구")])
-             + quote("도구 100개짜리 서버에 연결하면, 사용자가 묻기도 전에 그 전부의 값을 치르고 목록이 길수록 도구 고르기도 나빠진다", "MCP 로드맵, 2026.8"),
-             MCP26, MCPRM, SKILLSIO),
+        light("도구가 필요한 이유", viz2.calc_compare()
+             + note("LLM 혼자 못 하는 것", "정확한 계산 · 오늘의 정보 · 사내 데이터 · 실제 행동 → 무엇을 부를지는 LLM, 실행은 도구"), "Ch3"),
         light("도구의 구조 · 선언과 실행", viz2.decl_split()
               + note("핵심", "모델은 이름 · 설명 · 입력 형식만 보고 고름 · 실제 조회 · 실행은 함수가"), "Ch3"),
+        lab("3-1", "계산 도구 하나 붙여 보기", "Ch3",
+            "Claude Code에 도구를 붙이고, 직접 고르고 부르는지 확인",
+            ["도구 없이 계산 요청", "<code>claude mcp add</code> 로 계산 도구 등록", "같은 계산 요청 → 호출 표시", "<code>/mcp</code> 에서 도구 설명 보기"],
+            ["호출 표시 <code>mcp__calc__calc</code>", "도구 설명문 확인"], files=labdir("code_review"), mine="내 업무에서 LLM이 틀리면 곤란한 계산 하나"),
+        quest("3-1", "Ch3",
+              ["「도구 쓰지 말고 바로 답해 줘: 4817 × 293 × 1.1 원 미만 버림」", "터미널: <code>claude mcp add calc -- python tools/calc_server.py</code>",
+               "새 대화: 「calc 도구로 같은 계산을 해 줘」", "<code>/mcp</code> → calc → 도구 설명 읽기"],
+              ["답 위에 <code>calc</code> 호출 표시", "넘긴 인자 (expr · floor)", "두 답이 같은가 · 정답 1,552,519", "설명문이 곧 사용 설명서"],
+              "<code>tools/calc_server.py</code> 를 열어 보기 · 파일 하나 · 66줄"),
+        result("3-1", "Ch3", [("도구 등록", "명령 한 줄"), ("Claude가 고른 도구", "<code>mcp__calc__calc</code>"), ("걸린 시간", "9초 · 호출 1번"), ("답", "1,552,519 <em>정답</em>")],
+               "도구는 붙이기만 하면 Claude가 설명을 보고 스스로 골라 부름"),
         light("내장 도구와 외부 도구", viz2.tool_kinds()
               + note("MCP", "외부 도구를 Claude Code에 붙이는 표준 연결 방식 · 다음 장부터"), "Ch3"),
         light("도구 설계도 하네스", viz2.pair(
@@ -735,6 +742,12 @@ def ch_tool():
             cards([("주소", "/api/prs · /api/prs/번호/diff · /api/prs/번호/comments", []),
                    ("형식", "JSON · 사람이 아니라 프로그램이 읽는 모양", [])], 1))
               + note("직접", "저장소 서버를 켜고 브라우저로 열어 보기"), "Ch3"),
+        stat("MCP · Skills 확산 현황", "Ch3",
+             big([("5억", "회", "MCP SDK 월 다운로드 (대표 SDK 합계)", True),
+                  ("10억+", "회", "TypeScript · Python SDK 각각 누적"),
+                  ("46", "개", "Agent Skills 형식을 지원하는 도구")])
+             + quote("도구 100개짜리 서버에 연결하면, 사용자가 묻기도 전에 그 전부의 값을 치르고 목록이 길수록 도구 고르기도 나빠진다", "MCP 로드맵, 2026.8"),
+             MCP26, MCPRM, SKILLSIO),
         light("규격 없는 연결", mcp_fig.tangle()
               + note("MCP", "Model Context Protocol · Anthropic 2024.11 공개 · 도구 목록 · 호출 · 결과 전달 형식을 하나로"), "Ch3"),
         light("MCP 서버와 MCP 클라이언트", cards([
@@ -753,15 +766,15 @@ def ch_tool():
             "로컬 (명령)", [("내 PC에서 실행", "표준 입출력"), ("예", "코드 저장소 · 사내 DB"), ("등록", "<code>claude mcp add repo -- python mcp_server.py</code>")],
             "URL", [("인터넷 주소로 접속", "HTTP"), ("예", "Microsoft Learn · 사내 공용 서버"), ("등록", "<code>claude mcp add --transport http mslearn https://learn.microsoft.com/api/mcp</code>")], hl="l")
               + note("확인 · 공유", "<code>/mcp</code> · <code>-s project</code> → <code>.mcp.json</code> 으로 팀원이 같은 연결"), "Ch3"),
-        lab("3-1", "코드 저장소 MCP 서버 만들기", "Ch3",
+        lab("3-2", "코드 저장소 MCP 서버 만들기", "Ch3",
             "MCP 서버를 직접 만들어 연결 · 붙여 넣기 없이 PR 조회 · 코멘트",
             ["Microsoft Learn MCP 연결해 보기", "저장소 MCP 서버 만들기 · 연결", "「아직 리뷰 안 한 PR 정리해 줘」", "콘솔에 탭 ② 도구 호출"],
             ["탭 ② 도구 호출", "<code>/mcp</code> 에 내 서버"], files=labdir("code_review"), mine="내 업무에서 MCP로 붙이고 싶은 사내 시스템 하나"),
-        quest("3-1", "Ch3",
+        quest("3-2", "Ch3",
               ["「Microsoft Learn MCP(https://learn.microsoft.com/api/mcp)를 연결해 줘」", "「팀 코드 저장소 API를 MCP 서버로 만들어 연결해 줘」", "새 대화: 「아직 리뷰 안 한 PR 정리해 줘」", "「도구 호출 기록을 탭으로 보여 줘」"],
               ["<code>/mcp</code> 에 서버 둘", "답 위에 MCP 도구 호출 표시", "탭 ② 호출 · 응답 크기", "저장소 서버를 끄면?"],
               "<code>solution/mcp_server.py</code> · <code>solution/app/tabs/02_도구호출.html</code>"),
-        result("3-1", "Ch3", [("MCP 서버 만들기", "169초 · 21턴"), ("만든 도구", "PR 목록 · diff · 파일 · 코멘트"),
+        result("3-2", "Ch3", [("MCP 서버 만들기", "169초 · 21턴"), ("만든 도구", "PR 목록 · diff · 파일 · 코멘트"),
                                  ("등록", "<code>.mcp.json</code> · 처음 한 번 승인"), ("「PR 101~112 리뷰」", "142초 · 붙여 넣기 0건")],
                "요청 한 줄로 서버 · 연결까지 · 이름 · 구성은 Claude가 정함"),
         bridge("다음: Claude Code 하네스 분해", "", "Ch3", "→ Ch4 Skill · Sub Agent · Hook"),

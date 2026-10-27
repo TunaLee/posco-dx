@@ -832,6 +832,13 @@
   .tk-f{margin-top:12px; font-size:14px; color:#6B7785;}
   .tk-o{background:#fff; border-radius:12px; padding:10px 16px; animation:v2In .5s both; animation-delay:var(--d);} .tk-o b{display:block; font-size:17px;} .tk-o small{font-size:13px; color:#6B7785;}
   .tk-plug{display:flex; flex-direction:column; align-items:center; gap:6px;} .tk-plug b{background:#F28C28; color:#fff; border-radius:12px; padding:12px 18px; font-size:20px;} .tk-plug i{font-style:normal; font-size:28px; color:#F28C28; font-weight:900;}
+  .tv2{display:grid; grid-template-columns:1fr 60px 1fr; gap:10px; align-items:stretch; margin:8px 0 16px;}
+  .tv2c{border-radius:16px; padding:18px 22px; display:flex; flex-direction:column; gap:12px;} .tv2c.no{background:#F4F6F9;} .tv2c.yes{background:#FFF3E6;}
+  .tv2h{font-size:20px; font-weight:900; color:#6B7785;} .tv2c.yes .tv2h{color:#EF6C00;}
+  .tv2r{background:#fff; border-radius:12px; padding:12px 16px; display:grid; grid-template-columns:56px 1fr; align-items:center; animation:v2In .5s both; animation-delay:var(--d);}
+  .tv2r b{font-size:14px; color:#8A94A3;} .tv2r span{font-size:20px; font-weight:800; color:#16233A;}
+  .tv2r em{font-style:normal; margin-left:8px; font-weight:900;} .tv2r em.x{color:#C62828;} .tv2r em.o{color:#2E7D32;}
+  .tv2a{display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:900; color:#F28C28;}
   .v2tile b{font-size:21px; color:#16233A;} .v2tile span{font-size:15px; color:#6B7785; line-height:1.45;}
 </style>
 </head>
@@ -1369,12 +1376,12 @@ spacing: { unit: 8 }
   <div class="hub hubtxt" style="left:566px; top:356px">모델</div>
 </section>
 
-<section class="slide lt" data-title="MCP · Skills 확산 현황">
+<section class="slide lt" data-title="도구가 필요한 이유">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch3</span></div>
-  <h2 class="s-title sm">MCP · Skills 확산 현황</h2>
+  <h2 class="s-title sm">도구가 필요한 이유</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="bns c3"><div class="bn hl" style="--d:0.00s"><div class="bv">5억<small>회</small></div><div class="bl">MCP SDK 월 다운로드 (대표 SDK 합계)</div></div><div class="bn" style="--d:0.12s"><div class="bv">10억+<small>회</small></div><div class="bl">TypeScript · Python SDK 각각 누적</div></div><div class="bn" style="--d:0.24s"><div class="bv">46<small>개</small></div><div class="bl">Agent Skills 형식을 지원하는 도구</div></div></div><div class="qt"><p>도구 100개짜리 서버에 연결하면, 사용자가 묻기도 전에 그 전부의 값을 치르고 목록이 길수록 도구 고르기도 나빠진다</p><span>MCP 로드맵, 2026.8</span></div><div class="src">출처 · <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/" target="_blank" rel="noopener">MCP 블로그 · 2026-07-28 Specification</a> · <a href="https://blog.modelcontextprotocol.io/posts/mcp-roadmap/" target="_blank" rel="noopener">MCP 블로그 · New MCP Roadmap 2026.8</a> · <a href="https://agentskills.io/home" target="_blank" rel="noopener">agentskills.io (2026.10 기준)</a></div></div></div>
+  <div class="body"><div class="mid"><div class="tv2"><div class="tv2c no"><div class="tv2h">도구 없이</div><div class="tv2r" style="--d:0.00s"><b>질문</b><span>4,817 × 293 = ?</span></div><div class="tv2r" style="--d:0.45s"><b>LLM</b><span>다음 숫자를 확률로 이어 씀</span></div><div class="tv2r" style="--d:0.90s"><b>답</b><span>「1,411,281입니다」 <em class=x>✕</em></span></div></div><div class="tv2a">→</div><div class="tv2c yes"><div class="tv2h">계산 도구가 있으면</div><div class="tv2r" style="--d:1.60s"><b>LLM</b><span>calc 도구를 (4817 * 293)로 부르기로 결정</span></div><div class="tv2r" style="--d:2.05s"><b>도구</b><span>실제로 계산 → 1,411,381</span></div><div class="tv2r" style="--d:2.50s"><b>답</b><span>「1,411,381입니다」 <em class=o>✓</em></span></div></div></div><div class="dbnote"><span>LLM 혼자 못 하는 것</span> 정확한 계산 · 오늘의 정보 · 사내 데이터 · 실제 행동 → 무엇을 부를지는 LLM, 실행은 도구</div></div></div>
 </section>
 
 <section class="slide lt" data-title="도구의 구조 · 선언과 실행">
@@ -1383,6 +1390,34 @@ spacing: { unit: 8 }
   <h2 class="s-title sm">도구의 구조 · 선언과 실행</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="ds2"><div class="ds2c" style="--d:0s"><div class="ds2h"><b>도구 선언</b><span>모델에 전달 · 모델이 보는 것</span></div><div class="ds2k"><i>name</i><code>get_diff</code></div><div class="ds2k"><i>description</i><code>PR 의 변경 내용을 돌려준다</code></div><div class="ds2k"><i>input</i><code>pr · 정수</code></div><div class="ds2f">부를지 · 무엇을 넣을지 판단</div></div><div class="ds2a">→</div><div class="ds2c mid" style="--d:.4s"><div class="ds2h"><b>연결</b><span>Claude Code · MCP 서버</span></div><div class="ds2m"><code>get_diff</code><i>↓</i><code>def get_diff(pr)</code></div><div class="ds2f">고른 이름으로 함수를 찾아 실행</div></div><div class="ds2a">→</div><div class="ds2c app" style="--d:.8s"><div class="ds2h"><b>실행 함수</b><span>내 PC · 사내 시스템</span></div><div class="ds2code"><code>def get_diff(pr):<br>&nbsp;&nbsp;return 저장소.get(f"/prs/{pr}/diff")</code></div><div class="ds2f">모델에 보내지 않음 · 결과만 돌려줌</div></div></div><div class="dbnote"><span>핵심</span> 모델은 이름 · 설명 · 입력 형식만 보고 고름 · 실제 조회 · 실행은 함수가</div></div></div>
+</section>
+
+<section class="slide lt labs" data-title="[실습 3-1] 계산 도구 하나 붙여 보기">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span><span class="labtag">실습 3-1</span></div>
+  <h2 class="s-title sm">계산 도구 하나 붙여 보기</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="labgrid">
+    <div class="lc goal"><div class="lh">목표</div><p>Claude Code에 도구를 붙이고, 직접 고르고 부르는지 확인</p><div class="lf">사용 파일 · <code class="lfold">labs/code_review</code></div><div class="mine"><span>내 업무 적용</span>내 업무에서 LLM이 틀리면 곤란한 계산 하나</div></div>
+    <div class="lc steps"><div class="lh">단계</div><ol><li>도구 없이 계산 요청</li><li><code>claude mcp add</code> 로 계산 도구 등록</li><li>같은 계산 요청 → 호출 표시</li><li><code>/mcp</code> 에서 도구 설명 보기</li></ol></div>
+    <div class="lc done"><div class="lh">완료 기준</div><ul><li>호출 표시 <code>mcp__calc__calc</code></li><li>도구 설명문 확인</li></ul></div>
+  </div></div>
+</section>
+
+<section class="slide lt" data-title="실습 3-1 진행">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span></div>
+  <h2 class="s-title sm">실습 3-1 진행</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/code_review</code><em>요청은 짧게 · 방법은 Claude가 정함</em></div><div class="qh2">Claude에게</div><div class="qas"><div class="qa2"><span>1</span><p>「도구 쓰지 말고 바로 답해 줘: 4817 × 293 × 1.1 원 미만 버림」</p></div><div class="qa2"><span>2</span><p>터미널: <code>claude mcp add calc -- python tools/calc_server.py</code></p></div><div class="qa2"><span>3</span><p>새 대화: 「calc 도구로 같은 계산을 해 줘」</p></div><div class="qa2"><span>4</span><p><code>/mcp</code> → calc → 도구 설명 읽기</p></div></div><div class="qk2"><b>확인</b><ul><li>답 위에 <code>calc</code> 호출 표시</li><li>넘긴 인자 (expr · floor)</li><li>두 답이 같은가 · 정답 1,552,519</li><li>설명문이 곧 사용 설명서</li></ul></div><div class="dbnote"><span>막히면</span> <code>tools/calc_server.py</code> 를 열어 보기 · 파일 하나 · 66줄</div></div></div>
+</section>
+
+<section class="slide lt" data-title="실습 3-1 결과">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span></div>
+  <h2 class="s-title sm">실습 3-1 결과</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="rgrid c4"><div class="rc" style="--d:0.00s"><b>도구 등록</b><div class="rv"><span class="ra">명령 한 줄</span></div></div><div class="rc" style="--d:0.12s"><b>Claude가 고른 도구</b><div class="rv"><span class="ra"><code>mcp__calc__calc</code></span></div></div><div class="rc" style="--d:0.24s"><b>걸린 시간</b><div class="rv"><span class="ra">9초 · 호출 1번</span></div></div><div class="rc" style="--d:0.36s"><b>답</b><div class="rv"><span class="ra">1,552,519 <em>정답</em></span></div></div></div><div class="dbnote"><span>정리</span> 도구는 붙이기만 하면 Claude가 설명을 보고 스스로 골라 부름</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/code_review" target="_blank" rel="noopener">직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/code_review · 각 1회</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="내장 도구와 외부 도구">
@@ -1411,6 +1446,14 @@ spacing: { unit: 8 }
   "files": ["shop/orders.py"],
   "additions": 5, "deletions": 0},
  {"id": 102, "title": "쿠폰 정률 할인 지원", ...}]</code></pre></div><div class="kcards c1"><div class="kcard"><h4>주소</h4><p>/api/prs · /api/prs/번호/diff · /api/prs/번호/comments</p></div><div class="kcard"><h4>형식</h4><p>JSON · 사람이 아니라 프로그램이 읽는 모양</p></div></div></div><div class="dbnote"><span>직접</span> 저장소 서버를 켜고 브라우저로 열어 보기</div></div></div>
+</section>
+
+<section class="slide lt" data-title="MCP · Skills 확산 현황">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span></div>
+  <h2 class="s-title sm">MCP · Skills 확산 현황</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="bns c3"><div class="bn hl" style="--d:0.00s"><div class="bv">5억<small>회</small></div><div class="bl">MCP SDK 월 다운로드 (대표 SDK 합계)</div></div><div class="bn" style="--d:0.12s"><div class="bv">10억+<small>회</small></div><div class="bl">TypeScript · Python SDK 각각 누적</div></div><div class="bn" style="--d:0.24s"><div class="bv">46<small>개</small></div><div class="bl">Agent Skills 형식을 지원하는 도구</div></div></div><div class="qt"><p>도구 100개짜리 서버에 연결하면, 사용자가 묻기도 전에 그 전부의 값을 치르고 목록이 길수록 도구 고르기도 나빠진다</p><span>MCP 로드맵, 2026.8</span></div><div class="src">출처 · <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/" target="_blank" rel="noopener">MCP 블로그 · 2026-07-28 Specification</a> · <a href="https://blog.modelcontextprotocol.io/posts/mcp-roadmap/" target="_blank" rel="noopener">MCP 블로그 · New MCP Roadmap 2026.8</a> · <a href="https://agentskills.io/home" target="_blank" rel="noopener">agentskills.io (2026.10 기준)</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="규격 없는 연결">
@@ -1471,9 +1514,9 @@ spacing: { unit: 8 }
   <div class="body"><div class="mid"><div class="v2pair"><div class="v2p on"><div class="v2ph">로컬 (명령)</div><div class="v2pc" style="--d:0.00s"><b>내 PC에서 실행</b><span>표준 입출력</span></div><div class="v2pc" style="--d:0.08s"><b>예</b><span>코드 저장소 · 사내 DB</span></div><div class="v2pc" style="--d:0.16s"><b>등록</b><span><code>claude mcp add repo -- python mcp_server.py</code></span></div></div><div class="v2p"><div class="v2ph">URL</div><div class="v2pc" style="--d:0.00s"><b>인터넷 주소로 접속</b><span>HTTP</span></div><div class="v2pc" style="--d:0.08s"><b>예</b><span>Microsoft Learn · 사내 공용 서버</span></div><div class="v2pc" style="--d:0.16s"><b>등록</b><span><code>claude mcp add --transport http mslearn https://learn.microsoft.com/api/mcp</code></span></div></div></div><div class="dbnote"><span>확인 · 공유</span> <code>/mcp</code> · <code>-s project</code> → <code>.mcp.json</code> 으로 팀원이 같은 연결</div></div></div>
 </section>
 
-<section class="slide lt labs" data-title="[실습 3-1] 코드 저장소 MCP 서버 만들기">
+<section class="slide lt labs" data-title="[실습 3-2] 코드 저장소 MCP 서버 만들기">
   <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch3</span><span class="labtag">실습 3-1</span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span><span class="labtag">실습 3-2</span></div>
   <h2 class="s-title sm">코드 저장소 MCP 서버 만들기</h2>
   <div class="rule"></div>
   <div class="body"><div class="labgrid">
@@ -1483,18 +1526,18 @@ spacing: { unit: 8 }
   </div></div>
 </section>
 
-<section class="slide lt" data-title="실습 3-1 진행">
+<section class="slide lt" data-title="실습 3-2 진행">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch3</span></div>
-  <h2 class="s-title sm">실습 3-1 진행</h2>
+  <h2 class="s-title sm">실습 3-2 진행</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/code_review</code><em>요청은 짧게 · 방법은 Claude가 정함</em></div><div class="qh2">Claude에게</div><div class="qas"><div class="qa2"><span>1</span><p>「Microsoft Learn MCP(https://learn.microsoft.com/api/mcp)를 연결해 줘」</p></div><div class="qa2"><span>2</span><p>「팀 코드 저장소 API를 MCP 서버로 만들어 연결해 줘」</p></div><div class="qa2"><span>3</span><p>새 대화: 「아직 리뷰 안 한 PR 정리해 줘」</p></div><div class="qa2"><span>4</span><p>「도구 호출 기록을 탭으로 보여 줘」</p></div></div><div class="qk2"><b>확인</b><ul><li><code>/mcp</code> 에 서버 둘</li><li>답 위에 MCP 도구 호출 표시</li><li>탭 ② 호출 · 응답 크기</li><li>저장소 서버를 끄면?</li></ul></div><div class="dbnote"><span>막히면</span> <code>solution/mcp_server.py</code> · <code>solution/app/tabs/02_도구호출.html</code></div></div></div>
 </section>
 
-<section class="slide lt" data-title="실습 3-1 결과">
+<section class="slide lt" data-title="실습 3-2 결과">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch3</span></div>
-  <h2 class="s-title sm">실습 3-1 결과</h2>
+  <h2 class="s-title sm">실습 3-2 결과</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="rgrid c4"><div class="rc" style="--d:0.00s"><b>MCP 서버 만들기</b><div class="rv"><span class="ra">169초 · 21턴</span></div></div><div class="rc" style="--d:0.12s"><b>만든 도구</b><div class="rv"><span class="ra">PR 목록 · diff · 파일 · 코멘트</span></div></div><div class="rc" style="--d:0.24s"><b>등록</b><div class="rv"><span class="ra"><code>.mcp.json</code> · 처음 한 번 승인</span></div></div><div class="rc" style="--d:0.36s"><b>「PR 101~112 리뷰」</b><div class="rv"><span class="ra">142초 · 붙여 넣기 0건</span></div></div></div><div class="dbnote"><span>정리</span> 요청 한 줄로 서버 · 연결까지 · 이름 · 구성은 Claude가 정함</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/code_review" target="_blank" rel="noopener">직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/code_review · 각 1회</a></div></div></div>
 </section>

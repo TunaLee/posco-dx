@@ -2,7 +2,7 @@
 
 > ※ 사람 · 코드 · PR 은 모두 실습용 가상 자료입니다.
 
-준비된 것은 **팀 코드 저장소 서버(`repo/`)뿐**이다. 작은 주문 · 정산 서비스(`shop/`)에 팀원 4명이 PR 12개를 올려 둔 상태다.
+준비된 것은 **팀 코드 저장소 서버(`repo/`)** 와 실습 3-1 용 **계산 도구(`tools/calc_server.py`)** 뿐이다. 작은 주문 · 정산 서비스(`shop/`)에 팀원 4명이 PR 12개를 올려 둔 상태다.
 리뷰 콘솔 · MCP 서버 · Skill · Hook · 채점기는 모두 Claude Code 로 이 폴더에 만들어 간다. 실습 하나를 마칠 때마다 콘솔에 탭이 하나씩 생긴다.
 
 > **`repo/` 는 저장소 원본이다 — 읽기만 하고 고치지 않는다.** 기록 · 결과는 `data/` 에 둔다.
@@ -26,7 +26,8 @@ python repo/server.py          # http://127.0.0.1:8900 · 끄려면 Ctrl+C
 | 실습 | Claude 에게 (짧게) | 콘솔 |
 |---|---|---|
 | 2-1 | Superpowers 로 「PR 을 보는 리뷰 콘솔을 만들고 싶어 · 탭 하나로 시작」 | 탭 ① PR 목록 |
-| 3-1 | 「팀 코드 저장소 API 를 MCP 서버로 만들어 연결해 줘」 | 탭 ② 도구 호출 |
+| 3-1 | `claude mcp add calc -- python tools/calc_server.py` → 「calc 도구로 계산해 줘」 | 호출 표시 확인 |
+| 3-2 | 「팀 코드 저장소 API 를 MCP 서버로 만들어 연결해 줘」 | 탭 ② 도구 호출 |
 | 4-1 | 「코드 리뷰 절차를 Skill 로」 · 「보안 검토 Sub Agent」 | 탭 ③ 리뷰 |
 | 4-2 | 「승인 · 병합은 Hook 으로 막고 막은 기록을 탭으로」 | 탭 ④ 막은 기록 |
 | 5-1 | 「바뀐 함수만 돌려주는 도구를 추가해 줘」 | 탭 ② 응답 크기 비교 |
@@ -41,7 +42,7 @@ python repo/server.py          # http://127.0.0.1:8900 · 끄려면 Ctrl+C
 | 파일 | 쓰는 실습 |
 |---|---|
 | `CLAUDE.md` · `app/` (콘솔 · 탭 ① ~ ⑥) | 2-1 · 탭이 막히면 그 탭 파일만 `app/tabs/` 로 |
-| `mcp_server.py` | 3-1 · 5-1 · `claude mcp add repo -- python solution/mcp_server.py` |
+| `mcp_server.py` | 3-2 · 5-1 · `claude mcp add repo -- python solution/mcp_server.py` |
 | `dot_claude/` (Skill · Agent · settings) · `hooks/merge_guard.py` | 4-1 · 4-2 · 6-1 · `.claude/` 로 복사 |
 | `checks.py` | 7-1 |
 | `grade.py` · `tests/` | 8-1 |

@@ -261,6 +261,16 @@ def dev_team():
     return f'<svg viewBox="0 0 1180 340" class="v2">{"".join(s)}</svg>'
 
 
+def calc_compare():
+    """도구 없이 계산 vs 계산 도구를 부를 때 — 왼쪽이 먼저, 오른쪽이 뒤따름."""
+    def col(cls, head, rows, d0):
+        r = "".join(f'<div class="tv2r" style="--d:{d0 + i * .45:.2f}s"><b>{a}</b><span>{b}</span></div>' for i, (a, b) in enumerate(rows))
+        return f'<div class="tv2c {cls}"><div class="tv2h">{head}</div>{r}</div>'
+    a = col("no", "도구 없이", [("질문", "4,817 × 293 = ?"), ("LLM", "다음 숫자를 확률로 이어 씀"), ("답", "「1,411,281입니다」 <em class=x>✕</em>")], 0)
+    b = col("yes", "계산 도구가 있으면", [("LLM", "calc 도구를 (4817 * 293)로 부르기로 결정"), ("도구", "실제로 계산 → 1,411,381"), ("답", "「1,411,381입니다」 <em class=o>✓</em>")], 1.6)
+    return f'<div class="tv2">{a}<div class="tv2a">→</div>{b}</div>'
+
+
 CSS = """
   /* 표 대신 그림 */
   .v2{width:100%; height:auto; display:block; margin:4px 0 12px;}
@@ -311,5 +321,12 @@ CSS = """
   .tk-f{margin-top:12px; font-size:14px; color:#6B7785;}
   .tk-o{background:#fff; border-radius:12px; padding:10px 16px; animation:v2In .5s both; animation-delay:var(--d);} .tk-o b{display:block; font-size:17px;} .tk-o small{font-size:13px; color:#6B7785;}
   .tk-plug{display:flex; flex-direction:column; align-items:center; gap:6px;} .tk-plug b{background:#F28C28; color:#fff; border-radius:12px; padding:12px 18px; font-size:20px;} .tk-plug i{font-style:normal; font-size:28px; color:#F28C28; font-weight:900;}
+  .tv2{display:grid; grid-template-columns:1fr 60px 1fr; gap:10px; align-items:stretch; margin:8px 0 16px;}
+  .tv2c{border-radius:16px; padding:18px 22px; display:flex; flex-direction:column; gap:12px;} .tv2c.no{background:#F4F6F9;} .tv2c.yes{background:#FFF3E6;}
+  .tv2h{font-size:20px; font-weight:900; color:#6B7785;} .tv2c.yes .tv2h{color:#EF6C00;}
+  .tv2r{background:#fff; border-radius:12px; padding:12px 16px; display:grid; grid-template-columns:56px 1fr; align-items:center; animation:v2In .5s both; animation-delay:var(--d);}
+  .tv2r b{font-size:14px; color:#8A94A3;} .tv2r span{font-size:20px; font-weight:800; color:#16233A;}
+  .tv2r em{font-style:normal; margin-left:8px; font-weight:900;} .tv2r em.x{color:#C62828;} .tv2r em.o{color:#2E7D32;}
+  .tv2a{display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:900; color:#F28C28;}
   .v2tile b{font-size:21px; color:#16233A;} .v2tile span{font-size:15px; color:#6B7785; line-height:1.45;}
 """
