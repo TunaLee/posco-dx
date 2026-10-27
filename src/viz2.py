@@ -86,12 +86,28 @@ def ask_vs_hook():
     return f'<svg viewBox="0 0 1180 310" class="v2">{"".join(s)}</svg>'
 
 
-def fit(good, bad):
-    """업무 적합성 — 맞는 것 · 안 맞는 것 칩."""
+def fit(good, bad, gt="하네스로 만들기 좋은 업무", bt="맞지 않는 업무"):
+    """맞는 것 · 안 맞는 것 칩."""
     g = "".join(f'<li style="--d:{i * .1:.2f}s"><b>✓</b><span>{h}</span><small>{t}</small></li>' for i, (h, t) in enumerate(good))
     b = "".join(f'<li style="--d:{.5 + i * .1:.2f}s"><b>✕</b><span>{h}</span><small>{t}</small></li>' for i, (h, t) in enumerate(bad))
-    return (f'<div class="v2fit"><div class="ok"><div class="v2fh">하네스로 만들기 좋은 업무</div><ul>{g}</ul></div>'
-            f'<div class="no"><div class="v2fh">맞지 않는 업무</div><ul>{b}</ul></div></div>')
+    return (f'<div class="v2fit"><div class="ok"><div class="v2fh">{gt}</div><ul>{g}</ul></div>'
+            f'<div class="no"><div class="v2fh">{bt}</div><ul>{b}</ul></div></div>')
+
+
+def pair(lt, litems, rt, ritems, hl="r"):
+    """좌우 비교 — (머리, 한 줄) 카드 두 묶음 · hl 쪽이 주황."""
+    def col(t, items, on):
+        c = "".join(f'<div class="v2pc" style="--d:{i * .08:.2f}s"><b>{h}</b><span>{x}</span></div>' for i, (h, x) in enumerate(items))
+        return f'<div class="v2p{" on" if on else ""}"><div class="v2ph">{t}</div>{c}</div>'
+    return f'<div class="v2pair">{col(lt, litems, hl == "l")}{col(rt, ritems, hl == "r")}</div>'
+
+
+def maprows(rows, lt="", rt=""):
+    """한 줄씩 A → B (sub)."""
+    head = f'<div class="v2mh"><span>{lt}</span><i></i><span>{rt}</span></div>' if lt else ""
+    r = "".join(f'<div class="v2m" style="--d:{i * .12:.2f}s"><div class="a">{a}</div><i>→</i><div class="b"><b>{b}</b>{f"<small>{c}</small>" if c else ""}</div></div>'
+                for i, (a, b, c) in enumerate(rows))
+    return f'<div class="v2ms">{head}{r}</div>'
 
 
 def tiles(items, cols=3):
@@ -147,7 +163,7 @@ CSS = """
   .v2-code{font-size:20px; font-weight:800; fill:#FF8A80; font-family:var(--mono, monospace);}
   .v2-in{animation:v2In .5s ease-out both; animation-delay:var(--d);}
   @keyframes v2In{from{opacity:0; transform:translateY(8px)}}
-  @media print{.v2-in,.v2fit li,.v2tile{animation:none}}
+  @media print{.v2-in,.v2fit li,.v2tile,.v2pc,.v2m{animation:none}}
   .v2fo{display:flex; flex-direction:column; gap:8px;} .v2fo b{font-size:17px; color:#1F3A5F; line-height:1.35;} .v2fo span{font-size:14px; color:#6B7785; line-height:1.4;}
   .v2fit{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:6px 0 14px;}
   .v2fit > div{border-radius:16px; padding:20px 24px;} .v2fit .ok{background:#E8F5E9;} .v2fit .no{background:#F4F6F9;}
@@ -159,5 +175,16 @@ CSS = """
   .v2fit li span{font-size:20px; font-weight:800; color:#16233A;} .v2fit li small{font-size:14px; color:#6B7785;}
   .v2tiles{display:grid; gap:16px; margin:6px 0 16px;} .v2tiles.c2{grid-template-columns:repeat(2,1fr);} .v2tiles.c3{grid-template-columns:repeat(3,1fr);} .v2tiles.c4{grid-template-columns:repeat(4,1fr);} .v2tiles.c5{grid-template-columns:repeat(5,1fr);}
   .v2tile{border:1.5px solid #E1E5EB; border-top:5px solid #1F3A5F; border-radius:14px; padding:16px 20px; background:#fff; display:flex; flex-direction:column; gap:6px; animation:v2In .5s both; animation-delay:var(--d);}
+  .v2pair{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:6px 0 14px;}
+  .v2p{background:#F4F6F9; border-radius:16px; padding:18px 22px; display:flex; flex-direction:column; gap:10px;} .v2p.on{background:#FFF3E6;}
+  .v2ph{font-size:20px; font-weight:900; color:#1F3A5F;} .v2p.on .v2ph{color:#EF6C00;}
+  .v2pc{background:#fff; border-radius:12px; padding:10px 16px; display:flex; flex-direction:column; gap:2px; animation:v2In .5s both; animation-delay:var(--d);}
+  .v2pc b{font-size:18px; color:#16233A;} .v2pc span{font-size:14px; color:#6B7785;}
+  .v2ms{display:grid; gap:10px; margin:6px 0 14px;}
+  .v2mh{display:grid; grid-template-columns:1fr 50px 1.3fr; font-size:15px; font-weight:900;} .v2mh span:first-child{color:#C62828;} .v2mh span:last-child{color:#EF6C00;}
+  .v2m{display:grid; grid-template-columns:1fr 50px 1.3fr; align-items:center; animation:v2In .5s both; animation-delay:var(--d);}
+  .v2m .a{background:#F4F6F9; border-radius:12px; padding:12px 18px; font-size:18px; font-weight:800; color:#16233A;}
+  .v2m i{font-style:normal; text-align:center; color:#F28C28; font-weight:900; font-size:22px;}
+  .v2m .b{background:#FFF8F1; border:1.5px solid #F28C28; border-radius:12px; padding:10px 18px;} .v2m .b b{font-size:18px; color:#16233A; display:block;} .v2m .b small{font-size:14px; color:#6B7785;}
   .v2tile b{font-size:21px; color:#16233A;} .v2tile span{font-size:15px; color:#6B7785; line-height:1.45;}
 """

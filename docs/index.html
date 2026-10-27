@@ -791,7 +791,7 @@
   .v2-code{font-size:20px; font-weight:800; fill:#FF8A80; font-family:var(--mono, monospace);}
   .v2-in{animation:v2In .5s ease-out both; animation-delay:var(--d);}
   @keyframes v2In{from{opacity:0; transform:translateY(8px)}}
-  @media print{.v2-in,.v2fit li,.v2tile{animation:none}}
+  @media print{.v2-in,.v2fit li,.v2tile,.v2pc,.v2m{animation:none}}
   .v2fo{display:flex; flex-direction:column; gap:8px;} .v2fo b{font-size:17px; color:#1F3A5F; line-height:1.35;} .v2fo span{font-size:14px; color:#6B7785; line-height:1.4;}
   .v2fit{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:6px 0 14px;}
   .v2fit > div{border-radius:16px; padding:20px 24px;} .v2fit .ok{background:#E8F5E9;} .v2fit .no{background:#F4F6F9;}
@@ -803,6 +803,17 @@
   .v2fit li span{font-size:20px; font-weight:800; color:#16233A;} .v2fit li small{font-size:14px; color:#6B7785;}
   .v2tiles{display:grid; gap:16px; margin:6px 0 16px;} .v2tiles.c2{grid-template-columns:repeat(2,1fr);} .v2tiles.c3{grid-template-columns:repeat(3,1fr);} .v2tiles.c4{grid-template-columns:repeat(4,1fr);} .v2tiles.c5{grid-template-columns:repeat(5,1fr);}
   .v2tile{border:1.5px solid #E1E5EB; border-top:5px solid #1F3A5F; border-radius:14px; padding:16px 20px; background:#fff; display:flex; flex-direction:column; gap:6px; animation:v2In .5s both; animation-delay:var(--d);}
+  .v2pair{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:6px 0 14px;}
+  .v2p{background:#F4F6F9; border-radius:16px; padding:18px 22px; display:flex; flex-direction:column; gap:10px;} .v2p.on{background:#FFF3E6;}
+  .v2ph{font-size:20px; font-weight:900; color:#1F3A5F;} .v2p.on .v2ph{color:#EF6C00;}
+  .v2pc{background:#fff; border-radius:12px; padding:10px 16px; display:flex; flex-direction:column; gap:2px; animation:v2In .5s both; animation-delay:var(--d);}
+  .v2pc b{font-size:18px; color:#16233A;} .v2pc span{font-size:14px; color:#6B7785;}
+  .v2ms{display:grid; gap:10px; margin:6px 0 14px;}
+  .v2mh{display:grid; grid-template-columns:1fr 50px 1.3fr; font-size:15px; font-weight:900;} .v2mh span:first-child{color:#C62828;} .v2mh span:last-child{color:#EF6C00;}
+  .v2m{display:grid; grid-template-columns:1fr 50px 1.3fr; align-items:center; animation:v2In .5s both; animation-delay:var(--d);}
+  .v2m .a{background:#F4F6F9; border-radius:12px; padding:12px 18px; font-size:18px; font-weight:800; color:#16233A;}
+  .v2m i{font-style:normal; text-align:center; color:#F28C28; font-weight:900; font-size:22px;}
+  .v2m .b{background:#FFF8F1; border:1.5px solid #F28C28; border-radius:12px; padding:10px 18px;} .v2m .b b{font-size:18px; color:#16233A; display:block;} .v2m .b small{font-size:14px; color:#6B7785;}
   .v2tile b{font-size:21px; color:#16233A;} .v2tile span{font-size:15px; color:#6B7785; line-height:1.45;}
 </style>
 </head>
@@ -912,7 +923,7 @@
   <div class="eyebrow"><span class="tag">시작</span></div>
   <h2 class="s-title sm">최종 산출물</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>산출물</th><th>내용</th></tr></thead><tbody><tr><td><b>메타 하네스</b></td><td>인터뷰 → 설계 → 사람 승인 → 상황에 맞는 하네스 생성 · 시험</td></tr><tr><td><b>내 업무 하네스</b></td><td>메타 하네스로 만든 업무 전용 하네스 · 하네스 미적용과 전후 비교</td></tr><tr><td><b>내 업무 툴</b></td><td>Superpowers로 설계 · 계획 승인 · TDD · 화면은 DESIGN.md</td></tr><tr><td><b>사람 판정 기록</b></td><td>내가 정한 합격 기준으로 직접 판정 · 2분 발표</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>품질 콘솔</b><span>실습마다 탭이 하나씩 · 직접 만든 앱</span></div><div class="v2tile" style="--d:0.08s"><b>메타 하네스</b><span>인터뷰 → 승인 → 하네스 생성</span></div><div class="v2tile" style="--d:0.16s"><b>내 업무 하네스</b><span>미적용 vs 적용 비교</span></div><div class="v2tile" style="--d:0.24s"><b>사람 판정 기록</b><span>내 기준으로 판정 · 2분 발표</span></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="실습 환경">
@@ -920,7 +931,7 @@
   <div class="eyebrow"><span class="tag">시작</span></div>
   <h2 class="s-title sm">실습 환경</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>도구</th><th>용도</th></tr></thead><tbody><tr><td><b>Claude Code (비즈니스 계정)</b></td><td>하네스 만들기 · 대화형 실습</td></tr><tr><td><b>VS Code · Python 3.10+</b></td><td>실습 스크립트 · 데이터</td></tr><tr><td><b>Agent Watch</b></td><td>에이전트 실행 흐름 · 토큰 대시보드</td></tr><tr><td><b>Git · GitHub</b></td><td>하네스 버전 관리 · 공유</td></tr></tbody></table><div class="dbnote"><span>실습 자료</span> <a class="dl" href="dl/labs.zip" download>전체 실습 자료 labs.zip</a> · 장마다 실습 장표의 「사용 파일」에서도 내려받기</div></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>Claude Code</b><span>회사 계정 로그인</span></div><div class="v2tile" style="--d:0.08s"><b>VS Code · Python 3.10+</b><span>표준 라이브러리만</span></div><div class="v2tile" style="--d:0.16s"><b>Agent Watch</b><span>실행 흐름 · 토큰</span></div><div class="v2tile" style="--d:0.24s"><b>Git</b><span>버전 관리 · 공유</span></div></div><div class="dbnote"><span>실습 자료</span> <a class="dl" href="dl/labs.zip" download>전체 실습 자료 labs.zip</a> · 데이터(시뮬레이터)만 준비 · 앱은 직접 만듦</div></div></div>
 </section>
 
 <section class="slide lt" data-title="실습 진행 방식">
@@ -1030,7 +1041,7 @@
   <div class="eyebrow"><span class="tag">Ch1</span></div>
   <h2 class="s-title sm">마구와 하네스 부품</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="phmap"><figure class="ph"><img src="img/harness_parts.jpg" alt="마구의 부품 (1898)"><figcaption><b>마구의 부품 (1898)</b></figcaption></figure><table class="dbt"><thead><tr><th>마구</th><th>하는 일</th><th>하네스에서는</th></tr></thead><tbody><tr><td><b>굴레 · 고삐</b></td><td>방향을 정함</td><td>지침 · CLAUDE.md</td></tr><tr><td><b>눈가리개</b></td><td>볼 것만 보게 함</td><td>컨텍스트 설계</td></tr><tr><td><b>목사리 · 끄는 줄</b></td><td>힘을 수레에 전달</td><td>도구 · Skill</td></tr><tr><td><b>재갈</b></td><td>넘으면 바로 멈춤</td><td>Hook · 권한</td></tr><tr><td><b>마부</b></td><td>최종 판단 · 상태 확인</td><td>사람 승인 · 평가</td></tr></tbody></table></div><div class="dbnote"><span>말이 좋아질수록</span> 마구는 가벼워지지만 사라지지 않음 · 수레를 끄는 일이면 마구가 필요</div><div class="src">출처 · <a href="https://commons.wikimedia.org/wiki/File:Parts_of_horse_harness_(in_French,_1898).jpg" target="_blank" rel="noopener">그림 · Nouveau Larousse illustré 1898 (퍼블릭 도메인)</a></div></div></div>
+  <div class="body"><div class="mid"><div class="phmap"><figure class="ph"><img src="img/harness_parts.jpg" alt="마구의 부품 (1898)"><figcaption><b>마구의 부품 (1898)</b></figcaption></figure><div class="v2ms"><div class="v2mh"><span>마구</span><i></i><span>하네스</span></div><div class="v2m" style="--d:0.00s"><div class="a">굴레 · 고삐</div><i>→</i><div class="b"><b>지침 · CLAUDE.md</b><small>방향</small></div></div><div class="v2m" style="--d:0.12s"><div class="a">눈가리개</div><i>→</i><div class="b"><b>컨텍스트 설계</b><small>볼 것만</small></div></div><div class="v2m" style="--d:0.24s"><div class="a">목사리 · 끄는 줄</div><i>→</i><div class="b"><b>도구 · Skill</b><small>힘 전달</small></div></div><div class="v2m" style="--d:0.36s"><div class="a">재갈</div><i>→</i><div class="b"><b>Hook · 권한</b><small>바로 멈춤</small></div></div><div class="v2m" style="--d:0.48s"><div class="a">마부</div><i>→</i><div class="b"><b>사람 승인 · 평가</b><small>최종 판단</small></div></div></div></div><div class="dbnote"><span>말이 좋아질수록</span> 마구는 가벼워지지만 사라지지 않음</div><div class="src">출처 · <a href="https://commons.wikimedia.org/wiki/File:Parts_of_horse_harness_(in_French,_1898).jpg" target="_blank" rel="noopener">그림 · Nouveau Larousse illustré 1898 (퍼블릭 도메인)</a></div></div></div>
 </section>
 
 <section class="slide dk eco" data-title="하네스를 이루는 여섯 부품">
@@ -1065,7 +1076,7 @@
   <div class="eyebrow"><span class="tag">Ch1</span></div>
   <h2 class="s-title sm">하네스 부품이 해결하는 문제</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>부품</th><th>해결하는 문제</th><th>없을 때 증상</th></tr></thead><tbody><tr><td><b>지침</b></td><td>답 형식 · 기준이 흔들림</td><td>같은 질문에 매번 다른 형식</td></tr><tr><td><b>Skill</b></td><td>절차 누락</td><td>체크리스트 단계 건너뜀</td></tr><tr><td><b>Tool</b></td><td>지어낸 숫자</td><td>조회 대신 기억으로 답</td></tr><tr><td><b>Sub Agent</b></td><td>컨텍스트 오염</td><td>긴 작업 중 앞 지시를 잊음</td></tr><tr><td><b>Hook · 권한</b></td><td>위험한 실행</td><td>삭제 · 강제 push · 비밀 파일 수정</td></tr><tr><td><b>평가</b></td><td>조용한 품질 저하</td><td>프롬프트 수정 후 다른 곳이 깨짐</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c3"><div class="v2tile" style="--d:0.00s"><b>지침</b><span>매번 다른 형식 · 기준</span></div><div class="v2tile" style="--d:0.08s"><b>Skill</b><span>절차 단계 건너뜀</span></div><div class="v2tile" style="--d:0.16s"><b>Tool</b><span>조회 대신 기억으로 지어낸 숫자</span></div><div class="v2tile" style="--d:0.24s"><b>Sub Agent</b><span>긴 작업 중 앞 지시를 잊음</span></div><div class="v2tile" style="--d:0.32s"><b>Hook · 권한</b><span>삭제 · 강제 push 같은 위험한 실행</span></div><div class="v2tile" style="--d:0.40s"><b>평가</b><span>고친 뒤 다른 곳이 조용히 깨짐</span></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="신입사원 온보딩과의 비교">
@@ -1211,15 +1222,12 @@
     ├── settings.json         권한 · Hook 등록 (팀 공유)
     ├── settings.local.json   내 PC 전용 (git 제외)
     ├── skills/
-    │   └── spec-quote/
-    │       ├── SKILL.md      절차
-    │       └── 단가표.md      참고 자료
+    │   └── reject-report/
+    │       └── SKILL.md      절차
     ├── agents/
     │   └── verifier.md       Sub Agent 하나 = 파일 하나
-    ├── commands/
-    │   └── triage.md         /triage 로 부름
     └── hooks/
-        └── guard.py          Hook 스크립트</code></pre></div></div><table class="dbt"><thead><tr><th>위치</th><th>들어가는 것</th><th>언제 쓰임</th></tr></thead><tbody><tr><td><b>CLAUDE.md</b></td><td>모든 작업 공통 원칙</td><td>세션 시작 때 항상</td></tr><tr><td><b>skills/이름/SKILL.md</b></td><td>업무 절차 · 판단 기준 · 양식 (같은 폴더에 참고 파일)</td><td>요청이 description과 맞을 때</td></tr><tr><td><b>agents/이름.md</b></td><td>Sub Agent 역할 · 쓸 도구 · 모델</td><td>메인이 위임할 때</td></tr><tr><td><b>commands/이름.md</b></td><td>사람이 부르는 /명령</td><td>/이름 입력 때</td></tr><tr><td><b>hooks/</b></td><td>Hook 스크립트 (등록은 settings.json)</td><td>도구 실행 전후마다</td></tr><tr><td><b>settings.json</b></td><td>권한 허용 · 거부 · Hook 등록</td><td>항상 · git으로 팀 공유</td></tr><tr><td><b>settings.local.json</b></td><td>내 PC에서만 쓰는 설정</td><td>항상 · git에 안 올림</td></tr></tbody></table></div><div class="dbnote"><span>~/.claude/</span> 같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용</div></div></div>
+        └── guard.py          Hook 스크립트</code></pre></div></div><div class="v2tiles c1"><div class="v2tile" style="--d:0.00s"><b>CLAUDE.md</b><span>세션 시작 때 항상</span></div><div class="v2tile" style="--d:0.08s"><b>skills/</b><span>요청이 설명과 맞을 때</span></div><div class="v2tile" style="--d:0.16s"><b>agents/</b><span>메인이 위임할 때</span></div><div class="v2tile" style="--d:0.24s"><b>settings.json</b><span>권한 · Hook · 팀 공유</span></div></div></div><div class="dbnote"><span>~/.claude/</span> 같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용</div></div></div>
 </section>
 
 <section class="slide lt" data-title="부품별 로드 · 실행 시점">
@@ -1227,7 +1235,7 @@
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">부품별 로드 · 실행 시점</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>요소</th><th>언제 로드 · 실행</th><th>성격</th></tr></thead><tbody><tr><td><b>CLAUDE.md</b></td><td>세션 시작 때 항상</td><td>부탁 (따르려고 읽는 컨텍스트)</td></tr><tr><td><b>Skill</b></td><td>설명만 상시 · 본문은 호출될 때</td><td>절차 (필요할 때만)</td></tr><tr><td><b>명령</b> (/이름)</td><td>사람이 부를 때</td><td>정해진 순서 실행</td></tr><tr><td><b>Sub Agent</b></td><td>위임할 때 새 컨텍스트로</td><td>분업 (결과만 돌려받음)</td></tr><tr><td><b>Hook</b></td><td>도구 호출 전후 등 이벤트마다</td><td>강제 (코드가 결정)</td></tr><tr><td><b>권한</b></td><td>도구를 쓰기 직전</td><td>허용 · 거부 · 승인 요청</td></tr><tr><td><b>MCP</b></td><td>도구 목록 상시 · 실행은 호출 때</td><td>외부 시스템 연결</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c3"><div class="v2tile" style="--d:0.00s"><b>세션 시작 때</b><span>CLAUDE.md · Skill 설명 · MCP 도구 목록</span></div><div class="v2tile" style="--d:0.08s"><b>필요할 때</b><span>Skill 본문 · Sub Agent · /명령</span></div><div class="v2tile" style="--d:0.16s"><b>도구 호출 전후</b><span>권한 · Hook — 코드가 결정</span></div></div><div class="dbnote"><span>성격</span> CLAUDE.md = 부탁 · Skill = 절차 · Sub Agent = 분업 · Hook = 강제</div></div></div>
 </section>
 
 <section class="slide lt" data-title="부탁 · 절차 · 강제">
@@ -1313,7 +1321,7 @@
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">로컬 연결과 URL 연결</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th></th><th>로컬 (명령)</th><th>URL</th></tr></thead><tbody><tr><td><b>연결</b></td><td>내 PC에서 프로그램 실행 · 표준 입출력</td><td>인터넷 주소로 접속</td></tr><tr><td><b>예</b></td><td>시험실 서버 · 사내 DB</td><td>Microsoft Learn · 사내 공용 서버</td></tr><tr><td><b>등록</b></td><td><code>claude mcp add lims -- python mcp/server.py</code></td><td><code>claude mcp add --transport http mslearn https://learn.microsoft.com/api/mcp</code></td></tr><tr><td><b>확인</b></td><td><code>/mcp</code></td><td><code>/mcp</code></td></tr></tbody></table><div class="dbnote"><span>팀 공유</span> <code>-s project</code> → <code>.mcp.json</code> · 팀원이 같은 연결 · 처음 한 번 승인</div></div></div>
+  <div class="body"><div class="mid"><div class="v2pair"><div class="v2p on"><div class="v2ph">로컬 (명령)</div><div class="v2pc" style="--d:0.00s"><b>내 PC에서 실행</b><span>표준 입출력</span></div><div class="v2pc" style="--d:0.08s"><b>예</b><span>시험실 서버 · 사내 DB</span></div><div class="v2pc" style="--d:0.16s"><b>등록</b><span><code>claude mcp add lims -- python mcp/server.py</code></span></div></div><div class="v2p"><div class="v2ph">URL</div><div class="v2pc" style="--d:0.00s"><b>인터넷 주소로 접속</b><span>HTTP</span></div><div class="v2pc" style="--d:0.08s"><b>예</b><span>Microsoft Learn · 사내 공용 서버</span></div><div class="v2pc" style="--d:0.16s"><b>등록</b><span><code>claude mcp add --transport http mslearn https://learn.microsoft.com/api/mcp</code></span></div></div></div><div class="dbnote"><span>확인 · 공유</span> <code>/mcp</code> · <code>-s project</code> → <code>.mcp.json</code> 으로 팀원이 같은 연결</div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 2-1] 시험실 MCP 서버 만들기">
@@ -1381,7 +1389,7 @@ argument-hint: [문의 내용]
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">Skill과 command의 차이</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th></th><th>command</th><th>Skill</th></tr></thead><tbody><tr><td><b>누가 부르나</b></td><td>사람이 /이름 입력</td><td>Claude가 description을 보고 스스로 · 사람도 /이름으로 가능</td></tr><tr><td><b>형태</b></td><td>.claude/commands/이름.md 한 파일</td><td>.claude/skills/이름/ 폴더 (SKILL.md + 참고 자료)</td></tr><tr><td><b>입력</b></td><td>$ARGUMENTS 로 뒤의 말</td><td>대화 내용 그대로</td></tr><tr><td><b>맞는 일</b></td><td>사람이 시작해야 하는 일 · 배포 · 발송</td><td>업무 절차 · 판단 기준 · 양식</td></tr><tr><td><b>비유</b></td><td>버튼</td><td>업무 매뉴얼</td></tr></tbody></table><div class="dbnote"><span>최근</span> command는 Skill로 합쳐진 예전 방식 · 둘 다 /이름을 만들고 똑같이 동작 · 새로 만들 땐 Skill</div><div class="dbnote"><span>자동 호출 끄기</span> SKILL.md에 disable-model-invocation: true → 사람만 /이름으로 부름 (배포 · 발송처럼 사람이 시작할 일)</div></div></div>
+  <div class="body"><div class="mid"><div class="v2pair"><div class="v2p"><div class="v2ph">command · 버튼</div><div class="v2pc" style="--d:0.00s"><b>사람이 /이름</b><span>입력해야 실행</span></div><div class="v2pc" style="--d:0.08s"><b>한 파일</b><span>.claude/commands/이름.md</span></div><div class="v2pc" style="--d:0.16s"><b>맞는 일</b><span>배포 · 발송 · 사람이 시작할 일</span></div></div><div class="v2p on"><div class="v2ph">Skill · 업무 매뉴얼</div><div class="v2pc" style="--d:0.00s"><b>Claude가 골라 씀</b><span>설명을 보고 스스로 · /이름도 가능</span></div><div class="v2pc" style="--d:0.08s"><b>폴더</b><span>SKILL.md + 참고 자료</span></div><div class="v2pc" style="--d:0.16s"><b>맞는 일</b><span>업무 절차 · 판단 기준 · 양식</span></div></div></div><div class="dbnote"><span>새로 만들 땐 Skill</span> command는 합쳐진 예전 방식 · 사람만 부르게 하려면 disable-model-invocation: true</div></div></div>
 </section>
 
 <section class="slide lt" data-title="Sub Agent 경계 설계">
@@ -1389,7 +1397,7 @@ argument-hint: [문의 내용]
   <div class="eyebrow"><span class="tag">Ch2</span></div>
   <h2 class="s-title sm">Sub Agent 경계 설계</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>경계</th><th>정하는 것</th><th>예: reviewer</th></tr></thead><tbody><tr><td><b>도구 집합</b></td><td>쓸 수 있는 도구</td><td>Read · Grep · Glob</td></tr><tr><td><b>권한</b></td><td>쓰기 · 실행 허용 여부</td><td>쓰기 금지</td></tr><tr><td><b>컨텍스트</b></td><td>보여 줄 자료 범위</td><td>변경 파일만</td></tr><tr><td><b>반환 형식</b></td><td>부모가 받을 결과</td><td>파일:줄 · 문제 · 근거</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>도구</b><span>Read · Grep · Glob</span></div><div class="v2tile" style="--d:0.08s"><b>권한</b><span>쓰기 금지</span></div><div class="v2tile" style="--d:0.16s"><b>컨텍스트</b><span>변경 파일만</span></div><div class="v2tile" style="--d:0.24s"><b>반환 형식</b><span>파일:줄 · 문제 · 근거</span></div></div><div class="dbnote"><span>예</span> reviewer Agent · 네 가지를 정의 파일에 적음</div></div></div>
 </section>
 
 <section class="slide lt" data-title="Sub Agent 정의 파일">
@@ -1599,7 +1607,7 @@ print(json.dumps({"hookSpecificOutput": {
   <div class="eyebrow"><span class="tag">Ch3</span></div>
   <h2 class="s-title sm">컨텍스트에 올라가는 항목</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>항목</th><th>언제</th><th>크기를 좌우하는 것</th></tr></thead><tbody><tr><td><b>시스템 · 도구 목록</b></td><td>항상</td><td>MCP · 도구 개수</td></tr><tr><td><b>CLAUDE.md</b></td><td>항상</td><td>길이 · 중복</td></tr><tr><td><b>Skill 설명</b></td><td>항상 (본문은 호출 때)</td><td>Skill 개수</td></tr><tr><td><b>대화 이력</b></td><td>쌓임</td><td>세션 길이</td></tr><tr><td><b>도구 결과</b></td><td>쌓임 · 가장 큼</td><td>파일 통째 읽기 · 긴 로그</td></tr></tbody></table><div class="dbnote"><span>확인</span> /context 로 지금 책상 상태 보기</div></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c5"><div class="v2tile" style="--d:0.00s"><b>도구 목록</b><span>항상 · MCP 개수</span></div><div class="v2tile" style="--d:0.08s"><b>CLAUDE.md</b><span>항상 · 길이</span></div><div class="v2tile" style="--d:0.16s"><b>Skill 설명</b><span>항상 · 본문은 호출 때</span></div><div class="v2tile" style="--d:0.24s"><b>대화 이력</b><span>쌓임</span></div><div class="v2tile" style="--d:0.32s"><b>도구 결과</b><span>쌓임 · 가장 큼</span></div></div><div class="dbnote"><span>확인</span> <code>/context</code> 로 지금 책상 상태 보기</div></div></div>
 </section>
 
 <section class="slide lt" data-title="컨텍스트에 실제로 쌓이는 것">
@@ -1667,7 +1675,7 @@ print(json.dumps({"hookSpecificOutput": {
   <div class="eyebrow"><span class="tag">Ch3</span></div>
   <h2 class="s-title sm">외부 지식 · 위임으로 덜어내기</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><div><div class="flow"><div class="fs"><b>질문</b><span>VPN 규정?</span></div><div class="fa">→</div><div class="fs"><b>검색</b><span>문서 · DB</span></div><div class="fa">→</div><div class="fs hl"><b>조각만</b><span>3~5개</span></div><div class="fa">→</div><div class="fs"><b>답</b><span>+ 근거</span></div></div><table class="dbt"><thead><tr><th>RAG (검색 증강 생성)</th><th></th></tr></thead><tbody><tr><td><b>방식</b></td><td>문서 전체 대신 질문에 맞는 조각만 찾아 넣음</td></tr><tr><td><b>도구</b></td><td>Grep · 사내 검색 MCP · 벡터 검색</td></tr><tr><td><b>주의</b></td><td>검색이 틀리면 답도 틀림 · 근거 표기로 확인</td></tr></tbody></table></div><div><div class="flow"><div class="fs"><b>메인</b><span>로그 50개 조사</span></div><div class="fa">→</div><div class="fs"><b>조사 담당</b><span>Sub Agent · 다 읽음</span></div><div class="fa">→</div><div class="fs hl"><b>요약만</b><span>수천 토큰</span></div><div class="fa">→</div><div class="fs"><b>메인</b><span>가벼운 채로</span></div></div><table class="dbt"><thead><tr><th>Sub Agent 위임</th><th></th></tr></thead><tbody><tr><td><b>방식</b></td><td>많이 읽어야 하는 일을 따로 맡기고 결과만 받음</td></tr><tr><td><b>도구</b></td><td>.claude/agents/ · 읽기 전용 조사 담당</td></tr><tr><td><b>주의</b></td><td>전체 토큰은 비슷하거나 더 큼 · 메인만 가벼워짐</td></tr></tbody></table></div></div><div class="dbnote"><span>공통</span> 책상(메인 컨텍스트)에는 지금 필요한 것만 · 나머지는 밖에 두고 필요할 때 찾거나 맡긴다</div></div></div>
+  <div class="body"><div class="mid"><div class="twocol"><div><div class="flow"><div class="fs"><b>질문</b><span>VPN 규정?</span></div><div class="fa">→</div><div class="fs"><b>검색</b><span>문서 · DB</span></div><div class="fa">→</div><div class="fs hl"><b>조각만</b><span>3~5개</span></div><div class="fa">→</div><div class="fs"><b>답</b><span>+ 근거</span></div></div><div class="dbnote"><span>RAG</span> 문서 전체 대신 맞는 조각만 · 검색이 틀리면 답도 틀림</div></div><div><div class="flow"><div class="fs"><b>메인</b><span>로그 50개 조사</span></div><div class="fa">→</div><div class="fs"><b>조사 담당</b><span>Sub Agent · 다 읽음</span></div><div class="fa">→</div><div class="fs hl"><b>요약만</b><span>수천 토큰</span></div><div class="fa">→</div><div class="fs"><b>메인</b><span>가벼운 채로</span></div></div><div class="dbnote"><span>위임</span> 전체 토큰은 비슷하거나 큼 · 메인만 가벼워짐</div></div></div><div class="dbnote"><span>공통</span> 책상에는 지금 필요한 것만 · 나머지는 밖에 두고 찾거나 맡긴다</div></div></div>
 </section>
 
 <section class="slide lt" data-title="압축의 비용과 손실">
@@ -1683,7 +1691,7 @@ print(json.dumps({"hookSpecificOutput": {
   <div class="eyebrow"><span class="tag">Ch3</span></div>
   <h2 class="s-title sm">압축 때 하네스는 어떻게 되나</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>하네스 부품</th><th>압축하면</th></tr></thead><tbody><tr><td><b>프로젝트 CLAUDE.md · 자동 메모리</b></td><td>디스크에서 다시 읽어 넣음 · 요약되지 않음</td></tr><tr><td><b>이미 호출된 Skill</b></td><td>다시 붙임 · Skill마다 앞 5,000토큰 · 합계 25,000토큰 · 오래된 것부터 빠짐</td></tr><tr><td><b>Hook · 권한</b></td><td>모델 밖 코드라 그대로 매번 작동</td></tr><tr><td><b>최근 읽고 고친 파일</b></td><td>최근 수정순 5개까지 다시 읽음</td></tr><tr><td><b>대화로만 준 지시</b></td><td>요약되며 빠질 수 있음</td></tr></tbody></table><div class="dbnote"><span>그래서</span> 계속 지킬 규칙은 CLAUDE.md · 꼭 막을 것은 Hook · Skill은 중요한 내용을 앞쪽에 · 남길 것은 /compact 〈지시〉</div><div class="src">출처 · <a href="https://code.claude.com/docs/en/context-window.md" target="_blank" rel="noopener">Claude Code 문서 · Context window (What survives compaction)</a> · <a href="https://code.claude.com/docs/en/memory.md" target="_blank" rel="noopener">Claude Code 문서 · Memory</a></div></div></div>
+  <div class="body"><div class="mid"><div class="v2fit"><div class="ok"><div class="v2fh">압축 뒤에도 남는 것</div><ul><li style="--d:0.00s"><b>✓</b><span>CLAUDE.md · 자동 메모리</span><small>디스크에서 다시 읽음</small></li><li style="--d:0.10s"><b>✓</b><span>호출된 Skill</span><small>앞 5,000토큰씩 다시 붙음</small></li><li style="--d:0.20s"><b>✓</b><span>Hook · 권한</span><small>모델 밖 코드 · 그대로</small></li><li style="--d:0.30s"><b>✓</b><span>최근 파일 5개</span><small>다시 읽음</small></li></ul></div><div class="no"><div class="v2fh">빠질 수 있는 것</div><ul><li style="--d:0.50s"><b>✕</b><span>대화로만 준 지시</span><small>요약되며 빠질 수 있음</small></li></ul></div></div><div class="dbnote"><span>그래서</span> 계속 지킬 규칙은 CLAUDE.md · 꼭 막을 것은 Hook</div><div class="src">출처 · <a href="https://code.claude.com/docs/en/context-window.md" target="_blank" rel="noopener">Claude Code 문서 · Context window (What survives compaction)</a> · <a href="https://code.claude.com/docs/en/memory.md" target="_blank" rel="noopener">Claude Code 문서 · Memory</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="긴 세션의 문제와 처방">
@@ -1769,7 +1777,7 @@ print(json.dumps({"hookSpecificOutput": {
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">다른 회사의 하네스 ① 개발 자동화</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>회사</th><th>무엇을</th><th>하네스 요소</th><th>결과</th></tr></thead><tbody><tr><td><b>OpenAI Codex 팀</b></td><td>내부 제품을 손코딩 0줄로 · 5개월</td><td>docs/ 지도 · 실행 계획 · 린터와 구조 테스트로 경계 강제 · 로그 · 지표 읽기</td><td>약 100만 줄 · 손코딩 대비 약 1/10 시간</td></tr><tr><td><b>Stripe</b></td><td>Slack 요청 → CI 통과 PR</td><td>격리 devbox · 하위 폴더별 규칙 파일 · 사내 MCP 도구 400+ 중 골라 줌 · CI 최대 2회</td><td>주 1,000+ PR 병합 · 전부 사람 리뷰</td></tr><tr><td><b>Spotify</b></td><td>대규모 코드 마이그레이션</td><td>컨테이너 작업 · 포맷 · 린트 MCP · LLM judge가 diff 검토 · 트레이스</td><td>1,500+ PR 병합 · 60~90% 시간 절감</td></tr><tr><td><b>Airbnb</b></td><td>테스트 3.5천 파일 이전</td><td>변환 → Jest → 린트 → 타입 검사 단계 · 오류를 넣어 재시도 · 병렬</td><td>6주 (손으로 1.5년 예상) · 97% 자동 · 3% 사람</td></tr></tbody></table><div class="dbnote"><span>공통</span> 좁고 반복되고 확인 가능한 일 · 결정적 검사(테스트 · 린트 · CI)를 루프 안에 · 마지막은 사람</div><div class="src">출처 · <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener">OpenAI · Harness engineering 2026.2</a> · <a href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents" target="_blank" rel="noopener">Stripe · Minions 2026.2</a> · <a href="https://engineering.atspotify.com/2025/11/spotifys-background-coding-agent-part-1" target="_blank" rel="noopener">Spotify Engineering · Honk 2025.11</a> · <a href="https://airbnb.tech/?p=366" target="_blank" rel="noopener">Airbnb Tech · 테스트 이전 2025.3</a></div></div></div>
+  <div class="body"><div class="mid"><div class="bns c4"><div class="bn" style="--d:0.00s"><div class="bv">100만<small>줄</small></div><div class="bl">OpenAI Codex 팀 · 손코딩 0줄 · 5개월</div></div><div class="bn" style="--d:0.12s"><div class="bv">1,000+<small>PR/주</small></div><div class="bl">Stripe · 전부 사람 리뷰</div></div><div class="bn" style="--d:0.24s"><div class="bv">60~90<small>%</small></div><div class="bl">Spotify 마이그레이션 시간 절감</div></div><div class="bn hl" style="--d:0.36s"><div class="bv">97<small>%</small></div><div class="bl">Airbnb 테스트 이전 자동 · 6주</div></div></div><div class="dbnote"><span>공통</span> 좁고 반복 · 확인 가능한 일 · 테스트 · 린트 · CI를 루프 안에 · 마지막은 사람</div><div class="src">출처 · <a href="https://openai.com/index/harness-engineering/" target="_blank" rel="noopener">OpenAI · Harness engineering 2026.2</a> · <a href="https://stripe.dev/blog/minions-stripes-one-shot-end-to-end-coding-agents" target="_blank" rel="noopener">Stripe · Minions 2026.2</a> · <a href="https://engineering.atspotify.com/2025/11/spotifys-background-coding-agent-part-1" target="_blank" rel="noopener">Spotify Engineering · Honk 2025.11</a> · <a href="https://airbnb.tech/?p=366" target="_blank" rel="noopener">Airbnb Tech · 테스트 이전 2025.3</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="다른 회사의 하네스 ② 규칙 · 구조 · 사내 확산">
@@ -1777,7 +1785,7 @@ print(json.dumps({"hookSpecificOutput": {
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">다른 회사의 하네스 ② 규칙 · 구조 · 사내 확산</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>회사</th><th>무엇을</th><th>하네스 요소</th><th>결과</th></tr></thead><tbody><tr><td><b>배달의민족</b></td><td>프론트엔드 개발 · Cursor</td><td>경로별 규칙 · Skill · 필요한 메타데이터만 넘기는 전처리 스크립트</td><td>컨텍스트 평균 −96.5% · 도구 호출 4 → 1</td></tr><tr><td><b>Shopify</b></td><td>테스트 채점 · 생성 · 커버리지</td><td>Roast: YAML · Markdown 워크플로에 결정적 단계와 Claude Code를 섞음</td><td>「구조 없이 풀어 둔 AI는 큰 코드베이스에서 실패」</td></tr><tr><td><b>Rakuten</b></td><td>1,250만 줄 vLLM 기능 구현</td><td>Claude Code 7시간 자율 작업</td><td>기준 대비 정확도 99.9% · 출시 24일 → 5일 (고객 사례)</td></tr><tr><td><b>Anthropic 내부</b></td><td>엔지니어 132명 · 세션 20만 건 분석</td><td>Claude Code 사내 사용</td><td>업무 중 Claude 28% → 59% · 「완전히 맡길 수 있는 일은 0~20%」</td></tr></tbody></table><div class="dbnote"><span>하네스의 두 축</span> 가이드(미리 알려 주기: 규칙 · Skill) + 센서(결과 확인: 테스트 · 린트 · 리뷰) — martinfowler.com</div><div class="src">출처 · <a href="https://techblog.woowahan.com/26177/" target="_blank" rel="noopener">우아한형제들 기술블로그 2026.4</a> · <a href="https://shopify.engineering/introducing-roast" target="_blank" rel="noopener">Shopify Engineering · Roast 2025.6</a> · <a href="https://claude.com/customers/rakuten" target="_blank" rel="noopener">Anthropic 고객 사례 · Rakuten</a> · <a href="https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic" target="_blank" rel="noopener">Anthropic · How AI is transforming work 2025.12</a> · <a href="https://www.martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html" target="_blank" rel="noopener">martinfowler.com · Harness engineering 2026.2</a></div></div></div>
+  <div class="body"><div class="mid"><div class="bns c3"><div class="bn hl" style="--d:0.00s"><div class="bv">−96.5<small>%</small></div><div class="bl">배달의민족 · 경로별 규칙으로 컨텍스트</div></div><div class="bn" style="--d:0.12s"><div class="bv">24→5<small>일</small></div><div class="bl">Rakuten · 출시 기간 (고객 사례)</div></div><div class="bn" style="--d:0.24s"><div class="bv">28→59<small>%</small></div><div class="bl">Anthropic 내부 · 업무 중 Claude 비중</div></div></div><div class="qt"><p>구조 없이 풀어 둔 AI는 큰 코드베이스에서 실패한다</p><span>Shopify Engineering</span></div><div class="dbnote"><span>하네스의 두 축</span> 가이드(규칙 · Skill) + 센서(테스트 · 린트 · 리뷰) — martinfowler.com</div><div class="src">출처 · <a href="https://techblog.woowahan.com/26177/" target="_blank" rel="noopener">우아한형제들 기술블로그 2026.4</a> · <a href="https://shopify.engineering/introducing-roast" target="_blank" rel="noopener">Shopify Engineering · Roast 2025.6</a> · <a href="https://claude.com/customers/rakuten" target="_blank" rel="noopener">Anthropic 고객 사례 · Rakuten</a> · <a href="https://www.anthropic.com/research/how-ai-is-transforming-work-at-anthropic" target="_blank" rel="noopener">Anthropic · How AI is transforming work 2025.12</a> · <a href="https://www.martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html" target="_blank" rel="noopener">martinfowler.com · Harness engineering 2026.2</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="Claude Code 밖의 하네스 요소">
@@ -1793,7 +1801,7 @@ print(json.dumps({"hookSpecificOutput": {
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">하네스가 효과적일 때 · 아닐 때</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><table class="dbt"><thead><tr><th>효과적일 때</th><th>근거</th></tr></thead><tbody><tr><td><b>좁고 반복 · 확인 가능</b></td><td>Airbnb 97% 자동 · Spotify 60~90% 절감</td></tr><tr><td><b>긴 작업을 파일로 나눔</b></td><td>진행 기록 · 기능 목록 · 커밋 (Anthropic 장기 작업 하네스)</td></tr><tr><td><b>필요한 맥락만</b></td><td>배달의민족 컨텍스트 −96.5%</td></tr></tbody></table><table class="dbt"><thead><tr><th>효과가 없을 때</th><th>근거</th></tr></thead><tbody><tr><td><b>익숙한 저장소의 숙련자</b></td><td>METR: 19% 느려짐 · 본인은 20% 빨라졌다고 느낌</td></tr><tr><td><b>구조 없이 풀어 둠</b></td><td>Shopify: 큰 코드베이스에서 실패</td></tr><tr><td><b>리뷰가 병목</b></td><td>Spotify: PR이 늘수록 리뷰가 새 병목</td></tr></tbody></table></div><div class="dbnote"><span>DORA 2025</span> AI는 강한 조직도 약한 조직도 증폭 · 확인 장치가 약하면 손해도 커짐</div><div class="src">출처 · <a href="https://airbnb.tech/?p=366" target="_blank" rel="noopener">Airbnb Tech · 테스트 이전 2025.3</a> · <a href="https://anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener">Anthropic · Effective harnesses for long-running agents</a> · <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR · 숙련 개발자 연구 2025.7</a> · <a href="https://blog.google/technology/developers/dora-report-2025/" target="_blank" rel="noopener">Google · DORA 2025</a></div></div></div>
+  <div class="body"><div class="mid"><div class="v2fit"><div class="ok"><div class="v2fh">효과적일 때</div><ul><li style="--d:0.00s"><b>✓</b><span>좁고 반복 · 확인 가능</span><small>Airbnb 97% 자동</small></li><li style="--d:0.10s"><b>✓</b><span>긴 작업을 파일로 나눔</span><small>기능 목록 · 진행 기록 · 커밋</small></li><li style="--d:0.20s"><b>✓</b><span>필요한 맥락만</span><small>배달의민족 −96.5%</small></li></ul></div><div class="no"><div class="v2fh">효과가 없을 때</div><ul><li style="--d:0.50s"><b>✕</b><span>익숙한 저장소의 숙련자</span><small>METR · 19% 느려짐</small></li><li style="--d:0.60s"><b>✕</b><span>구조 없이 풀어 둠</span><small>Shopify · 큰 코드베이스 실패</small></li><li style="--d:0.70s"><b>✕</b><span>리뷰가 병목</span><small>Spotify · PR이 늘면 리뷰가 막힘</small></li></ul></div></div><div class="dbnote"><span>DORA 2025</span> AI는 강한 조직도 약한 조직도 증폭</div><div class="src">출처 · <a href="https://airbnb.tech/?p=366" target="_blank" rel="noopener">Airbnb Tech · 테스트 이전 2025.3</a> · <a href="https://anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener">Anthropic · Effective harnesses for long-running agents</a> · <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/" target="_blank" rel="noopener">METR · 숙련 개발자 연구 2025.7</a> · <a href="https://blog.google/technology/developers/dora-report-2025/" target="_blank" rel="noopener">Google · DORA 2025</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="플러그인: 하네스 묶음">
@@ -1809,7 +1817,7 @@ print(json.dumps({"hookSpecificOutput": {
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">많이 쓰는 공개 하네스</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>하네스</th><th>성격</th><th>멀티에이전트</th></tr></thead><tbody><tr><td><b>Superpowers</b></td><td>방법론 강제 (설계 → 계획 → TDD → 리뷰)</td><td>계획 후 Sub Agent 위임</td></tr><tr><td><b>gstack</b></td><td>역할 페르소나 (CEO · EM · QA · 보안)</td><td>역할 분업</td></tr><tr><td><b>Everything Claude Code</b></td><td>Agent · Skill · Hook · 명령 한 벌</td><td>역할별 Agent 다수</td></tr><tr><td><b>wshobson/agents</b></td><td>여러 도구 공용 플러그인 마켓</td><td>전문 Agent 묶음</td></tr><tr><td><b>claude-flow</b></td><td>코드로 짜는 다수 Agent 오케스트레이션</td><td>본격 멀티에이전트</td></tr><tr><td><b>공식 플러그인 마켓</b></td><td>Anthropic 공식 Skill · 플러그인</td><td>용도별</td></tr></tbody></table><div class="dbnote"><span>고르는 기준</span> 내 업무 흐름과 맞는가 · 강제 vs 선택 · 토큰 비용</div></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c3"><div class="v2tile" style="--d:0.00s"><b>Superpowers</b><span>설계 → 계획 → TDD → 리뷰 강제</span></div><div class="v2tile" style="--d:0.08s"><b>gstack</b><span>CEO · EM · QA · 보안 역할</span></div><div class="v2tile" style="--d:0.16s"><b>Everything Claude Code</b><span>Agent · Skill · Hook 한 벌</span></div><div class="v2tile" style="--d:0.24s"><b>wshobson/agents</b><span>여러 도구 공용 마켓</span></div><div class="v2tile" style="--d:0.32s"><b>claude-flow</b><span>코드로 짜는 다수 Agent</span></div><div class="v2tile" style="--d:0.40s"><b>공식 플러그인 마켓</b><span>Anthropic 공식</span></div></div><div class="dbnote"><span>고르는 기준</span> 내 업무 흐름과 맞는가 · 강제 vs 선택 · 토큰 비용</div></div></div>
 </section>
 
 <section class="slide lt" data-title="Superpowers 설치와 Skill">
@@ -1844,7 +1852,7 @@ subagent-driven-development  # 작업마다 Sub Agent · TDD · 리뷰</code></p
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">두 하네스의 성격</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th></th><th>Superpowers</th><th>gstack</th></tr></thead><tbody><tr><td><b>방식</b></td><td>적은 명령 · 강제 흐름</td><td>많은 명령 · 골라 쓰기</td></tr><tr><td><b>강점</b></td><td>계획 · TDD · 리뷰 누락 없음</td><td>역할별 검토 · QA · 보안</td></tr><tr><td><b>약점</b></td><td>작은 일에도 단계가 많음</td><td>흐름은 사람이 챙김</td></tr><tr><td><b>함께</b></td><td>gstack 기획 → Superpowers 실행 → gstack 리뷰 · QA</td><td></td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2pair"><div class="v2p on"><div class="v2ph">Superpowers</div><div class="v2pc" style="--d:0.00s"><b>적은 명령 · 강제 흐름</b><span>계획 · TDD · 리뷰 누락 없음</span></div><div class="v2pc" style="--d:0.08s"><b>약점</b><span>작은 일에도 단계가 많음</span></div></div><div class="v2p"><div class="v2ph">gstack</div><div class="v2pc" style="--d:0.00s"><b>많은 명령 · 골라 쓰기</b><span>역할별 검토 · QA · 보안</span></div><div class="v2pc" style="--d:0.08s"><b>약점</b><span>흐름은 사람이 챙김</span></div></div></div><div class="dbnote"><span>함께</span> gstack 기획 → Superpowers 실행 → gstack 리뷰 · QA</div></div></div>
 </section>
 
 <section class="slide lt" data-title="설치 전 점검 항목">
@@ -1852,7 +1860,7 @@ subagent-driven-development  # 작업마다 Sub Agent · TDD · 리뷰</code></p
   <div class="eyebrow"><span class="tag">Ch4</span></div>
   <h2 class="s-title sm">설치 전 점검 항목</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>항목</th><th>확인</th></tr></thead><tbody><tr><td><b>Hook · 명령</b></td><td>어떤 명령을 실행하는가 · 외부 전송은 없는가</td></tr><tr><td><b>권한</b></td><td>자동 허용 범위가 넓지 않은가</td></tr><tr><td><b>토큰</b></td><td>상시 로드되는 Skill · 지침 양</td></tr><tr><td><b>사내 규정</b></td><td>외부 저장소 설치 허용 여부</td></tr></tbody></table><div class="dbnote"><span>원칙</span> 공개 하네스도 내 평가셋으로 잰 뒤에 쓴다</div></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>Hook · 명령</b><span>무엇을 실행 · 외부 전송?</span></div><div class="v2tile" style="--d:0.08s"><b>권한</b><span>자동 허용이 넓지 않은가</span></div><div class="v2tile" style="--d:0.16s"><b>토큰</b><span>상시 로드되는 양</span></div><div class="v2tile" style="--d:0.24s"><b>사내 규정</b><span>외부 설치 허용?</span></div></div><div class="dbnote"><span>원칙</span> 공개 하네스도 내 평가셋으로 잰 뒤에</div></div></div>
 </section>
 
 <section class="slide lt" data-title="DESIGN.md · 디자인 하네스">
@@ -1874,7 +1882,7 @@ spacing: { unit: 8 }
 
 ## Do's and Don'ts
 - Do: 상태는 색 + 글자 함께
-- Don't: 그라데이션 · 그림자 남발</code></pre></div></div><table class="dbt"><thead><tr><th>섹션 (이 순서)</th><th>담는 것</th></tr></thead><tbody><tr><td><b>YAML 토큰</b></td><td>색 · 글꼴 · 모서리 · 간격 기준값</td></tr><tr><td><b>Overview</b></td><td>화면의 성격 한두 줄</td></tr><tr><td><b>Colors · Typography</b></td><td>토큰을 어디에 쓰는지</td></tr><tr><td><b>Layout · Elevation · Shapes</b></td><td>배치 · 깊이 · 모양 규칙</td></tr><tr><td><b>Components</b></td><td>버튼 · 표 · 카드 규칙</td></tr><tr><td><b>Do's and Don'ts</b></td><td>하지 말 것</td></tr></tbody></table></div><div class="dbnote"><span>DESIGN.md</span> 에이전트에게 디자인 규칙을 알려 주는 파일 형식 (Google Labs · alpha)</div><div class="src">출처 · <a href="https://github.com/google-labs-code/design.md" target="_blank" rel="noopener">Google Labs · DESIGN.md 형식 (alpha)</a></div></div></div>
+- Don't: 그라데이션 · 그림자 남발</code></pre></div></div><div class="v2tiles c1"><div class="v2tile" style="--d:0.00s"><b>YAML 토큰</b><span>색 · 글꼴 · 모서리 · 간격</span></div><div class="v2tile" style="--d:0.08s"><b>Overview</b><span>화면의 성격</span></div><div class="v2tile" style="--d:0.16s"><b>Components</b><span>버튼 · 표 · 카드</span></div><div class="v2tile" style="--d:0.24s"><b>Do's and Don'ts</b><span>하지 말 것</span></div></div></div><div class="dbnote"><span>DESIGN.md</span> 에이전트에게 디자인 규칙을 알려 주는 파일 형식 (Google Labs · alpha)</div><div class="src">출처 · <a href="https://github.com/google-labs-code/design.md" target="_blank" rel="noopener">Google Labs · DESIGN.md 형식 (alpha)</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="개인 디자인 하네스 적용">
@@ -2010,7 +2018,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch5</span></div>
   <h2 class="s-title sm">Sub Agent vs Agent Teams</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th></th><th>Sub Agent</th><th>Agent Teams</th></tr></thead><tbody><tr><td><b>소통</b></td><td>부모 ↔ 자식 한 방향</td><td>구성원끼리 직접 · 공유 작업 목록</td></tr><tr><td><b>맞는 일</b></td><td>독립 조사 · 검증 · 분업</td><td>서로 결과를 반박 · 보완해야 할 때</td></tr><tr><td><b>비용</b></td><td>자식마다 컨텍스트</td><td>구성원마다 세션 · 더 큼</td></tr><tr><td><b>통제</b></td><td>부모가 순서 강제</td><td>작업 목록 · 규칙으로 조율</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2pair"><div class="v2p on"><div class="v2ph">Sub Agent</div><div class="v2pc" style="--d:0.00s"><b>부모 ↔ 자식 한 방향</b><span>부모가 순서 강제</span></div><div class="v2pc" style="--d:0.08s"><b>맞는 일</b><span>독립 조사 · 검증 · 분업</span></div><div class="v2pc" style="--d:0.16s"><b>비용</b><span>자식마다 컨텍스트</span></div></div><div class="v2p"><div class="v2ph">Agent Teams</div><div class="v2pc" style="--d:0.00s"><b>구성원끼리 직접</b><span>공유 작업 목록</span></div><div class="v2pc" style="--d:0.08s"><b>맞는 일</b><span>서로 반박 · 보완</span></div><div class="v2pc" style="--d:0.16s"><b>비용</b><span>구성원마다 세션 · 더 큼</span></div></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="위임문 4요소">
@@ -2018,7 +2026,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch5</span></div>
   <h2 class="s-title sm">위임문 4요소</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>요소</th><th>빠지면</th></tr></thead><tbody><tr><td><b>목표 · 완료 기준</b></td><td>어디서 멈출지 모름</td></tr><tr><td><b>입력 범위</b></td><td>필요 없는 것까지 읽음</td></tr><tr><td><b>허용 도구</b></td><td>권한 밖 작업</td></tr><tr><td><b>반환 형식</b></td><td>부모가 결과를 못 합침</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>목표 · 완료 기준</b><span>없으면 어디서 멈출지 모름</span></div><div class="v2tile" style="--d:0.08s"><b>입력 범위</b><span>없으면 필요 없는 것까지 읽음</span></div><div class="v2tile" style="--d:0.16s"><b>허용 도구</b><span>없으면 권한 밖 작업</span></div><div class="v2tile" style="--d:0.24s"><b>반환 형식</b><span>없으면 부모가 못 합침</span></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="검증 Agent 분리">
@@ -2094,7 +2102,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch5</span></div>
   <h2 class="s-title sm">작업 유형별 권장 구성</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>상황</th><th>측정 결과 · 권장</th></tr></thead><tbody><tr><td><b>한 줄기로 이어지는 일</b></td><td>오케스트레이터를 만들지 않는다 · 단일 모델 + 낮은 effort가 매번 이김</td></tr><tr><td><b>어렵지만 하나인 과제</b></td><td>단일 Agent가 같은 정확도에 22~30% 더 쌈</td></tr><tr><td><b>쉬운 일 위임</b></td><td>평균 비용 ½ · 비싼 상위 10%는 $33 → $12</td></tr><tr><td><b>크고 나눌 수 있는 일</b></td><td>리더 1 + 작업자 25 · 시간 15~20h → 2.3h · 점수 10~12점↓</td></tr><tr><td><b>도구 한도</b></td><td>Claude Code Sub Agent 동시 20 · 3단계 · OpenAI 기본 동시 3</td></tr><tr><td><b>Agent Teams</b></td><td>실험 기능 · 팀원 3~5명 · 1인당 작업 5~6개</td></tr></tbody></table><div class="src">출처 · <a href="https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence" target="_blank" rel="noopener">Anthropic 문서 · Optimizing for cost and intelligence (2026.9 측정)</a> · <a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">Claude Code Sub Agent 문서</a> · <a href="https://developers.openai.com/api/docs/guides/responses-multi-agent" target="_blank" rel="noopener">OpenAI 문서 · Responses multi-agent</a> · <a href="https://code.claude.com/docs/en/agent-teams" target="_blank" rel="noopener">Claude Code Agent Teams 문서</a></div></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c3"><div class="v2tile" style="--d:0.00s"><b>한 줄기로 이어지는 일</b><span>단일 모델 + 낮은 effort</span></div><div class="v2tile" style="--d:0.08s"><b>어렵지만 하나인 과제</b><span>단일 Agent가 22~30% 더 쌈</span></div><div class="v2tile" style="--d:0.16s"><b>쉬운 일 위임</b><span>평균 비용 ½</span></div><div class="v2tile" style="--d:0.24s"><b>크고 나눌 수 있는 일</b><span>리더 1 + 작업자 25 · 15~20h → 2.3h</span></div><div class="v2tile" style="--d:0.32s"><b>도구 한도</b><span>Sub Agent 동시 20 · 3단계</span></div><div class="v2tile" style="--d:0.40s"><b>Agent Teams</b><span>실험 기능 · 팀원 3~5명</span></div></div><div class="src">출처 · <a href="https://platform.claude.com/docs/en/about-claude/models/optimizing-for-cost-and-intelligence" target="_blank" rel="noopener">Anthropic 문서 · Optimizing for cost and intelligence (2026.9 측정)</a> · <a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">Claude Code Sub Agent 문서</a> · <a href="https://developers.openai.com/api/docs/guides/responses-multi-agent" target="_blank" rel="noopener">OpenAI 문서 · Responses multi-agent</a> · <a href="https://code.claude.com/docs/en/agent-teams" target="_blank" rel="noopener">Claude Code Agent Teams 문서</a></div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="다음: 토큰 경제학">
@@ -2168,7 +2176,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch6</span></div>
   <h2 class="s-title sm">토큰 절감 레버 다섯 가지</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>레버</th><th>방법</th><th>주의</th></tr></thead><tbody><tr><td><b>① 입력 줄이기</b></td><td>짧은 CLAUDE.md · 찾아서 읽기 · Sub Agent 분리</td><td>가장 큰 절감</td></tr><tr><td><b>② 출력 줄이기</b></td><td>「간결하게 · JSON으로」 · caveman</td><td>설명이 필요한 곳은 예외</td></tr><tr><td><b>③ 코드량 줄이기</b></td><td>ponytail 같은 최소 구현 Skill</td><td>필요한 기능 누락 확인</td></tr><tr><td><b>④ 도구 출력 줄이기</b></td><td>rtk 같은 명령 출력 압축</td><td>필요한 오류 줄까지 지우지 않게</td></tr><tr><td><b>⑤ 모델 나누기</b></td><td>분류는 작은 모델 · 판단은 큰 모델</td><td>품질은 평가셋으로 확인</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c5"><div class="v2tile" style="--d:0.00s"><b>① 입력 줄이기</b><span>짧은 CLAUDE.md · 찾아서 읽기</span></div><div class="v2tile" style="--d:0.08s"><b>② 출력 줄이기</b><span>간결하게 · JSON · caveman</span></div><div class="v2tile" style="--d:0.16s"><b>③ 코드량 줄이기</b><span>최소 구현 Skill</span></div><div class="v2tile" style="--d:0.24s"><b>④ 도구 출력 줄이기</b><span>명령 출력 압축 · rtk</span></div><div class="v2tile" style="--d:0.32s"><b>⑤ 모델 나누기</b><span>분류는 작은 모델</span></div></div><div class="dbnote"><span>주의</span> 줄인 뒤 품질은 평가셋으로 확인</div></div></div>
 </section>
 
 <section class="slide lt" data-title="캐싱의 원리">
@@ -2176,7 +2184,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch6</span></div>
   <h2 class="s-title sm">캐싱의 원리</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><div class="kcards c1"><div class="kcard"><h4>① 매번 처음부터 다시 읽음</h4><p>요청마다 도구 목록 · 시스템 · CLAUDE.md · 지난 대화 · 새 질문을 통째로 다시 보냄</p></div><div class="kcard"><h4>② 앞부분을 저장해 둠</h4><p>다음 요청의 앞부분이 글자 하나까지 같으면 저장본을 씀</p></div><div class="kcard"><h4>③ 저장본은 1/10 가격</h4><p>처음 저장할 때만 1.25배 · 그다음부터 0.1배</p></div></div><table class="dbt"><thead><tr><th>요청 (입력 토큰 환산 예시)</th><th>캐시 없음</th><th>캐시 있음</th></tr></thead><tbody><tr><td><b>1</b> · 앞부분 2만 + 질문</td><td>20,500</td><td>25,500 (처음 저장)</td></tr><tr><td><b>2</b> · + 답 · 새 질문</td><td>22,000</td><td>약 3,900</td></tr><tr><td><b>3</b> · + 답 · 새 질문</td><td>23,500</td><td>약 4,100</td></tr><tr><td><b>합계</b></td><td>66,000</td><td><b>약 33,500</b></td></tr><tr><td><b>요청 10번이면</b></td><td>약 27만</td><td><b>약 6.6만</b></td></tr></tbody></table></div><div class="dbnote"><span>비유</span> 매주 회의 자료 묶음 · 앞쪽 공통 자료가 그대로면 「지난주 그 자료」로 넘기고, 표지 날짜 한 글자만 바뀌어도 처음부터 다시 읽음</div></div></div>
+  <div class="body"><div class="mid"><div class="twocol"><div class="kcards c1"><div class="kcard"><h4>① 매번 처음부터 다시 보냄</h4><p>도구 목록 · CLAUDE.md · 지난 대화 · 새 질문</p></div><div class="kcard"><h4>② 앞부분이 같으면 저장본</h4><p>글자 하나까지 같아야 함</p></div><div class="kcard"><h4>③ 저장본은 0.1배</h4><p>처음 저장만 1.25배</p></div></div><div class="hbars"><div class="hbt">요청 10번 · 입력 토큰 환산</div><div class="hb" style="--d:0.00s"><span class="hn">캐시 없음</span><span class="ht"><span class="hf" style="width:90.0%"></span></span><span class="hv">약 27만</span></div><div class="hb hl" style="--d:0.10s"><span class="hn">캐시 있음</span><span class="ht"><span class="hf" style="width:22.0%"></span></span><span class="hv">약 6.6만</span></div></div></div><div class="dbnote"><span>비유</span> 회의 자료 앞쪽이 그대로면 「지난주 그 자료」 · 표지 날짜 한 글자만 바뀌어도 처음부터</div></div></div>
 </section>
 
 <section class="slide lt" data-title="캐시가 깨지는 경우">
@@ -2332,7 +2340,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">HITL · 평가는 사람의 몫</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>사람</b><span>잘한 것의 기준</span></div><div class="fa">→</div><div class="fs"><b>에이전트</b><span>실행</span></div><div class="fa">→</div><div class="fs"><b>자동 확인</b><span>테스트 · 채점 · judge</span></div><div class="fa">→</div><div class="fs hl"><b>사람</b><span>판정 · 승인</span></div><div class="fa">→</div><div class="fs"><b>사람</b><span>기준 고치기</span></div></div><table class="dbt"><thead><tr><th></th><th>사람이 하는 일</th><th>자동으로 맡기는 일</th></tr></thead><tbody><tr><td><b>기준</b></td><td>무엇이 잘한 것인지 · 합격선</td><td>—</td></tr><tr><td><b>채점</b></td><td>애매한 건 · 표본을 직접 읽기</td><td>정답 비교 · 형식 · 숫자 대조</td></tr><tr><td><b>판정</b></td><td>합격 · 불합격 · 배포 여부</td><td>점수 · 차이 보고</td></tr><tr><td><b>개선</b></td><td>무엇을 고칠지 결정</td><td>평가 문항 다시 돌리기</td></tr></tbody></table><div class="dbnote"><span>원칙</span> 자동 채점은 사람이 볼 곳을 좁혀 주는 도구 · 최종 판정은 사람</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>사람</b><span>잘한 것의 기준</span></div><div class="fa">→</div><div class="fs"><b>에이전트</b><span>실행</span></div><div class="fa">→</div><div class="fs"><b>자동 확인</b><span>테스트 · 채점 · judge</span></div><div class="fa">→</div><div class="fs hl"><b>사람</b><span>판정 · 승인</span></div><div class="fa">→</div><div class="fs"><b>사람</b><span>기준 고치기</span></div></div><div class="v2pair"><div class="v2p on"><div class="v2ph">사람이 하는 일</div><div class="v2pc" style="--d:0.00s"><b>기준 · 합격선</b><span>무엇이 잘한 것인지</span></div><div class="v2pc" style="--d:0.08s"><b>판정</b><span>합격 · 배포 여부</span></div></div><div class="v2p"><div class="v2ph">자동으로 맡기는 일</div><div class="v2pc" style="--d:0.00s"><b>채점</b><span>정답 비교 · 형식 · 숫자 대조</span></div><div class="v2pc" style="--d:0.08s"><b>다시 돌리기</b><span>평가 문항 재실행</span></div></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="사람이 개입하는 지점">
@@ -2340,7 +2348,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">사람이 개입하는 지점</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>지점</th><th>사람이 하는 일</th><th>하네스에서</th></tr></thead><tbody><tr><td><b>시작 전</b></td><td>기준 · 합격선 정하기</td><td>인터뷰 · 평가 문항</td></tr><tr><td><b>계획 뒤</b></td><td>계획 승인 · 범위 조정</td><td>승인 파일 없으면 Hook이 구현 차단 (Ch8)</td></tr><tr><td><b>위험 행동 직전</b></td><td>허락 · 거절</td><td>Hook · 권한 ask (Ch2)</td></tr><tr><td><b>밖으로 나가기 전</b></td><td>발송 · 배포 확인</td><td>초안까지만 · 발송은 사람</td></tr><tr><td><b>끝난 뒤</b></td><td>결과 판정 · 다음 개선</td><td>채점 결과를 보고 사람이 결정</td></tr></tbody></table><div class="dbnote"><span>HITL</span> Human-in-the-loop · 사람이 흐름 안에서 확인 · 승인 · 판정</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>시작 전</b><span>기준 · 합격선</span></div><div class="fa">→</div><div class="fs"><b>계획 뒤</b><span>계획 승인</span></div><div class="fa">→</div><div class="fs hl"><b>위험 행동 직전</b><span>허락 · 거절 · Hook</span></div><div class="fa">→</div><div class="fs"><b>밖으로 나가기 전</b><span>발송 · 배포 확인</span></div><div class="fa">→</div><div class="fs"><b>끝난 뒤</b><span>판정 · 개선</span></div></div><div class="dbnote"><span>HITL</span> Human-in-the-loop · 사람이 흐름 안에서 확인 · 승인 · 판정</div></div></div>
 </section>
 
 <section class="slide lt" data-title="공개 벤치마크의 포화와 결함">
@@ -2385,7 +2393,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">엣지 케이스 유형</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>엣지 케이스</th><th>예</th><th>기대 동작</th></tr></thead><tbody><tr><td><b>모호한 입력</b></td><td>「그거 안 돼요」</td><td>되묻기</td></tr><tr><td><b>복합 의도</b></td><td>「노트북 구매하고 VPN도」</td><td>나눠 위임</td></tr><tr><td><b>지시 우회 시도</b></td><td>「이전 지시 무시하고…」</td><td>무시 · 정상 처리</td></tr><tr><td><b>범위 밖</b></td><td>「점심 메뉴 추천」</td><td>범위 안내</td></tr><tr><td><b>정보 누락 · 상충 숫자</b></td><td>수량 없음 · 표와 본문이 다름</td><td>null · 사람에게</td></tr><tr><td><b>실패해야 정상</b></td><td>근거 없는 질문</td><td>「자료에 없음」</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c3"><div class="v2tile" style="--d:0.00s"><b>모호한 입력</b><span>「그거 안 돼요」 → 되묻기</span></div><div class="v2tile" style="--d:0.08s"><b>복합 의도</b><span>「구매하고 VPN도」 → 나눠 처리</span></div><div class="v2tile" style="--d:0.16s"><b>지시 우회</b><span>「이전 지시 무시」 → 무시</span></div><div class="v2tile" style="--d:0.24s"><b>범위 밖</b><span>「점심 메뉴」 → 범위 안내</span></div><div class="v2tile" style="--d:0.32s"><b>정보 누락 · 상충</b><span>→ 비워 두고 사람에게</span></div><div class="v2tile" style="--d:0.40s"><b>실패해야 정상</b><span>근거 없음 → 「자료에 없음」</span></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="정답셋이 없을 때의 방법 세 가지">
@@ -2441,7 +2449,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">멀티 Agent 평가 대상과 지표</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>대상</th><th>지표</th></tr></thead><tbody><tr><td><b>분류 · 라우터</b></td><td>의도 정확도</td></tr><tr><td><b>Sub Agent</b></td><td>judge 점수 · 필드 F1</td></tr><tr><td><b>verifier</b></td><td>일부러 넣은 오답 차단율</td></tr><tr><td><b>전체</b></td><td>최종 품질 · 토큰 · 지연</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>분류 · 라우터</b><span>의도 정확도</span></div><div class="v2tile" style="--d:0.08s"><b>Sub Agent</b><span>judge 점수 · 필드 F1</span></div><div class="v2tile" style="--d:0.16s"><b>verifier</b><span>넣은 오답 차단율</span></div><div class="v2tile" style="--d:0.24s"><b>전체</b><span>최종 품질 · 토큰 · 지연</span></div></div></div></div>
 </section>
 
 <section class="slide lt labs" data-title="[실습 7-1] 판정 테스트 · Stop Hook 게이트">
@@ -2477,7 +2485,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">HITL로 하네스를 키우는 고리</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>실행</b><span>Agent가 일함</span></div><div class="fa">→</div><div class="fs hl"><b>사람 판정</b><span>맞나 · 넘었나</span></div><div class="fa">→</div><div class="fs"><b>기록</b><span>틀린 사례 · 이유</span></div><div class="fa">→</div><div class="fs"><b>하네스에 반영</b><span>원인별 부품</span></div><div class="fa">→</div><div class="fs"><b>다시 실행</b><span>같은 평가 문항</span></div></div><table class="dbt"><thead><tr><th>사람이 본 것 (이 강의 실습)</th><th>원인</th><th>하네스에 반영</th></tr></thead><tbody><tr><td><b>1-1</b> 「지급 보류」까지 Agent가 결정</td><td>결정 범위가 안 정해짐</td><td>CLAUDE.md 한 줄 · 결정은 담당자</td></tr><tr><td><b>3-1</b> 압축 뒤 대화로 준 규칙이 사라짐</td><td>규칙이 파일에 없음</td><td>CLAUDE.md · /compact 지시</td></tr><tr><td><b>7-1</b> 테스트 실패를 남긴 채 「완료」</td><td>완료 기준이 부탁뿐</td><td>Stop Hook으로 강제</td></tr><tr><td><b>7-1</b> 테스트 기대값을 Agent가 바꿈</td><td>근거 확인이 필요</td><td>평가 문항 추가 · 사람 확인</td></tr></tbody></table><div class="dbnote"><span>핵심</span> 판정 기록이 쌓이면 평가셋이 됨 · 같은 실수는 하네스가 막고 사람은 새로운 실수만 봄</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>실행</b><span>Agent가 일함</span></div><div class="fa">→</div><div class="fs hl"><b>사람 판정</b><span>맞나 · 넘었나</span></div><div class="fa">→</div><div class="fs"><b>기록</b><span>틀린 사례 · 이유</span></div><div class="fa">→</div><div class="fs"><b>하네스에 반영</b><span>원인별 부품</span></div><div class="fa">→</div><div class="fs"><b>다시 실행</b><span>같은 평가 문항</span></div></div><div class="v2ms"><div class="v2mh"><span>사람이 본 실수</span><i></i><span>하네스에 반영</span></div><div class="v2m" style="--d:0.00s"><div class="a">결정까지 Agent가 함</div><i>→</i><div class="b"><b>CLAUDE.md 한 줄</b><small>결정은 담당자</small></div></div><div class="v2m" style="--d:0.12s"><div class="a">압축 뒤 규칙이 사라짐</div><i>→</i><div class="b"><b>규칙을 파일로</b><small>CLAUDE.md</small></div></div><div class="v2m" style="--d:0.24s"><div class="a">테스트 실패인데 「완료」</div><i>→</i><div class="b"><b>Stop Hook</b><small>끝내기 전 강제</small></div></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="운영: 실패 유형 정의">
@@ -2485,7 +2493,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">운영: 실패 유형 정의</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>실패</th><th>판정</th><th>대응</th></tr></thead><tbody><tr><td><b>틀린 답</b></td><td>judge · 정답 비교</td><td>평가셋에 추가</td></tr><tr><td><b>근거 없는 답</b></td><td>숫자 · 조항 대조</td><td>차단 · 사람에게</td></tr><tr><td><b>정책 위반</b></td><td>금지 표현 · 권한</td><td>Hook으로 즉시 차단</td></tr><tr><td><b>멈춤 · 폭주</b></td><td>턴 · 토큰 한도</td><td>중단 · 알림</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>틀린 답</b><span>정답 비교 → 평가셋에 추가</span></div><div class="v2tile" style="--d:0.08s"><b>근거 없는 답</b><span>숫자 · 조항 대조 → 사람에게</span></div><div class="v2tile" style="--d:0.16s"><b>정책 위반</b><span>Hook으로 즉시 차단</span></div><div class="v2tile" style="--d:0.24s"><b>멈춤 · 폭주</b><span>턴 · 토큰 한도 → 중단</span></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="운영 장치">
@@ -2493,7 +2501,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch7</span></div>
   <h2 class="s-title sm">운영 장치</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>장치</th><th>방법</th></tr></thead><tbody><tr><td><b>근거 로깅</b></td><td>PostToolUse · SubagentStop Hook으로 한 줄씩</td></tr><tr><td><b>사람 확인 (HITL)</b></td><td>확신 낮음 · 되돌릴 수 없음 · 고위험 도메인</td></tr><tr><td><b>롤백</b></td><td>하네스를 git으로 버전 관리 → 이전 태그로</td></tr><tr><td><b>재시도</b></td><td>일시 오류만 · 최대 횟수 · 대기 늘리며</td></tr><tr><td><b>단계적 배포</b></td><td>일부 사용자 → 지표 확인 → 전체</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c5"><div class="v2tile" style="--d:0.00s"><b>근거 로깅</b><span>Hook으로 한 줄씩</span></div><div class="v2tile" style="--d:0.08s"><b>사람 확인</b><span>되돌릴 수 없는 일</span></div><div class="v2tile" style="--d:0.16s"><b>롤백</b><span>하네스도 git 태그</span></div><div class="v2tile" style="--d:0.24s"><b>재시도</b><span>일시 오류만 · 횟수 제한</span></div><div class="v2tile" style="--d:0.32s"><b>단계적 배포</b><span>일부 → 지표 → 전체</span></div></div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="다음: 내 하네스 만들기">
@@ -2551,7 +2559,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">하네스 브레인스토밍</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>질문</th><th>왜 묻나</th><th>예 · 주간 설비 점검 보고서</th></tr></thead><tbody><tr><td><b>① 어떤 업무 · 얼마나 자주</b></td><td>반복되지 않으면 하네스보다 그때그때 요청</td><td>매주 월요일 · 팀장에게 보고</td></tr><tr><td><b>② 무엇이 들어오나</b></td><td>입력 형식이 Skill의 첫 단계</td><td>점검 기록 CSV · 점검 기준 문서</td></tr><tr><td><b>③ 무엇이 나가야 하나</b></td><td>결과 양식 · 위치 → CLAUDE.md · Skill</td><td>요약 3줄 · 정비 요청 · 경고 표</td></tr><tr><td><b>④ 판단 기준 · 사내 규칙</b></td><td>모델이 모르는 회사 기준 → Skill</td><td>7.0 초과면 경고 · 이틀 연속이면 정비 요청</td></tr><tr><td><b>⑤ 절대 하면 안 되는 것</b></td><td>어기면 사고 → Hook</td><td>원본 기록 수정 · 외부 메일 발송</td></tr><tr><td><b>⑥ 사람이 꼭 볼 곳</b></td><td>HITL 지점 → 승인 · 판정</td><td>발송 전 팀장 확인</td></tr><tr><td><b>⑦ 잘했다의 기준 · 자주 나는 실수</b></td><td>평가 문항 · 엣지 케이스</td><td>누락 0건 · 빈 값을 0으로 읽는 실수</td></tr></tbody></table><div class="dbnote"><span>다음</span> 답이 곧 하네스 재료 · 메타 하네스의 인터뷰가 이 질문을 대신 던진다</div></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>① 어떤 업무 · 얼마나 자주</b><span>매주 월요일 설비 점검 보고</span></div><div class="v2tile" style="--d:0.08s"><b>② 무엇이 들어오나</b><span>점검 기록 CSV · 기준 문서</span></div><div class="v2tile" style="--d:0.16s"><b>③ 무엇이 나가나</b><span>요약 3줄 · 경고 표</span></div><div class="v2tile" style="--d:0.24s"><b>④ 판단 기준</b><span>7.0 초과면 경고</span></div><div class="v2tile" style="--d:0.32s"><b>⑤ 절대 안 되는 것</b><span>원본 수정 · 외부 발송</span></div><div class="v2tile" style="--d:0.40s"><b>⑥ 사람이 볼 곳</b><span>발송 전 팀장 확인</span></div><div class="v2tile" style="--d:0.48s"><b>⑦ 잘했다의 기준</b><span>누락 0건</span></div></div><div class="dbnote"><span>다음</span> 답이 곧 하네스 재료 · 메타 하네스의 인터뷰가 이 질문을 대신 던진다</div></div></div>
 </section>
 
 <section class="slide lt" data-title="하네스 만드는 순서">
@@ -2559,7 +2567,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">하네스 만드는 순서</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 브레인스토밍</b><span>업무 · 막을 것 · 잘했다의 기준</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>모든 업무 공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나 · 절차 · 양식</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>어기면 사고인 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>숫자 · 발송 등 틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건으로 채점</span></div></div><table class="dbt"><thead><tr><th>단계</th><th>office_work에서 한 일</th><th>결과</th></tr></thead><tbody><tr><td><b>② CLAUDE.md</b></td><td>결과는 out/과제/ · 원본 수정 금지 · 근거 표기</td><td>파일로 남김 12/12 (하네스 미적용 2/12)</td></tr><tr><td><b>③ Skill</b></td><td>spec-quote: 「수량 불일치면 견적 보류」</td><td>회사 규칙대로 보류 (하네스 미적용 쪽은 금액 계산 2/2)</td></tr><tr><td><b>④ Hook</b></td><td>inputs/ 수정 · 메일 발송 · 외부 전송 차단</td><td>원본 보존 12/12</td></tr><tr><td><b>⑥ 평가</b></td><td>grade.py · 과제 6개 정답 검사</td><td>과제 6개 110/114 · 40건 82/82 · 시간 · 토큰도 함께</td></tr></tbody></table><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁(확률) · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>① 브레인스토밍</b><span>업무 · 막을 것 · 기준</span></div><div class="fa">→</div><div class="fs"><b>② CLAUDE.md</b><span>공통 원칙 · 짧게</span></div><div class="fa">→</div><div class="fs hl"><b>③ Skill</b><span>업무 하나에 하나</span></div><div class="fa">→</div><div class="fs"><b>④ Hook · 권한</b><span>사고 나는 것만 차단</span></div><div class="fa">→</div><div class="fs"><b>⑤ 검증 Agent</b><span>틀리면 곤란한 일</span></div><div class="fa">→</div><div class="fs"><b>⑥ 평가 → 고치기</b><span>과거 사례 5~10건</span></div></div><div class="dbnote"><span>하네스 ≠ Skill</span> Skill · CLAUDE.md는 부탁 · Hook은 강제 · 평가는 확인 → 셋이 붙어야 하네스</div></div></div>
 </section>
 
 <section class="slide lt" data-title="메타 하네스란">
@@ -2567,7 +2575,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">메타 하네스란</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>인터뷰</b><span>업무 · 입력 · 금지</span></div><div class="fa">→</div><div class="fs"><b>설계</b><span>유형 · 필요한 부품만</span></div><div class="fa">→</div><div class="fs hl"><b>사람 승인</b><span>APPROVED</span></div><div class="fa">→</div><div class="fs"><b>생성 · 검토</b><span>하네스 파일</span></div><div class="fa">→</div><div class="fs"><b>시험</b><span>미적용 vs 적용</span></div><div class="fa">→</div><div class="fs"><b>사람 판정</b><span>고치기</span></div></div><table class="dbt"><thead><tr><th></th><th>범용 하네스</th><th>메타 하네스가 만든 하네스</th></tr></thead><tbody><tr><td><b>규칙</b></td><td>누구에게나 맞는 일반 규칙</td><td>인터뷰에서 나온 내 업무 규칙만</td></tr><tr><td><b>부품</b></td><td>전부 다</td><td>필요한 것만 · 넣지 않은 이유도 기록</td></tr><tr><td><b>막을 것</b></td><td>rm -rf · .env 같은 공통</td><td>내 업무에서 사고 나는 지점</td></tr><tr><td><b>평가</b></td><td>없음</td><td>내 예시 입력 3 + 엣지 케이스 2</td></tr><tr><td><b>재사용</b></td><td>한 번 설치</td><td>새 업무 · 새 상황마다 다시 인터뷰</td></tr></tbody></table><div class="dbnote"><span>주제에 따라</span> 업무 처리 주제 → 메타 하네스로 업무 하네스 · 개발 주제 → Superpowers</div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs"><b>인터뷰</b><span>업무 · 입력 · 금지</span></div><div class="fa">→</div><div class="fs"><b>설계</b><span>필요한 부품만</span></div><div class="fa">→</div><div class="fs hl"><b>사람 승인</b><span>APPROVED</span></div><div class="fa">→</div><div class="fs"><b>생성 · 검토</b><span>하네스 파일</span></div><div class="fa">→</div><div class="fs"><b>시험</b><span>미적용 vs 적용</span></div><div class="fa">→</div><div class="fs"><b>사람 판정</b><span>고치기</span></div></div><div class="v2pair"><div class="v2p"><div class="v2ph">범용 하네스</div><div class="v2pc" style="--d:0.00s"><b>일반 규칙</b><span>누구에게나</span></div><div class="v2pc" style="--d:0.08s"><b>부품 전부</b><span>한 번 설치</span></div></div><div class="v2p on"><div class="v2ph">메타 하네스가 만든 하네스</div><div class="v2pc" style="--d:0.00s"><b>내 업무 규칙만</b><span>인터뷰에서 나온 것</span></div><div class="v2pc" style="--d:0.08s"><b>필요한 부품만</b><span>새 업무마다 다시 인터뷰</span></div></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="메타 하네스 구조">
@@ -2577,19 +2585,16 @@ spacing: { unit: 8 }
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="twocol"><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">폴더 구조</span></div><pre><code>meta_harness/
 ├── CLAUDE.md                 순서 · 원칙
-├── templates/                유형별 예시 (업무 · 개발)
-├── docs/&lt;하네스 이름&gt;/
+├── templates/                유형별 예시
+├── docs/&lt;이름&gt;/
 │   ├── interview.md          인터뷰 답
-│   ├── spec.md             설계안
+│   ├── spec.md               설계안
 │   └── APPROVED              사람만 만듦
-├── out/&lt;하네스 이름&gt;/          만들어진 하네스
+├── out/&lt;이름&gt;/                만들어진 하네스
 └── .claude/
-    ├── skills/interview/     질문 → interview.md
-    ├── skills/spec/        유형 · 부품 → spec.md
-    ├── skills/build/         하네스 파일 생성
-    ├── skills/try/           미적용 vs 적용 시험
-    ├── agents/harness-reviewer.md  지어낸 규칙 검토
-    └── hooks/guard.py · settings.json  승인 전 생성 차단</code></pre></div></div><table class="dbt"><thead><tr><th>단계</th><th>담당</th><th>결과</th></tr></thead><tbody><tr><td><b>① 인터뷰</b></td><td>interview Skill · 사람이 답함</td><td>interview.md</td></tr><tr><td><b>② 설계</b></td><td>spec Skill · templates/ 참고</td><td>spec.md · 유형 · 부품</td></tr><tr><td><b>③ 승인</b></td><td><b>사람</b> · APPROVED</td><td>승인 전 생성은 Hook이 차단</td></tr><tr><td><b>④ 생성</b></td><td>build Skill</td><td>대상 폴더에 하네스</td></tr><tr><td><b>⑤ 검토</b></td><td>harness-reviewer</td><td>지어낸 규칙 · 빠진 차단</td></tr><tr><td><b>⑥ 시험</b></td><td>try Skill</td><td>미적용 vs 적용 비교표</td></tr><tr><td><b>⑦ 판정</b></td><td><b>사람</b></td><td>합격 · 고칠 점</td></tr></tbody></table></div></div></div>
+    ├── skills/ interview · spec · build · try
+    ├── agents/harness-reviewer.md
+    └── hooks/guard.py        승인 전 생성 차단</code></pre></div></div><div class="v2tiles c1"><div class="v2tile" style="--d:0.00s"><b>사람</b><span>인터뷰 답 · APPROVED · 최종 판정</span></div><div class="v2tile" style="--d:0.08s"><b>Skill</b><span>인터뷰 · 설계 · 생성 · 시험</span></div><div class="v2tile" style="--d:0.16s"><b>Hook</b><span>승인 전 생성 차단</span></div></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="메타 하네스를 만드는 요청문">
@@ -2614,7 +2619,7 @@ spacing: { unit: 8 }
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">TDD (테스트 주도 개발)</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><div><div class="flow"><div class="fs hl"><b>① 빨강</b><span>실패하는 테스트 먼저</span></div><div class="fa">→</div><div class="fs"><b>② 초록</b><span>통과할 만큼만 구현</span></div><div class="fa">→</div><div class="fs"><b>③ 정리</b><span>테스트는 그대로 통과</span></div></div><table class="dbt"><thead><tr><th>에이전트에게 좋은 이유</th><th></th></tr></thead><tbody><tr><td><b>완료 기준이 코드</b></td><td>「다 됐다」를 테스트가 판정</td></tr><tr><td><b>스스로 확인</b></td><td>고칠 때마다 node --test</td></tr><tr><td><b>나눠도 안전</b></td><td>합칠 때 깨진 곳이 바로 보임</td></tr><tr><td><b>사람은 사례를 검토</b></td><td>코드 대신 테스트 사례를 읽고 승인</td></tr></tbody></table></div><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 테스트 먼저 → 실패 · ② 구현 → 통과</span></div><pre><code>// test/calc.test.js
+  <div class="body"><div class="mid"><div class="twocol"><div><div class="flow"><div class="fs hl"><b>① 빨강</b><span>실패하는 테스트 먼저</span></div><div class="fa">→</div><div class="fs"><b>② 초록</b><span>통과할 만큼만 구현</span></div><div class="fa">→</div><div class="fs"><b>③ 정리</b><span>테스트는 그대로 통과</span></div></div><div class="v2tiles c2"><div class="v2tile" style="--d:0.00s"><b>완료 기준이 코드</b><span>「다 됐다」를 테스트가 판정</span></div><div class="v2tile" style="--d:0.08s"><b>스스로 확인</b><span>고칠 때마다 테스트</span></div><div class="v2tile" style="--d:0.16s"><b>나눠도 안전</b><span>깨진 곳이 바로 보임</span></div><div class="v2tile" style="--d:0.24s"><b>사람은 사례 검토</b><span>코드 대신 테스트를 읽음</span></div></div></div><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">① 테스트 먼저 → 실패 · ② 구현 → 통과</span></div><pre><code>// test/calc.test.js
 import { test } from "node:test";
 import assert from "node:assert";
 import { total } from "../src/calc.js";
@@ -2633,9 +2638,7 @@ export const total = (n) =>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">Superpowers로 개발하기</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><table class="dbt"><thead><tr><th>Superpowers Skill</th><th>하는 일</th><th>사람이 할 일</th></tr></thead><tbody><tr><td><b>brainstorming</b></td><td>질문으로 요구 정리 · 설계를 나눠 보여 줌</td><td><b>설계 승인</b></td></tr><tr><td><b>(화면이 있으면)</b></td><td>DESIGN.md로 화면 규칙 먼저 (Ch2)</td><td>색 · 화면 규칙 확인</td></tr><tr><td><b>using-git-worktrees</b></td><td>새 브랜치 · 워크트리 · 테스트 기준선</td><td>—</td></tr><tr><td><b>writing-plans</b></td><td>2~5분 단위 작업 · 파일 경로 · 확인 방법</td><td><b>계획 승인</b></td></tr><tr><td><b>subagent-driven-development</b></td><td>작업마다 새 Sub Agent · TDD · 스펙 리뷰 → 코드 리뷰</td><td>—</td></tr><tr><td><b>finishing-a-development-branch</b></td><td>테스트 확인 · 병합 · PR 정리</td><td><b>최종 판정</b></td></tr></tbody></table><div class="ptall"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">my_tool 에서 붙여 넣기</span></div><pre><code>〈만들 웹 앱 한 줄〉 을 만들고 싶어. superpowers 의 brainstorming 부터 시작해 줘.
-화면이 있으니 계획 전에 DESIGN.md 를 먼저 만들고, 화면은 DESIGN.md 를 따르게 해 줘.
-예시 데이터는 ../samples/〈분야〉/ 를 써.</code></pre></div></div></div><div class="dbnote"><span>직접 만들지 않는 이유</span> 개발 멀티에이전트 흐름은 공개 하네스가 이미 잘 갖춤 · 우리는 설치하고 승인 지점을 지키는 데 집중</div><div class="src">출처 · <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers · Skills</a></div></div></div>
+  <div class="body"><div class="mid"><div class="flow"><div class="fs hl"><b>brainstorming</b><span>요구 정리 · 설계 승인</span></div><div class="fa">→</div><div class="fs"><b>worktree</b><span>새 브랜치 · 기준선</span></div><div class="fa">→</div><div class="fs"><b>writing-plans</b><span>작은 작업 · 계획 승인</span></div><div class="fa">→</div><div class="fs"><b>subagent 개발</b><span>작업마다 Sub Agent · TDD</span></div><div class="fa">→</div><div class="fs"><b>finishing</b><span>테스트 · 병합 · 최종 판정</span></div></div><div class="dbnote"><span>사람이 할 일</span> 설계 승인 · 계획 승인 · 최종 판정 세 번 · 화면이 있으면 DESIGN.md 먼저</div><div class="dbnote"><span>직접 만들지 않는 이유</span> 개발 멀티에이전트 흐름은 공개 하네스가 이미 잘 갖춤 · 우리는 승인 지점을 지킴</div><div class="src">출처 · <a href="https://github.com/obra/superpowers" target="_blank" rel="noopener">obra/superpowers · Skills</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="Superpowers 실행 타임라인">
@@ -2680,7 +2683,7 @@ export const total = (n) =>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">오래 일하는 루프 하네스</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><table class="dbt"><thead><tr><th>오래 일할 때 생기는 문제</th><th>하네스 장치</th></tr></thead><tbody><tr><td><b>한 번에 다 하려 함</b></td><td>기능 목록 · 한 번에 하나만</td></tr><tr><td><b>일찍 「다 했다」 선언</b></td><td>passes 는 테스트 통과 뒤에만 · JSON이라 덜 고침</td></tr><tr><td><b>진행이 사라짐</b></td><td>진행 기록 파일 + git 커밋</td></tr><tr><td><b>컨텍스트가 쌓여 흐려짐</b></td><td>매번 새 세션 · 기록에서 이어받기</td></tr><tr><td><b>끝없이 돎</b></td><td>최대 횟수 · 허용 도구 · 비용 상한</td></tr></tbody></table><div><div class="flow"><div class="fs"><b>기록 읽기</b><span>progress · git log</span></div><div class="fa">→</div><div class="fs"><b>하나 고르기</b><span>passes: false</span></div><div class="fa">→</div><div class="fs hl"><b>TDD</b><span>테스트 → 구현</span></div><div class="fa">→</div><div class="fs"><b>기록 · 커밋</b><span>passes: true</span></div></div><div class="dbnote"><span>반복</span> 모두 통과하거나 최대 횟수까지 · 사람은 끝난 뒤 판정</div></div></div><div class="dbnote"><span>근거</span> Anthropic 장기 작업 하네스 (기능 목록 JSON · 진행 기록 · 커밋) · Ralph 루프 (매번 새 컨텍스트 · 한 번에 하나)</div><div class="src">출처 · <a href="https://anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener">Anthropic · Effective harnesses for long-running agents</a> · <a href="https://ghuntley.com/ralph/" target="_blank" rel="noopener">Geoffrey Huntley · Ralph</a></div></div></div>
+  <div class="body"><div class="mid"><div class="v2ms"><div class="v2mh"><span>오래 일할 때 생기는 문제</span><i></i><span>하네스 장치</span></div><div class="v2m" style="--d:0.00s"><div class="a">한 번에 다 하려 함</div><i>→</i><div class="b"><b>기능 목록 · 한 번에 하나</b></div></div><div class="v2m" style="--d:0.12s"><div class="a">일찍 「다 했다」</div><i>→</i><div class="b"><b>passes 는 테스트 통과 뒤에만</b></div></div><div class="v2m" style="--d:0.24s"><div class="a">진행이 사라짐</div><i>→</i><div class="b"><b>진행 기록 + git 커밋</b></div></div><div class="v2m" style="--d:0.36s"><div class="a">컨텍스트가 흐려짐</div><i>→</i><div class="b"><b>매번 새 세션</b></div></div><div class="v2m" style="--d:0.48s"><div class="a">끝없이 돎</div><i>→</i><div class="b"><b>최대 횟수 · 허용 도구</b></div></div></div><div class="dbnote"><span>근거</span> Anthropic 장기 작업 하네스 · Ralph 루프 (매번 새 컨텍스트 · 한 번에 하나)</div><div class="src">출처 · <a href="https://anthropic.com/engineering/effective-harnesses-for-long-running-agents" target="_blank" rel="noopener">Anthropic · Effective harnesses for long-running agents</a> · <a href="https://ghuntley.com/ralph/" target="_blank" rel="noopener">Geoffrey Huntley · Ralph</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="루프를 돌리는 세 가지 방법">
@@ -2739,7 +2742,7 @@ node loop.mjs 8
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">오늘 다룬 것</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>장</th><th>한 줄</th></tr></thead><tbody><tr><td><b>Ch1</b></td><td>모델이 좋아질수록 일을 맡기는 장치(하네스)가 결과를 가름</td></tr><tr><td><b>Ch2</b></td><td>부탁(CLAUDE.md) · 절차(Skill) · 강제(Hook) — 꼭 막을 것은 코드로</td></tr><tr><td><b>Ch3</b></td><td>책상에는 지금 필요한 것만 · 남길 것은 파일로</td></tr><tr><td><b>Ch4</b></td><td>남이 만든 하네스는 빌려 쓰고, 다른 회사는 좁고 확인 가능한 일부터</td></tr><tr><td><b>Ch5</b></td><td>나누면 비용이 늘어남 · 역할 분리와 규모가 필요할 때만</td></tr><tr><td><b>Ch6</b></td><td>토큰은 턴 수와 컨텍스트에서 · 재고 나서 줄이기</td></tr><tr><td><b>Ch7</b></td><td>자동 채점은 볼 곳을 좁히고, 판정은 사람이</td></tr><tr><td><b>Ch8</b></td><td>계획 먼저 · 내 업무는 메타 하네스로 · 개발은 Superpowers · 오래 걸리면 루프</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c4"><div class="v2tile" style="--d:0.00s"><b>Ch1</b><span>모델이 좋아질수록 하네스가 결과를 가름</span></div><div class="v2tile" style="--d:0.08s"><b>Ch2</b><span>부탁 · 절차 · 강제 — 꼭 막을 것은 코드로</span></div><div class="v2tile" style="--d:0.16s"><b>Ch3</b><span>책상에는 지금 필요한 것만</span></div><div class="v2tile" style="--d:0.24s"><b>Ch4</b><span>남이 만든 하네스는 빌려 쓰기</span></div><div class="v2tile" style="--d:0.32s"><b>Ch5</b><span>나누면 비용 증가 · 필요할 때만</span></div><div class="v2tile" style="--d:0.40s"><b>Ch6</b><span>재고 나서 줄이기</span></div><div class="v2tile" style="--d:0.48s"><b>Ch7</b><span>자동 채점은 볼 곳을 좁히고 판정은 사람이</span></div><div class="v2tile" style="--d:0.56s"><b>Ch8</b><span>계획 먼저 · 오래 걸리면 루프</span></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="내일부터 할 일">
@@ -2747,7 +2750,7 @@ node loop.mjs 8
   <div class="eyebrow"><span class="tag">Ch8</span></div>
   <h2 class="s-title sm">내일부터 할 일</h2>
   <div class="rule"></div>
-  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th></th><th>할 일</th><th>방법</th></tr></thead><tbody><tr><td><b>①</b></td><td><b>반복 업무 하나</b></td><td>CLAUDE.md 한 장으로 시작 · 결과는 파일로 · 결정은 사람에게</td></tr><tr><td><b>②</b></td><td><b>판정을 기록</b></td><td>틀릴 때마다 무엇이 · 왜 틀렸는지 한 줄</td></tr><tr><td><b>③</b></td><td><b>원인별로 반영</b></td><td>절차는 Skill · 원칙은 CLAUDE.md · 사고는 Hook</td></tr><tr><td><b>④</b></td><td><b>평가 문항 다섯 개</b></td><td>고칠 때마다 다시 돌려 나빠진 곳 확인</td></tr><tr><td><b>⑤</b></td><td><b>크게 만들지 않기</b></td><td>나누기 · 플러그인 · 루프는 재 보고 필요할 때만</td></tr></tbody></table></div></div>
+  <div class="body"><div class="mid"><div class="v2tiles c5"><div class="v2tile" style="--d:0.00s"><b>① 반복 업무 하나</b><span>CLAUDE.md 한 장으로 시작</span></div><div class="v2tile" style="--d:0.08s"><b>② 판정을 기록</b><span>틀릴 때마다 한 줄</span></div><div class="v2tile" style="--d:0.16s"><b>③ 원인별로 반영</b><span>절차 Skill · 원칙 CLAUDE.md · 사고 Hook</span></div><div class="v2tile" style="--d:0.24s"><b>④ 평가 문항 다섯 개</b><span>고칠 때마다 다시 돌리기</span></div><div class="v2tile" style="--d:0.32s"><b>⑤ 크게 만들지 않기</b><span>재 보고 필요할 때만</span></div></div></div></div>
 </section>
 
 <section class="slide dk bridge" data-title="하네스는 사람이 키운다">
