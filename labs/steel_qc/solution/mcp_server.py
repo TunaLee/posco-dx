@@ -20,7 +20,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from judge import SPECS, judge  # noqa: E402
 
 BASE = "http://127.0.0.1:8800"
-APPROVALS = Path(__file__).resolve().parent.parent / "data" / "approvals.json"
+DATA = Path(__file__).resolve().parent.parent / "data"
+APPROVALS = DATA / "approvals.json"
+CALLS = DATA / "mcp_calls.jsonl"   # 콘솔 탭 ② 도구 호출
 
 TOOLS = [
     {"name": "recent_results", "description": "가상 시험실의 최근 코일 시험 결과 원문을 돌려준다. 판정은 하지 않는다.",
@@ -78,6 +80,12 @@ def call(name, args):
     raise ValueError(f"없는 도구 {name}")
 
 
+def log(tool, args, size):
+    DATA.mkdir(exist_ok=True)
+    with CALLS.open("a", encoding="utf-8") as f:
+        f.write(json.dumps({"at": datetime.now().strftime("%H:%M:%S"), "tool": tool, "args": args, "bytes": size}, ensure_ascii=False) + "\n")
+
+
 def reply(id_, result=None, error=None):
     msg = {"jsonrpc": "2.0", "id": id_}
     msg.update({"error": error} if error else {"result": result})
@@ -106,7 +114,9 @@ def main():
             p = m.get("params", {})
             try:
                 out = call(p.get("name"), p.get("arguments") or {})
-                reply(id_, {"content": [{"type": "text", "text": json.dumps(out, ensure_ascii=False)}]})
+                text = json.dumps(out, ensure_ascii=False)
+                log(p.get("name"), p.get("arguments") or {}, len(text.encode("utf-8")))
+                reply(id_, {"content": [{"type": "text", "text": text}]})
             except Exception as e:  # 도구 오류는 LLM 이 읽을 수 있게 결과로 돌려준다
                 reply(id_, {"content": [{"type": "text", "text": f"오류: {e}"}], "isError": True})
         elif method == "ping":

@@ -5,9 +5,16 @@ Claude Code 가 도구를 부르기 직전에 이 스크립트를 실행하고, 
 """
 import json
 import sys
+from datetime import datetime
+from pathlib import Path
 
 event = json.load(sys.stdin)
 coil = (event.get("tool_input") or {}).get("coil_id", "?")
+data = Path(__file__).resolve().parents[2] / "data"     # 콘솔 탭 ④ 출하 승인
+data.mkdir(exist_ok=True)
+with (data / "blocked.jsonl").open("a", encoding="utf-8") as f:
+    f.write(json.dumps({"at": datetime.now().strftime("%H:%M:%S"), "tool": event.get("tool_name"),
+                        "coil_id": coil, "input": event.get("tool_input")}, ensure_ascii=False) + "\n")
 print(json.dumps({"hookSpecificOutput": {
     "hookEventName": "PreToolUse",
     "permissionDecision": "deny",

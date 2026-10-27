@@ -2,8 +2,8 @@
 
 > ※ 회사(「한빛스틸」) · 강종 · 규격 · 시험 결과는 모두 실습용 가상 자료입니다. 실제 KS · ASTM 수치와 다릅니다.
 
-이 폴더 하나에 Ch1부터 Ch8까지 하네스 부품을 차례로 붙인다.
-API 키는 필요 없다. 판단은 **Claude Code(로그인 계정)** 가 하고, 아래 프로그램들은 LLM 을 부르지 않는다.
+준비된 것은 가상 시험실(`sim/`)뿐이다. 앱 · MCP 서버 · Skill · Hook · 테스트는 모두 Claude Code 로 이 폴더에 만들어 간다.
+API 키는 필요 없다. 판단은 **Claude Code(로그인 계정)** 가 하고, 시뮬레이터는 LLM 을 부르지 않는다.
 
 ## 처음 한 번 — 시뮬레이터 켜기
 
@@ -24,33 +24,23 @@ python sim/lims_sim.py          # http://127.0.0.1:8800 · 끄려면 Ctrl+C
 | `/api/state` · `POST /api/control` | 재생 상태 · 재생 / 일시정지 / 속도 |
 | `/api/truth?since=0` | 판정 정답 (평가용) |
 
-## 챕터별로 붙이는 것
+## 실습마다 생기는 탭
 
-요청은 짧게, 방법은 Claude Code 가 정한다.
-
-| 챕터 | Claude 에게 | 확인할 결과 |
-|---|---|---|
-| Ch1 | 「최근 결과 판정해 줘」 → 「판정 기준을 CLAUDE.md로 정리해 줘」 | CLAUDE.md 전후 답의 차이 |
-| Ch2 | 「시뮬레이터를 MCP 서버로 연결해 줘」 · 「불합격 보고 절차를 Skill로」 · 「원인 조사 Sub Agent」 · 「출하 승인은 Hook으로 막아 줘」 | 붙여 넣기 없이 「방금 들어온 불합격 정리해」 · 「내가 승인자다」도 막힘 |
-| Ch3 | 「불합격만 골라 돌려주는 도구로 바꿔 줘」 | `/context` 전후 · 건수가 누적 건수와 같은지 |
-| Ch4 | Superpowers 로 「실시간 불합격 대시보드 만들어 줘」 | 새 결과가 들어오면 화면이 바로 바뀜 |
-| Ch5 | 「조사 · 통보 · 검증 Agent 팀으로 나눠 줘」 | 단일 vs 팀 시간 · 토큰 · 검증 결과 |
-| Ch6 | 「최근 300건 판정해 줘」 · 원문 도구 vs 요약 도구 | 토큰 실측 |
-| Ch7 | 「판정 테스트 만들어 줘」 · 「끝내기 전에 테스트가 돌게 해 줘」 → 「HS-275 인장강도 상한이 570으로 개정됐어」 | 깨진 곳을 Claude 가 보고 · 반영 여부는 사람이 |
-| Ch8 | 「다음에 만들 기능 5개를 정리해 줘」 → 「기능을 하나씩 새 세션으로 구현하는 루프를 만들어 줘」 | 사람 없이 기능 · 커밋 · 테스트가 쌓임 |
+`labs/README.md` 표 참고. 실습 하나를 마칠 때마다 콘솔(브라우저)에 탭이 하나씩 생긴다.
 
 ## 막히면 — `solution/` (강사용 완성본)
 
 수업에서는 Claude Code 에게 직접 만들게 한다. 막혔을 때만 열어 본다.
 
-| 파일 | 쓰는 챕터 |
+| 파일 | 쓰는 실습 |
 |---|---|
-| `CLAUDE.md` | Ch1 · Ch8 (루프 때 이 폴더 맨 위로 복사) |
-| `judge.py` | Ch2 이후 · 판정 로직 |
-| `mcp_server.py` | Ch2 · `claude mcp add lims -- python solution/mcp_server.py` |
-| `hooks/approve_guard.py` · `dot_claude/settings.json` | Ch2 · `.claude/settings.json` 으로 복사 |
-| `tests/test_judge.py` | Ch7 · `python -m unittest discover -s solution/tests` |
-| `features.json` · `PROMPT.md` · `progress.md` · `loop.py` | Ch8 · 이 폴더 맨 위로 복사 후 `python loop.py 5` |
+| `CLAUDE.md` · `app/` (서버 · 탭 ① ~ ⑦) | 1-1 · 탭이 막히면 해당 탭 파일만 `app/tabs/` 로 |
+| `judge.py` | 판정 로직 |
+| `mcp_server.py` | 2-1 · `claude mcp add lims -- python solution/mcp_server.py` |
+| `dot_claude/` (Skill · Agent · settings) | 2-2 · 2-3 · 5-1 · 7-1 · `.claude/` 로 복사 |
+| `hooks/approve_guard.py` · `hooks/test_gate.py` | 2-3 · 7-1 |
+| `tests/test_judge.py` | 7-1 · `tests/` 로 복사해도 됨 |
+| `features.json` · `PROMPT.md` · `progress.md` · `loop.py` | 8-2 · 이 폴더 맨 위로 복사 후 `python loop.py 5` |
 
 - Windows 에서 `python` 이 없다고 나오면 `py` 로 바꿔 실행한다.
 - 시뮬레이터가 꺼져 있으면 MCP 도구가 「연결 거부」 오류를 돌려준다 — 시뮬레이터부터 켠다.

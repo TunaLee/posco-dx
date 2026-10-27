@@ -1,4 +1,0 @@
-[Material Spec] Doc No. HB-SPEC-724
-
-Item: 베어링   Size: 22220EK   Material: SUJ2   Q'ty: 50 EA
-

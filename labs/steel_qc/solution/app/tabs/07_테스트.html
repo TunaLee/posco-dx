@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>테스트</title>
+<style>
+  body{margin:0; padding:20px 24px; font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; color:#16233A;}
+  .top{display:flex; align-items:baseline; gap:12px; margin-bottom:12px;} .top b{font-size:22px;} .top span{color:#6B7785; font-size:13px;}
+  table{width:100%; border-collapse:collapse; font-size:14px;}
+  th{background:#F4F6F9; text-align:left; padding:8px 10px; color:#6B7785; font-weight:700;}
+  td{padding:7px 10px; border-bottom:1px solid #EEF1F5; font-variant-numeric:tabular-nums; vertical-align:top;}
+  .bad td{background:#FDECEC;} .near td{background:#FFF8F1;} .tag{display:inline-block; border-radius:6px; padding:1px 8px; font-weight:800; color:#fff; font-size:12px;}
+  .r{background:#C62828;} .o{background:#EF6C00;} .g{background:#2E7D32;}
+  .bar{height:10px; background:#F28C28; border-radius:5px;}
+  .cols{display:grid; grid-template-columns:260px 1fr; gap:18px;} .list div{padding:8px 10px; border-radius:8px; cursor:pointer; font-size:14px;} .list div.on{background:#EEF1F5; font-weight:800;}
+  pre{white-space:pre-wrap; font-family:inherit; font-size:14px; line-height:1.6; background:#F8F9FB; border-radius:10px; padding:16px 20px; margin:0;}
+  .big{font-size:44px; font-weight:900;} .empty{color:#8A94A3; padding:30px 0;}
+</style>
+</head>
+<body>
+<div class="top"><b id="st" class="big">-</b><span id="at">끝내기 전에 Stop Hook이 돌린 판정 테스트 · data/test_results.json</span></div>
+<div style="display:flex;gap:14px;margin:10px 0 18px" id="cards"></div>
+<table><thead><tr><th>실패한 테스트</th></tr></thead><tbody id="rows"></tbody></table>
+<script>
+async function tick() {
+  const r = await fetch("/files/data/test_results.json"); if (!r.ok) return;
+  const t = await r.json();
+  const st = document.getElementById("st"); st.textContent = t.ok ? "통과" : "실패"; st.style.color = t.ok ? "#2E7D32" : "#C62828";
+  document.getElementById("at").textContent = t.at + " · Stop Hook이 끝내기 전에 돌린 판정 테스트";
+  document.getElementById("cards").innerHTML = [["테스트", t.total, "#16233A"], ["실패", t.failed, "#C62828"]]
+    .map(([k, v, c]) => `<div style="flex:1;border:1.5px solid #E1E5EB;border-radius:12px;padding:12px 18px"><div class="big" style="color:${c}">${v}</div>${k}</div>`).join("");
+  document.getElementById("rows").innerHTML = t.failures.length ? t.failures.map(f => `<tr class="bad"><td>${f}</td></tr>`).join("") : `<tr><td class="empty">실패 없음</td></tr>`;
+}
+tick(); setInterval(tick, 3000);
+</script>
+</body>
+</html>

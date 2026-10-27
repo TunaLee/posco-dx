@@ -325,14 +325,7 @@ LABS_DIR = Path(__file__).resolve().parent.parent / "labs"
 def labfile(rel):
     return (LABS_DIR / rel).read_text(encoding="utf-8").rstrip()
 
-HARNESS_DIR = Path(__file__).resolve().parent / "lab_harness"
-
-
 def _kitsrc(src):
-    if src.startswith("@PROMPT"):
-        return KIT_TEXT[src[1:]]
-    if src.startswith("@"):
-        return (HARNESS_DIR / src[1:]).read_text(encoding="utf-8").rstrip()
     return labfile(src)
 
 
@@ -414,7 +407,6 @@ def esc(x):
     return x.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-KIT_TEXT = {"PROMPT22": 'db_guard/project 에 운영 DB를 지키는 Hook을 만들어 줘.\n운영 DB(db/prod.db)를 바꾸는 건 어떤 방법이든 막고, 조회는 허용해 줘. 개발 DB는 마음대로 써도 돼.\n그 밖에 rm -rf, .env 읽기, git push --force 도 막아 줘.\n막을 때는 「운영 DB 쓰기는 사용자 허락 필요」처럼 이유를 한 줄로 알려 주고, 외부 패키지는 쓰지 말아 줘.\n다 만들면 python3 db_guard/check_hook.py 로 시험해서, 실패한 게 있으면 고치고 다시 시험해 줘.'}
 
 
 
@@ -525,7 +517,7 @@ def opening():
             ["<b>Git · GitHub</b>", "하네스 버전 관리 · 공유"],
         ]) + note("실습 자료", labdir("") + " · 장마다 실습 장표의 「사용 파일」에서도 내려받기"), "시작"),
         light("실습 진행 방식", flow([("labs.zip 받기", "아래 링크 · 덱과 같은 곳"), ("압축 풀기", "바탕화면 등"), ("VS Code로 폴더 열기", "실습마다 열 폴더 표시"), ("Claude Code 패널", "왼쪽 위 아이콘"), ("시뮬레이터 켜기", "python sim/lims_sim.py")])
-              + '<div class="kit wide" style="margin-top:22px">' + code("처음 한 번 · labs 폴더에서", esc("python3 · claude 버전을 확인하고\nlabs 폴더의 실습 폴더 목록을 보여 줘"))
+              + '<div class="kit wide" style="margin-top:22px">' + code("처음 한 번 · labs/steel_qc 에서", esc("python3 · claude 버전을 확인하고\n시뮬레이터(sim/lims_sim.py)를 켜 줘"))
               + code("막히면", esc("방금 오류를 보고 원인과 고칠 방법을 알려 줘. 내 PC 설정은 바꾸기 전에 물어봐"))
               + '</div>' + note("실습 자료", labdir("") + " · 설치할 패키지 없음 (표준 라이브러리만) · 코드는 직접 쓰지 않음"), "시작"),
     ]

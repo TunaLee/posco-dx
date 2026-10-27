@@ -1,11 +1,11 @@
 """판정 로직 회귀 테스트 — 시뮬레이터의 정답과 1,000건을 대조한다 (서버 없이 실행).
-    python -m unittest discover -s solution/tests
+    python -m unittest discover -s solution/tests   (tests/ 로 복사해도 됨)
 """
 import sys
 import unittest
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = next(d for d in Path(__file__).resolve().parents if (d / "sim").is_dir())   # solution/tests · tests 어디서나
 sys.path[:0] = [str(ROOT / "sim"), str(ROOT / "solution")]
 import lims_sim  # noqa: E402
 from judge import judge  # noqa: E402
