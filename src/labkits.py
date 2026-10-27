@@ -5,7 +5,7 @@ files: (저장 이름, 화면 경로, 원본) · 원본은 labs/ 기준
 """
 
 KITS = {
-    "8-1": dict(folder="meta_harness", open="labs/meta_harness", steps=[
+    "9-1": dict(folder="meta_harness", open="labs/meta_harness", steps=[
         ("① 메타 하네스 만들기", "do", "Ch8 「메타 하네스를 만드는 요청문」 붙여 넣기 → 만든 파일 확인 → Claude Code 새로 열기"),
         ("② 내 주제로 시작", "p", "내 하네스를 만들고 싶어: 〈사전 과제 주제 한 줄〉.\n예시 입력은 ../samples/〈분야〉/ 를 써. 인터뷰부터 시작해 줘"),
         ("③ 사람 승인", "do", "인터뷰 답 → docs/〈이름〉/spec.md 검토 → 괜찮으면 새 파일 <b>docs/〈이름〉/APPROVED</b> (사람만)"),

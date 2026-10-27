@@ -5,7 +5,7 @@ K, O, G, M = "#1F3A5F", "#F28C28", "#C9CFD8", "#6B7785"
 def tangle():
     """AI 앱 3개 × 사내 시스템 3개 — 규격 없이 각자 연결 vs MCP로 한 번씩."""
     apps = ["Claude Code", "ChatGPT", "사내 챗봇"]
-    systems = ["시험실 LIMS", "MES", "ERP"]
+    systems = ["코드 저장소", "Jira", "사내 DB"]
 
     def side(x0, hub):
         s = []
@@ -47,7 +47,7 @@ def seq():
          f'<marker id="mfo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">'
          f'<path d="M0 0 L10 5 L0 10 Z" fill="{O}"/></marker></defs>']
     heads = [("L", "Claude (모델)", "도구 고르기 · 답"), ("A", "Claude Code", "MCP 클라이언트"),
-             ("S", "lims MCP 서버", "내가 만든 프로그램"), ("P", "시뮬레이터 API", ":8800")]
+             ("S", "repo MCP 서버", "내가 만든 프로그램"), ("P", "저장소 API", ":8900")]
     for k, t, d in heads:
         x = X[k]; w = 200 if k == "P" else 250
         fill, tc = (K, "#fff") if k == "A" else ("#fff", K)
@@ -60,10 +60,10 @@ def seq():
         ("2", "A", "S", "tools/list", False),
         ("", "S", "A", "도구 이름 · 설명 · 입력 형식", False),
         ("3", "A", "L", "질문 + 도구 목록", False),
-        ("", "L", "A", "recent_results(limit=50)", True),
+        ("", "L", "A", "get_diff(pr=104)", True),
         ("4", "A", "S", "tools/call", True),
-        ("", "S", "P", "GET /api/results", True),
-        ("", "P", "S", "JSON", True),
+        ("", "S", "P", "GET /api/prs/104/diff", True),
+        ("", "P", "S", "diff 텍스트", True),
         ("5", "S", "A", "도구 결과", True),
         ("", "A", "L", "결과를 읽고 답", True),
     ]
@@ -90,13 +90,13 @@ def seq():
 def mapping():
     """Claude가 고르는 도구 → MCP 서버가 부르는 API."""
     return ('<div class="mfm">'
-            '<div class="mfm-c"><div class="mfm-h">Claude가 고르는 도구</div><code>recent_results(</code>'
-            '<div class="mfm-k">limit <small>정수 · 최근 몇 건</small></div>'
-            '<div class="mfm-k">grade <small>문자열 · 강종 필터 · 선택</small></div><code>)</code></div>'
+            '<div class="mfm-c"><div class="mfm-h">Claude가 고르는 도구</div><code>get_diff(</code>'
+            '<div class="mfm-k">pr <small>정수 · PR 번호</small></div>'
+            '<div class="mfm-k">file <small>문자열 · 파일 하나만 · 선택</small></div><code>)</code></div>'
             '<div class="mfm-m"><span>MCP 서버 코드</span><b>도구 이름 · 인자 → 주소</b><span>결과 JSON → 도구 결과</span></div>'
-            '<div class="mfm-c on"><div class="mfm-h">시뮬레이터 API</div><code>GET 127.0.0.1:8800/api/results</code>'
-            '<div class="mfm-k">?limit= <small>건수</small></div>'
-            '<div class="mfm-k">&amp;grade= <small>강종</small></div><code>→ JSON</code></div>'
+            '<div class="mfm-c on"><div class="mfm-h">저장소 API</div><code>GET 127.0.0.1:8900/api/prs/{pr}/diff</code>'
+            '<div class="mfm-k">{pr} <small>주소 안의 번호</small></div>'
+            '<div class="mfm-k">file <small>받은 뒤 코드에서 거름</small></div><code>→ diff 텍스트</code></div>'
             '</div>')
 
 
