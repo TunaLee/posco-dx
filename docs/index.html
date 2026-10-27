@@ -1491,6 +1491,14 @@ spacing: { unit: 8 }
   <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/code_review</code><em>요청은 짧게 · 방법은 Claude가 정함</em></div><div class="qh2">Claude에게</div><div class="qas"><div class="qa2"><span>1</span><p>「Microsoft Learn MCP(https://learn.microsoft.com/api/mcp)를 연결해 줘」</p></div><div class="qa2"><span>2</span><p>「팀 코드 저장소 API를 MCP 서버로 만들어 연결해 줘」</p></div><div class="qa2"><span>3</span><p>새 대화: 「아직 리뷰 안 한 PR 정리해 줘」</p></div><div class="qa2"><span>4</span><p>「도구 호출 기록을 탭으로 보여 줘」</p></div></div><div class="qk2"><b>확인</b><ul><li><code>/mcp</code> 에 서버 둘</li><li>답 위에 MCP 도구 호출 표시</li><li>탭 ② 호출 · 응답 크기</li><li>저장소 서버를 끄면?</li></ul></div><div class="dbnote"><span>막히면</span> <code>solution/mcp_server.py</code> · <code>solution/app/tabs/02_도구호출.html</code></div></div></div>
 </section>
 
+<section class="slide lt" data-title="실습 3-1 결과">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch3</span></div>
+  <h2 class="s-title sm">실습 3-1 결과</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="rgrid c4"><div class="rc" style="--d:0.00s"><b>MCP 서버 만들기</b><div class="rv"><span class="ra">169초 · 21턴</span></div></div><div class="rc" style="--d:0.12s"><b>만든 도구</b><div class="rv"><span class="ra">PR 목록 · diff · 파일 · 코멘트</span></div></div><div class="rc" style="--d:0.24s"><b>등록</b><div class="rv"><span class="ra"><code>.mcp.json</code> · 처음 한 번 승인</span></div></div><div class="rc" style="--d:0.36s"><b>「PR 101~112 리뷰」</b><div class="rv"><span class="ra">142초 · 붙여 넣기 0건</span></div></div></div><div class="dbnote"><span>정리</span> 요청 한 줄로 서버 · 연결까지 · 이름 · 구성은 Claude가 정함</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/code_review" target="_blank" rel="noopener">직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/code_review · 각 1회</a></div></div></div>
+</section>
+
 <section class="slide dk bridge" data-title="다음: Claude Code 하네스 분해">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="kick">Ch3 정리</div>
@@ -2470,6 +2478,14 @@ print(json.dumps({"hookSpecificOutput": {
   <h2 class="s-title sm">실습 8-1 진행</h2>
   <div class="rule"></div>
   <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/code_review</code><em>요청은 짧게 · 방법은 Claude가 정함</em></div><div class="qh2">Claude에게</div><div class="qas"><div class="qa2"><span>1</span><p>「리뷰 결과를 /api/answer 의 정답과 대조해 채점해 줘」</p></div><div class="qa2"><span>2</span><p>「채점 결과를 탭으로 보여 줘」</p></div><div class="qa2"><span>3</span><p>리뷰 Skill을 고친 뒤 다시 채점</p></div></div><div class="qk2"><b>확인</b><ul><li>찾은 문제 / 14</li><li>문제 없는 PR(107 · 112)에 지어낸 지적</li><li>놓친 유형</li><li>고친 뒤 점수 변화</li></ul></div><div class="dbnote"><span>막히면</span> <code>solution/grade.py</code> · <code>solution/app/tabs/06_채점.html</code></div></div></div>
+</section>
+
+<section class="slide lt" data-title="실습 8-1 결과">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">실습 8-1 결과</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="rgrid c4"><div class="rc" style="--d:0.00s"><b>찾은 문제</b><div class="rv"><span class="ra">11 / 14</span></div></div><div class="rc" style="--d:0.12s"><b>놓친 문제</b><div class="rv"><span class="ra">102 할인율 · 108 · 110 테스트</span></div></div><div class="rc" style="--d:0.24s"><b>「오탐」 2건</b><div class="rv"><span class="ra">107 requirements.txt 없음 · 112 103과 충돌</span></div></div><div class="rc" style="--d:0.36s"><b>오탐을 다시 보니</b><div class="rv"><span class="ra">둘 다 맞는 지적</span></div></div></div><div class="dbnote"><span>정리</span> 자동 채점은 볼 곳을 좁혀 줌 · 정답지도 사람이 다시 검토</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/code_review" target="_blank" rel="noopener">직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/code_review · 각 1회</a></div></div></div>
 </section>
 
 <section class="slide lt" data-title="점수 대신 고르기 · 고치기">
