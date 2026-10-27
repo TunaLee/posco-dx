@@ -11,7 +11,7 @@ from pathlib import Path
 
 MAX = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 TOOLS = ["Read", "Write", "Edit", "Grep", "Glob", "Bash(python:*)", "Bash(python3:*)", "Bash(curl:*)",
-         "Bash(git add:*)", "Bash(git commit:*)", "Bash(git status:*)", "Bash(git log:*)"]
+         "Bash(git add:*)", "Bash(git commit:*)", "Bash(git checkout:*)", "Bash(git push:*)", "Bash(git status:*)", "Bash(git log:*)"]
 
 
 def left():

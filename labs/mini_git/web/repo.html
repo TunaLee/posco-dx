@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>미니 깃 · PR</title><link rel="stylesheet" href="/web/style.css"></head>
+<body><header><a href="/">미니 깃</a><span id="crumb"></span></header>
+<main><h2 id="title">PR</h2><div class="sub" id="clone"></div>
+<table><thead><tr><th>#</th><th>제목</th><th>작성자</th><th>올린 시각</th><th>상태</th><th>변경</th><th>코멘트</th></tr></thead><tbody id="rows"></tbody></table></main>
+<script>
+const repo = location.pathname.split("/")[2];
+crumb.textContent = repo; title.textContent = repo + " · PR"; clone.innerHTML = `<code>git clone http://127.0.0.1:8900/${repo}.git</code>`;
+function load() {
+  fetch(`/api/repos/${repo}/prs`).then(r => r.json()).then(ps => rows.innerHTML = ps.slice().reverse().map(p =>
+    `<tr><td>${p.id}</td><td><a href="/r/${repo}/pr/${p.id}"><b>${p.title}</b></a><br><small>${p.branch}</small></td><td>${p.author}</td><td>${p.created_at}</td>` +
+    `<td><span class="st ${p.status}">${p.status}</span></td><td>+${p.additions} -${p.deletions}</td><td>${p.comments}</td></tr>`).join(""));
+}
+load(); setInterval(load, 5000);
+</script></body></html>

@@ -4,8 +4,8 @@ __pycache__/
 .env
 runs/
 
-# code_review 실행 결과 (각자 PC 에만)
-code_review/data/*
-!code_review/data/.gitkeep
-code_review/app/
-code_review/runs/
+# mini_git 실행 결과 (각자 PC 에만)
+mini_git/repos/
+mini_git/data/*
+!mini_git/data/.gitkeep
+mini_git/runs/

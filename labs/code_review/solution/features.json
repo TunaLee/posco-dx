@@ -1,7 +1,0 @@
-[
-  {"id": "F1", "title": "작성자별 리뷰 현황", "desc": "작성자마다 PR 수 · 지적 수 · 열린 PR 을 콘솔 탭으로", "passes": false},
-  {"id": "F2", "title": "위험 PR 순위", "desc": "보안 · 버그 지적이 많은 PR 순으로 콘솔 탭에", "passes": false},
-  {"id": "F3", "title": "파일별 변경 빈도", "desc": "여러 PR 이 함께 고친 파일 순으로 콘솔 탭에", "passes": false},
-  {"id": "F4", "title": "리뷰 대기 시간", "desc": "PR 이 올라온 뒤 첫 코멘트까지 걸린 시간을 콘솔 탭에", "passes": false},
-  {"id": "F5", "title": "병합 후보", "desc": "지적이 없고 테스트가 있는 PR 만 병합 후보로 · 병합은 하지 않음 · 콘솔 탭으로", "passes": false}
-]

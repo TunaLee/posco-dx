@@ -1,0 +1,29 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>미니 깃 · PR</title><link rel="stylesheet" href="/web/style.css"></head>
+<body><header><a href="/">미니 깃</a><span id="crumb"></span></header>
+<main><h2 id="title"></h2><div class="sub" id="meta"></div><div class="card" id="desc"></div>
+<h3>변경 내용</h3><pre class="diff" id="diff"></pre>
+<h3>코멘트</h3><div id="cms"></div>
+<div class="card"><textarea id="body" placeholder="리뷰 코멘트"></textarea><br><br>
+<button onclick="post('comments', {author: '사람', body: body.value}).then(() => body.value = '')">코멘트</button>
+<button class="o" onclick="post('approve', {reviewer: '사람'})">승인</button>
+<button class="p" onclick="post('merge', {by: '사람'})">병합</button> <span id="msg"></span></div></main>
+<script>
+const [, , repo, , n] = location.pathname.split("/"), api = `/api/repos/${repo}/prs/${n}`;
+crumb.innerHTML = `<a href="/r/${repo}" style="font-size:14px">${repo}</a> · PR ${n}`;
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+async function post(what, b) {
+  const r = await fetch(`${api}/${what}`, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(b)});
+  msg.textContent = r.ok ? "완료" : (await r.json()).error; load();
+}
+async function load() {
+  const p = await (await fetch(api)).json();
+  title.textContent = `#${p.id} ${p.title}`;
+  meta.innerHTML = `${p.author} · ${p.created_at} · <code>${p.branch}</code> → <code>main</code> · <span class="st ${p.status}">${p.status}</span>`;
+  desc.textContent = p.description || "(설명 없음)";
+  const d = await (await fetch(`${api}/diff`)).text();
+  diff.innerHTML = d.split("\n").map(l => `<div class="${l.startsWith("+++") || l.startsWith("---") || l.startsWith("@@") ? "h" : l[0] === "+" ? "a" : l[0] === "-" ? "d" : ""}">${esc(l) || " "}</div>`).join("");
+  const cs = await (await fetch(`${api}/comments`)).json();
+  cms.innerHTML = cs.map(c => `<div class="cm"><b>${esc(c.author)}</b><small>${c.at}${c.file ? " · " + c.file + (c.line ? ":" + c.line : "") : ""}</small><div>${esc(c.body)}</div></div>`).join("") || `<div class="sub">아직 없음</div>`;
+}
+load(); setInterval(load, 5000);
+</script></body></html>

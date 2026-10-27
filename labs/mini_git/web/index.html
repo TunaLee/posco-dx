@@ -1,0 +1,9 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>미니 깃</title><link rel="stylesheet" href="/web/style.css"></head>
+<body><header><a href="/">미니 깃</a><span>내 PC 안의 작은 GitHub · 실습용</span></header>
+<main><h2>저장소</h2><div class="sub">main 이 아닌 브랜치를 push 하면 PR 이 생긴다 · 새 이름으로 push 하면 저장소가 생긴다</div>
+<table><thead><tr><th>저장소</th><th>PR</th><th>열린 PR</th><th>clone 주소</th></tr></thead><tbody id="rows"></tbody></table>
+<div class="card" style="margin-top:16px"><b>내 코드 올리기</b><br><code>git remote add team http://127.0.0.1:8900/내저장소.git</code> → <code>git push team main</code></div></main>
+<script>
+fetch("/api/repos").then(r => r.json()).then(rs => rows.innerHTML = rs.map(r =>
+  `<tr><td><a href="/r/${r.name}"><b>${r.name}</b></a></td><td>${r.prs}</td><td>${r.open}</td><td><code>git clone ${r.clone}</code></td></tr>`).join(""));
+</script></body></html>

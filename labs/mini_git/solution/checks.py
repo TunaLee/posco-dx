@@ -15,10 +15,10 @@ RULES = [
     ("보안", "비밀번호 로그", re.compile(r"log\.\w+\([^)]*password", re.I)),
 ]
 
-prs = json.loads(urllib.request.urlopen("http://127.0.0.1:8900/api/prs", timeout=5).read())
+prs = json.loads(urllib.request.urlopen("http://127.0.0.1:8900/api/repos/shop/prs", timeout=5).read())
 out = []
 for p in prs:
-    files = json.loads(urllib.request.urlopen(f"http://127.0.0.1:8900/api/prs/{p['id']}/files", timeout=5).read())
+    files = json.loads(urllib.request.urlopen(f"http://127.0.0.1:8900/api/repos/shop/prs/{p['id']}/files", timeout=5).read())
     for path, text in files.items():
         for kind, name, rx in RULES:
             for m in rx.finditer(text):

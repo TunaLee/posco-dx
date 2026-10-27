@@ -206,7 +206,7 @@ def decl_split():
 def tool_kinds():
     """Claude Code 내장 도구 + MCP로 붙인 외부 도구."""
     inner = ["Read", "Write · Edit", "Bash", "Grep · Glob", "WebFetch", "Task (Sub Agent)"]
-    outer = [("팀 코드 저장소", "직접 만든 MCP 서버"), ("Microsoft Learn", "공개 문서 검색"), ("Slack · Jira", "회사 협업 도구"), ("DB · 파일 서버", "사내 데이터")]
+    outer = [("미니 깃", "직접 만든 MCP 서버"), ("Microsoft Learn", "공개 문서 검색"), ("Slack · Jira", "회사 협업 도구"), ("DB · 파일 서버", "사내 데이터")]
     i = "".join(f'<span style="--d:{k * .08:.2f}s">{t}</span>' for k, t in enumerate(inner))
     o = "".join(f'<div class="tk-o" style="--d:{.8 + k * .12:.2f}s"><b>{h}</b><small>{d}</small></div>' for k, (h, d) in enumerate(outer))
     return ('<div class="tk">'

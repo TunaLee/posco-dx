@@ -1,0 +1,9 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>미니 깃 · 리뷰 현황</title><link rel="stylesheet" href="/web/style.css"></head>
+<body><header><a href="/">미니 깃</a><span>리뷰 현황 (실습 2-1 완성본 · web/ 에 넣고 /web/review.html)</span></header>
+<main><h2>리뷰 현황 · shop</h2><div class="sub">PR마다 상태 · 코멘트 수 · 리뷰 안 된 PR 먼저</div>
+<table><thead><tr><th>#</th><th>제목</th><th>작성자</th><th>상태</th><th>코멘트</th></tr></thead><tbody id="rows"></tbody></table></main>
+<script>
+fetch("/api/repos/shop/prs").then(r => r.json()).then(ps => rows.innerHTML = ps.sort((a, b) => a.comments - b.comments).map(p =>
+  `<tr style="${p.comments ? "" : "background:#FFF8F1"}"><td>${p.id}</td><td><a href="/r/shop/pr/${p.id}">${p.title}</a></td><td>${p.author}</td>` +
+  `<td><span class="st ${p.status}">${p.status}</span></td><td>${p.comments || "리뷰 전"}</td></tr>`).join(""));
+</script></body></html>

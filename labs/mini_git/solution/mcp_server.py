@@ -1,7 +1,8 @@
-"""팀 코드 저장소 MCP 서버 (강사용 완성본 · 수업에서는 Claude Code 로 직접 만든다).
+"""미니 깃 MCP 서버 (강사용 완성본 · 수업에서는 Claude Code 로 직접 만든다).
 
 Claude Code 가 표준 입출력(stdio)으로 띄워 쓰는 MCP 서버. 파이썬 표준 라이브러리만 쓴다.
     claude mcp add repo -- python solution/mcp_server.py
+도구마다 repo 인자 (기본 shop)
 
 도구
     list_prs           PR 목록 · 상태 · 변경 줄 수
@@ -21,27 +22,29 @@ import urllib.request
 from datetime import datetime
 from pathlib import Path
 
-BASE = "http://127.0.0.1:8900/api"
-DATA = Path(__file__).resolve().parent.parent / "data"
+BASE = "http://127.0.0.1:8900/api/repos"
+DATA = Path(__file__).resolve().parent.parent / "data"   # 미니 깃 폴더의 data/
 CALLS = DATA / "mcp_calls.jsonl"
 
-PR = {"type": "object", "properties": {"pr": {"type": "integer", "description": "PR 번호 · 예: 104"}}, "required": ["pr"]}
+REPO = {"type": "string", "description": "저장소 이름 · 기본 shop"}
+PR = {"type": "object", "properties": {"repo": REPO, "pr": {"type": "integer", "description": "PR 번호 · 예: 104"}}, "required": ["pr"]}
 TOOLS = [
-    {"name": "list_prs", "description": "팀 코드 저장소의 PR 목록 (번호 · 제목 · 작성자 · 상태 · 변경 줄 수 · 코멘트 수).",
-     "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "list_repos", "description": "미니 깃의 저장소 목록.", "inputSchema": {"type": "object", "properties": {}}},
+    {"name": "list_prs", "description": "저장소의 PR 목록 (번호 · 제목 · 작성자 · 상태 · 변경 줄 수 · 코멘트 수).",
+     "inputSchema": {"type": "object", "properties": {"repo": REPO}}},
     {"name": "get_pr", "description": "PR 한 건의 설명과 바뀐 파일 목록.", "inputSchema": PR},
     {"name": "get_diff", "description": "PR 의 변경 내용 전체(unified diff). 크다 · 필요할 때만.", "inputSchema": PR},
     {"name": "changed_functions", "description": "PR 에서 추가 · 변경된 함수만 골라 돌려준다. 리뷰는 이걸 먼저 쓴다.", "inputSchema": PR},
     {"name": "get_comments", "description": "PR 에 달린 리뷰 코멘트.", "inputSchema": PR},
     {"name": "add_comment", "description": "PR 에 리뷰 코멘트를 남긴다.",
      "inputSchema": {"type": "object", "properties": {
-         "pr": {"type": "integer"}, "body": {"type": "string", "description": "코멘트 내용"},
+         "repo": REPO, "pr": {"type": "integer"}, "body": {"type": "string", "description": "코멘트 내용"},
          "file": {"type": "string"}, "line": {"type": "integer"}, "author": {"type": "string", "description": "기본 claude"}},
          "required": ["pr", "body"]}},
     {"name": "approve_pr", "description": "PR 을 승인한다.",
-     "inputSchema": {"type": "object", "properties": {"pr": {"type": "integer"}, "reviewer": {"type": "string"}}, "required": ["pr"]}},
+     "inputSchema": {"type": "object", "properties": {"repo": REPO, "pr": {"type": "integer"}, "reviewer": {"type": "string"}}, "required": ["pr"]}},
     {"name": "merge_pr", "description": "승인된 PR 을 병합한다.",
-     "inputSchema": {"type": "object", "properties": {"pr": {"type": "integer"}, "by": {"type": "string"}}, "required": ["pr"]}},
+     "inputSchema": {"type": "object", "properties": {"repo": REPO, "pr": {"type": "integer"}, "by": {"type": "string"}}, "required": ["pr"]}},
 ]
 
 
@@ -53,10 +56,10 @@ def api(path, body=None):
         return json.loads(raw) if r.headers.get_content_type() == "application/json" else raw
 
 
-def changed_functions(pr):
+def changed_functions(r, pr):
     """diff 에서 + 줄이 들어 있는 함수만 · 새 파일 내용에서 그 함수 전체를 잘라 돌려준다."""
-    files = api(f"/prs/{pr}/files")
-    diff = api(f"/prs/{pr}/diff")
+    files = api(f"/{r}/prs/{pr}/files")
+    diff = api(f"/{r}/prs/{pr}/diff")
     out = []
     for path, text in files.items():
         added = {l[1:].strip() for l in diff.splitlines() if l.startswith("+") and not l.startswith("+++") and l[1:].strip()}
@@ -73,22 +76,26 @@ def changed_functions(pr):
 
 
 def call(name, a):
+    r = a.get("repo") or "shop"
+    if name == "list_repos":
+        return api("")
     if name == "list_prs":
-        return api("/prs")
+        return api(f"/{r}/prs")
+    n = int(a["pr"])
     if name == "get_pr":
-        return api(f"/prs/{int(a['pr'])}")
+        return api(f"/{r}/prs/{n}")
     if name == "get_diff":
-        return api(f"/prs/{int(a['pr'])}/diff")
+        return api(f"/{r}/prs/{n}/diff")
     if name == "changed_functions":
-        return changed_functions(int(a["pr"]))
+        return changed_functions(r, n)
     if name == "get_comments":
-        return api(f"/prs/{int(a['pr'])}/comments")
+        return api(f"/{r}/prs/{n}/comments")
     if name == "add_comment":
-        return api(f"/prs/{int(a['pr'])}/comments", {"author": a.get("author", "claude"), "body": a["body"], "file": a.get("file"), "line": a.get("line")})
+        return api(f"/{r}/prs/{n}/comments", {"author": a.get("author", "claude"), "body": a["body"], "file": a.get("file"), "line": a.get("line")})
     if name == "approve_pr":
-        return api(f"/prs/{int(a['pr'])}/approve", {"reviewer": a.get("reviewer", "claude")})
+        return api(f"/{r}/prs/{n}/approve", {"reviewer": a.get("reviewer", "claude")})
     if name == "merge_pr":
-        return api(f"/prs/{int(a['pr'])}/merge", {"by": a.get("by", "claude")})
+        return api(f"/{r}/prs/{n}/merge", {"by": a.get("by", "claude")})
     raise ValueError(f"없는 도구 {name}")
 
 

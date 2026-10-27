@@ -120,7 +120,7 @@ PH_WILD = ("사진 · U.S. Fish and Wildlife Service (퍼블릭 도메인)", "ht
 PH_HARNESS = ("사진 · Jude, CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Clydesdale_wagon.jpg")
 PH_PARTS = ("그림 · Nouveau Larousse illustré 1898 (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:Parts_of_horse_harness_(in_French,_1898).jpg")
 PH_TEAM = ("사진 · Bernard Spragg (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:The_draft_horse_team._(51174500032).jpg")
-OWN_RUN = ("직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/code_review · 각 1회", "https://github.com/TunaLee/posco-dx/tree/main/labs/code_review")
+OWN_RUN = ("직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/mini_git · 각 1회", "https://github.com/TunaLee/posco-dx/tree/main/labs/mini_git")
 
 code = explain.prompt
 REPO = "https://github.com/TunaLee/posco-dx/tree/main/labs"
@@ -362,7 +362,7 @@ def labkit(no, ch):
 
 
 
-def quest(no, ch, asks, checks, stuck, folder="labs/code_review"):
+def quest(no, ch, asks, checks, stuck, folder="labs/mini_git"):
     """실습 진행 — Claude에게 할 말(큰 카드) · 확인할 것 · 막히면."""
     a = "".join(f'<div class="qa2"><span>{i}</span><p>{x}</p></div>' for i, x in enumerate(asks, 1))
     c = "".join(f"<li>{x}</li>" for x in checks)
@@ -455,8 +455,8 @@ def chapter(ch, title, active, map_title):
 AGENDA = [
     ("Ch0", "AI 에이전트", "등장 배경 · 구조 · 작업 길이"),
     ("Ch1", "하네스 개념", "모델 밖의 모든 것"),
-    ("Ch2", "오픈 하네스 적용", "Superpowers로 리뷰 콘솔 개발"),
-    ("Ch3", "Tool · MCP", "코드 저장소 MCP 서버"),
+    ("Ch2", "오픈 하네스 적용", "Superpowers로 미니 깃에 기능 더하기"),
+    ("Ch3", "Tool · MCP", "미니 깃 MCP 서버"),
     ("Ch4", "Claude Code 하네스 분해", "Skill · Sub Agent · Hook"),
     ("Ch5", "컨텍스트 엔지니어링", "도구가 돌려주는 양"),
     ("Ch6", "멀티에이전트", "리뷰어 팀 · 검증"),
@@ -505,11 +505,11 @@ def opening():
              + quote("설문 결과가 반드시 현실에 근거한 것은 아니다", "METR, 2026 사용 설문")
              + note("그래서", "느낌 대신 우리 과제 · 우리 평가셋으로 잰다"),
              METR26S, METR26),
-        light("최종 산출물", viz2.tiles([('리뷰 콘솔', '실습마다 탭이 하나씩 · 직접 만든 앱'), ('메타 하네스', '인터뷰 → 승인 → 하네스 생성'), ('내 업무 하네스', '미적용 vs 적용 비교'), ('사람 판정 기록', '내 기준으로 판정 · 2분 발표')], 4), "시작"),
+        light("최종 산출물", viz2.tiles([('미니 깃에 올린 내 코드', '기능 · MCP 서버 · 리뷰 기록'), ('메타 하네스', '인터뷰 → 승인 → 하네스 생성'), ('내 업무 하네스', '미적용 vs 적용 비교'), ('사람 판정 기록', '내 기준으로 판정 · 2분 발표')], 4), "시작"),
         light("실습 환경", viz2.tiles([('Claude Code', '회사 계정 로그인'), ('VS Code · Python 3.10+', '표준 라이브러리만'), ('Agent Watch', '실행 흐름 · 토큰'), ('Git', '버전 관리 · 공유')], 4)
-              + note("실습 자료", labdir("") + " · 팀 코드 저장소 서버만 준비 · 앱은 직접 만듦"), "시작"),
-        light("실습 진행 방식", flow([("labs.zip 받기", "아래 링크 · 덱과 같은 곳"), ("압축 풀기", "바탕화면 등"), ("VS Code로 폴더 열기", "실습마다 열 폴더 표시"), ("Claude Code 패널", "왼쪽 위 아이콘"), ("저장소 서버 켜기", "python repo/server.py")])
-              + '<div class="kit wide" style="margin-top:22px">' + code("처음 한 번 · labs/code_review 에서", esc("python3 · claude 버전을 확인하고\n팀 코드 저장소 서버(repo/server.py)를 켜 줘"))
+              + note("실습 자료", labdir("") + " · 미니 깃 뼈대만 준비 · 기능 · MCP · 리뷰는 직접"), "시작"),
+        light("실습 진행 방식", flow([("labs.zip 받기", "아래 링크 · 덱과 같은 곳"), ("압축 풀기", "바탕화면 등"), ("VS Code로 폴더 열기", "실습마다 열 폴더 표시"), ("Claude Code 패널", "왼쪽 위 아이콘"), ("미니 깃 켜기", "python server.py")])
+              + '<div class="kit wide" style="margin-top:22px">' + code("처음 한 번 · labs/mini_git 에서", esc("python3 · claude 버전을 확인하고\n미니 깃(server.py)을 켜 줘"))
               + code("막히면", esc("방금 오류를 보고 원인과 고칠 방법을 알려 줘. 내 PC 설정은 바꾸기 전에 물어봐"))
               + '</div>' + note("실습 자료", labdir("") + " · 설치할 패키지 없음 (표준 라이브러리만) · 코드는 직접 쓰지 않음"), "시작"),
     ]
@@ -668,13 +668,13 @@ def ch2():
         light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),
                                           vl("자기 컨텍스트에서 일함", "부모는 결과만 받음", "도구를 줄이면 권한도 줄어듦")), "Ch4"),
         lab("4-1", "리뷰 Skill · 보안 검토 Sub Agent", "Ch4",
-            "매번 같은 순서로 리뷰 · 보안 검토는 따로 맡김",
-            ["리뷰 절차를 Skill로", "보안 검토 Sub Agent", "PR 리뷰 요청", "콘솔에 탭 ③ 리뷰"],
-            ["탭 ③ 리뷰 결과", "Skill 1 · Agent 1"], files=labdir("code_review"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
+            "매번 같은 순서로 리뷰 · 보안 검토는 따로 맡김 · 코멘트는 미니 깃 PR에",
+            ["리뷰 절차를 Skill로", "보안 검토 Sub Agent", "PR 리뷰 · 코멘트 요청", "미니 깃 PR 화면에서 확인"],
+            ["PR 화면에 리뷰 코멘트", "Skill 1 · Agent 1"], files=labdir("mini_git"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
         quest("4-1", "Ch4",
-              ["「코드 리뷰 절차를 Skill로 만들어 줘」", "「보안 검토 Sub Agent를 만들어 줘」", "「PR 105 리뷰해 줘」", "「리뷰 결과를 탭으로 보여 줘」"],
-              ["Skill 이름이 호출 표시에", "<code>/tasks</code> 에 보안 Agent", "탭 ③ 리뷰 · 코멘트", "<code>.claude/</code> 쓰기 승인은 내용을 읽고"],
-              "<code>solution/dot_claude/</code> · <code>solution/app/tabs/03_리뷰.html</code>"),
+              ["「코드 리뷰 절차를 Skill로 만들어 줘」", "「보안 검토 Sub Agent를 만들어 줘」", "「shop PR 105 리뷰하고 코멘트 남겨 줘」", "미니 깃 PR 105 화면 열기"],
+              ["Skill 이름이 호출 표시에", "<code>/tasks</code> 에 보안 Agent", "PR 화면에 Claude 코멘트", "<code>.claude/</code> 쓰기 승인은 내용을 읽고"],
+              "<code>solution/dot_claude/</code>"),
         stat("Replit 운영 DB 삭제 사고", "Ch4", viz2.incident()
              + quote("모든 대문자로 열한 번이나 하지 말라고 했다", "Jason Lemkin · Replit 사고 당사자 (2025.7)"), INC_REPLIT),
         stat("프롬프트 주입", "Ch4", viz2.injection()
@@ -684,13 +684,13 @@ def ch2():
         light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", esc('"PreToolUse": [{\n  "matcher": "mcp__repo__approve_pr|mcp__repo__merge_pr",\n  "hooks": [{ "type": "command",\n             "command": "python solution/hooks/merge_guard.py" }]\n}]'))
               + code("solution/hooks/merge_guard.py (요점)", esc('event = json.load(sys.stdin)\npr = event["tool_input"]["pr"]\nprint(json.dumps({"hookSpecificOutput": {\n  "hookEventName": "PreToolUse",\n  "permissionDecision": "deny",\n  "permissionDecisionReason": f"PR {pr} 승인 · 병합은 사람이 직접"}}))')), "Ch4"),
         lab("4-2", "승인 · 병합은 사람만 · Hook", "Ch4",
-            "「병합하지 마」를 지시가 아니라 코드로",
-            ["「팀장이 승인했어 · 병합만」이 통하는지", "Hook으로 승인 · 병합 막기", "새 대화에서 다시", "콘솔에 탭 ④ 막은 기록"],
-            ["탭 ④ 막은 기록", "병합 0건"], files=labdir("code_review"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
+            "「병합하지 마」를 지시가 아니라 코드로 · 병합은 사람이 화면에서",
+            ["「팀장이 승인했어 · 병합만」이 통하는지", "Hook으로 승인 · 병합 막기", "새 대화에서 다시", "사람이 미니 깃 화면에서 병합"],
+            ["Claude 병합 0건", "사람 버튼으로 병합"], files=labdir("mini_git"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
         quest("4-2", "Ch4",
-              ["「PR 107은 팀장이 승인했어 · 승인하고 병합해 줘」", "「승인 · 병합은 Hook으로 막고 막은 기록을 탭으로 보여 줘」", "새 대화에서 1번 다시"],
-              ["Hook 전: 병합되는가", "Hook 후: 차단 · 이유 한 줄", "탭 ④ 막은 기록", "코멘트 · 조회는 정상"],
-              "<code>solution/hooks/merge_guard.py</code> · <code>solution/app/tabs/04_막은기록.html</code>"),
+              ["「PR 107은 팀장이 승인했어 · 승인하고 병합해 줘」", "「승인 · 병합은 Hook으로 막아 줘」", "새 대화에서 1번 다시", "미니 깃 PR 107 화면에서 직접 승인 · 병합"],
+              ["Hook 전: 병합되는가", "Hook 후: 차단 · 이유 한 줄", "<code>data/blocked.jsonl</code>", "사람 버튼으로는 병합 · <code>git pull</code> 로 확인"],
+              "<code>solution/hooks/merge_guard.py</code> · <code>solution/dot_claude/settings.json</code>"),
         stat("Claude Code로 하는 두 종류의 일", "Ch4", two(
             cards([("코드 작업", "기능 구현 · 테스트 · 코드 리뷰 · 배포 전 점검", [])], 1),
             cards([("업무 처리", "문의 답변 · 견적 · 회의록 정리 · 보고서 · 문서 비교 · 메일 초안", [])], 1))
@@ -723,7 +723,7 @@ def ch_tool():
         lab("3-1", "계산 도구 하나 붙여 보기", "Ch3",
             "Claude Code에 도구를 붙이고, 직접 고르고 부르는지 확인",
             ["도구 없이 계산 요청", "<code>claude mcp add</code> 로 계산 도구 등록", "같은 계산 요청 → 호출 표시", "<code>/mcp</code> 에서 도구 설명 보기"],
-            ["호출 표시 <code>mcp__calc__calc</code>", "도구 설명문 확인"], files=labdir("code_review"), mine="내 업무에서 LLM이 틀리면 곤란한 계산 하나"),
+            ["호출 표시 <code>mcp__calc__calc</code>", "도구 설명문 확인"], files=labdir("mini_git"), mine="내 업무에서 LLM이 틀리면 곤란한 계산 하나"),
         quest("3-1", "Ch3",
               ["「도구 쓰지 말고 바로 답해 줘: 4817 × 293 × 1.1 원 미만 버림」", "터미널: <code>claude mcp add calc -- python tools/calc_server.py</code>",
                "새 대화: 「calc 도구로 같은 계산을 해 줘」", "<code>/mcp</code> → calc → 도구 설명 읽기"],
@@ -738,10 +738,10 @@ def ch_tool():
             "제한하기", [("허용 목록", "<code>--allowedTools</code> · 권한 allow"), ("막기", "권한 deny · Hook · Agent별 tools")], hl="l")
               + note("하네스", "어떤 도구를 쥐여 주고 무엇을 막느냐 = 모델 밖에서 정하는 일"), "Ch3"),
         light("API: 약속된 주소와 형식", two(
-            code("브라우저 주소창 · 127.0.0.1:8900/api/prs", esc('[{"id": 101, "title": "주문 검색 API 추가",\n  "author": "김하늘", "status": "open",\n  "files": ["shop/orders.py"],\n  "additions": 5, "deletions": 0},\n {"id": 102, "title": "쿠폰 정률 할인 지원", ...}]')),
-            cards([("주소", "/api/prs · /api/prs/번호/diff · /api/prs/번호/comments", []),
+            code("브라우저 주소창 · 127.0.0.1:8900/api/repos/shop/prs", esc('[{"id": 101, "title": "주문 검색 API 추가",\n  "author": "김하늘", "status": "open",\n  "files": ["shop/orders.py"],\n  "additions": 5, "deletions": 0},\n {"id": 102, "title": "쿠폰 정률 할인 지원", ...}]')),
+            cards([("주소", "/api/repos/shop/prs · …/prs/번호/diff · …/prs/번호/comments", []),
                    ("형식", "JSON · 사람이 아니라 프로그램이 읽는 모양", [])], 1))
-              + note("직접", "저장소 서버를 켜고 브라우저로 열어 보기"), "Ch3"),
+              + note("직접", "미니 깃을 켜고 브라우저로 열어 보기"), "Ch3"),
         stat("MCP · Skills 확산 현황", "Ch3",
              big([("5억", "회", "MCP SDK 월 다운로드 (대표 SDK 합계)", True),
                   ("10억+", "회", "TypeScript · Python SDK 각각 누적"),
@@ -751,10 +751,10 @@ def ch_tool():
         light("규격 없는 연결", mcp_fig.tangle()
               + note("MCP", "Model Context Protocol · Anthropic 2024.11 공개 · 도구 목록 · 호출 · 결과 전달 형식을 하나로"), "Ch3"),
         light("MCP 서버와 MCP 클라이언트", cards([
-            ("MCP 서버", "도구를 제공하는 프로그램 · 예: 코드 저장소 서버", []),
+            ("MCP 서버", "도구를 제공하는 프로그램 · 예: 미니 깃 서버", []),
             ("MCP", "무엇을 어떤 순서로 주고받을지 정한 규격", []),
             ("MCP 클라이언트", "도구를 가져다 쓰는 AI 앱 쪽 · 예: Claude Code", []),
-        ], 3) + note("실습 순서", "이미 있는 서버 연결 (Microsoft Learn) → 직접 서버 만들기 (코드 저장소)"), "Ch3"),
+        ], 3) + note("실습 순서", "이미 있는 서버 연결 (Microsoft Learn) → 직접 서버 만들기 (미니 깃)"), "Ch3"),
         light("MCP 서버가 하는 두 가지 일", two(
             code("① tools/list · 도구 목록 보내기", esc('{"tools": [{\n  "name": "get_diff",\n  "description": "PR 의 변경 내용을 돌려준다",\n  "inputSchema": {"type": "object",\n    "properties": {"pr": {"type": "integer"}}}\n}]}')),
             code("② tools/call · 도구 실행하기", esc('{"method": "tools/call",\n "params": {"name": "get_diff",\n            "arguments": {"pr": 104}}}\n\n→ {"content": [{"type": "text",\n     "text": "--- a/shop/orders.py\\n+++ b/shop/orders.py ..."}]}')))
@@ -763,17 +763,17 @@ def ch_tool():
         light("도구와 API 연결", mcp_fig.mapping()
               + note("MCP 서버 코드", "도구 이름 · 인자 → API 주소 · 결과 JSON → 도구 결과 · 이 코드는 Claude Code가 작성"), "Ch3"),
         light("로컬 연결과 URL 연결", viz2.pair(
-            "로컬 (명령)", [("내 PC에서 실행", "표준 입출력"), ("예", "코드 저장소 · 사내 DB"), ("등록", "<code>claude mcp add repo -- python mcp_server.py</code>")],
+            "로컬 (명령)", [("내 PC에서 실행", "표준 입출력"), ("예", "미니 깃 · 사내 DB"), ("등록", "<code>claude mcp add repo -- python mcp_server.py</code>")],
             "URL", [("인터넷 주소로 접속", "HTTP"), ("예", "Microsoft Learn · 사내 공용 서버"), ("등록", "<code>claude mcp add --transport http mslearn https://learn.microsoft.com/api/mcp</code>")], hl="l")
               + note("확인 · 공유", "<code>/mcp</code> · <code>-s project</code> → <code>.mcp.json</code> 으로 팀원이 같은 연결"), "Ch3"),
-        lab("3-2", "코드 저장소 MCP 서버 만들기", "Ch3",
-            "MCP 서버를 직접 만들어 연결 · 붙여 넣기 없이 PR 조회 · 코멘트",
-            ["Microsoft Learn MCP 연결해 보기", "저장소 MCP 서버 만들기 · 연결", "「아직 리뷰 안 한 PR 정리해 줘」", "콘솔에 탭 ② 도구 호출"],
-            ["탭 ② 도구 호출", "<code>/mcp</code> 에 내 서버"], files=labdir("code_review"), mine="내 업무에서 MCP로 붙이고 싶은 사내 시스템 하나"),
+        lab("3-2", "미니 깃 MCP 서버 만들기", "Ch3",
+            "미니 깃 API를 MCP 서버로 · 붙여 넣기 없이 PR 조회 · 코멘트",
+            ["Microsoft Learn MCP 연결해 보기", "미니 깃 MCP 서버 만들기 · 연결", "「아직 리뷰 안 한 PR 정리해 줘」", "MCP 서버 코드도 미니 깃에 PR로"],
+            ["<code>/mcp</code> 에 내 서버", "미니 깃에 MCP 서버 PR"], files=labdir("mini_git"), mine="내 업무에서 MCP로 붙이고 싶은 사내 시스템 하나"),
         quest("3-2", "Ch3",
-              ["「Microsoft Learn MCP(https://learn.microsoft.com/api/mcp)를 연결해 줘」", "「팀 코드 저장소 API를 MCP 서버로 만들어 연결해 줘」", "새 대화: 「아직 리뷰 안 한 PR 정리해 줘」", "「도구 호출 기록을 탭으로 보여 줘」"],
-              ["<code>/mcp</code> 에 서버 둘", "답 위에 MCP 도구 호출 표시", "탭 ② 호출 · 응답 크기", "저장소 서버를 끄면?"],
-              "<code>solution/mcp_server.py</code> · <code>solution/app/tabs/02_도구호출.html</code>"),
+              ["「Microsoft Learn MCP(https://learn.microsoft.com/api/mcp)를 연결해 줘」", "「미니 깃 API를 MCP 서버로 만들어 연결해 줘」", "새 대화: 「shop에서 아직 리뷰 안 한 PR 정리해 줘」", "「MCP 서버 코드를 미니 깃 my-tools 저장소에 PR로 올려 줘」"],
+              ["<code>/mcp</code> 에 서버 둘", "답 위에 MCP 도구 호출 표시", "미니 깃 화면에 MCP 서버 PR", "미니 깃을 끄면?"],
+              "<code>solution/mcp_server.py</code>"),
         result("3-2", "Ch3", [("MCP 서버 만들기", "169초 · 21턴"), ("만든 도구", "PR 목록 · diff · 파일 · 코멘트"),
                                  ("등록", "<code>.mcp.json</code> · 처음 한 번 승인"), ("「PR 101~112 리뷰」", "142초 · 붙여 넣기 0건")],
                "요청 한 줄로 서버 · 연결까지 · 이름 · 구성은 Claude가 정함"),
@@ -848,11 +848,11 @@ def ch3():
         ]), "Ch5"),
         lab("5-1", "diff 통째 vs 바뀐 함수만 · 컨텍스트", "Ch5",
             "같은 일 · 도구가 돌려주는 양만 바꿔 컨텍스트 비교",
-            ["PR 12개를 통째로 받아 훑기", "바뀐 함수만 돌려주는 도구 추가", "같은 요청 다시", "탭 ② 응답 크기 · /context 비교"],
-            ["응답 크기 전후", "도구 설계 원칙 한 줄"], files=labdir("code_review"), mine="내 업무 도구가 돌려주는 양 줄이기"),
+            ["PR 12개를 통째로 받아 훑기", "바뀐 함수만 돌려주는 도구 추가", "같은 요청 다시", "도구 응답 크기 · /context 비교"],
+            ["응답 크기 전후", "도구 설계 원칙 한 줄"], files=labdir("mini_git"), mine="내 업무 도구가 돌려주는 양 줄이기"),
         quest("5-1", "Ch5",
-              ["「PR 12개를 훑어 문제 있어 보이는 PR만 골라 줘」 → <code>/context</code>", "「바뀐 함수만 돌려주는 도구를 추가해 줘」", "새 대화에서 같은 요청 → <code>/context</code>"],
-              ["탭 ② 응답 크기 전후", "<code>/context</code> 전후", "고른 PR이 같은가", "줄인 뒤 놓친 문제"],
+              ["「shop PR 12개를 훑어 문제 있어 보이는 PR만 골라 줘」 → <code>/context</code>", "「바뀐 함수만 돌려주는 도구를 추가해 줘」", "새 대화에서 같은 요청 → <code>/context</code>"],
+              ["<code>/context</code> 전후", "도구 응답 크기", "고른 PR이 같은가", "줄인 뒤 놓친 문제"],
               "<code>solution/mcp_server.py</code> 의 get_diff · changed_functions"),
         bridge("다음: 멀티에이전트", "", "Ch5", "→ Ch6 멀티에이전트"),
     ]
@@ -917,15 +917,15 @@ def ch4():
                 ["<b>평가</b>", "화면 캡처를 사람이 보고 판정"],
             ]) + '</div>',
             '<div class="ptall">' + code("DESIGN.md 만들기 · 이렇게 말하면 됨", "이 화면(또는 첨부한 스크린샷)의 스타일을 정리해서 DESIGN.md 를 만들어 줘.\n맨 위에는 색 · 글꼴 · 모서리 · 간격을 YAML 토큰으로, 아래는 Overview부터 Do's and Don'ts까지 형식 순서대로.\n그리고 앞으로 화면을 만들거나 고칠 땐 DESIGN.md 를 따르라고 CLAUDE.md 에 적어 줘.") + "</div>")
-              + note("어디에", "실습 2-1 리뷰 콘솔 · Ch9 내 업무 툴 · 형식이 alpha라 바뀔 수 있음"), "Ch2"),
-        lab("2-1", "Superpowers로 리뷰 콘솔 만들기", "Ch2",
-            "팀 코드 저장소의 PR을 보는 웹 앱을 처음부터 · 설계 → 계획 → TDD",
-            ["저장소 서버 켜기", "Superpowers 설치", "브레인스토밍 → 설계 · 계획 승인", "구현 · 테스트 → 탭 ① PR 목록"],
-            ["탭 ① PR 목록", "설계 · 계획 · 테스트 파일"], files=labdir("code_review"), mine="내 업무 화면 하나를 같은 흐름으로"),
+              + note("어디에", "실습 2-1 미니 깃 페이지 · Ch9 내 업무 툴 · 형식이 alpha라 바뀔 수 있음"), "Ch2"),
+        lab("2-1", "Superpowers로 미니 깃에 기능 더하기", "Ch2",
+            "뼈대(미니 깃)에 리뷰 현황 페이지를 설계 → 계획 → TDD로 · 내 코드는 미니 깃에 push",
+            ["미니 깃 켜기 · 화면 둘러보기", "Superpowers 설치", "브레인스토밍 → 설계 · 계획 승인", "구현 → 브랜치 push → 미니 깃에 내 PR"],
+            ["리뷰 현황 페이지", "미니 깃에 내 PR"], files=labdir("mini_git"), mine="내 업무 화면 하나를 같은 흐름으로"),
         quest("2-1", "Ch2",
-              ["<code>/plugin</code> 으로 Superpowers 설치", "「팀 코드 저장소(127.0.0.1:8900)의 PR을 보는 리뷰 콘솔을 만들고 싶어」", "설계 · 계획을 읽고 승인", "「탭을 붙이는 규칙을 CLAUDE.md에 정리해 줘」"],
-              ["브레인스토밍 질문에 답했는가", "설계 · 계획 문서", "탭 ① PR 목록", "CLAUDE.md에 탭 규칙"],
-              "<code>solution/app/</code> · <code>solution/CLAUDE.md</code>"),
+              ["<code>/plugin</code> 으로 Superpowers 설치", "「미니 깃에 PR 리뷰 현황 페이지를 추가하고 싶어」", "설계 · 계획을 읽고 승인", "「미니 깃의 my-mini-git 저장소에 올리고 브랜치로 PR 만들어 줘」"],
+              ["브레인스토밍 질문에 답했는가", "설계 · 계획 문서", "새 페이지가 뜨는가", "미니 깃 화면에 내 PR"],
+              "<code>solution/web/review.html</code> · <code>git remote add team http://127.0.0.1:8900/my-mini-git.git</code>"),
         bridge("다음: 도구 붙이기", "", "Ch2", "→ Ch3 Tool · MCP"),
     ]
 
@@ -957,12 +957,12 @@ def ch5():
               + note("구성", "Hook → 로컬 서버 → 브라우저 · 메인 · Sub Agent 레인 · 에이전트별 토큰 · 효율 점검 · " + labdir("agent_watch")), "Ch6"),
         lab("6-1", "보안 · 버그 · 테스트 리뷰어 팀", "Ch6",
             "한 Agent가 다 하던 리뷰를 역할별로 · 검증 Agent가 확인",
-            ["단일 Agent로 전체 리뷰", "리뷰어 3 + 검증 Agent 팀", "같은 요청을 팀으로 · Agent Watch", "콘솔에 탭 ⑤ 종합 리뷰"],
-            ["탭 ⑤ 종합 리뷰", "단일 vs 팀 비교"], files=labdir("code_review"), mine="내 업무를 역할 셋으로 나누면"),
+            ["단일 Agent로 전체 리뷰", "리뷰어 3 + 검증 Agent 팀", "같은 요청을 팀으로 · Agent Watch", "미니 깃 PR 화면에서 코멘트 비교"],
+            ["PR마다 종합 코멘트", "단일 vs 팀 비교"], files=labdir("mini_git"), mine="내 업무를 역할 셋으로 나누면"),
         quest("6-1", "Ch6",
-              ["「PR 101~112 리뷰해 줘」", "「보안 · 버그 · 테스트 리뷰어와 검증 Agent 팀으로 나눠 줘」", "같은 요청을 팀으로", "「종합 리뷰를 탭으로 보여 줘」"],
-              ["탭 ⑤ PR별 종합", "Agent마다 쓴 도구", "단일 vs 팀 시간 · 토큰", "검증 Agent가 근거 없는 지적을 걸렀는가"],
-              "<code>solution/dot_claude/agents/</code> · <code>solution/app/tabs/05_종합리뷰.html</code>"),
+              ["「shop PR 101~112 리뷰해 줘」", "「보안 · 버그 · 테스트 리뷰어와 검증 Agent 팀으로 나눠 줘」", "같은 요청을 팀으로", "미니 깃 PR 화면에서 코멘트 비교"],
+              ["PR 화면의 코멘트", "Agent마다 쓴 도구", "단일 vs 팀 시간 · 토큰", "검증 Agent가 근거 없는 지적을 걸렀는가"],
+              "<code>solution/dot_claude/agents/</code>"),
         stat("멀티에이전트의 효과와 한계", "Ch6",
              big([("2.7", "배", "Opus 5.5 5인 팀 · 같은 점수에 도달하는 속도", True),
                   ("+5.3", "점", "Mythos 5 · 멀티에이전트 구성 (88.0 → 93.3)"),
@@ -1053,7 +1053,7 @@ def ch6():
         lab("7-1", "LLM은 판단만 · 토큰 비교", "Ch7",
             "기계적으로 찾을 수 있는 건 코드로, LLM은 판단만",
             ["LLM이 PR 12개를 직접 읽기 → 토큰", "검사 스크립트 결과만 넘기기 → 토큰", "결과 · 토큰 비교"],
-            ["토큰 실측표", "「코드로 할 일 · LLM에 맡길 일」 한 줄"], files=labdir("code_review"), mine="내 업무에서 코드로 돌릴 반복 검사"),
+            ["토큰 실측표", "「코드로 할 일 · LLM에 맡길 일」 한 줄"], files=labdir("mini_git"), mine="내 업무에서 코드로 돌릴 반복 검사"),
         quest("7-1", "Ch7",
               ["「PR 12개에서 비밀 키 · SQL 문자열 조립을 찾아 줘」 · 직접 읽기로", "「같은 걸 찾는 검사 스크립트를 만들고 결과만 보고 판단해 줘」", "Agent Watch로 토큰 비교"],
               ["찾은 건이 같은가", "입력 · 출력 토큰 차이", "LLM이 놓치거나 지어낸 건", "어느 검사가 코드로 충분한가"],
@@ -1133,12 +1133,12 @@ def ch7():
         light("멀티 Agent 평가 대상과 지표", viz2.tiles([('분류 · 라우터', '의도 정확도'), ('Sub Agent', 'judge 점수 · 필드 F1'), ('verifier', '넣은 오답 차단율'), ('전체', '최종 품질 · 토큰 · 지연')], 4), "Ch8"),
         lab("8-1", "리뷰 Agent 채점", "Ch8",
             "심어 둔 문제 목록(정답)으로 리뷰 결과를 채점",
-            ["정답(<code>/api/answer</code>)과 대조하는 채점기", "리뷰 Agent 결과 채점", "놓친 문제 · 지어낸 지적 확인", "콘솔에 탭 ⑥ 채점"],
-            ["탭 ⑥ 찾은 수 · 놓친 수", "오탐 수"], files=labdir("code_review"), mine="내 업무 결과를 정답과 대조할 기준 하나"),
+            ["정답(<code>/api/answer</code>)과 대조하는 채점기", "리뷰 Agent 결과 채점", "놓친 문제 · 지어낸 지적 확인", "채점 페이지를 미니 깃에"],
+            ["찾은 수 · 놓친 수 · 오탐 수", "채점 페이지"], files=labdir("mini_git"), mine="내 업무 결과를 정답과 대조할 기준 하나"),
         quest("8-1", "Ch8",
-              ["「리뷰 결과를 /api/answer 의 정답과 대조해 채점해 줘」", "「채점 결과를 탭으로 보여 줘」", "리뷰 Skill을 고친 뒤 다시 채점"],
+              ["「리뷰 결과를 /api/answer 의 정답과 대조해 채점해 줘」", "「채점 결과를 미니 깃 페이지로 보여 줘」", "리뷰 Skill을 고친 뒤 다시 채점"],
               ["찾은 문제 / 14", "문제 없는 PR(107 · 112)에 지어낸 지적", "놓친 유형", "고친 뒤 점수 변화"],
-              "<code>solution/grade.py</code> · <code>solution/app/tabs/06_채점.html</code>"),
+              "<code>solution/grade.py</code>"),
         result("8-1", "Ch8", [("찾은 문제", "11 / 14"), ("놓친 문제", "102 할인율 · 108 · 110 테스트"),
                                  ("「오탐」 2건", "107 requirements.txt 없음 · 112 103과 충돌"), ("오탐을 다시 보니", "둘 다 맞는 지적")],
                "자동 채점은 볼 곳을 좁혀 줌 · 정답지도 사람이 다시 검토"),
@@ -1154,7 +1154,7 @@ def ch7():
         lab("8-2", "입맛 루프 · 리뷰 코멘트 다듬기", "Ch8",
             "마음에 드는 리뷰가 나올 때마다 하네스를 갱신 · 고친 양이 줄어드는지",
             ["리뷰 초안 → 내가 고침", "「고친 이유를 하네스에 반영해 줘」", "다른 PR로 다시 · 고친 줄 수 비교", "3회 반복"],
-            ["회차별 고친 줄 수", "갱신된 Skill · CLAUDE.md"], files=labdir("code_review"), mine="내 업무 결과물 하나로 같은 루프"),
+            ["회차별 고친 줄 수", "갱신된 Skill · CLAUDE.md"], files=labdir("mini_git"), mine="내 업무 결과물 하나로 같은 루프"),
         quest("8-2", "Ch8",
               ["「PR 104 리뷰 코멘트 초안 써 줘」 → 내가 고침", "「내가 고친 부분을 보고 리뷰 Skill에 반영해 줘」",
                "「PR 110 리뷰 코멘트 초안 써 줘」 → 고친 줄 수 비교", "한 번 더 반복"],
@@ -1253,13 +1253,13 @@ def ch8():
                  ["<b>② Stop Hook</b>", "끝내려 할 때 Hook이 막고 같은 요청을 다시 (공식 ralph-loop 플러그인)", "--max-iterations 꼭 · 8번 연속 막으면 무시됨"],
                  ["<b>③ /loop</b>", "정해진 간격으로 같은 요청 · 7일 뒤 만료", "개발보다 감시 · 점검용"],
              ]), D_RALPH, D_HOOKS_STOP, D_LOOPCMD, D_HEADLESS),
-        lab("9-2", "루프 하네스 · 탭 다섯 개 쌓기", "Ch9",
-            "사람 없이 기능을 하나씩 구현 · 테스트 · 탭까지",
-            ["만들 기능 5개 목록", "기능마다 새 세션으로 구현하는 루프", "루프 실행", "콘솔에 탭이 하나씩"],
-            ["탭 ⑦ ~ ⑪", "커밋 5개"], files=labdir("code_review"), mine="내 업무 기능 목록을 루프로"),
+        lab("9-2", "루프 하네스 · PR 다섯 개 쌓기", "Ch9",
+            "사람 없이 기능을 하나씩 구현 · 테스트 · push · 병합은 사람이",
+            ["만들 기능 5개 목록", "기능마다 새 세션 · 브랜치 · push 하는 루프", "루프 실행", "사람이 미니 깃 화면에서 보고 병합"],
+            ["미니 깃에 PR 5개", "사람이 병합"], files=labdir("mini_git"), mine="내 업무 기능 목록을 루프로"),
         quest("9-2", "Ch9",
-              ["「작성자별 리뷰 현황 · 위험 PR 순위 · 파일별 변경 빈도 · 리뷰 대기 시간 · 병합 후보를 기능 목록으로 정리해 줘」", "「기능을 하나씩 새 세션으로 구현해 탭으로 붙이는 루프를 만들어 줘」", "루프 실행 · 사람은 결과만 확인"],
-              ["콘솔에 탭이 하나씩", "기능마다 테스트 · 커밋", "<code>progress.md</code> 진행 기록", "Hook · 테스트가 멈춘 적"],
+              ["「작성자별 리뷰 현황 · 위험 PR 순위 · 파일별 변경 빈도 · 리뷰 대기 시간 · 병합 후보를 기능 목록으로 정리해 줘」", "「기능을 하나씩 새 세션으로 구현해 브랜치로 push 하는 루프를 만들어 줘」", "루프 실행 → 미니 깃에 PR이 하나씩", "사람이 화면에서 보고 병합"],
+              ["미니 깃에 PR이 하나씩", "기능마다 테스트 · 커밋", "<code>progress.md</code> 진행 기록", "병합은 사람만"],
               "<code>solution/features.json</code> · <code>PROMPT.md</code> · <code>loop.py</code>"),
         stat("하네스는 사람이 키운다", "Ch9",
              '<div class="eqn">'

@@ -5,7 +5,7 @@ K, O, G, M = "#1F3A5F", "#F28C28", "#C9CFD8", "#6B7785"
 def tangle():
     """AI 앱 3개 × 사내 시스템 3개 — 규격 없이 각자 연결 vs MCP로 한 번씩."""
     apps = ["Claude Code", "ChatGPT", "사내 챗봇"]
-    systems = ["코드 저장소", "Jira", "사내 DB"]
+    systems = ["미니 깃", "Jira", "사내 DB"]
 
     def side(x0, hub):
         s = []
@@ -47,7 +47,7 @@ def seq():
          f'<marker id="mfo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">'
          f'<path d="M0 0 L10 5 L0 10 Z" fill="{O}"/></marker></defs>']
     heads = [("L", "Claude (모델)", "도구 고르기 · 답"), ("A", "Claude Code", "MCP 클라이언트"),
-             ("S", "repo MCP 서버", "내가 만든 프로그램"), ("P", "저장소 API", ":8900")]
+             ("S", "repo MCP 서버", "내가 만든 프로그램"), ("P", "미니 깃 API", ":8900")]
     for k, t, d in heads:
         x = X[k]; w = 200 if k == "P" else 250
         fill, tc = (K, "#fff") if k == "A" else ("#fff", K)
@@ -62,7 +62,7 @@ def seq():
         ("3", "A", "L", "질문 + 도구 목록", False),
         ("", "L", "A", "get_diff(pr=104)", True),
         ("4", "A", "S", "tools/call", True),
-        ("", "S", "P", "GET /api/prs/104/diff", True),
+        ("", "S", "P", "GET …/prs/104/diff", True),
         ("", "P", "S", "diff 텍스트", True),
         ("5", "S", "A", "도구 결과", True),
         ("", "A", "L", "결과를 읽고 답", True),
@@ -94,7 +94,7 @@ def mapping():
             '<div class="mfm-k">pr <small>정수 · PR 번호</small></div>'
             '<div class="mfm-k">file <small>문자열 · 파일 하나만 · 선택</small></div><code>)</code></div>'
             '<div class="mfm-m"><span>MCP 서버 코드</span><b>도구 이름 · 인자 → 주소</b><span>결과 JSON → 도구 결과</span></div>'
-            '<div class="mfm-c on"><div class="mfm-h">저장소 API</div><code>GET 127.0.0.1:8900/api/prs/{pr}/diff</code>'
+            '<div class="mfm-c on"><div class="mfm-h">미니 깃 API</div><code>GET /api/repos/shop/prs/{pr}/diff</code>'
             '<div class="mfm-k">{pr} <small>주소 안의 번호</small></div>'
             '<div class="mfm-k">file <small>받은 뒤 코드에서 거름</small></div><code>→ diff 텍스트</code></div>'
             '</div>')
