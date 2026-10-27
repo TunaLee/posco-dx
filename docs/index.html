@@ -842,6 +842,11 @@
   .tv2r b{font-size:14px; color:#8A94A3;} .tv2r span{font-size:20px; font-weight:800; color:#16233A;}
   .tv2r em{font-style:normal; margin-left:8px; font-weight:900;} .tv2r em.x{color:#C62828;} .tv2r em.o{color:#2E7D32;}
   .tv2a{display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:900; color:#F28C28;}
+  .scp{display:grid; grid-template-columns:1fr 1.15fr .9fr; gap:16px; margin:2px 0 10px;}
+  .scp-c{background:#F4F6F9; border-radius:16px; padding:14px 16px; display:flex; flex-direction:column; gap:6px; animation:v2In .5s both; animation-delay:var(--d);} .scp-c.on{background:#FFF3E6;}
+  .scp-h{display:flex; flex-direction:column; gap:1px; margin-bottom:2px;} .scp-h b{font-size:20px; color:#1F3A5F;} .scp-c.on .scp-h b{color:#EF6C00;}
+  .scp-h code{font-size:14px; font-weight:800; background:none !important; padding:0 !important;} .scp-h span{font-size:12px; color:#6B7785;}
+  .scp-r{background:#fff; border-radius:10px; padding:6px 12px; display:flex; flex-direction:column; gap:1px;} .scp-r b{font-size:12px; color:#6B7785;} .scp-r code{font-size:13px; background:none !important; padding:0 !important; color:#16233A; word-break:break-all;}
   .v2tile b{font-size:21px; color:#16233A;} .v2tile span{font-size:15px; color:#6B7785; line-height:1.45;}
 </style>
 </head>
@@ -1236,6 +1241,14 @@
     │   └── verifier.md       Sub Agent 하나 = 파일 하나
     └── hooks/
         └── guard.py          Hook 스크립트</code></pre></div></div><div class="v2tiles c1"><div class="v2tile" style="--d:0.00s"><b>CLAUDE.md</b><span>세션 시작 때 항상</span></div><div class="v2tile" style="--d:0.08s"><b>skills/</b><span>요청이 설명과 맞을 때</span></div><div class="v2tile" style="--d:0.16s"><b>agents/</b><span>메인이 위임할 때</span></div><div class="v2tile" style="--d:0.24s"><b>settings.json</b><span>권한 · Hook · 팀 공유</span></div></div></div><div class="dbnote"><span>~/.claude/</span> 같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용</div></div></div>
+</section>
+
+<section class="slide lt" data-title="전역 · 프로젝트 하네스 위치">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch2</span></div>
+  <h2 class="s-title sm">전역 · 프로젝트 하네스 위치</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="scp"><div class="scp-c " style="--d:0.00s"><div class="scp-h"><b>전역</b><code>~/.claude/</code><span>내 모든 프로젝트</span></div><div class="scp-r"><b>CLAUDE.md</b><code>~/.claude/CLAUDE.md</code></div><div class="scp-r"><b>Skill · Agent</b><code>~/.claude/skills/ · agents/</code></div><div class="scp-r"><b>Hook · 권한</b><code>~/.claude/settings.json</code></div><div class="scp-r"><b>MCP</b><code>claude mcp add -s user</code></div><div class="scp-r"><b>플러그인</b><code>/plugin 설치 → ~/.claude/plugins/</code></div></div><div class="scp-c on" style="--d:0.25s"><div class="scp-h"><b>프로젝트</b><code>./.claude/</code><span>git으로 팀 공유</span></div><div class="scp-r"><b>CLAUDE.md</b><code>./CLAUDE.md</code></div><div class="scp-r"><b>Skill · Agent</b><code>./.claude/skills/ · agents/</code></div><div class="scp-r"><b>Hook · 권한</b><code>./.claude/settings.json</code></div><div class="scp-r"><b>MCP</b><code>claude mcp add -s project → ./.mcp.json</code></div><div class="scp-r"><b>팀원</b><code>clone 하면 그대로 · MCP는 처음 한 번 승인</code></div></div><div class="scp-c " style="--d:0.50s"><div class="scp-h"><b>내 PC만</b><code>이 프로젝트 · 나만</code><span>git에 안 올림</span></div><div class="scp-r"><b>Hook · 권한</b><code>./.claude/settings.local.json</code></div><div class="scp-r"><b>MCP</b><code>claude mcp add (기본 범위)</code></div><div class="scp-r"><b>쓰는 때</b><code>개인 키 · 실험 · 내 취향</code></div></div></div><div class="dbnote"><span>겹치면</span> 내 PC만 &gt; 프로젝트 &gt; 전역 순으로 우선 · 팀 규칙은 프로젝트에, 내 습관은 전역에</div></div></div>
 </section>
 
 <section class="slide lt" data-title="부품별 로드 · 실행 시점">

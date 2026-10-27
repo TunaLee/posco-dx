@@ -306,6 +306,21 @@ def subagent_flow():
     return f'<svg viewBox="0 0 1180 360" class="v2">{"".join(s)}</svg>'
 
 
+def scopes():
+    """하네스 설치 위치 — 전역 · 프로젝트 · 내 PC만."""
+    cols = [("전역", "~/.claude/", "내 모든 프로젝트", "", [("CLAUDE.md", "~/.claude/CLAUDE.md"), ("Skill · Agent", "~/.claude/skills/ · agents/"),
+                                                        ("Hook · 권한", "~/.claude/settings.json"), ("MCP", "claude mcp add -s user"), ("플러그인", "/plugin 설치 → ~/.claude/plugins/")]),
+            ("프로젝트", "./.claude/", "git으로 팀 공유", "on", [("CLAUDE.md", "./CLAUDE.md"), ("Skill · Agent", "./.claude/skills/ · agents/"),
+                                                         ("Hook · 권한", "./.claude/settings.json"), ("MCP", "claude mcp add -s project → ./.mcp.json"), ("팀원", "clone 하면 그대로 · MCP는 처음 한 번 승인")]),
+            ("내 PC만", "이 프로젝트 · 나만", "git에 안 올림", "", [("Hook · 권한", "./.claude/settings.local.json"), ("MCP", "claude mcp add (기본 범위)"),
+                                                          ("쓰는 때", "개인 키 · 실험 · 내 취향")])]
+    out = []
+    for i, (h, path, sub, cls, rows) in enumerate(cols):
+        r = "".join(f'<div class="scp-r"><b>{a}</b><code>{b}</code></div>' for a, b in rows)
+        out.append(f'<div class="scp-c {cls}" style="--d:{i * .25:.2f}s"><div class="scp-h"><b>{h}</b><code>{path}</code><span>{sub}</span></div>{r}</div>')
+    return f'<div class="scp">{"".join(out)}</div>'
+
+
 CSS = """
   /* 표 대신 그림 */
   .v2{width:100%; height:auto; display:block; margin:4px 0 12px;}
@@ -366,5 +381,10 @@ CSS = """
   .tv2r b{font-size:14px; color:#8A94A3;} .tv2r span{font-size:20px; font-weight:800; color:#16233A;}
   .tv2r em{font-style:normal; margin-left:8px; font-weight:900;} .tv2r em.x{color:#C62828;} .tv2r em.o{color:#2E7D32;}
   .tv2a{display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:900; color:#F28C28;}
+  .scp{display:grid; grid-template-columns:1fr 1.15fr .9fr; gap:16px; margin:2px 0 10px;}
+  .scp-c{background:#F4F6F9; border-radius:16px; padding:14px 16px; display:flex; flex-direction:column; gap:6px; animation:v2In .5s both; animation-delay:var(--d);} .scp-c.on{background:#FFF3E6;}
+  .scp-h{display:flex; flex-direction:column; gap:1px; margin-bottom:2px;} .scp-h b{font-size:20px; color:#1F3A5F;} .scp-c.on .scp-h b{color:#EF6C00;}
+  .scp-h code{font-size:14px; font-weight:800; background:none !important; padding:0 !important;} .scp-h span{font-size:12px; color:#6B7785;}
+  .scp-r{background:#fff; border-radius:10px; padding:6px 12px; display:flex; flex-direction:column; gap:1px;} .scp-r b{font-size:12px; color:#6B7785;} .scp-r code{font-size:13px; background:none !important; padding:0 !important; color:#16233A; word-break:break-all;}
   .v2tile b{font-size:21px; color:#16233A;} .v2tile span{font-size:15px; color:#6B7785; line-height:1.45;}
 """

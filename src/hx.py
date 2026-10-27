@@ -648,6 +648,8 @@ def ch2():
             '<div class="ctree">' + code("폴더 구조", '내-프로젝트/\n├── CLAUDE.md                 공통 원칙\n├── .mcp.json                 MCP 서버\n└── .claude/\n    ├── settings.json         권한 · Hook 등록 (팀 공유)\n    ├── settings.local.json   내 PC 전용 (git 제외)\n    ├── skills/\n    │   └── reject-report/\n    │       └── SKILL.md      절차\n    ├── agents/\n    │   └── verifier.md       Sub Agent 하나 = 파일 하나\n    └── hooks/\n        └── guard.py          Hook 스크립트') + "</div>",
             viz2.tiles([("CLAUDE.md", "세션 시작 때 항상"), ("skills/", "요청이 설명과 맞을 때"), ("agents/", "메인이 위임할 때"), ("settings.json", "권한 · Hook · 팀 공유")], 1))
               + note("~/.claude/", "같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용"), "Ch2"),
+        light("전역 · 프로젝트 하네스 위치", viz2.scopes()
+              + note("겹치면", "내 PC만 &gt; 프로젝트 &gt; 전역 순으로 우선 · 팀 규칙은 프로젝트에, 내 습관은 전역에"), "Ch2"),
         light("부품별 로드 · 실행 시점", viz2.tiles([('세션 시작 때', 'CLAUDE.md · Skill 설명 · MCP 도구 목록'), ('필요할 때', 'Skill 본문 · Sub Agent · /명령'), ('도구 호출 전후', '권한 · Hook — 코드가 결정')], 3)
               + note("성격", "CLAUDE.md = 부탁 · Skill = 절차 · Sub Agent = 분업 · Hook = 강제"), "Ch2"),
         light("부탁 · 절차 · 강제", cards([
