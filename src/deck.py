@@ -630,6 +630,7 @@ CSS = '''
   .combo span{background:#EEF1F5; border-radius:14px; padding:22px 28px; font-family:var(--mono);} .combo span.hl{background:#FFF3E6; border:2px solid #F28C28; font-family:var(--serif);}
   .combo b{color:#F28C28;}
   .tline.t4{grid-template-columns:repeat(4,1fr);}
+  .tline .tl.dim{opacity:.5;} .tline.t8 .tl{padding-right:10px;}
   .labtag{background:#F28C28; color:#fff; font-size:12px; font-weight:800; border-radius:6px; padding:3px 9px; letter-spacing:0;}
   .labgrid{margin-top:14px; display:grid; grid-template-columns:1fr; grid-template-rows:auto 1fr; gap:16px; height:100%; padding-bottom:10px;}
   .lt .mine{margin-top:10px; background:#FFF8F1; border:1.5px dashed #F28C28; border-radius:10px; padding:8px 14px; font-size:15px; color:#1F3A5F; font-weight:600;}

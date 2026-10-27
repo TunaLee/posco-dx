@@ -53,6 +53,7 @@ TBLB = ("Terminal-Bench 4.0 리더보드 2026.10", "https://www.tbench.ai/leader
 HARBOR = ("Terminal-Bench · Harbor-Index 2026.6", "https://www.tbench.ai/news/harbor-index")
 A_NOISE = ("Anthropic · Infrastructure noise 2026.2", "https://www.anthropic.com/engineering/infrastructure-noise")
 A_SON55 = ("Anthropic · Claude Sonnet 5.5 발표 2026.9", "https://www.anthropic.com/news/claude-sonnet-5-5")
+A_37 = ("Anthropic · Claude 3.7 Sonnet 포켓몬 실험 2025.2", "https://www.anthropic.com/news/visible-extended-thinking")
 A_FABLE5 = ("Anthropic · Claude Fable 5 발표 2026.6", "https://www.anthropic.com/news/claude-fable-5-mythos-5")
 SC_FABLE5 = ("Claude Fable 5 · Mythos 5 System Card 2026.6", "https://anthropic.com/claude-fable-5-mythos-5-system-card")
 METR_FRR = ("METR Frontier Risk Report 2026.5", "https://metr.org/blog/2026-05-19-frontier-risk-report/")
@@ -156,28 +157,18 @@ def viz(name):
         return f'<div class="capbox">도해 준비 중 · {name}</div>'
 
 
-EVO = [
-    ("챗봇", "2022~", "질문 하나에 답 하나", "더 잘 묻기", "프롬프트 엔지니어링"),
-    ("긴 입력 · 검색", "2023~", "문서를 함께 읽고 답", "무엇을 보여 줄지", "컨텍스트 엔지니어링 · RAG"),
-    ("도구 호출", "2023~24", "조회 · 계산 · 실행", "시스템 연결 방식 통일", "함수 호출 · MCP"),
-    ("에이전트", "2025~", "계획 · 실행 · 확인을 스스로 반복", "반복해도 같은 품질 · 안전 · 비용", "하네스 엔지니어링"),
-    ("멀티에이전트", "2026~", "여러 Agent가 나눠 동시에", "지휘 · 검증 · 측정", "오케스트레이션 · 평가"),
-    ("루프", "2026~", "사람 없이 일정 · 이벤트로 반복", "멈춤 규칙 · 상태 기록 · 사람 판정", "루프 엔지니어링"),
-]
+TL = [("2022.11", "채팅 · ChatGPT 공개"), ("2023.06", "도구 호출 · Function Calling"),
+      ("2024.11", "연결 표준 · MCP"), ("2025.02", "코딩 에이전트 · Claude Code"),
+      ("2025.07", "범용 에이전트 · ChatGPT agent"), ("2025.10", "스킬 · Agent Skills")]
+TL_HX = [("2025~", "하네스 엔지니어링"), ("2026~", "루프 엔지니어링")]
 
 
-def evolution(hl=3):
-    """모델 발전 단계별 — 할 수 있게 된 것 · 새 요구 · 대응."""
-    rows = ["할 수 있게 된 것", "새로 생긴 요구", "대응"]
-    head = '<div class="ev-rl"></div>' + "".join(
-        f'<div class="ev-h{" hl" if i == hl else ""}" style="--d:{i * .18:.2f}s"><b>{n}</b><span>{y}</span></div>'
-        for i, (n, y, *_) in enumerate(EVO))
-    body = ""
-    for r, label in enumerate(rows):
-        body += f'<div class="ev-rl">{label}</div>' + "".join(
-            f'<div class="ev-c r{r}{" hl" if i == hl else ""}" style="--d:{i * .18 + .1:.2f}s">{e[2 + r]}</div>'
-            for i, e in enumerate(EVO))
-    return f'<div class="evo">{head}{body}</div>'
+def timeline(extra=()):
+    """Ch0 연표 · extra 를 주면 앞 연표는 흐리게 두고 뒤에 덧붙임."""
+    hl = {"2023.06", "2025.02"} if not extra else set()
+    items = [(y, t, "hl" if y in hl else ("dim" if extra else "")) for y, t in TL] + [(y, t, "hl") for y, t in extra]
+    tl = "".join(f'<div class="tl {c}"><b>{y}</b><span>{t}</span></div>' for y, t, c in items)
+    return f'<div class="tline{" t8" if extra else ""}" style="grid-template-columns:repeat({len(items)},1fr)">{tl}</div>'
 
 
 def pages_grid(n=72, per=10):
@@ -399,6 +390,20 @@ def measured(no, ch, head, rows, take):
     return stat(f"실습 {no} 실측", ch, table(head, rows) + note("정리", take), OWN_RUN)
 
 
+def pokemon():
+    """포켓몬 하네스 · 과거(부품 여럿) vs 현재(화면 + 버튼)."""
+    parts = [("화면", "게임 화면 캡처", True), ("버튼", "A · B · 방향키 입력", True),
+             ("이동 도구", "좌표만 주면 길 찾기", False), ("기억 메모", "진행 상황 · 할 일 기록", False),
+             ("지도", "마을 · 길 위치", False), ("게임 상태", "위치 · 포켓몬 정보 제공", False)]
+    def side(cls, head, sub, keep_all):
+        chips = "".join(f'<div class="pk-p{"" if keep_all or k else " off"}" style="--d:{i * .15 + .3:.2f}s"><b>{n}</b><span>{d}</span></div>'
+                        for i, (n, d, k) in enumerate(parts))
+        return f'<div class="pk {cls}"><div class="pk-h"><b>{head}</b><span>{sub}</span></div><div class="pk-m">모델</div><div class="pk-g">{chips}</div></div>'
+    return ('<div class="pk2">' + side("old", "과거 Claude", "2025.2~ · 3.7 Sonnet 등", True)
+            + '<div class="pk-arr">→</div>' + side("new", "Claude Fable 5", "2026.6 · 화면만 보고 완주", False) + '</div>'
+            + note("정리", "모델이 못 하던 일을 하네스가 대신 → 모델이 좋아지면 그 부품은 덜어 냄"))
+
+
 def esc(x):
     return x.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
@@ -522,10 +527,6 @@ def opening():
 
 # ── Ch0 AI 에이전트 ─────────────────────────────────────
 def ch0():
-    tl = "".join(f'<div class="tl{" hl" if hl else ""}"><b>{y}</b><span>{t}</span></div>' for y, t, hl in [
-        ("2022.11", "채팅 · ChatGPT 공개", False), ("2023.06", "도구 호출 · Function Calling", True),
-        ("2024.11", "연결 표준 · MCP", False), ("2025.02", "코딩 에이전트 · Claude Code", True),
-        ("2025.07", "범용 에이전트 · ChatGPT agent", False), ("2025.10", "스킬 · Agent Skills", False)])
     return [divider("Ch0", "AI 에이전트", "")] + [
         light("에이전트 등장 배경", cards([
             ("도구 호출", "2023.06 Function Calling · 모델이 부를 함수와 값을 고름", []),
@@ -552,7 +553,7 @@ def ch0():
              METR_FRR, METR_TH),
         light("에이전트 구성 요소", flow([("모델", "읽기 · 판단 · 작성"), ("도구", "검색 · 파일 · 실행"), ("지침", "팀 규칙 · 절차"), ("자료", "양식 · 예시 · 참고")], hl=0)
               + note("다음", "모델을 뺀 나머지 전부 = 하네스"), "Ch0"),
-        light("채팅 → 에이전트 연표", f'<div class="tline" style="grid-template-columns:repeat(6,1fr)">{tl}</div>'
+        light("채팅 → 에이전트 연표", timeline()
               + note("출처", "OpenAI (2023.06 · 2025.07) · Anthropic (2024.11 · 2025.02 · 2025.10)"), "Ch0"),
     ]
 
@@ -593,13 +594,8 @@ def ch1():
             ["회사 소개 · 업무 규칙", "CLAUDE.md"], ["업무 매뉴얼", "Skill"], ["사내 시스템 계정", "Tool · MCP"],
             ["옆 팀 협업", "Sub Agent"], ["결재 · 보안 규정", "Hook · 권한"], ["수습 평가", "평가셋"],
         ]), "Ch1"),
-        light("모델 발전과 요구의 변화", evolution(), "Ch1"),
-        light("하네스가 필요해진 이유", table(["위임형 작업의 문제", "필요해진 것", "하네스 부품"], [
-            ["<b>같은 일을 반복</b>", "매번 같은 형식 · 같은 기준", "지침 · Skill · 평가"],
-            ["<b>사람이 중간을 안 봄</b>", "위험한 실행은 강제로 차단", "Hook · 권한"],
-            ["<b>길어진 작업</b>", "컨텍스트 · 토큰 관리", "Sub Agent · 압축 · 측정"],
-            ["<b>회사만 아는 사실</b>", "확정된 규칙 · 자료 제공", "Skill 참고 자료 · 도구"],
-        ]), "Ch1"),
+        light("채팅 → 에이전트 → 하네스", timeline(TL_HX)
+              + note("정리", "에이전트가 일을 맡게 되면서 → 맡긴 일을 지키는 장치(하네스)가 다음 과제"), "Ch1"),
         light("프롬프트 · 컨텍스트 · 하네스 선택 기준", '''<div class="tline t4">
   <div class="tl"><b>프롬프트</b><span>한 번의 질문을 잘 쓰기</span></div>
   <div class="tl"><b>컨텍스트</b><span>무엇을 보여 줄지 고르기</span></div>
@@ -621,11 +617,11 @@ def ch1():
                     ("8.8", "점", "같은 Sonnet 5.5 · Anthropic 측정 70.6% vs 공개 순위표 61.8%")])
              + note("그래서", "하네스는 비용도 바꾼다 · 남의 점수는 환경이 다르다 → 우리 환경 · 우리 과제로 직접 잰다 (Ch7)"),
              HARBOR, A_NOISE, SC_SONNET55, TBLB),
-        stat("모델 발전과 하네스 규모", "Ch1",
-             quote("예전 Claude 모델은 포켓몬을 하려면 복잡한 도우미 하네스가 필요했다. Claude Fable 5는 화면만 보고 게임을 끝냈다", "Anthropic, Claude Fable 5 발표 2026.6")
-             + hbars([("Mythos 5 · 단일 Agent", 88.0, False, "88.0%"), ("Mythos 5 · 멀티에이전트", 93.3, True, "93.3%")], top=100,
+        stat("포켓몬 하네스 변화", "Ch1", pokemon(), A_37, A_FABLE5),
+        stat("같은 모델 · 다른 하네스", "Ch1",
+             hbars([("Mythos 5 · 단일 Agent", 88.0, False, "88.0%"), ("Mythos 5 · 멀티에이전트", 93.3, True, "93.3%")], top=100,
                      title="BrowseComp · 같은 모델, 구성만 다름")
-             + note("그래서", "하네스는 한 번 만들고 끝이 아니라, 모델이 바뀔 때마다 재고 덜어 낸다"),
+             + note("그래서", "같은 모델도 하네스 구성에 따라 점수가 달라짐"),
              A_FABLE5, SC_FABLE5),
         lab("1-1", "시험 결과 판정 · 하네스 전후", "Ch1",
             "같은 질문 · 같은 데이터 · 바뀌는 것은 CLAUDE.md 한 장",
@@ -645,19 +641,6 @@ def ch1():
             ["<b>판정</b>", "정답", "정답"],
             ["<b>답 형식</b>", "장문 · 이모지 · 근거 없는 조언", "3줄 + <code>out/판정결과.md</code>"],
         ], "판정은 둘 다 맞음 · 달라진 것은 시간 · 형식 · 하지 않을 일"),
-        stat("루프 엔지니어링이 가능해진 이유", "Ch1",
-             '<div class="eqn">'
-             '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div>'
-             '<div class="eq-d">사람 없이 이어서 하는 도구 호출 · 최대 연속 (Anthropic 사내 조사)</div></div>'
-             '<div class="eq-op">+</div>'
-             '<div class="eq-c"><div class="eq-h">하네스가 좋아짐</div><div class="eq-v sm">기록 · 테스트 · 검증 · 멈춤 규칙</div>'
-             '<div class="eq-d">사람이 중간에 안 봐도 품질을 지키는 장치</div></div>'
-             '<div class="eq-op">=</div>'
-             '<div class="eq-c hl"><div class="eq-h">루프 엔지니어링</div><div class="eq-v sm">사람 없이 반복</div>'
-             '<div class="eq-d">일정 · 이벤트로 Agent가 스스로 돌고 사람은 끝에 판정</div></div>'
-             '</div>'
-             + note("다음 단계", "그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)"),
-             C_ANTH_WORK, A_LOOPENG, A_GRAPHENG),
         bridge("다음: Claude Code 하네스 구조", "", "Ch1", "→ Ch2"),
     ]
 
@@ -1566,6 +1549,19 @@ def ch8():
             ["내 하네스 폴더 · 비교표", "사람 판정 · 패들릿 게시"], files=labdir("meta_harness") + " · " + labdir("samples"),
             mine="사전 과제: 반복 업무 하나 + 결과 확인 방법"),
         *labkit('8-1', 'Ch8'),
+        stat("루프 엔지니어링이 가능해진 이유", "Ch8",
+             '<div class="eqn">'
+             '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div>'
+             '<div class="eq-d">사람 없이 이어서 하는 도구 호출 · 최대 연속 (Anthropic 사내 조사)</div></div>'
+             '<div class="eq-op">+</div>'
+             '<div class="eq-c"><div class="eq-h">하네스가 좋아짐</div><div class="eq-v sm">기록 · 테스트 · 검증 · 멈춤 규칙</div>'
+             '<div class="eq-d">사람이 중간에 안 봐도 품질을 지키는 장치</div></div>'
+             '<div class="eq-op">=</div>'
+             '<div class="eq-c hl"><div class="eq-h">루프 엔지니어링</div><div class="eq-v sm">사람 없이 반복</div>'
+             '<div class="eq-d">일정 · 이벤트로 Agent가 스스로 돌고 사람은 끝에 판정</div></div>'
+             '</div>'
+             + note("다음 단계", "그래프 엔지니어링 · 여러 Agent · 검증기 · 사람을 잇는 구조로 (2026.8 제안)"),
+             C_ANTH_WORK, A_LOOPENG, A_GRAPHENG),
         stat("오래 일하는 루프 하네스", "Ch8", two(
             table(["오래 일할 때 생기는 문제", "하네스 장치"], [
                 ["<b>한 번에 다 하려 함</b>", "기능 목록 · 한 번에 하나만"],
@@ -1630,6 +1626,20 @@ def slides():
 
 
 CSS = '''
+  /* 포켓몬 하네스 전후 */
+  .pk2{display:grid; grid-template-columns:1fr 60px 1fr; gap:10px; align-items:stretch; margin:6px 0 16px;}
+  .pk{border:1.5px solid #D9DDE3; border-radius:14px; padding:18px 20px; background:#fff;}
+  .pk.new{border-color:#F28C28; background:#FFF8F1;}
+  .pk-h b{font-size:24px; color:#16233A; margin-right:10px;} .pk-h span{font-size:15px; color:#6B7785;}
+  .pk.new .pk-h b{color:#F28C28;}
+  .pk-m{margin:14px auto 12px; width:120px; text-align:center; padding:10px 0; border-radius:10px; background:#1F3A5F; color:#fff; font-weight:800; font-size:18px;}
+  .pk-g{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .pk-p{border:1.5px solid #1F3A5F; border-radius:10px; padding:10px 12px; background:#fff; animation:bnIn .6s both; animation-delay:var(--d);}
+  .pk-p b{display:block; font-size:18px; color:#16233A;} .pk-p span{font-size:14px; color:#44506A;}
+  .pk-p.off{border-style:dashed; border-color:#C9CFD8; background:transparent; animation:pkOff 1s both; animation-delay:calc(var(--d) + .8s);}
+  .pk-p.off b,.pk-p.off span{color:#AEB6C1; text-decoration:line-through;}
+  @keyframes pkOff{from{opacity:1; background:#fff} to{opacity:.55}}
+  .pk-arr{display:flex; align-items:center; justify-content:center; font-size:36px; font-weight:800; color:#F28C28;}
   /* 실습 진행 · 시킬 일 / 확인할 결과 */
   .qgrid{display:grid; grid-template-columns:1.25fr 1fr; gap:18px; margin-top:14px;}
   .qc{border:1.5px solid #D9DDE3; border-top:5px solid #1F3A5F; border-radius:12px; padding:16px 20px; background:#fff;}
@@ -1647,15 +1657,6 @@ CSS = '''
   @keyframes udraw{from{stroke-dashoffset:1400}}
   @media print{.ucurve .udraw{animation:none}}
   .evo{display:grid; grid-template-columns:120px repeat(6, 1fr); gap:12px 12px; margin:4px 0 6px;}
-  .evo .ev-rl{font-size:16px; font-weight:700; color:#6B7785; display:flex; align-items:center;}
-  .evo .ev-h{background:#1F3A5F; color:#fff; border-radius:12px; padding:16px 16px; position:relative; animation:bnIn .6s both; animation-delay:var(--d);}
-  .evo .ev-h b{display:block; font-size:22px;} .evo .ev-h span{font-size:15px; opacity:.75;}
-  .evo .ev-h:not(:nth-child(6))::after{content:"→"; position:absolute; right:-14px; top:50%; transform:translateY(-50%); color:#9AA5B1; font-weight:800;}
-  .evo .ev-h.hl{background:#F28C28;}
-  .evo .ev-c{background:#fff; border:1px solid #E1E5EB; border-radius:10px; padding:16px 16px; font-size:18px; line-height:1.4; min-height:84px; color:#1F2A37; font-weight:600; animation:bnIn .6s both; animation-delay:var(--d);}
-  .evo .ev-c.r2{background:#F6F8FA; color:#1F3A5F; font-weight:800;}
-  .evo .ev-c.hl{border-color:#F28C28; background:#FFF8F1;} .evo .ev-c.r2.hl{background:#F28C28; color:#fff;}
-  @media print{.evo .ev-h,.evo .ev-c{animation:none}}
   .pgrid{display:grid; grid-template-columns:repeat(36, 1fr); gap:4px; margin:2px 0 4px; max-width:1000px;}
   .pgrid i{display:block; aspect-ratio:1/1.414; background:#fff; border:1.5px solid #9AA5B1; border-radius:2px; max-height:34px; animation:bnIn .4s both; animation-delay:var(--d);}
   .pgcap{font-size:13px; color:#8A94A3; margin-bottom:10px;}
