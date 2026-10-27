@@ -663,6 +663,8 @@ def ch2():
             "command · 버튼", [("사람이 /이름", "입력해야 실행"), ("한 파일", ".claude/commands/이름.md"), ("맞는 일", "배포 · 발송 · 사람이 시작할 일")],
             "Skill · 업무 매뉴얼", [("Claude가 골라 씀", "설명을 보고 스스로 · /이름도 가능"), ("폴더", "SKILL.md + 참고 자료"), ("맞는 일", "업무 절차 · 판단 기준 · 양식")])
               + note("새로 만들 땐 Skill", "command는 합쳐진 예전 방식 · 사람만 부르게 하려면 disable-model-invocation: true"), "Ch2"),
+        light("Sub Agent의 흐름", viz2.subagent_flow()
+              + note("핵심", "많이 읽는 일은 Sub Agent의 책상에서 · 메인은 결과만 받아 가볍게 · 일이 끝나면 Sub Agent는 닫힘"), "Ch2"),
         light("Sub Agent 경계 설계", viz2.tiles([('도구', 'Read · Grep · Glob'), ('권한', '쓰기 금지'), ('컨텍스트', '변경 파일만'), ('반환 형식', '파일:줄 · 문제 · 근거')], 4)
               + note("예", "reviewer Agent · 네 가지를 정의 파일에 적음"), "Ch2"),
         light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),

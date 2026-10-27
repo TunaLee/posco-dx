@@ -271,6 +271,41 @@ def calc_compare():
     return f'<div class="tv2">{a}<div class="tv2a">→</div>{b}</div>'
 
 
+def subagent_flow():
+    """Sub Agent 흐름 — 요청 → 위임문 → 새 컨텍스트에서 읽기 → 결과만 → 닫힘. 메인 컨텍스트는 조금만 참."""
+    s = [f"<defs>{_defs('sub')}</defs>"]
+    s.append(_box(20, 150, 190, 90, "사용자", "「shop 코드 리뷰해 줘」", fill="#F4F6F9", stroke=G, d=0))
+    s.append(_arrow(215, 178, 285, 178, d=.3, label="① 요청"))
+    s.append(_box(295, 120, 250, 150, "메인 Agent", "", fill="#fff", stroke=K, d=.4))
+    # 메인 컨텍스트 막대 (조금만)
+    s.append('<g class="v2-in" style="--d:.5s"><text x="315" y="232" class="v2-s">컨텍스트</text>'
+             '<rect x="315" y="240" width="210" height="14" rx="7" fill="#EEF1F5"/>'
+             '<rect x="315" y="240" width="40" height="14" rx="7" fill="#1F3A5F" class="sub-grow" style="--w:70px;--d:3.6s"/></g>')
+    s.append(_arrow(550, 160, 690, 160, c=O, d=1.0, label="② 위임문"))
+    s.append('<g class="v2-in" style="--d:1.1s"><text x="620" y="182" text-anchor="middle" class="v2-s" style="font-size:12px">목표 · 범위 · 도구 · 반환 형식</text></g>')
+    # Sub Agent (점선 · 새로 생김 → 닫힘)
+    s.append('<g class="sub-life">'
+             '<rect x="700" y="60" width="270" height="280" rx="16" fill="#FFF8F1" stroke="#F28C28" stroke-width="2.4" stroke-dasharray="8 6"/>'
+             '<text x="835" y="92" text-anchor="middle" class="v2-t">Sub Agent</text>'
+             '<text x="835" y="114" text-anchor="middle" class="v2-s">security-reviewer · 새 컨텍스트</text>'
+             + "".join(f'<rect x="{722 + i * 78}" y="128" width="70" height="26" rx="13" fill="#fff" stroke="#1F3A5F"/>'
+                       f'<text x="{757 + i * 78}" y="146" text-anchor="middle" class="v2-l" style="fill:#1F3A5F">{t}</text>' for i, t in enumerate(["Read", "Grep", "Glob"]))
+             + '<text x="720" y="282" class="v2-s">컨텍스트</text><rect x="720" y="290" width="230" height="14" rx="7" fill="#F4E3D0"/>'
+             '<rect x="720" y="290" width="20" height="14" rx="7" fill="#F28C28" class="sub-grow" style="--w:220px;--d:2.0s"/>'
+             '<text x="835" y="328" text-anchor="middle" class="v2-s">③ 많이 읽어도 여기에만 쌓임</text></g>')
+    # 파일들
+    for i, f in enumerate(["orders.py", "payment.py", "users.py", "refund.py"]):
+        y = 170 + i * 26
+        s.append(f'<g class="v2-in" style="--d:{1.8 + i * .25:.2f}s"><rect x="1000" y="{y}" width="150" height="22" rx="5" fill="#fff" stroke="#C9CFD8"/>'
+                 f'<text x="1012" y="{y + 16}" class="v2-l" style="fill:#16233A;font-family:var(--mono,monospace)">{f}</text></g>')
+    s.append(_arrow(990, 225, 975, 225, c=O, d=1.8))
+    # 결과만
+    s.append(_arrow(690, 240, 550, 240, c=GR, d=3.2, label="④ 결과만"))
+    s.append('<g class="v2-in" style="--d:3.3s"><text x="620" y="262" text-anchor="middle" class="v2-s" style="font-size:12px;fill:#2E7D32">보안 지적 3건 · 파일:줄</text></g>')
+    s.append(_arrow(285, 228, 215, 228, c=K, d=4.0, label="⑤ 답"))
+    return f'<svg viewBox="0 0 1180 360" class="v2">{"".join(s)}</svg>'
+
+
 CSS = """
   /* 표 대신 그림 */
   .v2{width:100%; height:auto; display:block; margin:4px 0 12px;}
@@ -279,6 +314,9 @@ CSS = """
   .v2-big{font-size:26px; font-weight:900;} .v2-n{font-size:17px; font-weight:900; fill:#fff;}
   .v2-code{font-size:20px; font-weight:800; fill:#FF8A80; font-family:var(--mono, monospace);}
   .v2-in{animation:v2In .5s ease-out both; animation-delay:var(--d);}
+  .sub-grow{animation:subGrow 1.2s ease-out both; animation-delay:var(--d);} @keyframes subGrow{to{width:var(--w)}}
+  .sub-life{animation:subLife 5.6s ease both;} @keyframes subLife{0%,14%{opacity:0} 22%,70%{opacity:1} 100%{opacity:.25}}
+  @media print{.sub-grow{animation:none; width:var(--w)} .sub-life{animation:none}}
   .tas-run{stroke-dashoffset:0; animation:tasRun 3s linear infinite;} @keyframes tasRun{to{stroke-dashoffset:-48}}
   .ana-spin{transform-origin:590px 225px; animation:anaSpin 12s linear infinite;} @keyframes anaSpin{to{transform:rotate(360deg)}}
   @keyframes v2In{from{opacity:0; transform:translateY(8px)}}
