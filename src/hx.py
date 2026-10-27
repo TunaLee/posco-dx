@@ -12,6 +12,7 @@ import explain
 import intro
 import labkits
 import mcp_fig
+import viz2
 
 deck.LAB_KIND.update({"1-1": ("필수", 20), "2-1": ("필수", 25), "2-2": ("필수", 20), "2-3": ("필수", 15),
                       "3-1": ("필수", 15), "4-1": ("필수", 30), "5-1": ("필수", 25),
@@ -773,102 +774,12 @@ def ch2():
         result("2-2", "Ch2", [("보고서 Skill", "두 번째 요청에 호출"), ("보고서 숫자", "불합격 9 · 근접 28 <em>정답</em>"),
                                  ("원인 조사 Agent", "69초"), ("찾은 원인", "인장강도 765 &gt; 상한 720")],
                "저장 위치는 Skill이 아니라 CLAUDE.md를 따름 · 같은 규칙은 한 곳에"),
-        stat("DESIGN.md · 디자인 하네스", "Ch2", two(
-            '<div class="ctree">' + code("DESIGN.md (예 · 이 강의 장표)", '---\ncolors: { primary: "#1F3A5F", accent: "#F28C28" }\ntypography: { body: Pretendard 15, heading: Pretendard 800 }\nrounded: { card: 12 }\nspacing: { unit: 8 }\n---\n## Overview\n사내 업무 도구 · 정보는 빽빽하게 · 강조는 주황 하나\n\n## Components\n- 표: 헤더 primary · 숫자는 오른쪽 정렬\n\n## Do\'s and Don\'ts\n- Do: 상태는 색 + 글자 함께\n- Don\'t: 그라데이션 · 그림자 남발') + "</div>",
-            table(["섹션 (이 순서)", "담는 것"], [
-                ["<b>YAML 토큰</b>", "색 · 글꼴 · 모서리 · 간격 기준값"],
-                ["<b>Overview</b>", "화면의 성격 한두 줄"],
-                ["<b>Colors · Typography</b>", "토큰을 어디에 쓰는지"],
-                ["<b>Layout · Elevation · Shapes</b>", "배치 · 깊이 · 모양 규칙"],
-                ["<b>Components</b>", "버튼 · 표 · 카드 규칙"],
-                ["<b>Do's and Don'ts</b>", "하지 말 것"],
-            ]))
-             + note("DESIGN.md", "에이전트에게 디자인 규칙을 알려 주는 파일 형식 (Google Labs · alpha)"),
-             D_DESIGNMD),
-        light("개인 디자인 하네스 적용", two(
-            '<div>' + flow([("DESIGN.md", "내 디자인 규칙"), ("CLAUDE.md", "따르라는 한 줄"), ("검사", "lint"), ("판정", "사람")], hl=0)
-            + table(["하네스 부품", "디자인에서는"], [
-                ["<b>지침</b>", "DESIGN.md · CLAUDE.md 한 줄"],
-                ["<b>강제 · 검사</b>", "npx @google/design.md lint DESIGN.md · 토큰 밖 색 검사"],
-                ["<b>평가</b>", "화면 캡처를 사람이 보고 판정"],
-            ]) + '</div>',
-            '<div class="ptall">' + code("DESIGN.md 만들기 · 이렇게 말하면 됨", "이 화면(또는 첨부한 스크린샷)의 스타일을 정리해서 DESIGN.md 를 만들어 줘.\n맨 위에는 색 · 글꼴 · 모서리 · 간격을 YAML 토큰으로, 아래는 Overview부터 Do's and Don'ts까지 형식 순서대로.\n그리고 앞으로 화면을 만들거나 고칠 땐 DESIGN.md 를 따르라고 CLAUDE.md 에 적어 줘.") + "</div>")
-              + note("어디에", "Ch8 내 업무 툴에 화면이 있으면 같이 넣기 · 형식이 alpha라 바뀔 수 있음"), "Ch2"),
-        light("놓치면 생기는 문제", table(["유형", "예", "피해"], [
-            ["<b>운영 데이터 변경 · 삭제</b>", "DROP · DELETE · 볼륨 삭제 API", "서비스 중단 · 복구 불가"],
-            ["<b>파일 · 드라이브 삭제</b>", "홈 폴더 · 드라이브 전체 삭제 명령", "작업물 · 설정 전부 손실"],
-            ["<b>이력 파괴</b>", "git push --force", "팀 커밋 이력 덮어씀"],
-            ["<b>비밀 유출</b>", "비밀 파일 · 토큰을 읽고 출력 · 전송", "계정 탈취 · 과금"],
-            ["<b>스스로 권한 올리기</b>", "설정 · Hook 파일 수정", "다른 가드가 모두 꺼짐"],
-            ["<b>검증 무력화</b>", "실패하는 테스트를 고쳐 통과", "버그가 그대로 배포"],
-        ]), "Ch2"),
-        stat("실제 사고 사례 (2026)", "Ch2", table(["시기 · 도구", "무슨 일", "없었던 가드"], [
-            ["<b>2026.4</b> Cursor + Opus 4.6", "스테이징 작업 중 찾은 토큰으로 API 한 번 → 운영 DB와 백업 9초 만에 삭제", "자격 증명 분리 · 파괴적 API 차단"],
-            ["<b>2026.2</b> OpenClaw (메일 Agent)", "「실행 전 확인」 지시가 압축으로 사라져 메일 200+ 삭제 · STOP 무시", "지시 밖의 강제 장치"],
-            ["<b>2026.3</b> Claude Code", "push 거절 → rebase 후 force push로 원격 이력 덮어씀", "force push 차단 규칙"],
-            ["<b>2026.7</b> Codex + GPT-5.6", "임시 폴더 처리 중 홈 경로를 덮어써 홈 폴더 삭제", "샌드박스 (Full Access 모드)"],
-        ]) + note("통계", "실제 피해 137건 중 65건이 삭제 · 코드 파괴 · 대부분 확인 관문 없는 코딩 에이전트 (Cyera 2026.5)"),
-             INC_POCKET, INC_OPENCLAW, INC_CC_PUSH, INC_CODEX, CYERA),
-        stat("이전 사고 사례 (2025)", "Ch2", table(["시기 · 도구", "무슨 일", "없었던 가드"], [
-            ["<b>2025.7</b> Replit Agent", "코드 동결을 대문자로 11번 지시했는데도 운영 DB 삭제", "개발 · 운영 분리 · 차단 규칙"],
-            ["<b>2025.11</b> Google Antigravity", "캐시 정리 요청에 D: 드라이브 전체 삭제 (자동 실행 모드)", "파괴적 명령 승인"],
-            ["<b>2025~26</b> Claude Code · Copilot · Cursor", "저장소의 설정 · Hook 파일로 명령 실행 · 자기 권한 올리기 (CVE 다수, 패치됨)", "설정 파일 보호"],
-        ]) + quote("모든 대문자로 열한 번이나 하지 말라고 했다", "Jason Lemkin (Replit 사고 당사자)"),
-             INC_REPLIT, INC_ANTIG, INC_CVE),
-        light("사고에서 배운 점", table(["교훈", "사례", "가드"], [
-            ["<b>지시는 잠금장치가 아님</b>", "Replit · OpenClaw", "Hook · 권한 deny 규칙"],
-            ["<b>닿는 자격 증명 = 권한</b>", "PocketOS", "운영 · 개발 계정 분리 · 최소 권한"],
-            ["<b>자동 실행 + 경로 실수 = 전체 삭제</b>", "Codex · Antigravity", "샌드박스 · 파괴적 명령 승인"],
-            ["<b>가드 자체도 공격 대상</b>", "설정 · Hook 파일 CVE", "설정 파일 보호 · 신뢰 확인"],
-        ]), "Ch2"),
-        stat("가드가 놓치는 비율", "Ch2",
-             hbars([("오토 모드 · 실제 과잉 행동", 17, True, "17% 놓침"), ("오토 모드 · 데이터 유출 시도", 5.7, False, "5.7% 놓침"),
-                    ("GPT-5.6 Sol · 확인 정책 없음", 2.9, False, "파괴적 행동 2.9%"), ("Opus 5.5 · 격리 환경", 1.5, False, "탈출 시도 1.5%"),
-                    ("최신 모델 · 프롬프트 주입", 8.5, False, "1.0~8.5% 통과")], top=20,
-                   title="모델 · 분류기 단계에서 걸러지지 않는 비율 (2026 공식 자료)")
-             + note("계산해 보면", "하루 위험 행동 100건 · 17% 놓침 → 17건이 그대로 실행"),
-             A_AUTO, SC_GPT6, SC_OPUS55, SC_HAIKU55),
-        stat("사람 승인의 한계", "Ch2",
-             big([("93", "%", "승인 요청을 그대로 승인 (승인 피로)", True),
-                  ("17", "%", "자동 분류기가 놓친 과잉 행동"),
-                  ("0.4", "%", "안전한 명령을 잘못 막은 비율")])
-             + note("2026 현재", "Claude Code 대부분 사용자의 기본 권한 = 오토 모드 · 막을 것은 Hook · 권한으로 강제"),
-             A_AUTO, SC_OPUS55),
-        stat("모델별 프롬프트 주입 성공률", "Ch2",
-             hbars([("Gemini 4 Argon", 0.7, False, "0.7%"), ("Claude Opus 5.5", 1.0, False, "1.0%"), ("Claude Fable 5.1", 1.0, False, "1.0%"),
-                    ("Claude Sonnet 5.5", 3.4, False, "3.4%"), ("Gemini 3.8 Flash", 5.5, False, "5.5%"), ("Claude Haiku 5.5", 7.1, False, "7.1%"),
-                    ("GPT-6 Astra", 8.5, True, "8.5%")], top=10, title="간접 프롬프트 주입 성공률 · 15번 시도 · 같은 공격 세트 (Anthropic 측정)")
-             + note("하네스로", "외부 문서 · 웹 · 메일은 읽기 전용 Agent에 · 쓰기 · 전송은 Hook으로 막기"),
-             SC_HAIKU55, SC_GPT6),
-        stat("메일 Agent 프롬프트 주입 사례", "Ch2",
-             flow([("공격자 메일", "흰 글씨 · 숨은 지시"), ("Agent가 메일을 읽음", "요약 · 분류 중"), ("지시를 따름", "다른 메일 · 파일 검색"),
-                   ("밖으로 전송", "이미지 URL · 폼 · 링크")], hl=3)
-             + table(["사례", "무슨 일", "결과"], [
-                 ["<b>Superhuman AI</b> (2026.1)", "받은 메일 속 숨은 지시 → 다른 민감 메일 수십 통 내용을 공격자 구글 폼으로", "고위험 판정 · 수정"],
-                 ["<b>OpenAI Codex</b> (2026.4)", "메일 정리 중 외부 메일의 주입 → 연결된 데이터 유출", "제보 후 수정"],
-                 ["<b>Microsoft 365 Copilot</b> (2025.6)", "메일 한 통으로 클릭 없이 · 나중에 다른 질문을 해도 내부 데이터를 이미지 URL에 실어 전송 (EchoLeak)", "CVSS 9.3 · 패치"],
-             ])
-             + note("치명적 3요소", "비공개 데이터 접근 + 외부 입력 + 밖으로 보내는 통로 → 셋이 만나면 유출")
-             + note("하네스로", "하나를 끊기 · 외부 메일은 읽기 전용 Agent · 외부 전송은 Hook 차단 · 발송은 사람"),
-             INC_SUPERHUMAN, INC_CODEXMAIL, INC_ECHOLEAK, TRIFECTA),
-        stat("안전장치 유무별 공격 성공률", "Ch2",
-             hbars([("Opus 5.5 · 모델만", 54.6, False, "54.6%"), ("Opus 5.5 · 탐지기 추가", 11.1, True, "11.1%")], top=60,
-                   title="코딩 Agent 대상 적응형 공격 성공률 (200번 × 40개 시나리오)")
-             + hbars([("GPT-5.6 Sol · 확인 정책 없음", 2.9, False, "2.9%"), ("GPT-5.6 Sol · 확인 정책 있음", 0.0, True, "0%")], top=4,
-                     title="파괴적 행동 비율")
-             + note("브라우저", "안전장치 없이 0.09~3.64% → 오토 모드 켜면 모든 모델 0% (110개 시나리오)"),
-             SC_OPUS55, SC_GPT6),
-        light("가드 4단계", table(["단계", "성격", "한계"], [
-            ["<b>① 모델의 조심성</b>", "확률적 · 지시를 잘 따름", "압축 · 긴 작업에서 지시가 묻힘"],
-            ["<b>② 오토 모드 분류기</b>", "확률적 · 사용자 말 기준으로 판정", "실제 과잉 행동 17% 놓침 · 허용 목록은 검사 안 함"],
-            ["<b>③ Hook · 권한 규칙</b>", "결정적 · 코드로 매번 차단", "규칙에 없는 우회 경로"],
-            ["<b>④ 계정 · 환경 분리</b>", "원천 차단 · 권한 자체가 없음", "설정 비용"],
-        ]) + note("원칙", "절대 일어나면 안 되는 일은 ③ · ④로 · ① · ②는 추가 안전망"), "Ch2"),
-        stat("CLAUDE.md와 Hook의 강제력 차이", "Ch2",
-             quote("CLAUDE.md 지침은 권고일 뿐이다. Hook은 결정적이고, 그 동작이 반드시 일어나게 보장한다", "Claude Code Best practices")
-             + big([("33", "개", "Hook을 걸 수 있는 이벤트"), ("exit 2", "", "PreToolUse에서 도구 호출 차단", True),
-                    ("수만 → 수백", "토큰", "Hook으로 로그에서 ERROR 줄만 넘길 때")]),
-             D_BP, D_HOOKS, D_COSTS),
+        stat("Replit 운영 DB 삭제 사고", "Ch2", viz2.incident()
+             + quote("모든 대문자로 열한 번이나 하지 말라고 했다", "Jason Lemkin · Replit 사고 당사자 (2025.7)"), INC_REPLIT),
+        stat("프롬프트 주입", "Ch2", viz2.injection()
+             + note("하네스로", "읽기는 허용 · 승인 · 전송 · 삭제는 Hook으로 막기 · 발송은 사람"), INC_SUPERHUMAN, TRIFECTA),
+        stat("부탁 vs Hook", "Ch2", viz2.ask_vs_hook()
+             + note("Claude Code 문서", "CLAUDE.md는 권고 · Hook은 결정적 — 반드시 일어나게 보장"), D_BP, D_HOOKS),
         light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", esc('"PreToolUse": [{\n  "matcher": "mcp__lims__approve_shipment",\n  "hooks": [{ "type": "command",\n             "command": "python solution/hooks/approve_guard.py" }]\n}]'))
               + code("solution/hooks/approve_guard.py (요점)", esc('event = json.load(sys.stdin)\ncoil = event["tool_input"]["coil_id"]\nprint(json.dumps({"hookSpecificOutput": {\n  "hookEventName": "PreToolUse",\n  "permissionDecision": "deny",\n  "permissionDecisionReason": f"출하 승인({coil})은 품질 담당자가 직접"}}))')), "Ch2"),
         lab("2-3", "출하 승인은 사람만 · Hook", "Ch2",
@@ -888,28 +799,16 @@ def ch2():
              + note("공통", "같은 부품: 지침 · Skill · Sub Agent · Hook · 평가 → 파일을 읽고 규칙대로 결과물을 만드는 일이면 모두 대상")
              + big([("20", "%", "Codex 주간 사용자 중 개발자가 아닌 지식 노동자"), ("1", "번", "Claude Code로 블로그 글 하나 · 채팅은 13번 주고받음", True)], 2),
              OAI_CODEX, A_ECON26),
-        light("하네스로 만들기 좋은 업무 · 맞지 않는 업무", two(
-            table(["만들기 좋은 업무", "이유"], [
-                ["<b>자주 반복</b>", "한 번 만든 지침 · Skill · Hook을 계속 재사용"],
-                ["<b>규칙 · 기준이 분명</b>", "「잘했다」를 정해야 지침으로 고정 가능"],
-                ["<b>결과 확인 가능</b>", "평가셋 · 검증 Agent · 테스트로 자동 확인"],
-                ["<b>회사만 아는 지식 필요</b>", "규정 · 양식 · 확정 사항을 넣어 줘야 함"],
-                ["<b>막아야 할 구간이 있음</b>", "Hook · 권한으로 강제"],
-            ]),
-            table(["맞지 않는 업무", "이유"], [
-                ["<b>한 번 하고 끝</b>", "대화로 시키는 편이 빠름"],
-                ["<b>기준이 매번 다른 판단</b>", "기획 · 협상 · 아이디어"],
-                ["<b>확인할 방법이 없음</b>", "좋아졌는지 알 수 없음"],
-                ["<b>되돌릴 수 없고 확인 장치도 없음</b>", "결재 · 송금은 사람 승인이 기본"],
-            ])), "Ch2"),
-        light("하네스 적용 예시 여섯 유형", table(["유형", "실습 예시", "내 업무라면 (예)", "하네스 핵심"], [
-            ["<b>문의 응대형</b>", "사내 문의 답변", "고객 클레임 1차 답변 · 시스템 사용 문의", "규정 근거 Skill · 승인 필요 건은 사람에게 · 발송 차단"],
-            ["<b>문서 추출 · 계산형</b>", "사양서 → 견적", "발주서 검토 · 계약 조항 추출", "추출 양식 Skill · 불일치면 보류 · 원본 수정 차단"],
-            ["<b>기록 → 보고서형</b>", "점검 기록 → 주간 보고서", "장애 주간 보고 · 생산 실적 보고", "기준값 · 양식 Skill · 빈 값은 확인 필요 · 수치 대조"],
-            ["<b>비교 · 검토형</b>", "규정 개정 비교 · 코드 리뷰", "계약 변경점 · 설정 변경 리뷰", "비교 절차 Skill · 검증 Agent · 고치지 않고 판정"],
-            ["<b>정리 · 작성형</b>", "회의록 → 할 일 · 안내 메일", "회의 후속 조치 · 공지 · 협력사 메일", "필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지"],
-            ["<b>개발형</b>", "내 업무 툴 (Ch8)", "MES 로그 분석 · 정산 검증 배치 · 테스트 보강", "Superpowers: 설계 → 계획 → Sub Agent TDD · 리뷰"],
-        ]) + note("샘플", labdir("samples") + " · 11개 업무 분야 가상 데이터 · 분야마다 하네스 주제 예시 3개"), "Ch2"),
+        light("하네스에 맞는 업무", viz2.fit(
+            [("자주 반복", "한 번 만들고 계속 재사용"), ("기준이 분명", "「잘했다」를 정할 수 있음"), ("결과 확인 가능", "테스트 · 정답 · 검증 Agent"),
+             ("회사만 아는 지식", "규정 · 양식 · 확정 사항"), ("막을 구간이 있음", "Hook으로 강제")],
+            [("한 번 하고 끝", "대화가 더 빠름"), ("기준이 매번 다름", "기획 · 협상 · 아이디어"), ("확인할 방법 없음", "좋아졌는지 모름"),
+             ("되돌릴 수 없음", "결재 · 송금은 사람")]), "Ch2"),
+        light("하네스 적용 예시 여섯 유형", viz2.tiles([
+            ("문의 응대", "클레임 1차 답변 · 규정 근거 · 발송은 사람"), ("문서 추출 · 계산", "발주서 · 계약 조항 · 불일치면 보류"),
+            ("기록 → 보고서", "생산 실적 · 장애 주간 보고 · 수치 대조"), ("비교 · 검토", "계약 변경점 · 설정 리뷰 · 고치지 않고 판정"),
+            ("정리 · 작성", "회의 후속 조치 · 공지 · 약속 금지"), ("개발", "MES 로그 분석 · 정산 배치 · Superpowers")], 3)
+              + note("샘플", labdir("samples") + " · 11개 업무 분야 가상 데이터"), "Ch2"),
         bridge("다음: 컨텍스트 설계", "", "Ch2", "→ Ch3 컨텍스트 엔지니어링"),
     ]
 
@@ -1047,17 +946,7 @@ def ch4():
             ["<b>Anthropic 내부</b>", "엔지니어 132명 · 세션 20만 건 분석", "Claude Code 사내 사용", "업무 중 Claude 28% → 59% · 「완전히 맡길 수 있는 일은 0~20%」"],
         ]) + note("하네스의 두 축", "가이드(미리 알려 주기: 규칙 · Skill) + 센서(결과 확인: 테스트 · 린트 · 리뷰) — martinfowler.com"),
              C_WOOWA, C_SHOPIFY, C_RAKUTEN, C_ANTH_WORK, C_FOWLER),
-        stat("Claude Code 밖의 하네스 요소", "Ch4", table(["요소", "무엇", "적용 예"], [
-            ["<b>AGENTS.md</b>", "도구 공통 규칙 파일 표준 (Linux Foundation)", "오픈소스 6만+ 프로젝트 · Copilot · Codex · Cursor가 읽음"],
-            ["<b>Copilot · Cursor 규칙</b>", "copilot-instructions.md · 경로별 .instructions.md · .cursor/rules", "배달의민족 경로별 규칙"],
-            ["<b>MCP</b>", "사내 도구 · 데이터 연결 표준", "Stripe 사내 도구 400+"],
-            ["<b>CI 연동</b>", "PR 리뷰 · 수정 봇", "Copilot 코드 리뷰 6천만 건 · GitHub 리뷰 5건 중 1건 이상 · claude-code-action"],
-            ["<b>샌드박스</b>", "파일 · 네트워크 격리 · microVM", "Claude Code 샌드박스로 권한 확인 −84% · Stripe 격리 devbox"],
-            ["<b>평가 · 레드팀</b>", "평가셋 · 공격 시나리오 자동 실행", "promptfoo (OpenAI 인수 2026.3) · Spotify LLM judge"],
-            ["<b>관측</b>", "에이전트 실행 트레이스 · 로그", "Langfuse · Spotify MLflow 트레이스"],
-            ["<b>프레임워크 · SDK</b>", "에이전트를 코드로 조립", "Claude Agent SDK · OpenAI Agents SDK · LangGraph · Google ADK"],
-            ["<b>워크트리</b>", "병렬 에이전트 작업 분리", "Codex 앱 · Claude Code 모두 에이전트마다 워크트리"],
-        ]), C_AGENTSMD, C_COPILOT_RV, C_SANDBOX, C_STRIPE),
+        stat("Claude Code 밖의 하네스 요소", "Ch4", viz2.outside(), C_AGENTSMD, C_COPILOT_RV, C_SANDBOX, C_STRIPE),
         stat("하네스가 효과적일 때 · 아닐 때", "Ch4", two(
             table(["효과적일 때", "근거"], [
                 ["<b>좁고 반복 · 확인 가능</b>", "Airbnb 97% 자동 · Spotify 60~90% 절감"],
@@ -1098,6 +987,27 @@ def ch4():
             ["<b>토큰</b>", "상시 로드되는 Skill · 지침 양"],
             ["<b>사내 규정</b>", "외부 저장소 설치 허용 여부"],
         ]) + note("원칙", "공개 하네스도 내 평가셋으로 잰 뒤에 쓴다"), "Ch4"),
+        stat("DESIGN.md · 디자인 하네스", "Ch4", two(
+            '<div class="ctree">' + code("DESIGN.md (예 · 이 강의 장표)", '---\ncolors: { primary: "#1F3A5F", accent: "#F28C28" }\ntypography: { body: Pretendard 15, heading: Pretendard 800 }\nrounded: { card: 12 }\nspacing: { unit: 8 }\n---\n## Overview\n사내 업무 도구 · 정보는 빽빽하게 · 강조는 주황 하나\n\n## Components\n- 표: 헤더 primary · 숫자는 오른쪽 정렬\n\n## Do\'s and Don\'ts\n- Do: 상태는 색 + 글자 함께\n- Don\'t: 그라데이션 · 그림자 남발') + "</div>",
+            table(["섹션 (이 순서)", "담는 것"], [
+                ["<b>YAML 토큰</b>", "색 · 글꼴 · 모서리 · 간격 기준값"],
+                ["<b>Overview</b>", "화면의 성격 한두 줄"],
+                ["<b>Colors · Typography</b>", "토큰을 어디에 쓰는지"],
+                ["<b>Layout · Elevation · Shapes</b>", "배치 · 깊이 · 모양 규칙"],
+                ["<b>Components</b>", "버튼 · 표 · 카드 규칙"],
+                ["<b>Do's and Don'ts</b>", "하지 말 것"],
+            ]))
+             + note("DESIGN.md", "에이전트에게 디자인 규칙을 알려 주는 파일 형식 (Google Labs · alpha)"),
+             D_DESIGNMD),
+        light("개인 디자인 하네스 적용", two(
+            '<div>' + flow([("DESIGN.md", "내 디자인 규칙"), ("CLAUDE.md", "따르라는 한 줄"), ("검사", "lint"), ("판정", "사람")], hl=0)
+            + table(["하네스 부품", "디자인에서는"], [
+                ["<b>지침</b>", "DESIGN.md · CLAUDE.md 한 줄"],
+                ["<b>강제 · 검사</b>", "npx @google/design.md lint DESIGN.md · 토큰 밖 색 검사"],
+                ["<b>평가</b>", "화면 캡처를 사람이 보고 판정"],
+            ]) + '</div>',
+            '<div class="ptall">' + code("DESIGN.md 만들기 · 이렇게 말하면 됨", "이 화면(또는 첨부한 스크린샷)의 스타일을 정리해서 DESIGN.md 를 만들어 줘.\n맨 위에는 색 · 글꼴 · 모서리 · 간격을 YAML 토큰으로, 아래는 Overview부터 Do's and Don'ts까지 형식 순서대로.\n그리고 앞으로 화면을 만들거나 고칠 땐 DESIGN.md 를 따르라고 CLAUDE.md 에 적어 줘.") + "</div>")
+              + note("어디에", "실습 4-1 실시간 판정 탭 · Ch8 내 업무 툴 · 형식이 alpha라 바뀔 수 있음"), "Ch4"),
         lab("4-1", "Superpowers로 실시간 판정 탭", "Ch4",
             "공개 하네스의 설계 → 계획 → TDD 흐름으로 탭 하나 완성",
             ["Superpowers 설치", "실시간 판정 탭 브레인스토밍", "설계 · 계획 승인 → 구현 · 테스트", "시뮬레이터 ×5 · 화면이 바뀌는지"],
@@ -1118,22 +1028,11 @@ def ch5():
         stat("여러 말, 한 마차", "Ch5",
              '<div class="phwide">' + photo("horse_team.jpg", "여러 말을 한 마차에", "마구로 묶여야 한 방향으로 끈다 = 멀티에이전트") + "</div>",
              PH_TEAM),
-        light("단일 Agent의 한계", table(["한계", "증상"], [
-            ["<b>컨텍스트 과부하</b>", "조사 · 구현 · 검증이 한 책상에 쌓임"],
-            ["<b>자기 검증</b>", "자기가 쓴 답을 자기가 채점 → 관대함"],
-            ["<b>순차 처리</b>", "독립 작업도 하나씩"],
-        ]), "Ch5"),
+        light("단일 Agent의 한계와 해소", viz2.single_to_multi(), "Ch5"),
         light("IT 팀에 비유한 멀티에이전트", flow([
-            ("기획자", "요구 · 완료 기준"), ("개발팀장", "일 나누기 · 맡기기 · 취합"),
-            ("개발팀원 여럿", "맡은 일만 · 각자 책상"), ("QA", "고치지 않고 판정"), ("팀장 보고", "결과 하나로")], hl=1)
-            + table(["IT 팀", "멀티에이전트", "Claude Code에서"], [
-                ["<b>기획자</b>", "사용자", "요청 · 완료 기준"],
-                ["<b>개발팀장</b>", "메인 Agent (Supervisor)", "CLAUDE.md 나누기 규칙 · 지휘 Skill"],
-                ["<b>개발팀원</b>", "Sub Agent", ".claude/agents/이름.md · 결과만 팀장에게"],
-                ["<b>QA</b>", "검증 Agent", "verifier.md · 읽기 전용"],
-                ["<b>업무 지시서</b>", "위임문", "목표 · 범위 · 반환 형식 · 완료 기준"],
-                ["<b>팀원끼리 회의</b>", "Agent Teams", "구성원끼리 직접 소통 · 실험 기능"],
-            ]), "Ch5"),
+            ("기획자", "사용자 · 완료 기준"), ("개발팀장", "메인 Agent · 나누고 합침"),
+            ("개발팀원 여럿", "Sub Agent · 각자 책상"), ("QA", "검증 Agent · 판정만"), ("팀장 보고", "결과 하나로")], hl=1)
+              + note("Claude Code에서", "팀원 = <code>.claude/agents/이름.md</code> · 업무 지시서 = 위임문 · 팀원끼리 회의 = Agent Teams"), "Ch5"),
         light("오케스트레이션 패턴", viz("orchestration_patterns"), "Ch5"),
         light("Sub Agent 위임 구조", viz("subagent_fanout"), "Ch5"),
         light("Agent Teams 구조", viz("agent_teams") + note("상태", "실험 기능 · 환경 변수로 켬 · 위임으로 충분하면 Sub Agent"), "Ch5"),
@@ -1268,18 +1167,11 @@ def ch6():
             ["<b>E2E 테스트</b>", "실제 흐름 확인 · 핵심 흐름에만"],
             ["<b>고위험 도메인</b>", "안전 · 계약 · 인사는 큰 모델 + 사람"],
         ]) + note("원칙", "토큰이 아니라 「완료된 작업 1건당 비용」으로 판단"), "Ch6"),
-        light("플러그인 없이 바로 쓰는 절감법", table(["방법", "어떻게", "줄어드는 곳"], [
-            ["<b>① 일이 바뀌면 새로</b>", "/clear", "앞 대화 재전송 · 새로 시작은 비용 0"],
-            ["<b>② 긴 세션 요약</b>", "/compact 남길 것", "쌓인 대화 · 도구 결과"],
-            ["<b>③ CLAUDE.md 짧게</b>", "긴 매뉴얼은 Skill · 참고 파일로", "매 요청 고정 입력"],
-            ["<b>④ 찾아서 읽기</b>", "통째 Read 대신 Grep · 줄 범위", "도구 결과"],
-            ["<b>⑤ MCP는 필요한 것만</b>", "안 쓰는 서버 끄기 · 도구 검색 (기본 켜짐)", "도구 정의"],
-            ["<b>⑥ 모델 나누기</b>", "분류 · 검색 Sub Agent는 model: haiku", "단가"],
-            ["<b>⑦ effort 조절</b>", "low 먼저 → 실패만 high", "생각 토큰"],
-            ["<b>⑧ 캐시 지키기</b>", "앞부분 고정 · 시각 · ID는 뒤에", "새 입력 → 캐시 읽기 (0.1배)"],
-            ["<b>⑨ 출력 줄이기</b>", "「결과는 파일로 · 대화엔 3줄」", "출력"],
-            ["<b>⑩ 로그는 Hook으로 거르기</b>", "ERROR 줄만 넘기기", "수만 → 수백 토큰"],
-        ]) + note("먼저 재기", "/context로 큰 것부터 · 줄인 뒤 품질은 평가로"), "Ch6"),
+        light("플러그인 없이 바로 쓰는 절감법", viz2.tiles([
+            ("/clear", "일이 바뀌면 새로"), ("/compact", "긴 세션 요약"), ("CLAUDE.md 짧게", "긴 매뉴얼은 Skill로"),
+            ("Grep · 줄 범위", "통째로 읽지 않기"), ("MCP 필요한 것만", "안 쓰는 서버 끄기"), ("model: haiku", "분류 · 검색 Agent"),
+            ("effort low", "실패한 것만 high"), ("캐시 지키기", "앞부분 고정"), ("결과는 파일로", "대화엔 3줄"), ("Hook으로 거르기", "로그는 ERROR 줄만")], 5)
+              + note("먼저 재기", "<code>/context</code> 로 큰 것부터 · 줄인 뒤 품질은 평가로"), "Ch6"),
         lab("6-1", "LLM은 예외만 · 토큰 비교", "Ch6",
             "반복 판정은 코드로, LLM은 이상 건만 · 같은 결과에 토큰이 얼마나 줄어드나",
             ['LLM이 300건 직접 판정 → 토큰', '코드 판정 요약 도구 → 토큰', '이상 건만 Agent에게 → 토큰', '결과 · 토큰 비교'],

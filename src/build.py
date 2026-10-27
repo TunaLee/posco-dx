@@ -62,7 +62,7 @@ def make_downloads():
 def build():
     parts = [art.DEFS] + hx.slides()
     tpl = (ROOT / "src" / "template.html").read_text()
-    css = intro.CSS + explain.CSS + deck.CSS + deck_gas.CSS + hx.CSS + stats_hx.CSS + hx.mcp_fig.CSS
+    css = intro.CSS + explain.CSS + deck.CSS + deck_gas.CSS + hx.CSS + stats_hx.CSS + hx.mcp_fig.CSS + hx.viz2.CSS
     tpl = tpl.replace("</style>", css + "</style>", 1)
     html = tpl.replace("{{DECK_TITLE}}", "하네스 엔지니어링 · 평가와 검증").replace("{{SLIDES}}", "\n\n".join(parts))
     out = ROOT / "docs" / "index.html"
