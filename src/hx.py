@@ -984,7 +984,6 @@ def ch5():
               + note("Claude Code에서", "팀원 = <code>.claude/agents/이름.md</code> · 업무 지시서 = 위임문 · 팀원끼리 회의 = Agent Teams"), "Ch6"),
         light("오케스트레이션 패턴", viz("orchestration_patterns"), "Ch6"),
         light("Sub Agent 위임 구조", viz("subagent_fanout"), "Ch6"),
-        light("Agent Teams 구조", viz("agent_teams") + note("상태", "실험 기능 · 환경 변수로 켬 · 위임으로 충분하면 Sub Agent"), "Ch6"),
         light("Sub Agent vs Agent Teams", viz2.pair(
             "Sub Agent", [("부모 ↔ 자식 한 방향", "부모가 순서 강제"), ("맞는 일", "독립 조사 · 검증 · 분업"), ("비용", "자식마다 컨텍스트")],
             "Agent Teams", [("구성원끼리 직접", "공유 작업 목록"), ("맞는 일", "서로 반박 · 보완"), ("비용", "구성원마다 세션 · 더 큼")], hl="l"), "Ch6"),
