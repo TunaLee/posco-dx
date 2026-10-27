@@ -184,6 +184,38 @@ def agent_anatomy():
     return f'<svg viewBox="0 0 1180 430" class="v2">{"".join(s)}</svg>'
 
 
+def decl_split():
+    """도구 선언은 모델에, 실행 함수는 내 PC에 — 등록 정보가 둘을 잇는다."""
+    return ('<div class="ds2">'
+            '<div class="ds2c" style="--d:0s"><div class="ds2h"><b>도구 선언</b><span>모델에 전달 · 모델이 보는 것</span></div>'
+            '<div class="ds2k"><i>name</i><code>get_coil</code></div>'
+            '<div class="ds2k"><i>description</i><code>코일 한 건의 시험 결과를 조회한다</code></div>'
+            '<div class="ds2k"><i>input</i><code>coil_id · 문자열</code></div>'
+            '<div class="ds2f">부를지 · 무엇을 넣을지 판단</div></div>'
+            '<div class="ds2a">→</div>'
+            '<div class="ds2c mid" style="--d:.4s"><div class="ds2h"><b>연결</b><span>Claude Code · MCP 서버</span></div>'
+            '<div class="ds2m"><code>get_coil</code><i>↓</i><code>def get_coil(coil_id)</code></div>'
+            '<div class="ds2f">고른 이름으로 함수를 찾아 실행</div></div>'
+            '<div class="ds2a">→</div>'
+            '<div class="ds2c app" style="--d:.8s"><div class="ds2h"><b>실행 함수</b><span>내 PC · 사내 시스템</span></div>'
+            '<div class="ds2code"><code>def get_coil(coil_id):<br>&nbsp;&nbsp;return 시험실DB.조회(coil_id)</code></div>'
+            '<div class="ds2f">모델에 보내지 않음 · 결과만 돌려줌</div></div>'
+            '</div>')
+
+
+def tool_kinds():
+    """Claude Code 내장 도구 + MCP로 붙인 외부 도구."""
+    inner = ["Read", "Write · Edit", "Bash", "Grep · Glob", "WebFetch", "Task (Sub Agent)"]
+    outer = [("사내 시험실", "직접 만든 MCP 서버"), ("Microsoft Learn", "공개 문서 검색"), ("Slack · Jira", "회사 협업 도구"), ("DB · 파일 서버", "사내 데이터")]
+    i = "".join(f'<span style="--d:{k * .08:.2f}s">{t}</span>' for k, t in enumerate(inner))
+    o = "".join(f'<div class="tk-o" style="--d:{.8 + k * .12:.2f}s"><b>{h}</b><small>{d}</small></div>' for k, (h, d) in enumerate(outer))
+    return ('<div class="tk">'
+            f'<div class="tk-in"><div class="tk-h">Claude Code 내장 도구</div><div class="tk-chips">{i}</div>'
+            '<div class="tk-f">설치하면 바로 · 파일 · 명령 · 웹</div></div>'
+            '<div class="tk-plug"><b>MCP</b><i>⇄</i></div>'
+            f'<div class="tk-out"><div class="tk-h">외부 도구</div>{o}</div></div>')
+
+
 CSS = """
   /* 표 대신 그림 */
   .v2{width:100%; height:auto; display:block; margin:4px 0 12px;}
@@ -194,7 +226,7 @@ CSS = """
   .v2-in{animation:v2In .5s ease-out both; animation-delay:var(--d);}
   .ana-spin{transform-origin:590px 225px; animation:anaSpin 12s linear infinite;} @keyframes anaSpin{to{transform:rotate(360deg)}}
   @keyframes v2In{from{opacity:0; transform:translateY(8px)}}
-  @media print{.v2-in,.v2fit li,.v2tile,.v2pc,.v2m{animation:none}}
+  @media print{.v2-in,.v2fit li,.v2tile,.v2pc,.v2m,.ds2c,.tk-chips span,.tk-o{animation:none}}
   .v2fo{display:flex; flex-direction:column; gap:8px;} .v2fo b{font-size:17px; color:#1F3A5F; line-height:1.35;} .v2fo span{font-size:14px; color:#6B7785; line-height:1.4;}
   .v2fit{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:6px 0 14px;}
   .v2fit > div{border-radius:16px; padding:20px 24px;} .v2fit .ok{background:#E8F5E9;} .v2fit .no{background:#F4F6F9;}
@@ -217,5 +249,21 @@ CSS = """
   .v2m .a{background:#F4F6F9; border-radius:12px; padding:12px 18px; font-size:18px; font-weight:800; color:#16233A;}
   .v2m i{font-style:normal; text-align:center; color:#F28C28; font-weight:900; font-size:22px;}
   .v2m .b{background:#FFF8F1; border:1.5px solid #F28C28; border-radius:12px; padding:10px 18px;} .v2m .b b{font-size:18px; color:#16233A; display:block;} .v2m .b small{font-size:14px; color:#6B7785;}
+  .ds2{display:grid; grid-template-columns:1fr 40px 1fr 40px 1fr; align-items:stretch; margin:8px 0 16px;}
+  .ds2c{border:2px solid #1F3A5F; border-radius:14px; padding:16px 18px; background:#fff; display:flex; flex-direction:column; gap:8px; animation:v2In .5s both; animation-delay:var(--d);}
+  .ds2c.mid{border-style:dashed;} .ds2c.app{border-color:#F28C28; background:#FFF8F1;}
+  .ds2h b{display:block; font-size:20px; color:#16233A;} .ds2h span{font-size:13px; color:#6B7785;}
+  .ds2k{display:flex; flex-direction:column; gap:2px;} .ds2k i{font-style:normal; font-size:12px; color:#8A94A3; font-family:var(--mono, monospace);} .ds2k code{font-size:15px; background:#EEF1F5; border-radius:6px; padding:4px 8px;}
+  .ds2m{display:flex; flex-direction:column; align-items:center; gap:6px; margin:auto 0;} .ds2m code{font-size:15px; background:#EEF1F5; border-radius:6px; padding:6px 10px;} .ds2m i{font-style:normal; color:#F28C28; font-weight:900;}
+  .ds2code code{display:block; font-size:14px; background:#1E1E2E !important; color:#E6E6F0 !important; border-radius:8px; padding:12px; line-height:1.6;}
+  .ds2f{margin-top:auto; font-size:14px; font-weight:800; color:#1F3A5F;} .ds2c.app .ds2f{color:#EF6C00;}
+  .ds2a{display:flex; align-items:center; justify-content:center; color:#F28C28; font-size:26px; font-weight:900;}
+  .tk{display:grid; grid-template-columns:1fr 120px 1fr; gap:16px; align-items:center; margin:8px 0 16px;}
+  .tk-in,.tk-out{border-radius:16px; padding:18px 22px;} .tk-in{background:#EEF1F5;} .tk-out{background:#FFF3E6; display:grid; gap:10px;}
+  .tk-h{font-size:18px; font-weight:900; color:#1F3A5F; margin-bottom:10px;} .tk-out .tk-h{color:#EF6C00; margin-bottom:0;}
+  .tk-chips{display:flex; flex-wrap:wrap; gap:8px;} .tk-chips span{background:#fff; border:1.5px solid #1F3A5F; border-radius:999px; padding:6px 14px; font-weight:800; font-size:15px; font-family:var(--mono, monospace); animation:v2In .4s both; animation-delay:var(--d);}
+  .tk-f{margin-top:12px; font-size:14px; color:#6B7785;}
+  .tk-o{background:#fff; border-radius:12px; padding:10px 16px; animation:v2In .5s both; animation-delay:var(--d);} .tk-o b{display:block; font-size:17px;} .tk-o small{font-size:13px; color:#6B7785;}
+  .tk-plug{display:flex; flex-direction:column; align-items:center; gap:6px;} .tk-plug b{background:#F28C28; color:#fff; border-radius:12px; padding:12px 18px; font-size:20px;} .tk-plug i{font-style:normal; font-size:28px; color:#F28C28; font-weight:900;}
   .v2tile b{font-size:21px; color:#16233A;} .v2tile span{font-size:15px; color:#6B7785; line-height:1.45;}
 """

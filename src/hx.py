@@ -672,6 +672,14 @@ def ch2():
                   ("46", "개", "Agent Skills 형식을 지원하는 도구")])
              + quote("도구 100개짜리 서버에 연결하면, 사용자가 묻기도 전에 그 전부의 값을 치르고 목록이 길수록 도구 고르기도 나빠진다", "MCP 로드맵, 2026.8"),
              MCP26, MCPRM, SKILLSIO),
+        light("도구의 구조 · 선언과 실행", viz2.decl_split()
+              + note("핵심", "모델은 이름 · 설명 · 입력 형식만 보고 고름 · 실제 조회 · 실행은 함수가"), "Ch2"),
+        light("내장 도구와 외부 도구", viz2.tool_kinds()
+              + note("MCP", "외부 도구를 Claude Code에 붙이는 표준 연결 방식 · 다음 장부터"), "Ch2"),
+        light("도구 설계도 하네스", viz2.pair(
+            "붙이기", [("외부 도구 연결", "MCP · 사내 시스템"), ("내 업무 도구", "필요한 조회 · 계산만")],
+            "제한하기", [("허용 목록", "<code>--allowedTools</code> · 권한 allow"), ("막기", "권한 deny · Hook · Agent별 tools")], hl="l")
+              + note("하네스", "어떤 도구를 쥐여 주고 무엇을 막느냐 = 모델 밖에서 정하는 일"), "Ch2"),
         light("API: 약속된 주소와 형식", two(
             code("브라우저 주소창 · 127.0.0.1:8800/api/results?limit=1", esc('[{"seq": 1, "coil_id": "HB26-00001",\n  "time": "2026-10-28 08:04", "grade": "HS-355",\n  "line": "3냉연", "shift": "A",\n  "values": {"C": 0.106, "Mn": 1.1, "P": 0.014, "S": 0.023,\n             "YS": 433, "TS": 528, "EL": 26.9}}]')),
             cards([("주소", "/api/results · /api/specs · /api/results/코일번호", []),
