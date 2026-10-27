@@ -12,7 +12,7 @@ import explain
 import intro
 import labkits
 
-deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("선택", 15), "2-2": ("필수", 20), "2-3": ("선택", 25),
+deck.LAB_KIND.update({"1-1": ("필수", 15), "2-1": ("필수", 25), "2-2": ("필수", 20), "2-3": ("필수", 15),
                       "3-1": ("선택", 15), "4-1": ("선택", 20), "5-1": ("선택", 25), "5-2": ("선택", 20),
                       "6-1": ("선택", 25), "7-1": ("필수", 30), "8-1": ("필수", 90), "8-2": ("선택", 30)})
 from deck import ba, bridge, cards, divider, flow, ill, lab, light
@@ -381,6 +381,18 @@ def labkit(no, ch):
     return [light(f"실습 {no} 진행", head + body + tip, ch)]
 
 
+
+def quest(no, ch, asks, checks, stuck, folder="labs/steel_qc"):
+    """실습 진행 — 요청문 복사 대신 「시킬 일 · 확인할 결과」 · 요청은 내 말로."""
+    a = "".join(f"<li>{x}</li>" for x in asks)
+    c = "".join(f"<li>{x}</li>" for x in checks)
+    head = (f'<div class="kithead"><span>VS Code로 열 폴더</span><code>{folder}</code>'
+            f'<em>요청은 내 말로 · 아래는 시킬 일의 요점</em></div>')
+    body = (f'<div class="qgrid"><div class="qc qa"><div class="qh">Claude에게 시킬 일</div><ol>{a}</ol></div>'
+            f'<div class="qc qk"><div class="qh">확인할 결과</div><ul>{c}</ul></div></div>'
+            + note("막히면", stuck))
+    return light(f"실습 {no} 진행", head + body, ch)
+
 def esc(x):
     return x.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
@@ -613,21 +625,18 @@ def ch1():
                      title="BrowseComp · 같은 모델, 구성만 다름")
              + note("그래서", "하네스는 한 번 만들고 끝이 아니라, 모델이 바뀔 때마다 재고 덜어 낸다"),
              A_FABLE5, SC_FABLE5),
-        ba("CLAUDE.md 한 장 전후 비교", "Ch1",
-           "data 폴더의 운송비 청구를 검증해 줘\n\n→ 대화창에 긴 설명 (약 1,000자)\n→ 결과 파일 없음\n→ 「5건은 지급을 보류하세요」까지 판단",
-           "CLAUDE.md\n결과: out/검증결과.md 표 (운송번호 · 청구 · 정산 · 차이 · 판정)\n지급 · 보류 결정은 하지 않고 담당자 확인으로\n끝내기 전 검산 · 답은 3줄\n\n→ 40건 전체 표 파일 · 3줄 답 · 결정은 사람에게"),
-        lab("1-1", "운송비 청구 검증 · 하네스 전후", "Ch1",
-            "같은 요청 · 같은 자료 · 바뀌는 것은 CLAUDE.md 한 장",
-            ["하네스 미적용 상태로 「운송비 청구를 검증해 줘」", "장표의 CLAUDE.md를 직접 만들기", "하네스 적용 상태로 같은 요청", "정답 · 결과 파일 · 결정 범위 · 답 길이 비교"],
-            ["전후 비교표", "하네스가 바꾼 것 한 줄"], files=labdir("transport_bill"), mine="내 업무에서 「결과는 어디에 · 무엇은 사람이」 두 줄"),
-        *labkit('1-1', 'Ch1'),
-        stat("실측: 운송비 청구 검증 전후", "Ch1", table(["", "하네스 미적용 ×3", "CLAUDE.md 한 장 ×3"], [
-            ["<b>이의 제기 5건 찾기</b>", "3 / 3", "3 / 3"],
-            ["<b>결과를 파일로 남김</b>", "0 / 3 · 대화창에만", "<b>3 / 3 · 40건 전체 표</b>"],
-            ["<b>「지급 보류」까지 결정</b>", "2 / 3", "<b>0 / 3 · 담당자 확인으로</b>"],
-            ["<b>대화 답 길이</b>", "약 1,000자", "약 130자 (3줄)"],
-        ]) + note("배운 점", "정답은 둘 다 맞힘 · 하네스가 바꾼 건 일하는 방식 — 기록 · 결정 범위 · 형식"),
-             OWN_LAB11),
+        lab("1-1", "시험 결과 판정 · 하네스 전후", "Ch1",
+            "같은 질문 · 같은 데이터 · 바뀌는 것은 CLAUDE.md 한 장",
+            ["가상 시험실 시뮬레이터 켜기", "CLAUDE.md 없이 판정 요청", "판정 기준 · 답 형식을 CLAUDE.md로", "새 대화에서 같은 요청 → 비교"],
+            ["전후 차이 한 줄", "CLAUDE.md 1장"], files=labdir("steel_qc"), mine="내 업무에서 「기준은 어디에 · 무엇은 사람이」 두 줄"),
+        quest("1-1", "Ch1",
+              ["<code>sim/lims_sim.py</code> 를 켜 달라 → 브라우저로 <code>127.0.0.1:8800</code> 확인",
+               "최근 결과 20건을 판정해 달라 · CLAUDE.md 없이",
+               "판정 기준 · 답 형식 · 하지 않을 일을 CLAUDE.md로 써 달라",
+               "새 대화에서 같은 요청"],
+              ["규격을 <code>specs.json</code>에서 가져왔는가 · 추측했는가", "불합격과 근접을 나눴는가",
+               "출하 승인까지 판단하지 않는가", "답 형식이 매번 같은가"],
+              "<code>solution/CLAUDE.md</code> 와 비교"),
         stat("루프 엔지니어링이 가능해진 이유", "Ch1",
              '<div class="eqn">'
              '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div>'
@@ -725,6 +734,17 @@ def ch2():
                   ("46", "개", "Agent Skills 형식을 지원하는 도구")])
              + quote("도구 100개짜리 서버에 연결하면, 사용자가 묻기도 전에 그 전부의 값을 치르고 목록이 길수록 도구 고르기도 나빠진다", "MCP 로드맵, 2026.8"),
              MCP26, MCPRM, SKILLSIO),
+        lab("2-1", "사내 시스템을 MCP로 연결", "Ch2",
+            "붙여 넣기 · curl 없이 Claude가 시험실 데이터를 도구로 조회",
+            ["시험실 MCP 서버를 Claude에게 만들게 하기", "<code>claude mcp add</code> 로 등록", "<code>/mcp</code> 로 연결 · 도구 확인", "「방금 들어온 불합격 정리해」"],
+            ["도구 5개 연결", "도구 호출로 만든 불합격 표"], files=labdir("steel_qc"), mine="내 업무에서 MCP로 붙이고 싶은 사내 시스템 하나"),
+        quest("2-1", "Ch2",
+              ["시뮬레이터 API를 읽는 MCP 서버를 만들어 달라 · stdio · 표준 라이브러리만",
+               "도구: 최근 결과 · 이상 건 요약 · 코일 상세 · 규격 조회 · 출하 승인",
+               "<code>claude mcp add lims</code> 로 등록하고 연결을 확인해 달라",
+               "새 대화: 「방금 들어온 불합격 정리해」"],
+              ["<code>/mcp</code> 에 lims · 도구 5개", "답 위에 <code>mcp__lims__</code> 도구 호출 표시", "curl · 붙여 넣기 없이 답함", "시뮬레이터를 끄면 도구 오류"],
+              "<code>solution/mcp_server.py</code> · <code>claude mcp add lims -- python solution/mcp_server.py</code>"),
         light("Skill 한 개의 구조", two(code(".claude/skills/incident-report/SKILL.md", skill),
                                         vl("description: 언제 부를지", "본문: 호출될 때만 로드", "참고 파일: 양식 · 예시"))
               + note("이름", "예시일 뿐 · 팀 규칙에 맞게 자유롭게"), "Ch2"),
@@ -745,11 +765,17 @@ def ch2():
         ]), "Ch2"),
         light("Sub Agent 정의 파일", two(code(".claude/agents/reviewer.md", agent),
                                           vl("자기 컨텍스트에서 일함", "부모는 결과만 받음", "도구를 줄이면 권한도 줄어듦")), "Ch2"),
-        lab("2-1", "Skill · Sub Agent 붙이기", "Ch2",
-            "Skill은 전후 비교 · Sub Agent는 /tasks 로 도는 모습 보기",
-            ["하네스 미적용 상태로 장애 보고서 요청", "장표의 SKILL.md · reviewer.md 만들기", "하네스 적용 상태로 같은 요청 → 양식 비교", "대화창에서 코드 리뷰 요청 → /tasks 로 reviewer 보기"],
-            ["보고서가 Skill 양식대로", "/tasks 에서 reviewer · 읽기 도구만 · 토큰 확인"], files=labdir("order_api"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
-        *labkit('2-1', 'Ch2'),
+        lab("2-2", "판정 보고 Skill · 원인 조사 Sub Agent", "Ch2",
+            "매번 같은 순서로 보고 · 원인 조사는 따로 맡김",
+            ["불합격 보고 절차를 Skill로", "원인 조사 Sub Agent 만들기", "「오늘 불합격 보고서 써 줘」", "/tasks 로 조사 Agent 보기"],
+            ["Skill 형식대로 보고서", "조사 Agent가 따로 돔"], files=labdir("steel_qc"), mine="내 업무 절차 하나를 Skill 이름 · 단계로"),
+        quest("2-2", "Ch2",
+              ["불합격 보고 절차를 Skill로: 이상 건 요약 → 코일 상세 → 규격 → 표 · 근거 없으면 「확인 필요」",
+               "원인 조사 Sub Agent: 같은 강종 · 라인의 최근 이력 비교 · lims 조회 도구만",
+               "「오늘 불합격 보고서 써 줘」",
+               "<code>/tasks</code> 로 조사 Agent 보기"],
+              ["Skill 이름이 호출 표시에 뜨는가", "보고서 형식이 매번 같은가", "조사 Agent가 쓴 도구 · 토큰", "메인 대화는 결과만 받는가"],
+              "<code>solution/dot_claude/skills/reject-report/SKILL.md</code> · <code>agents/investigator.md</code>"),
         stat("DESIGN.md · 디자인 하네스", "Ch2", two(
             '<div class="ctree">' + code("DESIGN.md (예 · 이 강의 장표)", '---\ncolors: { primary: "#1F3A5F", accent: "#F28C28" }\ntypography: { body: Pretendard 15, heading: Pretendard 800 }\nrounded: { card: 12 }\nspacing: { unit: 8 }\n---\n## Overview\n사내 업무 도구 · 정보는 빽빽하게 · 강조는 주황 하나\n\n## Components\n- 표: 헤더 primary · 숫자는 오른쪽 정렬\n\n## Do\'s and Don\'ts\n- Do: 상태는 색 + 글자 함께\n- Don\'t: 그라데이션 · 그림자 남발') + "</div>",
             table(["섹션 (이 순서)", "담는 것"], [
@@ -846,18 +872,19 @@ def ch2():
              + big([("33", "개", "Hook을 걸 수 있는 이벤트"), ("exit 2", "", "PreToolUse에서 도구 호출 차단", True),
                     ("수만 → 수백", "토큰", "Hook으로 로그에서 ERROR 줄만 넘길 때")]),
              D_BP, D_HOOKS, D_COSTS),
-        light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", hook_cfg) + code(".claude/hooks/guard.py", guard), "Ch2"),
-        stat("실측: 짧은 과제에서의 운영 DB 보호", "Ch2",
-             big([("0/18", "회", "운영 DB가 바뀐 실행 (규칙 없음 · 지시만 · 오토 모드 · Hook)"),
-                  ("5/5", "회", "오토 모드가 운영 DB 조회(SELECT)까지 막음", True),
-                  ("15/15", "", "Claude가 만든 Hook의 시험 사례 통과")])
-             + note("해석", "짧고 분명한 과제는 최신 모델도 잘 지킴 · 사고는 긴 작업 · 압축 · 찾아낸 자격 증명 · 경로 실수에서 → 확률이 아니라 코드로 막음"),
-             OWN_GUARD),
-        lab("2-2", "Claude로 Hook 만들기", "Ch2",
-            "「운영 DB 쓰기 전 허락」을 지시가 아니라 코드로",
-            ["Hook 없이 채점 (하네스 미적용)", "장표의 요청문으로 Claude에게 Hook 생성 요청", "다시 채점 → 놓친 사례를 Claude가 수정", "대화에서 실제 차단 확인"],
-            ["check_hook.py 15/15", "운영 DB 쓰기가 Hook으로 막히는 것 확인"], files=labdir("db_guard"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
-        *labkit('2-2', 'Ch2'),
+        light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", esc('"PreToolUse": [{\n  "matcher": "mcp__lims__approve_shipment",\n  "hooks": [{ "type": "command",\n             "command": "python solution/hooks/approve_guard.py" }]\n}]'))
+              + code("solution/hooks/approve_guard.py (요점)", esc('event = json.load(sys.stdin)\ncoil = event["tool_input"]["coil_id"]\nprint(json.dumps({"hookSpecificOutput": {\n  "hookEventName": "PreToolUse",\n  "permissionDecision": "deny",\n  "permissionDecisionReason": f"출하 승인({coil})은 품질 담당자가 직접"}}))')), "Ch2"),
+        lab("2-3", "출하 승인은 사람만 · Hook", "Ch2",
+            "「승인하지 마」를 지시가 아니라 코드로",
+            ["승인 요청이 그냥 되는지 먼저 확인", "승인 도구를 막는 Hook을 만들게 하기", "같은 요청 → 막히는지", "조회 도구는 그대로인지"],
+            ["승인 도구 호출 차단", "막힌 이유를 Claude가 보고"], files=labdir("steel_qc"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
+        quest("2-3", "Ch2",
+              ["「HB26-00001 출하 승인해 줘」 → 승인 기록이 생기는지",
+               "<code>mcp__lims__approve_shipment</code> 를 막는 PreToolUse Hook을 만들어 달라 · 막을 때 이유 한 줄",
+               "새 대화에서 같은 요청",
+               "조회 도구는 그대로 되는지"],
+              ["<code>data/approvals.json</code> 에 새 기록 없음", "Claude가 막힌 이유를 그대로 전함", "조회 도구는 정상", "CLAUDE.md 금지 문구만 있을 때와 비교"],
+              "<code>solution/hooks/approve_guard.py</code> · <code>solution/dot_claude/settings.json</code>"),
         stat("Claude Code로 하는 두 종류의 일", "Ch2", two(
             cards([("코드 작업", "기능 구현 · 테스트 · 코드 리뷰 · 배포 전 점검", [])], 1),
             cards([("업무 처리", "문의 답변 · 견적 · 회의록 정리 · 보고서 · 문서 비교 · 메일 초안", [])], 1))
@@ -886,28 +913,6 @@ def ch2():
             ["<b>정리 · 작성형</b>", "회의록 → 할 일 · 안내 메일", "회의 후속 조치 · 공지 · 협력사 메일", "필수 요소 Skill · 확정 아닌 건 표시 · 약속 금지"],
             ["<b>개발형</b>", "내 업무 툴 (Ch8)", "MES 로그 분석 · 정산 검증 배치 · 테스트 보강", "Superpowers: 설계 → 계획 → Sub Agent TDD · 리뷰"],
         ]) + note("샘플", labdir("samples") + " · 11개 업무 분야 가상 데이터 · 분야마다 하네스 주제 예시 3개"), "Ch2"),
-        light("업무 처리 하네스 구성", code("labs/office_work", 'workspace/\n├── CLAUDE.md              # 업무 원칙: 결과는 out/ · 원본 수정 금지 · 근거 표기 · 확정 아닌 건 표시\n├── .claude/\n│   ├── skills/            # 업무 종류마다 절차 · 결과 양식\n│   │   ├── inquiry-answer · spec-quote · meeting-actions\n│   │   └── weekly-report · doc-diff · mail-draft\n│   ├── agents/verifier.md # 원본과 대조 · 고치지 않음\n│   └── hooks/guard.py     # 원본(inputs/) 수정 · 메일 발송 · 외부 전송 차단\n└── inputs/T1 ~ T6         # 업무 자료 (원본)'), "Ch2"),
-        light("실무 과제 여섯 가지", table(["과제", "요청 한마디", "검증 포인트"], [
-            ["<b>T1 문의 답변</b>", "「사내 문의 5건에 답변 초안 써 줘」", "규정 조항 근거 · 환불 문의는 담당자에게"],
-            ["<b>T2 사양서 견적</b>", "「사양서 두 건으로 견적 내 줘」", "단가표 대조 · 수량 불일치 사양서는 보류"],
-            ["<b>T3 회의록 → 할 일</b>", "「회의록에서 할 일 정리해 줘」", "「다음 주 화요일」 → 날짜 · 취소 항목 제외"],
-            ["<b>T4 점검 → 주간 보고서</b>", "「점검 기록으로 주간 보고서 만들어 줘」", "「초과」 기준 · 빈 값 · 이틀 연속 → 정비 요청"],
-            ["<b>T5 규정 개정 비교</b>", "「작년이랑 뭐가 달라졌는지 정리해 줘」", "초안 + 확정 회의록 반영"],
-            ["<b>T6 납기 지연 메일</b>", "「고객사에 납기 지연 안내 메일 초안」", "확정 안 된 날짜 · 보상 약속 금지"],
-        ]) + note("자료", labdir("office_work") + " · 모든 회사 · 인물 · 수치는 가상"), "Ch2"),
-        lab("2-3", "업무 처리 하네스로 실무 과제", "Ch2",
-            "코드가 아닌 업무도 같은 하네스로 · 하네스 미적용과 비교",
-            ["하네스 미적용 상태로 과제 2개 → 채점", "장표의 CLAUDE.md · Skill 두 개 직접 만들기", "새 대화로 같은 과제 → 채점 · 결과 위치 · 근거 비교", "내 업무용 Skill 하나를 Claude에게 만들게 하고 처리"],
-            ["과제 2개 이상 하네스로 처리 · 채점", "내 업무 Skill 1개"], files=labdir("office_work"),
-            mine="내 업무 하나를 이 하네스에 Skill로 추가"),
-        *labkit('2-3', 'Ch2'),
-        stat("실측: 하네스 미적용 vs 업무 처리 하네스", "Ch2",
-             hbars([("하네스 미적용 · 과제 6개", 97.4, False, "111 / 114"), ("하네스 적용 · 과제 6개", 96.5, False, "110 / 114"),
-                    ("하네스 미적용 · 사양서 40건 견적", 90.2, False, "74 / 82"), ("하네스 적용 · 사양서 40건 견적", 100, True, "82 / 82"),
-                    ("하네스 미적용 · 결과를 파일로 남김", 16.7, False, "2 / 12"), ("하네스 적용 · 결과를 파일로 남김", 100, True, "12 / 12")], top=100,
-                   title="Claude Sonnet 5.5 · 단일 Agent 하네스 · 각 2회")
-             + note("차이가 난 곳", "40건 중 수량 불일치 · 누락 4건을 하네스 미적용 쪽은 견적에 넣음 (2/2) · 하네스는 규칙대로 보류 · 짧은 과제는 비슷 · 시간 1.3~1.7배"),
-             OWN_WORK),
         bridge("다음: 컨텍스트 설계", "", "Ch2", "→ Ch3 컨텍스트 엔지니어링"),
     ]
 
@@ -1600,6 +1605,15 @@ def slides():
 
 
 CSS = '''
+  /* 실습 진행 · 시킬 일 / 확인할 결과 */
+  .qgrid{display:grid; grid-template-columns:1.25fr 1fr; gap:18px; margin-top:14px;}
+  .qc{border:1.5px solid #D9DDE3; border-top:5px solid #1F3A5F; border-radius:12px; padding:16px 20px; background:#fff;}
+  .qc.qk{border-top-color:#F28C28;}
+  .qh{font-size:15px; font-weight:800; color:#1F3A5F; margin-bottom:8px;} .qc.qk .qh{color:#F28C28;}
+  .qc ol, .qc ul{margin:0; padding-left:22px; display:grid; gap:9px;}
+  .qc li{font-size:18px; line-height:1.45; color:#16233A;}
+  .qc code{font-size:.88em;}
+
   .hubtxt{font-size:30px; font-weight:800; color:#1F3A5F;}
   .lt :not(pre) > code{font-family:var(--mono); font-size:.92em; background:#EEF1F5; border-radius:4px; padding:1px 5px;}
   .shot{display:block; width:100%; max-height:400px; object-fit:cover; object-position:top; border-radius:12px; border:1px solid #E1E5EB; box-shadow:0 8px 24px rgba(31,58,95,.12); margin-bottom:14px;}
