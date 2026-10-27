@@ -1,7 +1,7 @@
 """팀 코드 저장소 데이터 — 작은 주문 · 정산 서비스(shop/)와 팀원 4명의 PR 12개.
 
 모든 사람 · 코드 · PR 은 실습용 가상 자료다.
-ISSUES 는 PR 에 일부러 심어 둔 문제 목록(채점용 정답)이다. 리뷰할 때는 보지 않는다.
+ISSUES 는 PR 에 일부러 심어 둔 문제 목록이다 (강사 참고용 · 화면 · API 로는 내보내지 않음).
 """
 
 BASE = {
@@ -258,7 +258,7 @@ def get_price(sku, cache={}):
  "files": {"shop/users.py": BASE["shop/users.py"].replace('log.info("login failed: %s", email)', 'log.warning("login failed: %s", email)')}},
 ]
 
-# 심어 둔 문제 (채점용 정답) · kind: 보안 · 버그 · 성능 · 테스트
+# 심어 둔 문제 (강사 참고용) · kind: 보안 · 버그 · 성능 · 테스트
 ISSUES = [
     {"pr": 101, "id": "101-a", "kind": "보안", "file": "shop/orders.py", "key": "SQL 인젝션", "desc": "f-string 으로 status · name 을 SQL 에 바로 넣음 · 파라미터 바인딩 필요"},
     {"pr": 102, "id": "102-a", "kind": "버그", "file": "shop/pricing.py", "key": "할인율 범위 검증 없음", "desc": "rate 가 100 초과 · 음수여도 그대로 계산"},

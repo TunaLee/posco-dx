@@ -217,17 +217,17 @@ def tool_kinds():
 
 
 def taste_loop():
-    """입맛 루프 — 초안 → 사람이 고르고 고침 → 이유 한 줄 → 하네스 갱신 → 다음 초안. 가운데: 고친 양이 줄어듦."""
+    """리뷰 반영 루프 — Agent PR → 사람이 수정 요청 → Agent가 고침 → 하네스에 반영. 가운데: PR별 수정 요청 수."""
     cx, cy, r = 590, 205, 150
-    pts = [(cx, cy - r, "① 초안", "Agent가 리뷰 · 보고서"), (cx + r * 1.9, cy, "② 사람이 고름 · 고침", "채택 or 직접 수정"),
-           (cx, cy + r, "③ 이유 한 줄", "「왜 고쳤나」"), (cx - r * 1.9, cy, "④ 하네스 갱신", "Skill 예시 · CLAUDE.md · Hook")]
+    pts = [(cx, cy - r, "① Agent가 PR", "기능 · 화면"), (cx + r * 1.9, cy, "② 사람이 수정 요청", "화면을 보고 말로"),
+           (cx, cy + r, "③ Agent가 고침", "코멘트를 읽고 다시 push"), (cx - r * 1.9, cy, "④ 하네스에 반영", "CLAUDE.md · Skill · Hook")]
     s = [f"<defs>{_defs('tas')}</defs>",
          f'<ellipse cx="{cx}" cy="{cy}" rx="{r * 1.9}" ry="{r}" fill="none" stroke="{O}" stroke-width="3" stroke-dasharray="14 10" class="tas-run"/>']
     for i, (x, y, h, sub) in enumerate(pts):
         hot = i == 1
         s.append(_box(x - 125, y - 40, 250, 80, h, sub, fill="#FFF3E6" if hot else "#fff", stroke=O if hot else K, d=i * .4))
-    bars = [(10, "1회"), (5, "2회"), (2, "3회")]   # 모양만 · 실측은 실습 8-2에서
-    s.append('<g class="v2-in" style="--d:1.8s"><text x="590" y="146" text-anchor="middle" class="v2-s">사람이 고친 양</text>')
+    bars = [(10, "PR 1"), (5, "PR 2"), (2, "PR 3")]   # 모양만 · 실측은 실습 8-2에서
+    s.append('<g class="v2-in" style="--d:1.8s"><text x="590" y="146" text-anchor="middle" class="v2-s">PR별 수정 요청 수</text>')
     for i, (v, lab) in enumerate(bars):
         x = 530 + i * 45; h = v * 6
         s.append(f'<rect x="{x}" y="{240 - h}" width="30" height="{h}" rx="4" fill="{O if i == 2 else K}"/>'

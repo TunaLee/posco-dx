@@ -13,12 +13,13 @@ API     GET  /api/repos
         GET  /api/repos/<저장소>/prs/<번호>         PR 한 건
         GET  /api/repos/<저장소>/prs/<번호>/diff    변경 내용 (unified diff)
         GET  /api/repos/<저장소>/prs/<번호>/files   바뀐 파일 전체 내용
-        GET  /api/repos/<저장소>/files/<경로>        main 의 파일
+        GET  /api/repos/<저장소>/files/<경로>?ref=   파일 내용 (기본 main)
+        GET  /api/repos/<저장소>/branches · /commits?ref=
+        POST /api/repos/<저장소>/prs                {"head", "title", "body"}  push 한 브랜치의 PR 제목 · 설명
         GET  /api/repos/<저장소>/prs/<번호>/comments
         POST /api/repos/<저장소>/prs/<번호>/comments {"author", "body", "file"?, "line"?}
         POST /api/repos/<저장소>/prs/<번호>/approve  {"reviewer"}
         POST /api/repos/<저장소>/prs/<번호>/merge    {"by"}      승인된 PR 만 · 실제 git merge
-        GET  /api/answer                             shop 에 심어 둔 문제 — 채점용 · 리뷰할 때 보지 않는다
 """
 import json
 import os
@@ -199,17 +200,20 @@ class H(BaseHTTPRequestHandler):
                 out.append({"name": r, "clone": f"http://127.0.0.1:{PORT}/{r}.git",
                             "prs": len(m["prs"]), "open": sum(1 for b in m["prs"] if b not in m["merged"])})
             return self.send(out)
-        if p == ["api", "answer"]:
-            import shop_data
-            return self.send({"issues": shop_data.ISSUES, "clean": shop_data.CLEAN})
         if len(p) >= 4 and p[:2] == ["api", "repos"] and p[2] in repo_names():
             repo = p[2]
             if p[3] == "prs" and len(p) == 4:
                 m = sync(repo)
                 return self.send(sorted((summary(repo, m, b) for b in m["prs"]), key=lambda x: x["id"]))
             if p[3] == "files":
-                path = "/".join(p[4:])
-                return self.send({"path": path, "content": git(repo, "show", f"main:{path}")})
+                path = "/".join(p[4:]); ref = (dict(x.split("=", 1) for x in urlsplit(self.path).query.split("&") if "=" in x).get("ref") or "main")
+                return self.send({"path": path, "ref": ref, "content": git(repo, "show", f"{ref}:{path}")})
+            if p[3] == "branches":
+                return self.send([b for b in git(repo, "for-each-ref", "refs/heads", "--format=%(refname:short)").split("\n") if b])
+            if p[3] == "commits":
+                ref = (dict(x.split("=", 1) for x in urlsplit(self.path).query.split("&") if "=" in x).get("ref") or "main")
+                rows = git(repo, "log", ref, "-20", "--format=%h\x1f%an\x1f%ad\x1f%s", "--date=format:%Y-%m-%d %H:%M").split("\n")
+                return self.send([dict(zip(("sha", "author", "date", "message"), r.split("\x1f"))) for r in rows if r])
             if p[3] == "prs" and p[4].isdigit():
                 m, br = find(repo, int(p[4]))
                 if not br:
@@ -233,6 +237,13 @@ class H(BaseHTTPRequestHandler):
         if g:
             return self.git_http(g.group(1), g.group(2))
         p = path.strip("/").split("/")
+        if len(p) == 4 and p[:2] == ["api", "repos"] and p[2] in repo_names() and p[3] == "prs":
+            b = json.loads(self.body() or b"{}"); m = sync(p[2])
+            if b.get("head") not in m["prs"]:
+                return self.send({"error": f"push 된 브랜치가 아님 {b.get('head')} · 먼저 git push"}, 404)
+            pr = m["prs"][b["head"]]
+            pr.update({k: b[k] for k in ("title",) if b.get(k)}); pr["description"] = b.get("body", pr["description"]); save(p[2], m)
+            return self.send({"id": pr["id"], "branch": b["head"], "title": pr["title"]}, 201)
         if len(p) == 6 and p[:2] == ["api", "repos"] and p[2] in repo_names() and p[3] == "prs" and p[4].isdigit():
             repo = p[2]
             m, br = find(repo, int(p[4]))

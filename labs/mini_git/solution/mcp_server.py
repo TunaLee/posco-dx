@@ -1,19 +1,18 @@
 """미니 깃 MCP 서버 (강사용 완성본 · 수업에서는 Claude Code 로 직접 만든다).
 
-Claude Code 가 표준 입출력(stdio)으로 띄워 쓰는 MCP 서버. 파이썬 표준 라이브러리만 쓴다.
+GitHub 공식 MCP 서버(github/github-mcp-server)의 도구 이름 · 모양을 따른다 → 진짜 GitHub 로 바꿔도 Skill · Hook 을 그대로.
     claude mcp add repo -- python solution/mcp_server.py
-도구마다 repo 인자 (기본 shop)
 
-도구
-    list_prs           PR 목록 · 상태 · 변경 줄 수
-    get_pr             PR 한 건 설명
-    get_diff           PR 변경 내용 전체 (원문 · 큼)
-    changed_functions  바뀐 함수만 (컨텍스트를 아끼는 도구 · 실습 5-1)
-    get_comments       리뷰 코멘트 목록
-    add_comment        리뷰 코멘트 남기기
-    approve_pr         승인            ← Hook 으로 사람만 (실습 4-2)
-    merge_pr           병합            ← Hook 으로 사람만
-호출마다 data/mcp_calls.jsonl 에 한 줄 (콘솔 탭 ② 도구 호출)
+도구 (repo 인자 · 기본 shop)
+    list_pull_requests          PR 목록
+    pull_request_read           method: get · get_diff · get_files · get_comments
+    get_changed_functions       바뀐 함수만 (GitHub 에 없는 우리 도구 · 컨텍스트 절약 · 실습 5-1)
+    create_pull_request         push 한 브랜치에 제목 · 설명
+    add_comment_to_pending_review  파일 · 줄에 리뷰 코멘트
+    pull_request_review_write   리뷰 제출 · event APPROVE 면 승인   ← Hook 으로 사람만 (실습 4-4)
+    merge_pull_request          병합                                ← Hook 으로 사람만
+    list_branches · list_commits · get_file_contents
+호출마다 data/mcp_calls.jsonl 에 한 줄
 """
 import json
 import re
@@ -27,24 +26,30 @@ DATA = Path(__file__).resolve().parent.parent / "data"   # 미니 깃 폴더의 
 CALLS = DATA / "mcp_calls.jsonl"
 
 REPO = {"type": "string", "description": "저장소 이름 · 기본 shop"}
-PR = {"type": "object", "properties": {"repo": REPO, "pr": {"type": "integer", "description": "PR 번호 · 예: 104"}}, "required": ["pr"]}
+R = {"repo": {"type": "string", "description": "저장소 이름 · 기본 shop"}}
+N = {**R, "pullNumber": {"type": "integer", "description": "PR 번호 · 예: 104"}}
+
+
+def obj(props, req=()):
+    return {"type": "object", "properties": props, "required": list(req)}
+
+
 TOOLS = [
-    {"name": "list_repos", "description": "미니 깃의 저장소 목록.", "inputSchema": {"type": "object", "properties": {}}},
-    {"name": "list_prs", "description": "저장소의 PR 목록 (번호 · 제목 · 작성자 · 상태 · 변경 줄 수 · 코멘트 수).",
-     "inputSchema": {"type": "object", "properties": {"repo": REPO}}},
-    {"name": "get_pr", "description": "PR 한 건의 설명과 바뀐 파일 목록.", "inputSchema": PR},
-    {"name": "get_diff", "description": "PR 의 변경 내용 전체(unified diff). 크다 · 필요할 때만.", "inputSchema": PR},
-    {"name": "changed_functions", "description": "PR 에서 추가 · 변경된 함수만 골라 돌려준다. 리뷰는 이걸 먼저 쓴다.", "inputSchema": PR},
-    {"name": "get_comments", "description": "PR 에 달린 리뷰 코멘트.", "inputSchema": PR},
-    {"name": "add_comment", "description": "PR 에 리뷰 코멘트를 남긴다.",
-     "inputSchema": {"type": "object", "properties": {
-         "repo": REPO, "pr": {"type": "integer"}, "body": {"type": "string", "description": "코멘트 내용"},
-         "file": {"type": "string"}, "line": {"type": "integer"}, "author": {"type": "string", "description": "기본 claude"}},
-         "required": ["pr", "body"]}},
-    {"name": "approve_pr", "description": "PR 을 승인한다.",
-     "inputSchema": {"type": "object", "properties": {"repo": REPO, "pr": {"type": "integer"}, "reviewer": {"type": "string"}}, "required": ["pr"]}},
-    {"name": "merge_pr", "description": "승인된 PR 을 병합한다.",
-     "inputSchema": {"type": "object", "properties": {"repo": REPO, "pr": {"type": "integer"}, "by": {"type": "string"}}, "required": ["pr"]}},
+    {"name": "list_pull_requests", "description": "저장소의 PR 목록 (번호 · 제목 · 작성자 · 상태 · 변경 줄 수 · 코멘트 수).",
+     "inputSchema": obj({**R, "state": {"type": "string", "description": "open · merged · all (기본 all)"}})},
+    {"name": "pull_request_read", "description": "PR 한 건 읽기. method: get(설명) · get_diff(변경 전체 · 큼) · get_files(바뀐 파일 전체) · get_comments(리뷰 코멘트).",
+     "inputSchema": obj({**N, "method": {"type": "string", "enum": ["get", "get_diff", "get_files", "get_comments"]}}, ["pullNumber", "method"])},
+    {"name": "get_changed_functions", "description": "PR 에서 바뀐 함수 · 바뀐 줄만. 리뷰는 이걸 먼저 쓴다.", "inputSchema": obj(N, ["pullNumber"])},
+    {"name": "create_pull_request", "description": "push 한 브랜치(head)에 PR 제목 · 설명을 붙인다.",
+     "inputSchema": obj({**R, "head": {"type": "string"}, "title": {"type": "string"}, "body": {"type": "string"}}, ["head", "title"])},
+    {"name": "add_comment_to_pending_review", "description": "PR 의 파일 · 줄에 리뷰 코멘트를 단다.",
+     "inputSchema": obj({**N, "body": {"type": "string"}, "path": {"type": "string"}, "line": {"type": "integer"}}, ["pullNumber", "body"])},
+    {"name": "pull_request_review_write", "description": "리뷰를 제출한다. event: COMMENT · APPROVE.",
+     "inputSchema": obj({**N, "event": {"type": "string", "enum": ["COMMENT", "APPROVE"]}, "body": {"type": "string"}}, ["pullNumber", "event"])},
+    {"name": "merge_pull_request", "description": "승인된 PR 을 병합한다.", "inputSchema": obj(N, ["pullNumber"])},
+    {"name": "list_branches", "description": "브랜치 목록.", "inputSchema": obj(R)},
+    {"name": "list_commits", "description": "커밋 이력 (최근 20개).", "inputSchema": obj({**R, "ref": {"type": "string"}})},
+    {"name": "get_file_contents", "description": "파일 내용.", "inputSchema": obj({**R, "path": {"type": "string"}, "ref": {"type": "string"}}, ["path"])},
 ]
 
 
@@ -77,25 +82,30 @@ def changed_functions(r, pr):
 
 def call(name, a):
     r = a.get("repo") or "shop"
-    if name == "list_repos":
-        return api("")
-    if name == "list_prs":
-        return api(f"/{r}/prs")
-    n = int(a["pr"])
-    if name == "get_pr":
-        return api(f"/{r}/prs/{n}")
-    if name == "get_diff":
-        return api(f"/{r}/prs/{n}/diff")
-    if name == "changed_functions":
+    if name == "list_pull_requests":
+        prs = api(f"/{r}/prs"); st = a.get("state") or "all"
+        return prs if st == "all" else [x for x in prs if (x["status"] == "merged") == (st == "merged")]
+    if name == "list_branches":
+        return api(f"/{r}/branches")
+    if name == "list_commits":
+        return api(f"/{r}/commits?ref={a.get('ref') or 'main'}")
+    if name == "get_file_contents":
+        return api(f"/{r}/files/{a['path']}?ref={a.get('ref') or 'main'}")
+    if name == "create_pull_request":
+        return api(f"/{r}/prs", {"head": a["head"], "title": a["title"], "body": a.get("body", "")})
+    n = int(a["pullNumber"])
+    if name == "pull_request_read":
+        return api(f"/{r}/prs/{n}" + {"get": "", "get_diff": "/diff", "get_files": "/files", "get_comments": "/comments"}[a.get("method", "get")])
+    if name == "get_changed_functions":
         return changed_functions(r, n)
-    if name == "get_comments":
-        return api(f"/{r}/prs/{n}/comments")
-    if name == "add_comment":
-        return api(f"/{r}/prs/{n}/comments", {"author": a.get("author", "claude"), "body": a["body"], "file": a.get("file"), "line": a.get("line")})
-    if name == "approve_pr":
-        return api(f"/{r}/prs/{n}/approve", {"reviewer": a.get("reviewer", "claude")})
-    if name == "merge_pr":
-        return api(f"/{r}/prs/{n}/merge", {"by": a.get("by", "claude")})
+    if name == "add_comment_to_pending_review":
+        return api(f"/{r}/prs/{n}/comments", {"author": "claude", "body": a["body"], "file": a.get("path"), "line": a.get("line")})
+    if name == "pull_request_review_write":
+        if a.get("event") == "APPROVE":
+            return api(f"/{r}/prs/{n}/approve", {"reviewer": "claude"})
+        return api(f"/{r}/prs/{n}/comments", {"author": "claude", "body": a.get("body", "")})
+    if name == "merge_pull_request":
+        return api(f"/{r}/prs/{n}/merge", {"by": "claude"})
     raise ValueError(f"없는 도구 {name}")
 
 

@@ -5,11 +5,11 @@ description: 팀 코드 저장소의 PR 을 리뷰할 때. 「PR 105 리뷰해 �
 
 # 코드 리뷰 절차
 
-1. `mcp__repo__get_pr` 로 설명을 읽고, `mcp__repo__changed_functions` 로 바뀐 함수만 본다. 전체 diff 는 꼭 필요할 때만.
+1. `mcp__repo__pull_request_read`(method get) 로 설명을 읽고, `mcp__repo__get_changed_functions` 로 바뀐 함수만 본다. 전체 diff(get_diff)는 꼭 필요할 때만.
 2. 네 가지 관점으로 본다 — 보안(비밀 키 · SQL 조립 · 권한) · 버그(경계값 · 예외 · 상태) · 성능(반복 쿼리) · 테스트(빠진 경우).
 3. 보안이 의심되면 `security-reviewer` Agent 에게 맡기고 결과만 받는다.
 4. 지적마다 근거 줄을 붙인다. 근거가 없으면 쓰지 않는다. 문제가 없으면 「지적 없음」.
-5. `data/reviews.json` 에 아래 형식으로 덧붙이고, `mcp__repo__add_comment` 로 PR 에 요약 한 줄을 남긴다.
+5. `data/reviews.json` 에 아래 형식으로 덧붙이고, `mcp__repo__add_comment_to_pending_review` 로 근거 줄에 코멘트를 남긴다.
 6. 승인 · 병합은 하지 않는다 (사람이 한다).
 
 ## 형식 (data/reviews.json 의 한 항목)
