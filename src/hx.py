@@ -1581,6 +1581,13 @@ def ch8():
               ['<code>solution/</code> 의 CLAUDE.md · features.json · PROMPT.md · progress.md · loop.py 를 폴더 맨 위로 복사', '<code>git init</code> 후 첫 커밋', '<code>python loop.py 5</code>', '실패하면 progress.md 를 읽고 원인 보고'],
               ['passes 가 하나씩 true', '커밋마다 테스트 통과', 'Hook · 테스트가 루프를 멈춘 적', '세션마다 토큰 · 시간'],
               "<code>solution/loop.py</code> · 루프는 <code>claude -p</code> 를 로그인 계정으로 실행"),
+        measured("8-2", "Ch8", ["회차", "기능", "시간", "테스트"], [
+            ["<b>1</b>", "F1 3연속 상한 근접 경보", "234초", "19건 통과"],
+            ["<b>2</b>", "F2 강종별 불합격률", "150초", "29건 통과"],
+            ["<b>3</b>", "F3 교대조 리포트", "108초", "39건 통과"],
+            ["<b>4</b>", "F4 항목별 이탈 순위", "282초", "52건 통과"],
+            ["<b>5</b>", "F5 출하 승인 후보", "173초", "65건 통과"],
+        ], "사람 손 없이 16분 · 기능 5개 · 커밋 5개 · 1,017건 집계가 정답과 일치 · 출하 승인 기록 0건"),
         stat("하네스는 사람이 키운다", "Ch8",
              '<div class="eqn">'
              '<div class="eq-c"><div class="eq-h">사람이 정한다</div><div class="eq-v sm">기준 · 막을 것 · 합격선</div>'

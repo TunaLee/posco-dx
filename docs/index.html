@@ -2668,6 +2668,14 @@ node loop.mjs 8
   <div class="body"><div class="mid"><div class="kithead"><span>VS Code로 열 폴더</span><code>labs/steel_qc</code><em>요청은 내 말로 · 아래는 시킬 일의 요점</em></div><div class="qgrid"><div class="qc qa"><div class="qh">Claude에게 시킬 일</div><ol><li><code>solution/</code> 의 CLAUDE.md · features.json · PROMPT.md · progress.md · loop.py 를 폴더 맨 위로 복사</li><li><code>git init</code> 후 첫 커밋</li><li><code>python loop.py 5</code></li><li>실패하면 progress.md 를 읽고 원인 보고</li></ol></div><div class="qc qk"><div class="qh">확인할 결과</div><ul><li>passes 가 하나씩 true</li><li>커밋마다 테스트 통과</li><li>Hook · 테스트가 루프를 멈춘 적</li><li>세션마다 토큰 · 시간</li></ul></div></div><div class="dbnote"><span>막히면</span> <code>solution/loop.py</code> · 루프는 <code>claude -p</code> 를 로그인 계정으로 실행</div></div></div>
 </section>
 
+<section class="slide lt" data-title="실습 8-2 실측">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch8</span></div>
+  <h2 class="s-title sm">실습 8-2 실측</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>회차</th><th>기능</th><th>시간</th><th>테스트</th></tr></thead><tbody><tr><td><b>1</b></td><td>F1 3연속 상한 근접 경보</td><td>234초</td><td>19건 통과</td></tr><tr><td><b>2</b></td><td>F2 강종별 불합격률</td><td>150초</td><td>29건 통과</td></tr><tr><td><b>3</b></td><td>F3 교대조 리포트</td><td>108초</td><td>39건 통과</td></tr><tr><td><b>4</b></td><td>F4 항목별 이탈 순위</td><td>282초</td><td>52건 통과</td></tr><tr><td><b>5</b></td><td>F5 출하 승인 후보</td><td>173초</td><td>65건 통과</td></tr></tbody></table><div class="dbnote"><span>정리</span> 사람 손 없이 16분 · 기능 5개 · 커밋 5개 · 1,017건 집계가 정답과 일치 · 출하 승인 기록 0건</div><div class="src">출처 · <a href="https://github.com/TunaLee/posco-dx/tree/main/labs/steel_qc" target="_blank" rel="noopener">직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/steel_qc · 각 1회</a></div></div></div>
+</section>
+
 <section class="slide lt" data-title="하네스는 사람이 키운다">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch8</span></div>
