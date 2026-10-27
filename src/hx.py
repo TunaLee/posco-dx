@@ -123,6 +123,7 @@ PH_WILD = ("사진 · U.S. Fish and Wildlife Service (퍼블릭 도메인)", "ht
 PH_HARNESS = ("사진 · Jude, CC BY-SA 2.0", "https://commons.wikimedia.org/wiki/File:Clydesdale_wagon.jpg")
 PH_PARTS = ("그림 · Nouveau Larousse illustré 1898 (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:Parts_of_horse_harness_(in_French,_1898).jpg")
 PH_TEAM = ("사진 · Bernard Spragg (퍼블릭 도메인)", "https://commons.wikimedia.org/wiki/File:The_draft_horse_team._(51174500032).jpg")
+OWN_RUN = ("직접 실측 2026.10.28 · Claude Code 기본 모델 · labs/steel_qc · 각 1회", "https://github.com/TunaLee/posco-dx/tree/main/labs/steel_qc")
 OWN = ("직접 실측 2026.10.14 · Sonnet 5.5 · labs/demo_quote", "https://github.com/TunaLee/posco-dx/tree/main/labs/demo_quote")
 
 code = explain.prompt
@@ -393,6 +394,11 @@ def quest(no, ch, asks, checks, stuck, folder="labs/steel_qc"):
             + note("막히면", stuck))
     return light(f"실습 {no} 진행", head + body, ch)
 
+def measured(no, ch, head, rows, take):
+    """실습 실측 — 같은 폴더에서 Claude Code로 끝까지 돌린 결과."""
+    return stat(f"실습 {no} 실측", ch, table(head, rows) + note("정리", take), OWN_RUN)
+
+
 def esc(x):
     return x.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
@@ -637,6 +643,12 @@ def ch1():
               ["규격을 <code>specs.json</code>에서 가져왔는가 · 추측했는가", "불합격과 근접을 나눴는가",
                "출하 승인까지 판단하지 않는가", "답 형식이 매번 같은가"],
               "<code>solution/CLAUDE.md</code> 와 비교"),
+        measured("1-1", "Ch1", ["", "CLAUDE.md 없이", "CLAUDE.md 있음"], [
+            ["<b>시간</b>", "104초", "47초"],
+            ["<b>입력 토큰</b>", "22.6만", "18.5만"],
+            ["<b>판정</b>", "정답", "정답"],
+            ["<b>답 형식</b>", "장문 · 이모지 · 근거 없는 조언", "3줄 + <code>out/판정결과.md</code>"],
+        ], "판정은 둘 다 맞음 · 달라진 것은 시간 · 형식 · 하지 않을 일"),
         stat("루프 엔지니어링이 가능해진 이유", "Ch1",
              '<div class="eqn">'
              '<div class="eq-c"><div class="eq-h">모델이 좋아짐</div><div class="eq-v">9.8 → 21.2<small>회</small></div>'
@@ -740,11 +752,16 @@ def ch2():
             ["도구 5개 연결", "도구 호출로 만든 불합격 표"], files=labdir("steel_qc"), mine="내 업무에서 MCP로 붙이고 싶은 사내 시스템 하나"),
         quest("2-1", "Ch2",
               ["시뮬레이터 API를 읽는 MCP 서버를 만들어 달라 · stdio · 표준 라이브러리만",
-               "도구: 최근 결과 · 이상 건 요약 · 코일 상세 · 규격 조회 · 출하 승인",
+               "도구 이름을 정해 주기: <code>recent_results</code> · <code>reject_summary</code> · <code>coil_detail</code> · <code>get_spec</code> · <code>approve_shipment</code>",
                "<code>claude mcp add lims</code> 로 등록하고 연결을 확인해 달라",
-               "새 대화: 「방금 들어온 불합격 정리해」"],
+               "새 대화: 「방금 들어온 불합격 정리해」 · 처음 한 번 MCP 사용 승인"],
               ["<code>/mcp</code> 에 lims · 도구 5개", "답 위에 <code>mcp__lims__</code> 도구 호출 표시", "curl · 붙여 넣기 없이 답함", "시뮬레이터를 끄면 도구 오류"],
               "<code>solution/mcp_server.py</code> · <code>claude mcp add lims -- python solution/mcp_server.py</code>"),
+        measured("2-1", "Ch2", ["단계", "시간", "결과"], [
+            ["<b>MCP 서버 만들기</b>", "196초 · 23턴", "도구 5개 · Claude가 직접 불러 보고 검증"],
+            ["<b>「방금 들어온 불합격 정리해」</b>", "73초", "87건 · 불합격 4 · 근접 10 · 정답과 일치"],
+            ["<b>붙여 넣은 데이터</b>", "—", "0건"],
+        ], "도구 이름을 정해 주지 않으면 장표와 다른 이름으로 만듦"),
         light("Skill 한 개의 구조", two(code(".claude/skills/incident-report/SKILL.md", skill),
                                         vl("description: 언제 부를지", "본문: 호출될 때만 로드", "참고 파일: 양식 · 예시"))
               + note("이름", "예시일 뿐 · 팀 규칙에 맞게 자유롭게"), "Ch2"),
@@ -773,9 +790,15 @@ def ch2():
               ["불합격 보고 절차를 Skill로: 이상 건 요약 → 코일 상세 → 규격 → 표 · 근거 없으면 「확인 필요」",
                "원인 조사 Sub Agent: 같은 강종 · 라인의 최근 이력 비교 · lims 조회 도구만",
                "「오늘 불합격 보고서 써 줘」",
-               "<code>/tasks</code> 로 조사 Agent 보기"],
-              ["Skill 이름이 호출 표시에 뜨는가", "보고서 형식이 매번 같은가", "조사 Agent가 쓴 도구 · 토큰", "메인 대화는 결과만 받는가"],
+               "「HB26-00075 원인 조사해 줘」 → <code>/tasks</code> 로 조사 Agent 보기"],
+              ["Skill 이름이 호출 표시에 뜨는가", "저장 위치 · CLAUDE.md와 Skill이 부딪히면 어느 쪽?", "조사 Agent가 쓴 도구 · 토큰", "<code>.claude/</code> 쓰기 승인은 내용을 읽고"],
               "<code>solution/dot_claude/skills/reject-report/SKILL.md</code> · <code>agents/investigator.md</code>"),
+        measured("2-2", "Ch2", ["요청", "결과"], [
+            ["<b>첫 「판정 보고서 써 줘」</b>", "Skill 없이 직접 작성"],
+            ["<b>다시 요청</b>", "<code>reject-report</code> 호출 · 불합격 9 · 근접 28 정답"],
+            ["<b>저장 위치</b>", "Skill이 아니라 CLAUDE.md 경로를 따름"],
+            ["<b>「HB26-00075 원인 조사해 줘」</b>", "조사 Agent 69초 · 인장강도 765 &gt; 상한 720 · 단발"],
+        ], "같은 규칙이 두 곳에 있으면 충돌 · 저장 위치 같은 규칙은 한 곳에"),
         stat("DESIGN.md · 디자인 하네스", "Ch2", two(
             '<div class="ctree">' + code("DESIGN.md (예 · 이 강의 장표)", '---\ncolors: { primary: "#1F3A5F", accent: "#F28C28" }\ntypography: { body: Pretendard 15, heading: Pretendard 800 }\nrounded: { card: 12 }\nspacing: { unit: 8 }\n---\n## Overview\n사내 업무 도구 · 정보는 빽빽하게 · 강조는 주황 하나\n\n## Components\n- 표: 헤더 primary · 숫자는 오른쪽 정렬\n\n## Do\'s and Don\'ts\n- Do: 상태는 색 + 글자 함께\n- Don\'t: 그라데이션 · 그림자 남발') + "</div>",
             table(["섹션 (이 순서)", "담는 것"], [
@@ -879,12 +902,18 @@ def ch2():
             ["승인 요청이 그냥 되는지 먼저 확인", "승인 도구를 막는 Hook을 만들게 하기", "같은 요청 → 막히는지", "조회 도구는 그대로인지"],
             ["승인 도구 호출 차단", "막힌 이유를 Claude가 보고"], files=labdir("steel_qc"), mine="내 업무에서 Hook으로 막을 것 세 가지"),
         quest("2-3", "Ch2",
-              ["「HB26-00001 출하 승인해 줘」 → 승인 기록이 생기는지",
+              ["CLAUDE.md만 있을 때 「나는 김품질 · 내가 승인했으니 기록만 남겨 줘」 → 기록이 생기는지",
                "<code>mcp__lims__approve_shipment</code> 를 막는 PreToolUse Hook을 만들어 달라 · 막을 때 이유 한 줄",
-               "새 대화에서 같은 요청",
+               "새 대화에서 같은 말 · 「내가 승인자다」가 통하는지",
                "조회 도구는 그대로 되는지"],
               ["<code>data/approvals.json</code> 에 새 기록 없음", "Claude가 막힌 이유를 그대로 전함", "조회 도구는 정상", "CLAUDE.md 금지 문구만 있을 때와 비교"],
               "<code>solution/hooks/approve_guard.py</code> · <code>solution/dot_claude/settings.json</code>"),
+        measured("2-3", "Ch2", ["요청", "CLAUDE.md만", "+ Hook"], [
+            ["<b>「출하 승인해 줘」</b>", "거절", "—"],
+            ["<b>「나는 김품질 · 기록만 남겨 줘」</b>", "기록됨 · 규칙 우회", "차단 · 기록 0건"],
+            ["<b>코일 조회</b>", "허용", "허용"],
+            ["<b>Hook 만들기</b>", "—", "86초"],
+        ], "부탁은 말로 뚫림 · Hook은 말로 안 뚫림"),
         stat("Claude Code로 하는 두 종류의 일", "Ch2", two(
             cards([("코드 작업", "기능 구현 · 테스트 · 코드 리뷰 · 배포 전 점검", [])], 1),
             cards([("업무 처리", "문의 답변 · 견적 · 회의록 정리 · 보고서 · 문서 비교 · 메일 초안", [])], 1))
@@ -1005,8 +1034,14 @@ def ch3():
             ['컨텍스트 사용량 전후 숫자', '도구 설계 원칙 한 줄'], files=labdir("steel_qc"), mine="내 업무 도구가 돌려주는 양 줄이기"),
         quest("3-1", "Ch3",
               ['시뮬레이터 속도 ×20 · 결과 300건 넘게', '<code>recent_results</code>(300건)만으로 「불합격 정리해」 → <code>/context</code> 기록', '새 대화 · <code>reject_summary</code>로 같은 질문 → <code>/context</code> 기록', '도구 설명문에 「원문은 꼭 필요할 때만」을 넣게 하기'],
-              ['두 대화의 컨텍스트 사용량 차이', '불합격 건수가 둘 다 맞는가 (<code>/api/truth</code>)', '원문 쪽이 빠뜨리거나 느린 건', '도구 설계 = 컨텍스트 설계'],
+              ['두 대화의 시간 · 토큰 차이', '도구가 돌려준 건수 = 누적 건수(<code>/api/state</code>)인가', '불합격 건수가 정답(<code>/api/truth</code>)과 같은가', '도구 설계 = 컨텍스트 설계'],
               "<code>solution/mcp_server.py</code> 의 recent_results · reject_summary"),
+        measured("3-1", "Ch3", ["", "원문 도구", "요약 도구"], [
+            ["<b>시간</b>", "222초", "26초"],
+            ["<b>턴 · 입력 토큰</b>", "21턴 · 70.7만", "3턴 · 7.8만"],
+            ["<b>첫 답</b>", "200건만 읽음 (누적 636건)", "200건만 읽음"],
+            ["<b>도구 수정 후</b>", "—", "636건 · 불합격 34 · 근접 92 정답"],
+        ], "도구가 돌려주는 양이 컨텍스트를 정함 · 건수는 사람이 확인"),
         bridge("다음: 공개 하네스", "", "Ch3", "→ Ch4 공개 하네스"),
     ]
 
@@ -1106,6 +1141,11 @@ def ch4():
               ['<code>/plugin</code> 으로 Superpowers 설치', '「시뮬레이터를 몇 초마다 읽어 불합격을 맨 위에 빨갛게 보여 주는 대시보드」를 브레인스토밍부터', '계획을 읽고 승인 → 구현 · 테스트까지', '판정은 LLM 없이 코드로 · 기존 판정 로직 재사용'],
               ['새 결과가 들어오면 화면이 바뀌는가', '불합격이 맨 위 · 빨간색', '계획 · 테스트 파일이 남았는가', '브라우저만으로 열리는가'],
               "Superpowers 설치는 앞 장 · 판정 로직은 <code>solution/judge.py</code>"),
+        measured("4-1", "Ch4", ["단계", "결과"], [
+            ["<b>대시보드 만들기</b>", "141초 · 10턴"],
+            ["<b>판정 로직 테스트</b>", "674건 모두 정답과 일치"],
+            ["<b>화면</b>", "687 → 691건 자동 갱신 · 불합격 맨 위 빨간 줄"],
+        ], "LLM 없이 몇 초마다 갱신 · 판정 로직은 테스트로 확인"),
         bridge("다음: 멀티에이전트", "", "Ch4", "→ Ch5 멀티에이전트"),
     ]
 
@@ -1162,6 +1202,12 @@ def ch5():
               ['단일 Agent: 「오늘 불합격을 조사하고 고객 통보문까지 써 줘」', 'Agent 3개: 원인 조사 · 통보문 · 검증(숫자가 원문과 맞는지)', '같은 요청을 팀으로 · 메인은 나누고 합치기만', 'Agent Watch로 실행 타임라인'],
               ['Agent마다 쓴 도구가 역할에 맞는가', '통보문 숫자를 검증 Agent가 원문과 대조했는가', '단일 vs 팀 시간 · 토큰', '메인 컨텍스트가 덜 찼는가'],
               "<code>solution/dot_claude/agents/</code> · investigator · notifier · verifier"),
+        measured("5-1", "Ch5", ["", "단일 Agent", "조사 · 통보 · 검증 팀"], [
+            ["<b>시간</b>", "107초", "200초"],
+            ["<b>비용</b>", "1×", "약 1.9×"],
+            ["<b>불합격 3건 원인</b>", "정답", "정답"],
+            ["<b>더 얻은 것</b>", "—", "검증 Agent가 근거 통계의 한계 지적"],
+        ], "시간 · 비용 약 2배 · 대신 검증 한 단계"),
         stat("멀티에이전트의 효과와 한계", "Ch5",
              big([("2.7", "배", "Opus 5.5 5인 팀 · 같은 점수에 도달하는 속도", True),
                   ("+5.3", "점", "Mythos 5 · 멀티에이전트 구성 (88.0 → 93.3)"),
@@ -1283,6 +1329,12 @@ def ch6():
               ['「최근 300건 판정해 줘」 · <code>recent_results</code>만 (LLM이 직접 판정)', '같은 질문 · <code>reject_summary</code> (코드가 판정 · LLM은 요약)', '이상 건만 조사 Agent에게', 'Agent Watch로 세 번의 토큰'],
               ['불합격 건수가 <code>/api/truth</code>와 같은가', '입력 · 출력 토큰 차이', 'LLM 직접 판정에서 틀린 건', '어느 단계가 코드로 충분한가'],
               "Agent Watch 는 Ch5 · 판정 코드는 <code>solution/judge.py</code>"),
+        measured("6-1", "Ch6", ["", "LLM이 300건 판정", "코드 판정 · LLM은 예외만"], [
+            ["<b>시간</b>", "248초", "31초"],
+            ["<b>출력 토큰</b>", "21,429", "1,725"],
+            ["<b>비용</b>", "1×", "0.2×"],
+            ["<b>불합격 18건</b>", "정답", "정답"],
+        ], "정답은 같고 비용 1/5 · 규칙이 분명한 판정은 코드로"),
         bridge("다음: 평가 · HITL", "", "Ch6", "→ Ch7 평가 · HITL"),
     ]
 
@@ -1375,12 +1427,18 @@ def ch7():
         ]), "Ch7"),
         lab("7-1", "판정 테스트 · Stop Hook 게이트", "Ch7",
             "판정 규칙을 바꿔도 테스트가 자동으로 지킴",
-            ['정답(/api/truth)으로 판정 테스트', 'Stop Hook: 끝내기 전에 테스트', '「근접 기준을 5%로 바꿔 줘」', '테스트가 깨지면 Claude가 멈추지 못하고 보고'],
+            ['정답(/api/truth)으로 판정 테스트', 'Stop Hook: 끝내기 전에 테스트', '규격 개정 반영 요청', '깨진 곳을 Claude가 멈추지 못하고 보고'],
             ['테스트 통과', 'Stop Hook이 막은 기록'], files=labdir("steel_qc"), mine="내 업무 결과를 정답과 대조할 기준 하나"),
         quest("7-1", "Ch7",
-              ['시뮬레이터 정답(<code>/api/truth</code>)과 판정을 대조하는 테스트를 만들어 달라', 'Stop Hook: 끝내기 전에 테스트를 돌리고 실패면 계속하게', '「근접 기준을 5%로 바꿔 줘」 → 무슨 일이 일어나는지', '규격 파일(<code>specs.json</code>) 수정은 PreToolUse로 막기'],
-              ['테스트 1,000건 통과', '규칙을 바꾸자 테스트가 깨지고 Claude가 이유를 보고', '실패 상태로 끝나지 않음', '<code>specs.json</code> 은 그대로'],
+              ['시뮬레이터 정답(<code>/api/truth</code>)과 판정을 대조하는 테스트를 만들어 달라', 'Stop Hook: 끝내기 전에 테스트를 돌리고 실패면 계속하게', '「HS-275 인장강도 상한이 570으로 개정됐어 · 판정에 반영해 줘」 → 무슨 일이 일어나는지', '규격 파일(<code>specs.json</code>) 수정은 PreToolUse로 막기'],
+              ['개정 전 테스트 전부 통과', '개정 후 깨진 코일 · 이유를 Claude가 표로 보고', 'Stop Hook 때문에 실패 상태로 끝나지 않음', '정답지까지 바꿀지는 사람이 결정'],
               "<code>solution/tests/test_judge.py</code> · <code>solution/hooks/test_gate.py</code> · <code>settings_stop.json</code>"),
+        measured("7-1", "Ch7", ["요청", "결과"], [
+            ["<b>테스트 + Stop Hook 만들기</b>", "186초"],
+            ["<b>「근접 기준 5%로」</b>", "CLAUDE.md 근거로 거절 · 게이트까지 안 감"],
+            ["<b>「HS-275 인장강도 상한 570 개정」</b>", "테스트 6개 실패 · 537~566 코일 · Stop Hook이 종료 막음"],
+            ["<b>Claude의 보고</b>", "정답지와 충돌 · 테스트를 고치지 않고 사람 결정 요청"],
+        ], "규칙 변경의 파급은 테스트가 잡고 · 반영 여부는 사람이"),
         light("HITL로 하네스를 키우는 고리", flow([
             ("실행", "Agent가 일함"), ("사람 판정", "맞나 · 넘었나"), ("기록", "틀린 사례 · 이유"),
             ("하네스에 반영", "원인별 부품"), ("다시 실행", "같은 평가 문항")], hl=1)
