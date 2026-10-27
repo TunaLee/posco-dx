@@ -738,11 +738,6 @@ def ch_tool():
             "붙이기", [("외부 도구 연결", "MCP · 사내 시스템"), ("내 업무 도구", "필요한 조회 · 계산만")],
             "제한하기", [("허용 목록", "<code>--allowedTools</code> · 권한 allow"), ("막기", "권한 deny · Hook · Agent별 tools")], hl="l")
               + note("하네스", "어떤 도구를 쥐여 주고 무엇을 막느냐 = 모델 밖에서 정하는 일"), "Ch4"),
-        light("API: 약속된 주소와 형식", two(
-            code("브라우저 주소창 · 127.0.0.1:8900/api/repos/shop/prs", esc('[{"id": 101, "title": "주문 검색 API 추가",\n  "author": "김하늘", "status": "open",\n  "files": ["shop/orders.py"],\n  "additions": 5, "deletions": 0},\n {"id": 102, "title": "쿠폰 정률 할인 지원", ...}]')),
-            cards([("주소", "/api/repos/shop/prs · …/prs/번호/diff · …/prs/번호/comments", []),
-                   ("형식", "JSON · 사람이 아니라 프로그램이 읽는 모양", [])], 1))
-              + note("직접", "미니 깃을 켜고 브라우저로 열어 보기"), "Ch4"),
         stat("MCP · Skills 확산 현황", "Ch4",
              big([("5억", "회", "MCP SDK 월 다운로드 (대표 SDK 합계)", True),
                   ("10억+", "회", "TypeScript · Python SDK 각각 누적"),
@@ -761,6 +756,11 @@ def ch_tool():
             code("② tools/call · 도구 실행하기", esc('{"method": "tools/call",\n "params": {"name": "get_diff",\n            "arguments": {"pr": 104}}}\n\n→ {"content": [{"type": "text",\n     "text": "--- a/shop/orders.py\\n+++ b/shop/orders.py ..."}]}')))
               + note("설명문", "Claude는 이름 · 설명 · 입력 형식만 보고 도구를 고름 → 설명문이 곧 사용 설명서"), "Ch4"),
         light("등록 · 호출 순서", mcp_fig.seq(), "Ch4"),
+        light("미니 깃 API", two(
+            code("브라우저 주소창 · 127.0.0.1:8900/api/repos/shop/prs", esc('[{"id": 101, "title": "주문 검색 API 추가",\n  "author": "김하늘", "status": "open",\n  "files": ["shop/orders.py"],\n  "additions": 5, "deletions": 0},\n {"id": 102, "title": "쿠폰 정률 할인 지원", ...}]')),
+            cards([("주소", "/api/repos/shop/prs · …/prs/번호/diff · …/prs/번호/comments", []),
+                   ("형식", "JSON · 사람이 아니라 프로그램이 읽는 모양", [])], 1))
+              + note("MCP 서버가 부를 곳", "약속된 주소에 요청하면 정해진 형식(JSON)으로 답 · 브라우저로도 열어 볼 수 있음"), "Ch4"),
         light("도구와 API 연결", mcp_fig.mapping()
               + note("MCP 서버 코드", "도구 이름 · 인자 → API 주소 · 결과 JSON → 도구 결과 · 이 코드는 Claude Code가 작성"), "Ch4"),
         light("로컬 연결과 URL 연결", viz2.pair(
