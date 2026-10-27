@@ -236,6 +236,31 @@ def taste_loop():
     return f'<svg viewBox="0 0 1180 410" class="v2">{"".join(s)}</svg>'
 
 
+def dev_team():
+    """개발팀이 하던 일 → 같은 순서를 Agent가 · 사람은 승인 지점만."""
+    steps = [("요구 정리", "기획 회의", "brainstorming", "질문으로 요구 정리"),
+             ("설계 검토", "팀장 리뷰", "설계 문서", "사람이 승인"),
+             ("작업 계획", "스프린트 계획", "writing-plans", "2~5분 단위 · 사람이 승인"),
+             ("구현", "개발자 · 테스트 먼저", "Sub Agent · TDD", "작업마다 새 Agent"),
+             ("코드 리뷰", "동료 리뷰", "리뷰 Agent", "스펙 · 코드 두 번"),
+             ("마무리", "QA · 배포 확인", "테스트 · 병합 정리", "사람이 최종 판정")]
+    human = {1, 2, 5}
+    s = [f"<defs>{_defs('dev')}</defs>",
+         '<text x="20" y="62" class="v2-h" style="fill:#6B7785">개발팀</text>',
+         '<text x="20" y="262" class="v2-h" style="fill:#EF6C00">개발 하네스</text>']
+    w, x0 = 158, 150
+    for i, (h, t, a, sub) in enumerate(steps):
+        x = x0 + i * (w + 12)
+        s.append(_box(x, 20, w, 80, h, t, fill="#F4F6F9", stroke=G, d=i * .15))
+        s.append(_arrow(x + w / 2, 108, x + w / 2, 196, c=O, d=1.0 + i * .12))
+        s.append(_box(x, 205, w, 90, a, sub, fill="#FFF8F1", stroke=O, d=1.2 + i * .12))
+        if i in human:
+            s.append(f'<g class="v2-in" style="--d:{2.2 + i * .1:.2f}s"><rect x="{x + w / 2 - 44}" y="305" width="88" height="26" rx="13" fill="{K}"/>'
+                     f'<text x="{x + w / 2}" y="323" text-anchor="middle" class="v2-n" style="font-size:13px">사람 확인</text></g>')
+    s.append('<g class="v2-in" style="--d:.9s"><text x="20" y="160" class="v2-l" style="fill:#EF6C00">↓ 같은 순서를</text><text x="20" y="180" class="v2-l" style="fill:#EF6C00">Agent가</text></g>')
+    return f'<svg viewBox="0 0 1180 340" class="v2">{"".join(s)}</svg>'
+
+
 CSS = """
   /* 표 대신 그림 */
   .v2{width:100%; height:auto; display:block; margin:4px 0 12px;}

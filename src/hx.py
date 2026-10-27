@@ -707,6 +707,7 @@ def ch2():
             ("기록 → 보고서", "생산 실적 · 장애 주간 보고 · 수치 대조"), ("비교 · 검토", "계약 변경점 · 설정 리뷰 · 고치지 않고 판정"),
             ("정리 · 작성", "회의 후속 조치 · 공지 · 약속 금지"), ("개발", "MES 로그 분석 · 정산 배치 · Superpowers")], 3)
               + note("샘플", labdir("samples") + " · 11개 업무 분야 가상 데이터"), "Ch4"),
+        stat("Claude Code 밖의 하네스 요소", "Ch4", viz2.outside(), C_AGENTSMD, C_COPILOT_RV, C_SANDBOX, C_STRIPE),
         bridge("다음: 컨텍스트 설계", "", "Ch4", "→ Ch5 컨텍스트 엔지니어링"),
     ]
 
@@ -863,18 +864,9 @@ def ch4():
           "/office-hours · /plan-eng-review   # 기획 · 설계 검토\n"
           "/review · /qa · /cso               # 리뷰 · QA · 보안")
     return chapter("Ch2", "오픈 하네스 적용", {"Skill · 명령", "Sub Agent · 팀", "Hook · 권한"}, "남이 만든 하네스") + [
-        stat("다른 회사의 하네스 ① 개발 자동화", "Ch2",
-             big([("100만", "줄", "OpenAI Codex 팀 · 손코딩 0줄 · 5개월"), ("1,000+", "PR/주", "Stripe · 전부 사람 리뷰"),
-                  ("60~90", "%", "Spotify 마이그레이션 시간 절감"), ("97", "%", "Airbnb 테스트 이전 자동 · 6주", True)], 4)
-             + note("공통", "좁고 반복 · 확인 가능한 일 · 테스트 · 린트 · CI를 루프 안에 · 마지막은 사람"),
-             C_OAI_HE, C_STRIPE, C_SPOTIFY, C_AIRBNB),
-        stat("다른 회사의 하네스 ② 규칙 · 구조 · 사내 확산", "Ch2",
-             big([("−96.5", "%", "배달의민족 · 경로별 규칙으로 컨텍스트", True), ("24→5", "일", "Rakuten · 출시 기간 (고객 사례)"),
-                  ("28→59", "%", "Anthropic 내부 · 업무 중 Claude 비중")], 3)
-             + quote("구조 없이 풀어 둔 AI는 큰 코드베이스에서 실패한다", "Shopify Engineering")
-             + note("하네스의 두 축", "가이드(규칙 · Skill) + 센서(테스트 · 린트 · 리뷰) — martinfowler.com"),
-             C_WOOWA, C_SHOPIFY, C_RAKUTEN, C_ANTH_WORK, C_FOWLER),
-        stat("Claude Code 밖의 하네스 요소", "Ch2", viz2.outside(), C_AGENTSMD, C_COPILOT_RV, C_SANDBOX, C_STRIPE),
+        stat("개발팀의 방식 = 개발 하네스", "Ch2", viz2.dev_team()
+             + note("개발 하네스", "개발자들이 해 오던 순서 · 노하우를 Skill · Agent · Hook으로 묶은 것 · 사람은 확인 지점만"),
+             C_SUPERPOWERS, C_OAI_HE),
         stat("하네스가 효과적일 때 · 아닐 때", "Ch2", viz2.fit(
             [("좁고 반복 · 확인 가능", "Airbnb 97% 자동"), ("긴 작업을 파일로 나눔", "기능 목록 · 진행 기록 · 커밋"), ("필요한 맥락만", "배달의민족 −96.5%")],
             [("익숙한 저장소의 숙련자", "METR · 19% 느려짐"), ("구조 없이 풀어 둠", "Shopify · 큰 코드베이스 실패"), ("리뷰가 병목", "Spotify · PR이 늘면 리뷰가 막힘")],
@@ -915,7 +907,7 @@ def ch4():
             ["저장소 서버 켜기", "Superpowers 설치", "브레인스토밍 → 설계 · 계획 승인", "구현 · 테스트 → 탭 ① PR 목록"],
             ["탭 ① PR 목록", "설계 · 계획 · 테스트 파일"], files=labdir("code_review"), mine="내 업무 화면 하나를 같은 흐름으로"),
         quest("2-1", "Ch2",
-              ["<code>/plugin</code> 으로 Superpowers 설치", "「팀 코드 저장소(127.0.0.1:8900)의 PR을 보는 리뷰 콘솔을 만들고 싶어 · 탭 하나로 시작해서 실습마다 붙일 거야」", "설계 · 계획을 읽고 승인", "「탭을 붙이는 규칙을 CLAUDE.md에 정리해 줘」"],
+              ["<code>/plugin</code> 으로 Superpowers 설치", "「팀 코드 저장소(127.0.0.1:8900)의 PR을 보는 리뷰 콘솔을 만들고 싶어」", "설계 · 계획을 읽고 승인", "「탭을 붙이는 규칙을 CLAUDE.md에 정리해 줘」"],
               ["브레인스토밍 질문에 답했는가", "설계 · 계획 문서", "탭 ① PR 목록", "CLAUDE.md에 탭 규칙"],
               "<code>solution/app/</code> · <code>solution/CLAUDE.md</code>"),
         bridge("다음: 도구 붙이기", "", "Ch2", "→ Ch3 Tool · MCP"),

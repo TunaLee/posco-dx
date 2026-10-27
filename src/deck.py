@@ -123,8 +123,7 @@ def lab(no, title, ch, goal, steps, done, minutes=None, files="", mine=""):
 
 
 def _kind(no):
-    k = LAB_KIND.get(no)
-    return f'<span class="kindtag k{k[0]}">{k[0]} · {k[1]}분</span>' if k else ""
+    return ""
 
 
 def bridge(title, question, ch, nxt):
