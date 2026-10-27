@@ -154,6 +154,36 @@ def single_to_multi():
     return f'<svg viewBox="0 0 1180 380" class="v2">{"".join(s)}</svg>'
 
 
+def agent_anatomy():
+    """에이전트 구조 — LLM 하나 → 부품이 붙고 → 반복 고리 → 바깥이 에이전트."""
+    cx, cy = 590, 225
+    s = [f"<defs>{_defs('ana')}</defs>"]
+    # 바깥 테두리 (마지막에)
+    s.append(f'<g class="v2-in" style="--d:3.0s"><rect x="40" y="18" width="1100" height="404" rx="28" fill="none" stroke="{O}" stroke-width="3" stroke-dasharray="10 8"/>'
+             f'<rect x="64" y="4" width="150" height="30" rx="15" fill="{O}"/><text x="139" y="25" text-anchor="middle" class="v2-n">에이전트</text></g>')
+    # 부품 4개 (차례로)
+    parts = [(150, 70, "도구", "검색 · 파일 · 실행 · MCP", "tool"), (830, 70, "지침", "CLAUDE.md · Skill", "rule"),
+             (150, 290, "기억", "대화 · 메모리 · 진행 기록", "mem"), (830, 290, "자료", "사내 문서 · 데이터", "data")]
+    for i, (x, y, h, sub, _) in enumerate(parts):
+        d = .6 + i * .35
+        ex, ey = (x + 300 if x < cx else x), y + 45
+        s.append(f'<g class="v2-in" style="--d:{d:.2f}s"><line x1="{ex}" y1="{ey}" x2="{cx + (-95 if x < cx else 95)}" y2="{cy + (-30 if y < cy else 30)}" stroke="{G}" stroke-width="3"/>'
+                 f'<rect x="{x}" y="{y}" width="300" height="90" rx="16" fill="#fff" stroke="{K}" stroke-width="2.2"/>'
+                 f'<text x="{x + 150}" y="{y + 38}" text-anchor="middle" class="v2-t">{h}</text>'
+                 f'<text x="{x + 150}" y="{y + 64}" text-anchor="middle" class="v2-s">{sub}</text></g>')
+    # 반복 고리 (부품 뒤)
+    s.append(f'<g class="v2-in" style="--d:2.2s"><circle cx="{cx}" cy="{cy}" r="128" fill="none" stroke="{O}" stroke-width="3" stroke-dasharray="14 10" class="ana-spin"/>'
+             + "".join(f'<rect x="{cx + dx - 62}" y="{cy + dy - 16}" width="124" height="32" rx="16" fill="#FFF3E6" stroke="{O}"/>'
+                       f'<text x="{cx + dx}" y="{cy + dy + 6}" text-anchor="middle" class="v2-l" style="fill:#EF6C00">{t}</text>'
+                       for dx, dy, t in ((0, -128, "① 생각"), (111, 64, "② 도구 호출"), (-111, 64, "③ 결과 확인")))
+             + "</g>")
+    # LLM (처음)
+    s.append(f'<g class="v2-in" style="--d:0s"><circle cx="{cx}" cy="{cy}" r="78" fill="{K}"/>'
+             f'<text x="{cx}" y="{cy - 4}" text-anchor="middle" class="v2-big" style="fill:#fff">LLM</text>'
+             f'<text x="{cx}" y="{cy + 24}" text-anchor="middle" class="v2-s" style="fill:#C9CFD8">읽기 · 판단 · 작성</text></g>')
+    return f'<svg viewBox="0 0 1180 430" class="v2">{"".join(s)}</svg>'
+
+
 CSS = """
   /* 표 대신 그림 */
   .v2{width:100%; height:auto; display:block; margin:4px 0 12px;}
@@ -162,6 +192,7 @@ CSS = """
   .v2-big{font-size:26px; font-weight:900;} .v2-n{font-size:17px; font-weight:900; fill:#fff;}
   .v2-code{font-size:20px; font-weight:800; fill:#FF8A80; font-family:var(--mono, monospace);}
   .v2-in{animation:v2In .5s ease-out both; animation-delay:var(--d);}
+  .ana-spin{transform-origin:590px 225px; animation:anaSpin 12s linear infinite;} @keyframes anaSpin{to{transform:rotate(360deg)}}
   @keyframes v2In{from{opacity:0; transform:translateY(8px)}}
   @media print{.v2-in,.v2fit li,.v2tile,.v2pc,.v2m{animation:none}}
   .v2fo{display:flex; flex-direction:column; gap:8px;} .v2fo b{font-size:17px; color:#1F3A5F; line-height:1.35;} .v2fo span{font-size:14px; color:#6B7785; line-height:1.4;}
