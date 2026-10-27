@@ -573,6 +573,19 @@ def ch1():
             ["회사 소개 · 업무 규칙", "CLAUDE.md"], ["업무 매뉴얼", "Skill"], ["사내 시스템 계정", "Tool · MCP"],
             ["옆 팀 협업", "Sub Agent"], ["결재 · 보안 규정", "Hook · 권한"], ["수습 평가", "평가셋"],
         ]), "Ch1"),
+        light("Claude가 작업할 때 참고하는 것", arch()
+              + note("구분", "①은 부탁 · 참고 (모델이 따르려 함) · ③은 강제 (모델이 우회 못 함) · Skill · Agent는 설명만 상시, 본문은 쓸 때만"), "Ch1"),
+        light("프로젝트 폴더 구조 · .claude/", two(
+            '<div class="ctree">' + code("폴더 구조", '내-프로젝트/\n├── CLAUDE.md                 공통 원칙\n├── .mcp.json                 MCP 서버\n└── .claude/\n    ├── settings.json         권한 · Hook 등록 (팀 공유)\n    ├── settings.local.json   내 PC 전용 (git 제외)\n    ├── skills/\n    │   └── reject-report/\n    │       └── SKILL.md      절차\n    ├── agents/\n    │   └── verifier.md       Sub Agent 하나 = 파일 하나\n    └── hooks/\n        └── guard.py          Hook 스크립트') + "</div>",
+            viz2.tiles([("CLAUDE.md", "세션 시작 때 항상"), ("skills/", "요청이 설명과 맞을 때"), ("agents/", "메인이 위임할 때"), ("settings.json", "권한 · Hook · 팀 공유")], 1))
+              + note("~/.claude/", "같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용"), "Ch1"),
+        light("부품별 로드 · 실행 시점", viz2.tiles([('세션 시작 때', 'CLAUDE.md · Skill 설명 · MCP 도구 목록'), ('필요할 때', 'Skill 본문 · Sub Agent · /명령'), ('도구 호출 전후', '권한 · Hook — 코드가 결정')], 3)
+              + note("성격", "CLAUDE.md = 부탁 · Skill = 절차 · Sub Agent = 분업 · Hook = 강제"), "Ch1"),
+        light("부탁 · 절차 · 강제", cards([
+            ("CLAUDE.md = 부탁", "모델이 읽고 따르려 함 · 어길 수 있음", []),
+            ("Skill · 명령 = 절차", "필요할 때만 불러 컨텍스트 절약", []),
+            ("Hook · 권한 = 강제", "코드가 막음 · 모델이 우회 못 함", []),
+        ]), "Ch1"),
         light("채팅 → 에이전트 → 하네스", timeline(TL_HX)
               + note("정리", "에이전트가 일을 맡게 되면서 → 맡긴 일을 지키는 장치(하네스)가 다음 과제"), "Ch1"),
         light("프롬프트 · 컨텍스트 · 하네스 선택 기준", '''<div class="tline t4">
@@ -642,19 +655,6 @@ def ch2():
              "    print('차단: 위험 명령 · 비밀 파일', file=sys.stderr)\n"
              "    sys.exit(2)                     # 2 = 막고 이유를 Claude에게")
     return chapter("Ch4", "Claude Code 하네스 분해", {"Skill · 명령", "Hook · 권한", "Tool · MCP"}, "Skill · 명령 · Hook · 도구") + [
-        light("Claude가 작업할 때 참고하는 것", arch()
-              + note("구분", "①은 부탁 · 참고 (모델이 따르려 함) · ③은 강제 (모델이 우회 못 함) · Skill · Agent는 설명만 상시, 본문은 쓸 때만"), "Ch4"),
-        light("프로젝트 폴더 구조 · .claude/", two(
-            '<div class="ctree">' + code("폴더 구조", '내-프로젝트/\n├── CLAUDE.md                 공통 원칙\n├── .mcp.json                 MCP 서버\n└── .claude/\n    ├── settings.json         권한 · Hook 등록 (팀 공유)\n    ├── settings.local.json   내 PC 전용 (git 제외)\n    ├── skills/\n    │   └── reject-report/\n    │       └── SKILL.md      절차\n    ├── agents/\n    │   └── verifier.md       Sub Agent 하나 = 파일 하나\n    └── hooks/\n        └── guard.py          Hook 스크립트') + "</div>",
-            viz2.tiles([("CLAUDE.md", "세션 시작 때 항상"), ("skills/", "요청이 설명과 맞을 때"), ("agents/", "메인이 위임할 때"), ("settings.json", "권한 · Hook · 팀 공유")], 1))
-              + note("~/.claude/", "같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용"), "Ch4"),
-        light("부품별 로드 · 실행 시점", viz2.tiles([('세션 시작 때', 'CLAUDE.md · Skill 설명 · MCP 도구 목록'), ('필요할 때', 'Skill 본문 · Sub Agent · /명령'), ('도구 호출 전후', '권한 · Hook — 코드가 결정')], 3)
-              + note("성격", "CLAUDE.md = 부탁 · Skill = 절차 · Sub Agent = 분업 · Hook = 강제"), "Ch4"),
-        light("부탁 · 절차 · 강제", cards([
-            ("CLAUDE.md = 부탁", "모델이 읽고 따르려 함 · 어길 수 있음", []),
-            ("Skill · 명령 = 절차", "필요할 때만 불러 컨텍스트 절약", []),
-            ("Hook · 권한 = 강제", "코드가 막음 · 모델이 우회 못 함", []),
-        ]), "Ch4"),
         light("Skill 한 개의 구조", two(code(".claude/skills/incident-report/SKILL.md", skill),
                                         vl("description: 언제 부를지", "본문: 호출될 때만 로드", "참고 파일: 양식 · 예시"))
               + note("이름", "예시일 뿐 · 팀 규칙에 맞게 자유롭게"), "Ch4"),

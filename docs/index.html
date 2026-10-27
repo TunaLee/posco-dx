@@ -1112,6 +1112,50 @@
   <div class="body"><div class="mid"><table class="dbt"><thead><tr><th>신입사원이 받는 것</th><th>Agent의 하네스</th></tr></thead><tbody><tr><td>회사 소개 · 업무 규칙</td><td>CLAUDE.md</td></tr><tr><td>업무 매뉴얼</td><td>Skill</td></tr><tr><td>사내 시스템 계정</td><td>Tool · MCP</td></tr><tr><td>옆 팀 협업</td><td>Sub Agent</td></tr><tr><td>결재 · 보안 규정</td><td>Hook · 권한</td></tr><tr><td>수습 평가</td><td>평가셋</td></tr></tbody></table></div></div>
 </section>
 
+<section class="slide lt" data-title="Claude가 작업할 때 참고하는 것">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">Claude가 작업할 때 참고하는 것</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="arch"><div class="ar-col ar-ctx"><div class="ar-h">① 모델이 읽는 것 · 컨텍스트</div><div class="ar-it"><b>Claude Code 기본 지침</b><em>항상</em></div><div class="ar-it"><b>도구 정의 (내장 + MCP)</b><em>항상</em></div><div class="ar-it"><b>CLAUDE.md</b><em>항상</em></div><div class="ar-it"><b>Skill 목록</b><em>이름 · 설명만</em></div><div class="ar-it"><b>Sub Agent 목록</b><em>이름 · 설명만</em></div><div class="ar-it"><b>대화 · 도구 결과</b><em>쌓임</em></div><div class="ar-it"><b>새 요청 · /command 본문</b><em>이번 요청</em></div></div><div class="ar-arrow">→</div><div class="ar-col ar-model"><div class="ar-h">② Claude가 고르는 것</div><div class="ar-act">답하기</div><div class="ar-act">도구 쓰기 (Read · Bash · MCP …)</div><div class="ar-act">Skill 본문 불러오기</div><div class="ar-act">Sub Agent에게 위임</div></div><div class="ar-arrow">→</div><div class="ar-col ar-gate"><div class="ar-h">③ 모델 밖에서 작동 · 코드</div><div class="ar-g"><b>권한</b><em>settings.json 허용 · 거부 · 승인 요청</em></div><div class="ar-g"><b>Hook</b><em>실행 전후 검사 · 차단 (exit 2)</em></div><div class="ar-g"><b>실행</b><em>파일 · 명령 · 외부 시스템</em></div></div></div><div class="ar-loop">↺ 실행 결과는 다시 ①로 쌓이고, 끝날 때까지 반복</div><div class="dbnote"><span>구분</span> ①은 부탁 · 참고 (모델이 따르려 함) · ③은 강제 (모델이 우회 못 함) · Skill · Agent는 설명만 상시, 본문은 쓸 때만</div></div></div>
+</section>
+
+<section class="slide lt" data-title="프로젝트 폴더 구조 · .claude/">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">프로젝트 폴더 구조 · .claude/</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="twocol"><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">폴더 구조</span></div><pre><code>내-프로젝트/
+├── CLAUDE.md                 공통 원칙
+├── .mcp.json                 MCP 서버
+└── .claude/
+    ├── settings.json         권한 · Hook 등록 (팀 공유)
+    ├── settings.local.json   내 PC 전용 (git 제외)
+    ├── skills/
+    │   └── reject-report/
+    │       └── SKILL.md      절차
+    ├── agents/
+    │   └── verifier.md       Sub Agent 하나 = 파일 하나
+    └── hooks/
+        └── guard.py          Hook 스크립트</code></pre></div></div><div class="v2tiles c1"><div class="v2tile" style="--d:0.00s"><b>CLAUDE.md</b><span>세션 시작 때 항상</span></div><div class="v2tile" style="--d:0.08s"><b>skills/</b><span>요청이 설명과 맞을 때</span></div><div class="v2tile" style="--d:0.16s"><b>agents/</b><span>메인이 위임할 때</span></div><div class="v2tile" style="--d:0.24s"><b>settings.json</b><span>권한 · Hook · 팀 공유</span></div></div></div><div class="dbnote"><span>~/.claude/</span> 같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용</div></div></div>
+</section>
+
+<section class="slide lt" data-title="부품별 로드 · 실행 시점">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">부품별 로드 · 실행 시점</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="v2tiles c3"><div class="v2tile" style="--d:0.00s"><b>세션 시작 때</b><span>CLAUDE.md · Skill 설명 · MCP 도구 목록</span></div><div class="v2tile" style="--d:0.08s"><b>필요할 때</b><span>Skill 본문 · Sub Agent · /명령</span></div><div class="v2tile" style="--d:0.16s"><b>도구 호출 전후</b><span>권한 · Hook — 코드가 결정</span></div></div><div class="dbnote"><span>성격</span> CLAUDE.md = 부탁 · Skill = 절차 · Sub Agent = 분업 · Hook = 강제</div></div></div>
+</section>
+
+<section class="slide lt" data-title="부탁 · 절차 · 강제">
+  <div class="coord"><b></b> / <span class="tot"></span></div>
+  <div class="eyebrow"><span class="tag">Ch1</span></div>
+  <h2 class="s-title sm">부탁 · 절차 · 강제</h2>
+  <div class="rule"></div>
+  <div class="body"><div class="mid"><div class="kcards c3"><div class="kcard"><h4>CLAUDE.md = 부탁</h4><p>모델이 읽고 따르려 함 · 어길 수 있음</p></div><div class="kcard"><h4>Skill · 명령 = 절차</h4><p>필요할 때만 불러 컨텍스트 절약</p></div><div class="kcard"><h4>Hook · 권한 = 강제</h4><p>코드가 막음 · 모델이 우회 못 함</p></div></div></div></div>
+</section>
+
 <section class="slide lt" data-title="채팅 → 에이전트 → 하네스">
   <div class="coord"><b></b> / <span class="tot"></span></div>
   <div class="eyebrow"><span class="tag">Ch1</span></div>
@@ -1582,50 +1626,6 @@ spacing: { unit: 8 }
   <div class="icons"><span class="nm">평가셋 · 토큰</span></div>
 </div>
   <div class="hub hubtxt" style="left:566px; top:356px">모델</div>
-</section>
-
-<section class="slide lt" data-title="Claude가 작업할 때 참고하는 것">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch4</span></div>
-  <h2 class="s-title sm">Claude가 작업할 때 참고하는 것</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="arch"><div class="ar-col ar-ctx"><div class="ar-h">① 모델이 읽는 것 · 컨텍스트</div><div class="ar-it"><b>Claude Code 기본 지침</b><em>항상</em></div><div class="ar-it"><b>도구 정의 (내장 + MCP)</b><em>항상</em></div><div class="ar-it"><b>CLAUDE.md</b><em>항상</em></div><div class="ar-it"><b>Skill 목록</b><em>이름 · 설명만</em></div><div class="ar-it"><b>Sub Agent 목록</b><em>이름 · 설명만</em></div><div class="ar-it"><b>대화 · 도구 결과</b><em>쌓임</em></div><div class="ar-it"><b>새 요청 · /command 본문</b><em>이번 요청</em></div></div><div class="ar-arrow">→</div><div class="ar-col ar-model"><div class="ar-h">② Claude가 고르는 것</div><div class="ar-act">답하기</div><div class="ar-act">도구 쓰기 (Read · Bash · MCP …)</div><div class="ar-act">Skill 본문 불러오기</div><div class="ar-act">Sub Agent에게 위임</div></div><div class="ar-arrow">→</div><div class="ar-col ar-gate"><div class="ar-h">③ 모델 밖에서 작동 · 코드</div><div class="ar-g"><b>권한</b><em>settings.json 허용 · 거부 · 승인 요청</em></div><div class="ar-g"><b>Hook</b><em>실행 전후 검사 · 차단 (exit 2)</em></div><div class="ar-g"><b>실행</b><em>파일 · 명령 · 외부 시스템</em></div></div></div><div class="ar-loop">↺ 실행 결과는 다시 ①로 쌓이고, 끝날 때까지 반복</div><div class="dbnote"><span>구분</span> ①은 부탁 · 참고 (모델이 따르려 함) · ③은 강제 (모델이 우회 못 함) · Skill · Agent는 설명만 상시, 본문은 쓸 때만</div></div></div>
-</section>
-
-<section class="slide lt" data-title="프로젝트 폴더 구조 · .claude/">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch4</span></div>
-  <h2 class="s-title sm">프로젝트 폴더 구조 · .claude/</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="twocol"><div class="ctree"><div class="code sm"><div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="fn">폴더 구조</span></div><pre><code>내-프로젝트/
-├── CLAUDE.md                 공통 원칙
-├── .mcp.json                 MCP 서버
-└── .claude/
-    ├── settings.json         권한 · Hook 등록 (팀 공유)
-    ├── settings.local.json   내 PC 전용 (git 제외)
-    ├── skills/
-    │   └── reject-report/
-    │       └── SKILL.md      절차
-    ├── agents/
-    │   └── verifier.md       Sub Agent 하나 = 파일 하나
-    └── hooks/
-        └── guard.py          Hook 스크립트</code></pre></div></div><div class="v2tiles c1"><div class="v2tile" style="--d:0.00s"><b>CLAUDE.md</b><span>세션 시작 때 항상</span></div><div class="v2tile" style="--d:0.08s"><b>skills/</b><span>요청이 설명과 맞을 때</span></div><div class="v2tile" style="--d:0.16s"><b>agents/</b><span>메인이 위임할 때</span></div><div class="v2tile" style="--d:0.24s"><b>settings.json</b><span>권한 · Hook · 팀 공유</span></div></div></div><div class="dbnote"><span>~/.claude/</span> 같은 구조를 홈 폴더에 → 내 모든 프로젝트에 적용</div></div></div>
-</section>
-
-<section class="slide lt" data-title="부품별 로드 · 실행 시점">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch4</span></div>
-  <h2 class="s-title sm">부품별 로드 · 실행 시점</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="v2tiles c3"><div class="v2tile" style="--d:0.00s"><b>세션 시작 때</b><span>CLAUDE.md · Skill 설명 · MCP 도구 목록</span></div><div class="v2tile" style="--d:0.08s"><b>필요할 때</b><span>Skill 본문 · Sub Agent · /명령</span></div><div class="v2tile" style="--d:0.16s"><b>도구 호출 전후</b><span>권한 · Hook — 코드가 결정</span></div></div><div class="dbnote"><span>성격</span> CLAUDE.md = 부탁 · Skill = 절차 · Sub Agent = 분업 · Hook = 강제</div></div></div>
-</section>
-
-<section class="slide lt" data-title="부탁 · 절차 · 강제">
-  <div class="coord"><b></b> / <span class="tot"></span></div>
-  <div class="eyebrow"><span class="tag">Ch4</span></div>
-  <h2 class="s-title sm">부탁 · 절차 · 강제</h2>
-  <div class="rule"></div>
-  <div class="body"><div class="mid"><div class="kcards c3"><div class="kcard"><h4>CLAUDE.md = 부탁</h4><p>모델이 읽고 따르려 함 · 어길 수 있음</p></div><div class="kcard"><h4>Skill · 명령 = 절차</h4><p>필요할 때만 불러 컨텍스트 절약</p></div><div class="kcard"><h4>Hook · 권한 = 강제</h4><p>코드가 막음 · 모델이 우회 못 함</p></div></div></div></div>
 </section>
 
 <section class="slide lt" data-title="Skill 한 개의 구조">
