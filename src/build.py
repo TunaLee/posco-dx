@@ -71,5 +71,19 @@ def build():
     make_downloads()
 
 
+def build_vibe3():
+    """바이브코딩 온라인 강의 3장 덱 → docs/vibe3.html"""
+    import vibe3
+    parts = [art.DEFS] + vibe3.slides()
+    tpl = (ROOT / "src" / "template.html").read_text()
+    css = intro.CSS + explain.CSS + deck.CSS + deck_gas.CSS + hx.CSS + stats_hx.CSS + hx.mcp_fig.CSS + hx.viz2.CSS
+    tpl = tpl.replace("</style>", css + "</style>", 1)
+    html = tpl.replace("{{DECK_TITLE}}", "하네스 엔지니어링 · 내 업무 에이전트").replace("{{SLIDES}}", "\n\n".join(parts))
+    out = ROOT / "docs" / "vibe3.html"
+    out.write_text(html)
+    print(out, len(parts) - 1, "장")
+
+
 if __name__ == "__main__":
     build()
+    build_vibe3()

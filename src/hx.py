@@ -586,7 +586,7 @@ def ch1():
                     ("GPT-5.4 mini · Codex CLI", 66.1, True, "66.1%"), ("GPT-5.4 mini · Terminus 2", 36.9, False, "36.9%"),
                     ("GPT-5.3-Codex · Codex CLI", 79.1, True, "79.1%"), ("GPT-5.3-Codex · Terminus 2", 68.5, False, "68.5%")], top=100,
                    title="Terminal-Bench 2.1 · 같은 모델, 하네스만 다름")
-             + note("최대 22.5점 차이", "Epoch AI도 「성능을 가장 크게 좌우하는 것은 스캐폴드 선택」 (GPT-5 기준 최대 11%)"),
+             + note("최대 29.2점 차이", "Epoch AI도 「성능을 가장 크게 좌우하는 것은 스캐폴드 선택」 (GPT-5 기준 최대 11%)"),
              TB21, EPOCH),
         stat("같은 문제 · 하네스별 작업량", "Ch1",
              big([("11", "분", "Claude Code 하네스 · 도구 22번 · 28문제 풂", True), ("19", "분", "터미널만 · 도구 41번 · 26문제 풂")], 2)
@@ -680,12 +680,12 @@ def ch2():
               ["<code>.claude/</code> 에 생긴 파일", "Skill 이름이 호출 표시에", "<code>/tasks</code> 에 보안 Agent", "전후 형식 · 근거 줄 차이"],
               "<code>solution/dot_claude/</code> → <code>.claude/</code> 로 복사", folder="labs/review_lab"),
         stat("Replit 운영 DB 삭제 사고", "Ch2", viz2.incident()
-             + quote("모든 대문자로 열한 번이나 하지 말라고 했다", "Jason Lemkin · Replit 사고 당사자 (2025.7)"), INC_REPLIT),
+             + quote("대문자로 열한 번이나 하지 말라고 했다", "Jason Lemkin · Replit 사고 당사자 (2025.7)"), INC_REPLIT),
         stat("프롬프트 주입", "Ch2", viz2.injection()
              + note("하네스로", "읽기는 허용 · 승인 · 전송 · 삭제는 Hook으로 막기 · 발송은 사람"), INC_SUPERHUMAN, TRIFECTA),
         stat("부탁 vs Hook", "Ch2", viz2.ask_vs_hook()
              + note("Claude Code 문서", "CLAUDE.md는 권고 · Hook은 결정적 — 반드시 일어나게 보장"), D_BP, D_HOOKS),
-        light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", esc('"PreToolUse": [{\n  "matcher": "Edit|Write|MultiEdit",\n  "hooks": [{ "type": "command",\n             "command": "python .claude/hooks/guard.py" }]\n}]'))
+        light("Hook 설정과 차단 코드", code(".claude/settings.json (hooks 부분)", esc('"PreToolUse": [{\n  "matcher": "Edit|Write",\n  "hooks": [{ "type": "command",\n             "command": "python .claude/hooks/guard.py" }]\n}]'))
               + code(".claude/hooks/guard.py (요점)", esc('event = json.load(sys.stdin)\npath = event["tool_input"]["file_path"]\nif 상대경로(path).startswith(("shop/", "tests/")):\n    print(json.dumps({"hookSpecificOutput": {\n      "hookEventName": "PreToolUse",\n      "permissionDecision": "deny",\n      "permissionDecisionReason": "리뷰어는 코드를 고치지 않는다"}}))')), "Ch2"),
         lab("2-2", "리뷰어는 고치지 않는다 · Hook", "Ch2",
             "「고치지 마」를 지시가 아니라 코드로",

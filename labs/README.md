@@ -23,6 +23,7 @@ Ch2 에서 더미 코드로 `.claude/`(Skill · Agent · Hook)를 Claude 와 함
 
 | 폴더 | 내용 |
 |---|---|
+| `meeting_agent/` | 바이브코딩 3장 · 회의록 정리 에이전트 · 원본 회의록 3개 · 완성본(`solution/`) |
 | `review_lab/` | Ch2 · 리뷰용 더미 코드 · 완성본(`solution/dot_claude/`) |
 | `mini_git/` | 미니 깃 뼈대 · 리뷰용 팀 PR(`seed/`) · 계산 도구(`tools/`) · 완성본(`solution/`) |
 | `meta_harness/` · `samples/` | Ch9 실습 9-1 · 내 업무 하네스 |

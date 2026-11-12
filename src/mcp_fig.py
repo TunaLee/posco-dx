@@ -2,10 +2,9 @@
 K, O, G, M = "#1F3A5F", "#F28C28", "#C9CFD8", "#6B7785"
 
 
-def tangle():
+def tangle(systems=("미니 깃", "Jira", "사내 DB")):
     """AI 앱 3개 × 사내 시스템 3개 — 규격 없이 각자 연결 vs MCP로 한 번씩."""
     apps = ["Claude Code", "ChatGPT", "사내 챗봇"]
-    systems = ["미니 깃", "Jira", "사내 DB"]
 
     def side(x0, hub):
         s = []

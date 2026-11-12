@@ -1,6 +1,6 @@
 """PreToolUse Hook — 리뷰 중에는 shop/ · tests/ 를 고치지 못하게 막는다 (강사용 완성본 · 실습 2-2).
 
-.claude/settings.json 의 hooks.PreToolUse 에 matcher "Edit|Write|MultiEdit" 로 건다.
+.claude/settings.json 의 hooks.PreToolUse 에 matcher "Edit|Write" 로 건다.
 """
 import json
 import sys
