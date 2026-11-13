@@ -76,7 +76,7 @@ def build_vibe3():
     import vibe3
     parts = [art.DEFS] + vibe3.slides()
     tpl = (ROOT / "src" / "template.html").read_text()
-    css = intro.CSS + explain.CSS + deck.CSS + deck_gas.CSS + hx.CSS + stats_hx.CSS + hx.mcp_fig.CSS + hx.viz2.CSS
+    css = intro.CSS + explain.CSS + deck.CSS + deck_gas.CSS + hx.CSS + stats_hx.CSS + hx.mcp_fig.CSS + hx.viz2.CSS + vibe3.CSS
     tpl = tpl.replace("</style>", css + "</style>", 1)
     html = tpl.replace("{{DECK_TITLE}}", "하네스 엔지니어링 · 내 업무 에이전트").replace("{{SLIDES}}", "\n\n".join(parts))
     out = ROOT / "docs" / "vibe3.html"
