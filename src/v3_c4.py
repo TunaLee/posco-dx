@@ -7,7 +7,7 @@ import anim
 import viz2
 from deck import ba, divider, flow, light
 from hx import code, esc, note
-from v3kit import SOL, brief
+from v3kit import phmap, SOL, brief
 
 T = "3-4"
 
@@ -18,11 +18,13 @@ def slides():
         # ── 배경 → 비유 → 애니메이션
         light("긴 작업에서 생기는 일", viz2.tiles([
             ("처음 정한 규칙을 놓침", "대화가 길어지면 앞부분은 요약으로"), ("새 대화마다 처음부터", "「원본은 고치지 마」를 또 설명"),
-            ("파일을 많이 읽으면", "금방 차고 느려짐")], 3), T),
-        light("책상 비유", viz2.maprows([
+            ("파일을 많이 읽으면", "금방 차고 느려짐")], 3)
+              + flow([("대화 시작", "규칙을 말로 설명"), ("회의록 3개 읽기", "파일 내용이 쌓임"), ("정리 · 수정 반복", "대화가 길어짐"),
+                      ("한도 근처", "자동 요약"), ("말로 한 규칙", "요약에 섞여 줄어듦")], hl=4), T),
+        light("책상 비유", phmap("office_desk.webp", "사무실 책상", "사진 · Abbie Rowe (NARA) · 퍼블릭 도메인", "https://commons.wikimedia.org/wiki/File:Photograph_of_a_desk_in_a_White_House_office_-_NARA_-_199463.jpg", viz2.maprows([
             ("책상 크기", "컨텍스트 한도", "한 번에 읽는 양"), ("늘 펴 둔 메모", "시스템 프롬프트 · CLAUDE.md", "입력 전부터"),
             ("서랍 속 책 목록", "MCP 도구 이름 · Skill 설명", "이름 · 설명만"), ("꺼내 펼친 자료", "읽은 파일 · 도구 결과", "가장 많이 차지"),
-            ("책상이 차면 메모 한 장으로 정리", "자동 요약", "한도 근처에서")], "책상", "컨텍스트"), T),
+            ("책상이 차면 메모 한 장으로 정리", "자동 요약", "한도 근처에서")], "책상", "컨텍스트")), T),
         light("컨텍스트의 구성", anim.context_fill()
               + note("참고", "Claude Code 문서 「Explore the context window」 · NetworkChuck 「Why LLMs get dumb」 · IBM Technology 「What is a Context Window?」"), T),
         # ── CLAUDE.md
@@ -33,16 +35,30 @@ def slides():
         light("CLAUDE.md에 적을 내용", viz2.tiles([
             ("같은 실수가 두 번", "기한 없는 할 일에 날짜를 지어냄"), ("같은 설명을 또 함", "「결과는 out/ 에 저장」"),
             ("새 팀원도 알아야 함", "원본 폴더는 읽기만")], 3)
+              + viz2.maprows([
+                  ("「결과는 out/ 에 저장해 줘」", "결과는 out/ 에 파일로", ""), ("「기한 지어내지 마」", "기한이 없으면 「기한 미정」", ""),
+                  ("「고객 명단은 빼 줘」", "개인정보는 결과에 옮기지 않는다", "")], "또 한 말", "CLAUDE.md 한 줄")
               + note("공식 문서", "다시 설명하게 되는 것을 적어 두는 곳"), T),
         # ── 범위
         light("적용 범위 세 곳", viz2.tiles([
             ("Project · ./CLAUDE.md", "이 프로젝트 · git으로 팀 공유"), ("User · ~/.claude/CLAUDE.md", "내 모든 프로젝트 · 나만"),
             ("Local · ./CLAUDE.local.md", "이 프로젝트 · 나만 · .gitignore 에 추가")], 3)
+              + code("파일 위치", esc(
+                  "~/.claude/CLAUDE.md            User\n"
+                  "meeting_agent/\n"
+                  "├── CLAUDE.md                  Project\n"
+                  "└── CLAUDE.local.md            Local"))
               + note("회사 단위", "IT 부서가 까는 관리 정책(Managed policy) CLAUDE.md 도 있음"), T),
         light("범위별 내용", viz2.maprows([
             ("Project", "폴더 규칙 · 판단 기준", "「원본/ 은 읽기만」"), ("User", "내 말투 · 내 습관", "「답은 한국어로 짧게」"),
-            ("Local", "나만 쓰는 이 폴더 설정", "내 노션 페이지 주소")], "범위", "넣을 것"), T),
+            ("Local", "나만 쓰는 이 폴더 설정", "내 노션 페이지 주소")], "범위", "넣을 것")
+              + '<div class="twocol"><div>' + code("~/.claude/CLAUDE.md · 예", esc("- 답은 한국어로 짧게\n- 날짜는 11/10 처럼 월/일"))
+              + "</div><div>" + code("CLAUDE.local.md · 예", esc("- 내 노션 회의록 페이지: 주간 회의 2026\n- 결과 확인은 VS Code 로"))
+              + "</div></div>", T),
         light("겹친 범위의 읽는 순서", flow([("관리 정책", "회사"), ("User", "~/.claude/"), ("Project", "./CLAUDE.md"), ("Local", "./CLAUDE.local.md")], hl=2)
+              + viz2.pair(
+                  "어긋난 예", [("User 「결과는 바탕화면에」", "Project 「결과는 out/ 에」"), ("결과", "어느 쪽에 저장할지 정해지지 않음")],
+                  "맞춘 예", [("User 저장 위치 줄을 뺌", "Project 「결과는 out/ 에」 한 곳에만"), ("결과", "늘 out/")], hl="r")
               + note("모두 읽힘", "넓은 범위부터 차례로 · 서로 어긋나면 어느 쪽을 따를지 모름 → 문장을 맞춰 두기"), T),
         # ── 예 · 쓰는 법
         light("CLAUDE.md 예 · 회의록 정리", code("CLAUDE.md", esc(md))
@@ -57,6 +73,8 @@ def slides():
               + note("길이", "공식 권장 200줄 이내 · 길수록 컨텍스트를 차지하고 덜 지킴"), T),
         light("만들고 확인하는 명령", viz2.tiles([
             ("/init", "폴더를 읽고 CLAUDE.md 초안 생성"), ("/memory", "불러온 CLAUDE.md 열어 고치기"), ("/context all", "Memory files 에 올라갔는지 확인")], 3)
+              + flow([("/init", "초안"), ("초안 읽기", "틀린 줄 지우기"), ("규칙 덧붙이기", "기한 미정 · 개인정보"),
+                      ("새 대화", "규칙이 올라간 채 시작"), ("/context all", "올라갔는지 확인")], hl=2)
               + note("초안 다음", "Claude가 모르는 규칙은 사람이 덧붙임"), T),
         # ── 실습
         brief(T, T,

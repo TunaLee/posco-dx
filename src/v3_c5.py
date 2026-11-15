@@ -7,7 +7,7 @@ import anim
 import viz2
 from deck import ba, divider, flow, lab, light
 from hx import code, esc, note
-from v3kit import F, SOL, brief, pick
+from v3kit import phmap, F, SOL, brief, pick
 
 T = "3-5"
 SK = (SOL / "dot_claude" / "skills" / "meeting-notes" / "SKILL.md").read_text(encoding="utf-8").strip()
@@ -27,10 +27,14 @@ def background():
         light("매번 같은 설명", viz2.tiles([
             ("회의록 정리", "「결정 · 할 일 · 열린 질문으로 나눠 줘」"), ("주간 보고", "「지난주 대비 · 경고는 빨간색」"),
             ("메일 답장", "「규정 근거 한 줄 · 존댓말」")], 3)
+              + code("회의록마다 같은 설명 · 예", esc(
+                  "11/3   결정 · 할 일 · 열린 질문으로 나눠 줘. 기한 없으면 「기한 미정」, 근거 한 줄\n"
+                  "11/5   결정 · 할 일 · 열린 질문으로 나눠 줘. 기한 없으면 「기한 미정」, 근거 한 줄\n"
+                  "11/10  결정 · 할 일 · 열린 질문으로 나눠 줘. 기한 없으면 「기한 미정」, 근거 한 줄"))
               + note("반복해서 설명하는 것", "Skill 후보 · 한 번 써 두고 필요할 때 불러옴"), T),
-        light("업무 매뉴얼 비유", viz2.maprows([
+        light("업무 매뉴얼 비유", phmap("system_manuals.webp", "책등에 제목이 붙은 매뉴얼", "사진 · Bill Woodcock · CC BY-SA 4.0", "https://commons.wikimedia.org/wiki/File:AUX_system_manuals.jpg", viz2.maprows([
             ("책장의 책 제목", "name · description", "시작할 때 이것만"), ("필요한 책의 해당 장", "SKILL.md 본문", "요청과 맞으면"),
-            ("부록 · 양식", "부속 파일", "본문이 가리킬 때만"), ("계산기", "스크립트", "실행 결과만 올라감")], "매뉴얼", "Skill")
+            ("부록 · 양식", "부속 파일", "본문이 가리킬 때만"), ("계산기", "스크립트", "실행 결과만 올라감")], "매뉴얼", "Skill"))
               + note("Anthropic 엔지니어링 블로그", "목차 → 장 → 부록 순서로 펼치는 매뉴얼"), T),
         light("Skill의 정의", flow([("한 번 써 둠", "절차 · 형식 · 기준"), ("요청이 들어옴", "「회의록 정리해 줘」"),
                                   ("Claude가 꺼냄", "description 과 맞으면"), ("같은 결과", "매번 같은 절차 · 형식")], hl=2)
@@ -50,6 +54,11 @@ def structure():
         light("Skill 저장 위치", viz2.tiles([
             ("개인", "~/.claude/skills/이름/SKILL.md · 내 모든 프로젝트"), ("프로젝트", ".claude/skills/이름/SKILL.md · 이 폴더 · 팀 공유"),
             ("플러그인", "플러그인/skills/이름/SKILL.md · 설치한 묶음")], 3)
+              + code("위치 예", esc(
+                  "~/.claude/skills/mail-draft/SKILL.md                       개인\n"
+                  "meeting_agent/.claude/skills/meeting-notes/SKILL.md        프로젝트\n"
+                  "/document-skills:docx                                      플러그인 · 이름 앞에 플러그인"))
+              + note("이름이 같으면", "개인이 프로젝트보다 먼저 · 플러그인은 <code>/플러그인:이름</code> 이라 겹치지 않음")
               + note("회의록 실습", "프로젝트 위치 · <code>labs/meeting_agent/.claude/skills/</code>"), T),
         light("Skill 폴더 구조", code("폴더", esc(tree))
               + note("SKILL.md 하나면 시작", "양식 · 스크립트는 필요해질 때 추가"), T),
@@ -65,6 +74,10 @@ def structure():
         light("부속 파일과 스크립트", viz2.tiles([
             ("양식 · 예시 파일", "본문이 「양식.md 참고」라고 가리킬 때만 읽음"), ("스크립트", "읽지 않고 실행 · 결과만 컨텍스트에"),
             ("나누는 기준", "SKILL.md 가 500줄에 가까우면 떼어 냄")], 3)
+              + code("SKILL.md 끝 · 부속 파일 가리키기 예", esc(
+                  "## 참고 자료\n"
+                  "- 표 양식은 [양식.md](양식.md)\n"
+                  "- 저장 전 `${CLAUDE_SKILL_DIR}/check.py out/<날짜>_정리.md` 실행"))
               + note("Claude Code 문서", "Scripts are executed, not loaded"), T),
     ]
 
@@ -103,7 +116,12 @@ def good_skill():
     return [
         light("좋은 Skill의 네 요소", viz2.tiles([
             ("① 언제 쓰는지", "description · 요청 예문"), ("② 단계별 절차", "번호 · 한 줄에 한 동작"),
-            ("③ 산출물 형식", "표 머리 · 저장 위치"), ("④ 예시", "잘 된 결과 한 줄")], 4), T),
+            ("③ 산출물 형식", "표 머리 · 저장 위치"), ("④ 예시", "잘 된 결과 한 줄")], 4)
+              + viz2.maprows([
+                  ("① 언제 쓰는지", "맨 위 --- 사이 description", "「회의록 정리해 줘」 「할 일 뽑아 줘」"),
+                  ("② 단계별 절차", "본문 1~6 번호", "「세 가지로 나눈다 — 결정 · 할 일 · 열린 질문」"),
+                  ("③ 산출물 형식", "## 형식", "| 할 일 | 담당 | 기한 | 상태 | 근거 |"),
+                  ("④ 예시", "## 예시 · 실습에서 추가", "원본 11/10 의 기한 없는 할 일 한 줄")], "요소", "meeting-notes SKILL.md 위치"), T),
         light("① 언제 쓰는지", side("meeting-notes · description", FRONT, [
             ("하는 일", "할 일 · 결정 · 공유 초안으로 정리"), ("요청 예문", "「회의록 정리해 줘」 「할 일 뽑아 줘」"),
             ("빠지면", "요청과 맞춰 볼 근거가 없음")]), T),
@@ -139,7 +157,9 @@ def practice():
     return [
         light("Skill로 만드는 순서", flow([("Skill 없이", "「회의록 정리해 줘」"), ("결과 보고 말하기", "좋았던 것 · 바꿀 것"),
                                        ("Skill로", "「반영해서 Skill로 만들어 줘」"), ("새 대화", "같은 요청 · 비교")], hl=1)
-              + note("말로 수정", "SKILL.md는 Claude가 작성 · 규칙은 사람이 정함"), T),
+              + viz2.pair(
+                  "사람이 정함", [("바꿀 것", "결과에서 고를 3개"), ("판단 기준", "기한이 없으면 「기한 미정」"), ("하지 않을 것", "발송 · 원본 수정")],
+                  "Claude가 씀", [("폴더 · 파일", ".claude/skills/meeting-notes/SKILL.md"), ("description 문장", "하는 일 + 요청 예문"), ("절차 · 형식 줄", "번호 · 표 머리")], hl="l"), T),
         lab("3-5", "회의록 정리 Skill", T, "Skill 없이 받은 결과를 보고 말로 다듬어 Skill로 고정",
             ["Skill 없이 정리 요청", "바꿀 것 · 규칙을 내가 정하기", "Skill로 만들게 요청", "새 대화에서 비교"],
             ["<code>.claude/skills/meeting-notes/</code>", "매번 같은 형식"], files=F, mine="내 반복 업무 절차 하나"),

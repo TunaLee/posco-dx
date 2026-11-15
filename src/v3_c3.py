@@ -12,9 +12,9 @@
 import anim
 import mcp_fig
 import viz2
-from deck import divider, lab, light
-from hx import code, esc, note
-from v3kit import F, brief, pick
+from deck import divider, flow, lab, light
+from hx import code, esc, note, table
+from v3kit import logo, phmap, F, brief, pick
 
 T = "3-3"
 
@@ -54,14 +54,19 @@ def slides():
         light("연결 규격의 부재", mcp_fig.tangle(("노션", "슬랙", "구글 드라이브"))
               + note("MCP", "Model Context Protocol · 도구 목록 · 호출 · 결과 전달 형식을 하나로"), t),
         # ── 비유 ──
-        light("USB-C 비유", viz2.maprows([
+        light("USB-C 비유", phmap("usbc_port.webp", "노트북의 USB-C 포트", "사진 · Logant547 · CC BY 4.0", "https://commons.wikimedia.org/wiki/File:USB-C_connector_on_a_laptop.jpg", viz2.maprows([
             ("노트북", "Claude Code", "MCP 호스트"), ("USB-C 포트 규격", "MCP", "주고받는 순서 · 형식"),
             ("모니터 · 외장 디스크", "MCP 서버", "노션 · 슬랙 · 드라이브"), ("꽂으면 할 수 있는 일을 알림", "도구 목록", "notion-search · notion-fetch …"),
-            ("기기마다 케이블 하나", "서버마다 클라이언트 하나", "")], "USB-C", "MCP")
+            ("기기마다 케이블 하나", "서버마다 클라이언트 하나", "")], "USB-C", "MCP"))
               + note("공식 소개", "modelcontextprotocol.io — 「AI 앱을 위한 USB-C 포트」"), t),
         # ── 구조 ──
         light("MCP 서버와 MCP 클라이언트", viz2.tiles([
             ("MCP 서버", "도구를 내주는 쪽 · 노션 · 슬랙 · 드라이브"), ("MCP", "주고받는 순서 · 형식의 규격"), ("MCP 클라이언트", "도구를 쓰는 쪽 · Claude Code 안")], 3)
+              + code("연결 구조 · 서버 세 개를 붙이면", esc(
+                  "Claude Code (호스트)\n"
+                  "├── 클라이언트 ① ──── 노션 MCP 서버\n"
+                  "├── 클라이언트 ② ──── 슬랙 MCP 서버\n"
+                  "└── 클라이언트 ③ ──── 구글 드라이브 MCP 서버"))
               + note("서버마다 하나", "Claude Code(호스트)가 연결한 서버 수만큼 클라이언트를 만듦"), t),
         light("서버가 보내는 도구 목록 예", code("노션 MCP · 도구 목록 일부", esc(
             "notion-search      페이지 · 데이터베이스를 제목이나 주제로 찾기\n"
@@ -79,17 +84,19 @@ def slides():
         light("연결 범위 세 곳", viz2.tiles([
             ("Local · 기본", "이 프로젝트 · 나만 · <code>~/.claude.json</code>"), ("Project", "이 프로젝트 · 팀 공유 · <code>.mcp.json</code>"),
             ("User", "내 모든 프로젝트 · 나만 · <code>~/.claude.json</code>")], 3)
+              + code(".mcp.json · Project 범위 예", esc(
+                  '{ "mcpServers": {\n    "notion": { "type": "http", "url": "https://mcp.notion.com/mcp" }\n} }'))
               + note("고르는 법", "등록할 때 <code>--scope project</code> 처럼 붙임 · 팀이 같이 쓸 연결만 Project"), t),
         # ── 업무 도구별 ──
-        light("노션 MCP", viz2.pair(
+        light("노션 MCP", logo("notion_logo.webp", "Notion", "https://commons.wikimedia.org/wiki/File:Notion-logo.svg") + viz2.pair(
             "읽기 도구", [("notion-search", "제목 · 주제로 찾기"), ("notion-fetch", "페이지 열기"), ("notion-query-meeting-notes", "회의록 찾기")],
             "쓰기 도구", [("notion-create-pages", "새 페이지"), ("notion-update-page", "내용 · 속성 고치기"), ("notion-delete-pages", "휴지통으로")], hl="l")
               + note("주소 · 로그인", "<code>https://mcp.notion.com/mcp</code> · OAuth 로그인"), t),
-        light("슬랙 MCP", viz2.pair(
+        light("슬랙 MCP", logo("slack_logo.webp", "Slack", "https://commons.wikimedia.org/wiki/File:Slack_icon_2019.svg") + viz2.pair(
             "읽기", [("검색", "메시지 · 파일 · 채널 · 사용자"), ("읽기", "채널 · 스레드 · 캔버스")],
             "쓰기", [("보내기", "메시지 보내기 · 예약"), ("만들기", "채널 · 캔버스 · 리액션")], hl="l")
               + note("주소 · 승인", "<code>https://mcp.slack.com/mcp</code> · 워크스페이스 관리자가 앱 승인"), t),
-        light("구글 드라이브 MCP", viz2.pair(
+        light("구글 드라이브 MCP", logo("gdrive_logo.webp", "Google Drive", "https://commons.wikimedia.org/wiki/File:Google_Drive_icon_(2020).svg") + viz2.pair(
             "읽기", [("search_files", "파일 찾기"), ("read_file_content", "파일 내용 읽기"), ("get_file_metadata", "파일 정보")],
             "쓰기 · 동작", [("create_file", "파일 만들기"), ("copy_file", "파일 복사"), ("download_file_content", "내용 내려받기")], hl="l")
               + note("주소 · 조건", "<code>https://drivemcp.googleapis.com/mcp/v1</code> · Developer Preview · Google Cloud 프로젝트와 OAuth 클라이언트 필요"), t),
@@ -97,6 +104,10 @@ def slides():
             ("노션", "OAuth 로그인 · 관리자가 MCP 연결을 막을 수 있음 · 게스트는 연결 불가"),
             ("슬랙", "OAuth 로그인 · 관리자가 앱 승인 · 마켓플레이스 앱 · 사내 앱만"),
             ("구글 드라이브", "Developer Preview 신청 · Cloud 프로젝트에서 API 켜기 · OAuth 클라이언트")], 3)
+              + table(["서비스", "Claude Code 에 붙이는 방법"], [
+                  ["노션", "<code>claude mcp add --transport http notion https://mcp.notion.com/mcp</code> → <code>/mcp</code> 로그인"],
+                  ["슬랙", "슬랙 문서가 밝힌 파트너 클라이언트 · 관리자 승인 뒤 로그인"],
+                  ["구글 드라이브", "Cloud 콘솔에서 OAuth 클라이언트를 만든 뒤 등록"]])
               + note("실습", "가장 가벼운 노션으로 · 막히면 <code>labs/meeting_agent/원본/</code>"), t),
         # ── 등록 · 확인 ──
         light("노션 MCP 등록 순서", code("터미널 · 한 번만", esc("claude mcp add --transport http notion https://mcp.notion.com/mcp"))
@@ -104,13 +115,25 @@ def slides():
                             ("③ 허용", "읽을 워크스페이스 선택"), ("④ 확인", "/mcp 에 연결 표시")], 4), t),
         light("연결 상태 확인", viz2.tiles([
             ("Connected", "연결됨 · 바로 사용"), ("Needs authentication", "로그인 필요 · /mcp 에서 로그인"), ("Failed to connect", "연결 실패 · 주소 · 네트워크 확인")], 3)
-              + note("보는 곳", "터미널 <code>claude mcp list</code> · 대화 안 <code>/mcp</code>"), t),
+              + code("터미널 · 연결 관리 명령", esc(
+                  "claude mcp list          # 등록한 서버와 상태\n"
+                  "claude mcp get notion    # 한 서버의 설정 보기\n"
+                  "claude mcp remove notion # 연결 지우기\n"
+                  "/mcp                     # 대화 안 · 상태 확인 · 로그인"))
+              + note("실패 표시", "그 서버에 연결하지 못했다는 뜻 · 목록 명령이 실패한 것은 아님"), t),
         light("회사 계정 연결 제한", viz2.tiles([
             ("관리자 허용 요청", "워크스페이스의 외부 연결 허용"), ("개인 공간으로 복제", "읽을 페이지만 복제해 연결"), ("내보내기 파일", "Markdown으로 받아 폴더에")], 3)
+              + code("막혔을 때 쓰는 폴더 · 같은 회의록", esc(
+                  "labs/meeting_agent/원본/\n"
+                  "├── 2026-11-03_주간회의.md\n"
+                  "├── 2026-11-05_프로모션회의.md\n"
+                  "└── 2026-11-10_주간회의.md"))
               + note("실제 사례", "회사 워크스페이스는 연결 거절 → 페이지를 개인 공간으로 복제하자 연결됨"), t),
         light("연결 전 확인", viz2.tiles([
             ("공식 주소인가", "서비스 공식 문서의 MCP 주소"), ("무엇을 읽어 오나", "밖의 글을 가져오는 서버 · 글 속 지시가 섞일 수 있음"),
             ("어떤 쓰기 도구가 있나", "고치기 · 지우기 · 보내기")], 3)
+              + flow([("주소 확인", "서비스 공식 문서"), ("등록", "<code>claude mcp add</code>"), ("로그인", "<code>/mcp</code> · 읽을 곳만 허용"),
+                      ("쓰기 도구 닫기", "settings.json deny")], hl=3)
               + note("Claude Code 문서", "믿을 수 있는 서버만 연결 · 밖의 글을 가져오는 서버는 프롬프트 주입 위험"), t),
         # ── 권한 ──
         light("필요한 도구만 열기", viz2.pair(

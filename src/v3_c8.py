@@ -7,7 +7,7 @@ import anim
 import viz2
 from anim import BG, G, K, N, O, OK, S, W, _D, _path_dot, _t
 from deck import divider, flow, light
-from hx import code, esc, note
+from hx import code, esc, note, table
 from v3kit import pick
 
 T = "3-8"
@@ -89,7 +89,11 @@ def slides():
         light("완성 에이전트 결과 예 · 11/10", code("out/2026-11-10_정리.md · 예", esc(out_md))
               + note("근거", "표의 줄마다 원본 회의록 문장 · 기한이 없던 보안팀 미팅은 「기한 미정」"), t),
         light("사람의 하네스 갱신", flow([("Agent", "회의록 정리"), ("사람", "결과 보고 수정 요청"), ("하네스 갱신", "CLAUDE.md · Skill · Hook"),
-                                        ("다음 실행", "같은 요청이 안 나옴"), ("사람", "새로운 문제만 봄")], hl=2), t),
+                                        ("다음 실행", "같은 요청이 안 나옴"), ("사람", "새로운 문제만 봄")], hl=2)
+              + table(["사람이 본 것", "수정 요청", "하네스에 남긴 줄"], [
+                  ("보안팀 미팅에 없는 기한이 붙음", "「원본에 없으면 비워 둬」", "CLAUDE.md · 기한이 없으면 「기한 미정」 · 지어내지 않는다"),
+                  ("고객 명단 내용이 정리에 들어감", "「명단은 빼 줘」", "CLAUDE.md · 개인정보(고객 명단 등)는 결과에 옮기지 않는다"),
+                  ("Claude가 원본 오타를 고침", "「원본은 손대지 마」", "Hook · guard.py 가 원본/ 수정을 거부")]), t),
         light("수정 요청 반영 루프", viz2.taste_loop(steps=[("① Agent가 정리", "회의록 → 할 일 표"), ("② 사람이 수정 요청", "결과를 보고 말로"),
                                                     ("③ Agent가 고침", "다시 정리"), ("④ 하네스에 반영", "CLAUDE.md · Skill · Hook")], unit="회의")
               + note("보는 것", "회의별 수정 요청 수 · 줄어드는지 확인"), t),
@@ -116,6 +120,12 @@ def slides():
               + note("공통", "목록 단위 반복 · 확인 기준 · 최종 승인은 사람"), t),
         light("내 업무에 옮기는 순서", flow([("① 업무 하나", "매주 반복 · 결과가 파일"), ("② CLAUDE.md", "판단 기준 몇 줄"),
                                           ("③ Skill", "결과를 보고 절차로"), ("④ Hook", "사고 날 곳 하나"), ("⑤ 검토 Agent", "확인 기준 세 개")], hl=0)
+              + code("내 업무 폴더 · 첫 주", esc(
+                  "내업무/\n"
+                  "├── CLAUDE.md      ← 판단 기준 몇 줄부터\n"
+                  "├── 원본/          ← 반복해서 받는 자료\n"
+                  "└── out/           ← 결과 파일\n"
+                  "   (.claude/ 의 skills · hooks · agents 는 수정 요청이 쌓일 때)"))
               + note("크게 만들지 않기", "처음엔 CLAUDE.md 한 장 · 수정 요청이 쌓일 때 부품을 더함"), t),
         pick("하네스는 사람이 키운다", t, repl=[("하네스는 사람이 키운다", "사람이 키우는 하네스")]),
     ]

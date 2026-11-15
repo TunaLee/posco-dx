@@ -78,6 +78,8 @@ CSS = """
   .lt .ba .b, .lt .ba .a{min-height:210px; justify-content:center; padding:30px 32px;}
   .lt .ba .q{font-size:23px;}
   .lt .dbnote{font-size:17px;}
+  .v3logo{display:flex; align-items:center; gap:14px; margin:0 0 16px;} .v3logo img{height:52px; width:auto;} .v3logo b{font-size:24px; color:#16233A;}
+  .phmap.v3ph{grid-template-columns:400px 1fr;} .phmap.v3ph .ph img{height:330px; object-fit:cover;}
   /* vibe3 · 요청 쓰기 */
   .bf{display:grid; grid-template-columns:1.25fr 1fr; gap:18px; margin-bottom:12px;}
   .bh{font-size:14px; font-weight:900; color:#6B7785; letter-spacing:.02em; margin:0 0 8px;}
@@ -94,6 +96,19 @@ CSS = """
   .ha.weak ul{margin:0; padding-left:20px; font-size:17px; color:#C62828; line-height:1.7; font-weight:600;}
   .an{margin:2px 0 8px;}
 """
+
+
+def phmap(img, cap, credit, url, body):
+    """비유 장 — 왼쪽 실물 사진 + 오른쪽 대응표 · 출처는 오른쪽 위 (Commons · 라이선스 확인)."""
+    from hx import photo
+    from stats_hx import src
+    return f'<div class="phmap v3ph">{photo(img, cap)}{body}</div>' + src((credit, url))
+
+
+def logo(img, name, url):
+    """서비스 장 머리 — 공식 로고(참조용 · Commons 퍼블릭 도메인) + 이름 · 출처는 오른쪽 위."""
+    from stats_hx import src
+    return f'<div class="v3logo"><img src="img/{img}" alt="{name} 로고"/><b>{name}</b></div>' + src((f"로고 · {name} · 퍼블릭 도메인 (Commons)", url))
 
 
 def cover():
