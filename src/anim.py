@@ -291,7 +291,7 @@ def skill_trigger():
 
 # ── 4 Hook 이 끼어드는 시점 ───────────────────────────
 def hook_gate():
-    """이벤트 시간축 중 「실행 직전(PreToolUse)」에 관문 → 원본/ 수정은 exit 2 로 막고 이유를 Claude 에게 · out/ 쓰기는 통과. 14초 · 한 번.
+    """이벤트 시간축 중 「실행 직전(PreToolUse)」에 관문 → 원본/ 수정은 deny 로 막고 이유를 Claude 에게 · out/ 쓰기는 통과. 14초 · 한 번.
     참고: Claude Code Hooks 문서 · Claude 「Hooks in Claude Code」 · Agentic Lab 「Claude Code Hooks, Explained Simply」."""
     d = _D("hk", 14)
     MO = "#FFF3E6"
@@ -320,7 +320,7 @@ def hook_gate():
           + d.a([(0, "opacity:0"), (20, "opacity:0"), (21, "opacity:1"), (30, "opacity:1"), (33, "opacity:0"), (100, "opacity:0")]) + "/>")
     s += (f'<g {d.show(22)}><circle cx="400" cy="190" r="16" fill="{W}" stroke="{R}" stroke-width="3"/>'
           f'<path d="M393 183 L407 197 M407 183 L393 197" stroke="{R}" stroke-width="3.5"/>'
-          + _t(430, 166, "exit 2 · 막음", "tn", "start", f'style="fill:{R};font-size:15px"') + "</g>")
+          + _t(430, 166, "deny · 막음", "tn", "start", f'style="fill:{R};font-size:15px"') + "</g>")
     ret = [(381, 214), (330, 238), (226, 236)]
     s += f'<path d="M381 214 Q330 246 226 236" fill="none" stroke="{R}" stroke-width="3" marker-end="url(#{d.id("r")})" {d.show(28)}/>'
     s += _path_dot(d, ret, 28, 34, R, 8)
@@ -330,7 +330,7 @@ def hook_gate():
     s += _path_dot(d, [(232, 285), (375, 285)], 46, 56, OK, 11)
     s += (f'<rect x="381" y="110" width="38" height="300" rx="10" fill="none" stroke="{OK}" stroke-width="5" '
           + d.a([(0, "opacity:0"), (56, "opacity:0"), (57, "opacity:1"), (64, "opacity:1"), (67, "opacity:0"), (100, "opacity:0")]) + "/>")
-    s += f'<g {d.show(57)}>' + _t(430, 262, "exit 0 · 통과", "tn", "start", f'style="fill:{OK};font-size:15px"') + "</g>"
+    s += f'<g {d.show(57)}>' + _t(430, 262, "통과", "tn", "start", f'style="fill:{OK};font-size:15px"') + "</g>"
     s += _path_dot(d, [(400, 285), (595, 285), (786, 285)], 60, 74, OK, 11)
     s += f'<g {d.show(76)}><rect x="790" y="245" width="200" height="80" rx="14" fill="#E8F5E9" stroke="{OK}" stroke-width="3"/>' + _t(890, 274, "out/", "tt", extra=f'style="fill:{OK}"') + _t(890, 300, "저장됨", "ts", extra=f'style="fill:{OK}"') + "</g>"
     s += f'<g {d.show(86)}>' + _t(500, 380, "도구 호출마다 매번 같은 검사", "tn", "start") + _t(500, 406, "권한 모드보다 먼저 실행", "ts", "start") + "</g>"

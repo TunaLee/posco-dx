@@ -286,7 +286,8 @@ def metr_chart():
             g += f'<circle cx="{X(r[0]):.1f}" cy="{Y(r[idx]):.1f}" r="4.5" fill="{col}"/>'
     for d, a, b, lab in METR_SOTA:
         if lab:
-            g += f'<text x="{X(d) - 6:.1f}" y="{Y(a) - 10:.1f}" text-anchor="end" font-size="12.5" font-weight="700" fill="#1F3A5F">{lab}</text>'
+            dy = 22 if lab == "Claude Opus 4.6" else -10   # 바로 뒤 Mythos 이름표와 겹치지 않게 아래로
+            g += f'<text x="{X(d) - 6:.1f}" y="{Y(a) + dy:.1f}" text-anchor="end" font-size="12.5" font-weight="700" fill="#1F3A5F">{lab}</text>'
     g += (f'<line x1="{X0}" x2="{X1}" y1="{Y(960):.1f}" y2="{Y(960):.1f}" stroke="#D64545" stroke-dasharray="5 5" stroke-width="1.5"/>'
           f'<text x="{X0 + 6}" y="{Y(960) - 6:.1f}" font-size="12" fill="#D64545">16시간 넘는 측정은 신뢰 낮음</text>')
     lx, ly = X0 + 420, Y0 - 56
