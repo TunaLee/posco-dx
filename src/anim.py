@@ -159,102 +159,214 @@ def agent_loop():
     return d.svg(1160, 440, s)
 
 
-# ── 2 컨텍스트가 쌓이는 모습 ─────────────────────────
+def _path_dot(d, xy, t0, t1, color=O, r=9, label=""):
+    """꺾은선 xy 를 t0% → t1% 동안 따라가는 점 (앞뒤로는 숨김)."""
+    segs = [math.dist(a, b) for a, b in zip(xy, xy[1:])]
+    tot = sum(segs) or 1
+    pts, acc = [(0, *xy[0], 0), (max(t0 - .3, 0), *xy[0], 0), (t0, *xy[0], 1)], 0
+    for (x, y), L in zip(xy[1:], segs):
+        acc += L
+        pts.append((t0 + (t1 - t0) * acc / tot, x, y, 1))
+    pts += [(t1 + .5, *xy[-1], 0), (100, *xy[-1], 0)]
+    return _dot(d, pts, color, r, label)
+
+
+def _flow(d, t, xy, col, mk, lab="", lx=0, ly=0, anchor="middle", span=5, r=8, dash=False):
+    """t% 에 화살표가 나타나고 점이 span 동안 따라감."""
+    path = "M" + " L".join(f"{x:g} {y:g}" for x, y in xy)
+    tc = "#EF6C00" if col == O else col
+    da = 'stroke-dasharray="7 6" ' if dash else ""
+    s = (f'<g {d.show(t)}><path d="{path}" fill="none" stroke="{col}" stroke-width="3" '
+         f'{da}marker-end="url(#{d.id(mk)})"/>')
+    if lab:
+        s += _t(lx, ly, lab, "tn", anchor, f'style="fill:{tc};font-size:14.5px"')
+    return s + "</g>" + _path_dot(d, xy, t, t + span, col, r)
+
+
+# ── 2 컨텍스트가 차는 모습 ───────────────────────────
 def context_fill():
-    """한 번에 읽는 양(컨텍스트)에 무엇이 · 언제 올라가는지. 항상 → 쌓임 → 호출될 때. 12초 · 한 번."""
-    d = _D("cf", 12)
-    X0, Y, H, BW = 40, 70, 70, 1080
-    items = [("시스템 · 내장 도구", .10, K, 1, 3, "항상"), ("MCP 도구 목록", .08, K, .7, 10, "항상 · 연결한 만큼"),
-             ("CLAUDE.md", .05, K, .45, 17, "항상 · 길이만큼"), ("Skill 설명", .04, O, .45, 24, "항상 · 설명만"),
-             ("대화", .12, G, 1, 36, "쌓임"), ("도구 결과", .30, O, 1, 50, "쌓임 · 가장 큼"), ("Skill 본문", .07, O, .75, 68, "호출될 때만")]
+    """같은 크기 그릇이 입력 전부터 차 있고 → 작업하며 쌓이고 → 한도 근처에서 자동 요약. 16초 · 한 번.
+    참고: Claude Code 「Explore the context window」 · NetworkChuck 「Why LLMs get dumb」 · IBM 「What is a Context Window?」."""
+    d = _D("cx", 16)
+    X0, Y, H, BW = 40, 80, 80, 1080
+    FL = "#8FA3BF"
+    start = [("시스템 프롬프트", .06, N, 1, 3), ("CLAUDE.md", .04, K, 1, 7), ("MCP 도구 이름", .015, K, .5, 11), ("Skill 설명", .015, O, .6, 14)]
+    work = [("요청", .03, S, .6, 24), ("회의록 11-03", .11, FL, 1, 30), ("회의록 11-10", .11, FL, 1, 36), ("회의록 11-05", .11, FL, 1, 42),
+            ("Skill 본문", .05, O, 1, 50), ("도구 결과", .10, "#5C7FA8", 1, 56), ("대화 · 답", .21, S, .45, 62)]
     s = f'<rect x="{X0}" y="{Y}" width="{BW}" height="{H}" rx="12" fill="{BG}" stroke="{N}" stroke-width="3"/>'
     s += _t(X0, 40, "컨텍스트 · 한 번에 읽는 양", "tt", "start") + _t(X0 + BW, 40, "한도", "tt", "end")
-    x = X0
-    for i, (name, f, col, op, t, when) in enumerate(items):
+    x, pct, marks = X0, 0, []
+    for name, f, col, op, t in start:
         w = f * BW
         s += (f'<rect x="{x:g}" y="{Y}" height="{H}" fill="{col}" fill-opacity="{op}" stroke="{W}" stroke-width="2" '
-              + d.a([(0, "width:0px"), (t, "width:0px"), (t + 6, f"width:{w:g}px"), (100, f"width:{w:g}px")]) + "/>")
-        ly = 190 + i * 32
-        s += (f'<g {d.show(t)}><rect x="{X0}" y="{ly - 11}" width="22" height="22" rx="4" fill="{col}" fill-opacity="{op}"/>'
-              + _t(X0 + 34, ly, name, "tn", "start") + _t(X0 + 230, ly, when, "to" if "호출" in when or "가장" in when else "ts", "start") + "</g>")
+              + d.a([(0, "width:0px"), (t, "width:0px"), (t + 4, f"width:{w:g}px"), (100, f"width:{w:g}px")]) + "/>")
         x += w
-    s += f'<g {d.show(80)}>' + _t(700, 260, "설명은 늘 올라가 있고", "tn", "start") + _t(700, 292, "본문 · 결과는 쓸 때만 올라감", "tn", "start") + _t(700, 336, "→ CLAUDE.md 는 짧게 · 절차는 Skill 로", "to", "start") + "</g>"
-    return d.svg(1160, 420, s)
+        pct += f
+        marks.append((t + 3, pct))
+    sx = x
+    s += f'<g {d.show(16)}><path d="M{X0} 176 H{sx:g}" stroke="{N}" stroke-width="2"/>' + _t((X0 + sx) / 2, 194, "입력 전에 이미", "tn", extra='style="font-size:14px"') + "</g>"
+    for name, f, col, op, t in work:
+        w = f * BW
+        s += (f'<rect x="{x:g}" y="{Y}" height="{H}" fill="{col}" fill-opacity="{op}" stroke="{W}" stroke-width="2" '
+              + d.a([(0, "width:0px;opacity:1"), (t, "width:0px;opacity:1"), (t + 4, f"width:{w:g}px;opacity:1"), (76, f"width:{w:g}px;opacity:1"),
+                     (82, "width:0px;opacity:0"), (100, "width:0px;opacity:0")]) + "/>")
+        if f >= .1:
+            s += f'<g {d.show(t + 3, 76)}>' + _t(x + w / 2, Y + H / 2, name, "tw", extra='style="font-size:14px"') + "</g>"
+        x += w
+        pct += f
+        marks.append((t + 3, pct))
+    # 자동 요약
+    ax = X0 + .885 * BW
+    s += f'<g {d.show(70)}><path d="M{ax:g} {Y - 14} V{Y + H + 14}" stroke="{R}" stroke-width="3" stroke-dasharray="6 5"/>' + _t(ax, Y + H + 30, "자동 요약", "tn", extra=f'style="fill:{R};font-size:14px"') + "</g>"
+    sw = .07 * BW
+    s += (f'<rect x="{sx:g}" y="{Y}" height="{H}" fill="{OK}" stroke="{W}" stroke-width="2" '
+          + d.a([(0, "width:0px"), (80, "width:0px"), (85, f"width:{sw:g}px"), (100, f"width:{sw:g}px")]) + "/>")
+    s += f'<g {d.show(84)}>' + _t(sx + sw / 2, Y + H / 2, "요약", "tw", extra='style="font-size:14px"') + "</g>"
+    marks.append((80, sum(f for _, f, *_ in start) + .07))
+    # 퍼센트 (다음 값이 나올 때 바뀜)
+    for i, (t, p) in enumerate(marks):
+        end = marks[i + 1][0] if i + 1 < len(marks) else None
+        if end and end <= t:
+            continue
+        s += f'<g {d.show(t, end if end else None)}>' + _t(600, 40, f"{round(p * 100)}%", "tt", extra=f'style="font-size:24px;fill:{R if p > .8 else N}"') + "</g>"
+    # 범례
+    leg = [("시스템 프롬프트 · CLAUDE.md", N, 1, "입력 전 · 항상", 4), ("MCP 도구 이름 · Skill 설명", K, .5, "입력 전 · 이름 · 설명만", 12),
+           ("요청 · 대화 · 답", S, .5, "쌓임", 24), ("읽은 파일 · 도구 결과", FL, 1, "쌓임 · 가장 큼", 31),
+           ("Skill 본문", O, 1, "호출될 때만", 50), ("요약", OK, 1, "한도 가까우면 자동으로", 84)]
+    for i, (name, col, op, when, t) in enumerate(leg):
+        ly = 232 + i * 34
+        s += (f'<g {d.show(t)}><rect x="{X0}" y="{ly - 11}" width="22" height="22" rx="4" fill="{col}" fill-opacity="{op}"/>'
+              + _t(X0 + 34, ly, name, "tn", "start") + _t(X0 + 290, ly, when, "to" if t in (31, 50, 84) else "ts", "start") + "</g>")
+    s += (f'<g {d.show(88)}>' + _t(700, 262, "요약 뒤에도 다시 올라가는 것", "tn", "start")
+          + _t(700, 292, "시스템 프롬프트 · CLAUDE.md · Skill 설명", "ts", "start")
+          + _t(700, 336, "→ CLAUDE.md 는 짧게 · 절차는 Skill 로", "to", "start") + "</g>")
+    return d.svg(1160, 440, s)
 
 
-# ── 3 Skill이 불리는 순간 ─────────────────────────────
+# ── 3 Skill 이 열리는 단계 ────────────────────────────
 def skill_trigger():
-    """요청 문장과 Skill 설명을 비교 → 맞는 Skill 본문만 열림. 10초 · 한 번."""
-    d = _D("sk", 10)
-    s = (f'<g {d.show(2)}><rect x="20" y="150" width="250" height="60" rx="14" fill="{N}"/>' + _t(145, 181, "「11/10 회의록 정리해 줘」", "tw") + "</g>")
+    """① 시작할 때 설명 줄만 → ② 요청과 맞으면 본문 → ③ 본문이 가리킬 때 부속 파일 · 스크립트는 실행 결과만. 14초 · 한 번.
+    참고: Claude Code Skills 문서 · Claude 「What are skills?」 · IBM 「What AI Agent Skills Are and How They Work」."""
+    d = _D("sk", 14)
+    BAND = "#FFF3E6"
     cards = [("weekly-report", "주간 보고서를 쓸 때"), ("meeting-notes", "회의록을 할 일 · 결정으로 정리할 때"), ("mail-draft", "고객 메일 답장 초안을 쓸 때")]
-    s += _t(470, 40, "Skill 설명 · 항상 올라가 있음", "tn")
+    s = _t(230, 20, "Skill 폴더 · 디스크", "tn")
+    s += f'<rect x="560" y="10" width="580" height="410" rx="16" fill="{BG}" stroke="{N}" stroke-width="3"/>' + _t(850, 34, "컨텍스트", "tt")
     for i, (n, desc) in enumerate(cards):
-        y = 70 + i * 100
-        s += f'<rect x="320" y="{y}" width="300" height="80" rx="12" fill="{W}" stroke="{G}" stroke-width="2"/>'
-        s += _t(340, y + 26, n, "tm", "start") + _t(340, y + 54, desc, "ts", "start", 'style="font-size:13.5px"')
-    # 훑는 표시
-    s += (f'<rect x="314" width="312" height="92" rx="14" fill="none" stroke="{O}" stroke-width="4" '
-          + d.a([(0, "y:64px;opacity:0"), (12, "y:64px;opacity:0"), (14, "y:64px;opacity:1"), (24, "y:64px;opacity:1"),
-                 (32, "y:164px;opacity:1"), (100, "y:164px;opacity:1")]) + "/>")
-    s += f'<g {d.show(34)}>' + _t(470, 380, "요청과 설명이 맞음 → meeting-notes", "to") + f'<path d="M630 210 H700" stroke="{O}" stroke-width="3" marker-end="url(#{d.id("o")})"/></g>'
-    # 본문 열림
-    s += (f'<rect x="710" y="60" width="430" rx="14" fill="#FFF8F1" stroke="{O}" stroke-width="2.5" '
-          + d.a([(0, "height:0px;opacity:0"), (40, "height:0px;opacity:1"), (55, "height:300px;opacity:1"), (100, "height:300px;opacity:1")]) + "/>")
-    body = ["SKILL.md 본문", "1. 원본/ 에서 회의록 고르기", "2. 결정 · 할 일 · 열린 질문", "3. 담당 · 기한 · 근거 한 줄", "4. 지난 할 일 완료 여부", "5. out/ 에 저장 · 대화엔 3줄"]
-    for i, line in enumerate(body):
-        s += f'<g {d.show(52 + i * 5)}>' + _t(734, 96 + i * 42, line, "tt" if i == 0 else "tn", "start") + "</g>"
-    s += f'<g {d.show(88)}>' + _t(925, 392, "나머지 Skill 본문은 열리지 않음", "ts") + "</g>"
-    return d.svg(1160, 410, s)
+        y = 40 + i * 125
+        s += f'<rect x="30" y="{y}" width="400" height="105" rx="12" fill="{W}" stroke="{G}" stroke-width="2"/>'
+        s += f'<rect x="31" y="{y + 1}" width="398" height="32" rx="11" fill="{BAND}"/>' + _t(46, y + 18, f"{n} · {desc}", "tm", "start", 'style="font-size:13px"')
+        dim = "" if i == 1 else d.a([(0, "opacity:1"), (84, "opacity:1"), (88, "opacity:.35"), (100, "opacity:.35")])
+        s += f'<g {dim}>' + "".join(f'<rect x="46" y="{y + 44 + k * 14}" width="{300 - k * 60}" height="7" rx="3" fill="{G}"/>' for k in range(3)) + "</g>"
+        if i == 1:
+            s += _t(46, y + 92, "부속: 양식.md · check.py", "ts", "start", 'style="font-size:13px"')
+        # ① 설명 줄이 컨텍스트로
+        cy = 78 + i * 26
+        t = 4 + i * 3
+        dx, dy = 30 - 600, y - cy
+        s += (f'<g {d.a([(0, f"transform:translate({dx}px,{dy}px);opacity:0"), (t, f"transform:translate({dx}px,{dy}px);opacity:0"), (t + 1, f"transform:translate({dx}px,{dy}px);opacity:1"), (t + 7, "transform:translate(0px,0px);opacity:1"), (100, "transform:translate(0px,0px);opacity:1")], "ease-out")}>'
+              f'<rect x="600" y="{cy}" width="400" height="22" rx="6" fill="{BAND}"/>' + _t(612, cy + 11, f"{n} · {desc}", "tm", "start", 'style="font-size:12.5px"') + "</g>")
+    s += f'<g {d.show(3)}>' + _t(580, 66, "① 시작할 때 — 이름 · 설명만", "tn", "start", 'style="font-size:14px"') + "</g>"
+    # 요청 → 맞는 설명 고름
+    s += f'<g {d.show(22)}><rect x="600" y="160" width="300" height="32" rx="16" fill="{N}"/>' + _t(750, 176, "「11/10 회의록 정리해 줘」", "tw", extra='style="font-size:14px"') + "</g>"
+    s += f'<rect x="596" y="100" width="408" height="30" rx="8" fill="none" stroke="{O}" stroke-width="3" {d.show(30)}/>'
+    s += f'<rect x="27" y="162" width="406" height="111" rx="14" fill="none" stroke="{O}" stroke-width="3.5" {d.show(32)}/>'
+    s += f'<g {d.show(32)}>' + _t(1012, 115, "← 요청과 맞음", "to", "start", 'style="font-size:13.5px"') + "</g>"
+    # ② 본문
+    s += _flow(d, 38, [(434, 230), (556, 270)], O, "o")
+    s += f'<g {d.show(38)}>' + _t(580, 214, "② 요청과 맞으면 — 본문", "tn", "start", 'style="font-size:14px"') + "</g>"
+    s += (f'<rect x="600" y="226" width="520" rx="12" fill="#FFF8F1" stroke="{O}" stroke-width="2.5" '
+          + d.a([(0, "height:0px;opacity:0"), (40, "height:0px;opacity:1"), (48, "height:104px;opacity:1"), (100, "height:104px;opacity:1")]) + "/>")
+    for k, line in enumerate(["SKILL.md 본문 · meeting-notes", "1. 결정 · 할 일 · 열린 질문으로 나누기", "2. 형식은 양식.md · 다 쓰면 check.py 로 확인"]):
+        s += f'<g {d.show(46 + k * 3)}>' + _t(616, 248 + k * 30, line, "tn" if k else "tt", "start", 'style="font-size:15px"' if k else 'style="font-size:16px"') + "</g>"
+    # ③ 부속 파일 · 스크립트
+    s += f'<g {d.show(58)}>' + _t(580, 350, "③ 본문이 가리킬 때만 — 부속", "tn", "start", 'style="font-size:14px"') + "</g>"
+    s += (f'<g {d.show(60)}><rect x="600" y="364" width="240" height="38" rx="10" fill="{W}" stroke="{O}" stroke-width="2.5"/>'
+          + _t(720, 383, "양식.md · 읽어서 올림", "tn", extra='style="font-size:14px"') + "</g>")
+    s += (f'<g {d.show(70)}><rect x="856" y="364" width="264" height="38" rx="10" fill="{W}" stroke="{K}" stroke-width="2.5" stroke-dasharray="6 4"/>'
+          + _t(988, 383, "check.py · 실행 결과만", "tn", extra='style="font-size:14px"') + "</g>")
+    s += f'<g {d.show(86)}>' + _t(230, 418, "나머지 Skill 본문은 열리지 않음", "ts") + "</g>"
+    return d.svg(1160, 430, s)
 
 
-# ── 4 Hook이 끼어드는 시점 ───────────────────────────
+# ── 4 Hook 이 끼어드는 시점 ───────────────────────────
 def hook_gate():
-    """원본/ 수정 요청은 Hook 이 가로채 거부 · out/ 쓰기는 통과. 10초 · 한 번 · 끝 장면에 두 결과가 남음."""
-    d = _D("hk", 10)
-    s = _box(20, 110, 180, 210, "Claude", "도구 호출")
-    s += f'<rect x="520" y="60" width="26" height="320" rx="8" fill="{K}"/>' + _t(533, 402, "Hook", "tt")
-    s += (f'<rect x="510" y="60" width="46" height="320" rx="10" fill="none" stroke="{R}" stroke-width="5" '
-          + d.a([(0, "opacity:0"), (26, "opacity:0"), (28, "opacity:1"), (42, "opacity:1"), (45, "opacity:0"), (100, "opacity:0")]) + "/>")
-    s += (f'<rect x="510" y="60" width="46" height="320" rx="10" fill="none" stroke="{OK}" stroke-width="5" '
-          + d.a([(0, "opacity:0"), (64, "opacity:0"), (66, "opacity:1"), (74, "opacity:1"), (77, "opacity:0"), (100, "opacity:0")]) + "/>")
-    s += _box(900, 105, 240, 110, "원본/", "회의록 3개", fill=BG, stroke=G)
-    s += _box(900, 235, 240, 110, "out/", "정리 결과", fill=BG, stroke=G)
-    for y, x2 in ((160, 500), (290, 500)):
-        s += f'<path d="M200 {y} H{x2}" stroke="{G}" stroke-width="3" stroke-dasharray="6 6"/><path d="M560 {y} H890" stroke="{G}" stroke-width="3" stroke-dasharray="6 6"/>'
-    s += _dot(d, [(0, 210, 160, 0), (6, 210, 160, 1), (26, 500, 160, 1), (34, 500, 160, 1), (44, 210, 160, 1), (46, 210, 160, 0), (100, 210, 160, 0)],
-              color=R, r=12, label="Edit 원본/11-03")
-    s += (f'<g {d.show(30)}><circle cx="500" cy="160" r="15" fill="{W}" stroke="{R}" stroke-width="3"/>'
-          f'<path d="M493 153 L507 167 M507 153 L493 167" stroke="{R}" stroke-width="3.5"/>'
-          + _t(350, 120, "거부 · 이유를 Claude에게", "tt", extra=f'style="fill:{R};font-size:17px"') + "</g>")
-    s += f'<g {d.show(46)}>' + _t(350, 225, "이유를 읽고 out/ 으로", "ts") + "</g>"
-    s += _dot(d, [(0, 210, 290, 0), (52, 210, 290, 0), (54, 210, 290, 1), (66, 533, 290, 1), (80, 890, 290, 1), (82, 890, 290, 0), (100, 890, 290, 0)],
-              color=OK, r=12, label="Write out/11-03_정리")
-    s += f'<g {d.show(82)}>' + _t(725, 330, "통과 · 저장됨", "tt", extra=f'style="fill:{OK};font-size:17px"') + "</g>"
-    return d.svg(1160, 420, s)
+    """이벤트 시간축 중 「실행 직전(PreToolUse)」에 관문 → 원본/ 수정은 exit 2 로 막고 이유를 Claude 에게 · out/ 쓰기는 통과. 14초 · 한 번.
+    참고: Claude Code Hooks 문서 · Claude 「Hooks in Claude Code」 · Agentic Lab 「Claude Code Hooks, Explained Simply」."""
+    d = _D("hk", 14)
+    MO = "#FFF3E6"
+    ev = [("요청 제출", "UserPromptSubmit"), ("실행 직전", "PreToolUse"), ("도구 실행", ""), ("실행 직후", "PostToolUse"), ("응답 끝", "Stop")]
+    s = f'<path d="M40 48 H1100" stroke="{G}" stroke-width="3"/>'
+    for i, (k, e) in enumerate(ev):
+        x = 30 + i * 218
+        op = "" if i == 1 else d.a([(0, "opacity:1"), (6, "opacity:1"), (9, "opacity:.4"), (100, "opacity:.4")])
+        s += (f'<rect x="{x}" y="20" width="196" height="58" rx="12" fill="{W}" stroke="{G if i != 1 else K}" stroke-width="2"/>'
+              f'<g {op}>' + _t(x + 98, 40 if e else 49, k, "tn", extra='style="font-size:16px"') + (_t(x + 98, 62, e, "tm", extra=f'style="font-size:12.5px;fill:{S}"') if e else "") + "</g>")
+    s += f'<rect x="248" y="20" width="196" height="58" rx="12" fill="none" stroke="{O}" stroke-width="4" {d.show(6)}/>'
+    s += f'<path d="M346 80 V94 H400 V108" fill="none" stroke="{O}" stroke-width="3" stroke-dasharray="5 4" {d.show(8)}/>'
+    # 무대
+    s += _box(20, 150, 200, 190, "Claude", "도구 호출", fill=MO, stroke=O)
+    s += f'<rect x="387" y="110" width="26" height="300" rx="8" fill="{K}"/>' + _t(400, 428, "Hook · guard.py", "tn")
+    s += _box(500, 240, 190, 90, "도구 실행", "")
+    s += _box(790, 140, 200, 80, "원본/", "회의록 3개", fill=BG, stroke=G)
+    s += _box(790, 245, 200, 80, "out/", "정리 결과", fill=BG, stroke=G)
+    for y, segs in ((190, ((220, 383), (417, 786))), (285, ((220, 383), (417, 496), (690, 786)))):
+        for a, b in segs:
+            s += f'<path d="M{a} {y} H{b}" stroke="{G}" stroke-width="3" stroke-dasharray="6 6"/>'
+    # 1) 원본 수정 → 막힘
+    s += f'<g {d.show(8)}>' + _t(230, 172, "Edit 원본/11-03.md", "tm", "start", f'style="fill:{R};font-size:12.5px"') + "</g>"
+    s += _path_dot(d, [(232, 190), (375, 190)], 10, 20, R, 11)
+    s += (f'<rect x="381" y="110" width="38" height="300" rx="10" fill="none" stroke="{R}" stroke-width="5" '
+          + d.a([(0, "opacity:0"), (20, "opacity:0"), (21, "opacity:1"), (30, "opacity:1"), (33, "opacity:0"), (100, "opacity:0")]) + "/>")
+    s += (f'<g {d.show(22)}><circle cx="400" cy="190" r="16" fill="{W}" stroke="{R}" stroke-width="3"/>'
+          f'<path d="M393 183 L407 197 M407 183 L393 197" stroke="{R}" stroke-width="3.5"/>'
+          + _t(430, 166, "exit 2 · 막음", "tn", "start", f'style="fill:{R};font-size:15px"') + "</g>")
+    ret = [(381, 214), (330, 238), (226, 236)]
+    s += f'<path d="M381 214 Q330 246 226 236" fill="none" stroke="{R}" stroke-width="3" marker-end="url(#{d.id("r")})" {d.show(28)}/>'
+    s += _path_dot(d, ret, 28, 34, R, 8)
+    s += f'<g {d.show(32)}>' + _t(120, 368, "이유가 Claude에게", "tn", extra=f'style="fill:{R};font-size:15px"') + _t(120, 392, "「원본/은 수정 금지 · out/ 에 쓰기」", "ts", extra='style="font-size:13.5px"') + "</g>"
+    # 2) out/ 쓰기 → 통과
+    s += f'<g {d.show(44)}>' + _t(230, 267, "Write out/정리.md", "tm", "start", f'style="fill:{OK};font-size:12.5px"') + "</g>"
+    s += _path_dot(d, [(232, 285), (375, 285)], 46, 56, OK, 11)
+    s += (f'<rect x="381" y="110" width="38" height="300" rx="10" fill="none" stroke="{OK}" stroke-width="5" '
+          + d.a([(0, "opacity:0"), (56, "opacity:0"), (57, "opacity:1"), (64, "opacity:1"), (67, "opacity:0"), (100, "opacity:0")]) + "/>")
+    s += f'<g {d.show(57)}>' + _t(430, 262, "exit 0 · 통과", "tn", "start", f'style="fill:{OK};font-size:15px"') + "</g>"
+    s += _path_dot(d, [(400, 285), (595, 285), (786, 285)], 60, 74, OK, 11)
+    s += f'<g {d.show(76)}><rect x="790" y="245" width="200" height="80" rx="14" fill="#E8F5E9" stroke="{OK}" stroke-width="3"/>' + _t(890, 274, "out/", "tt", extra=f'style="fill:{OK}"') + _t(890, 300, "저장됨", "ts", extra=f'style="fill:{OK}"') + "</g>"
+    s += f'<g {d.show(86)}>' + _t(500, 380, "도구 호출마다 매번 같은 검사", "tn", "start") + _t(500, 406, "권한 모드보다 먼저 실행", "ts", "start") + "</g>"
+    return d.svg(1160, 440, s)
 
 
 # ── 5 MCP 호출 순서 ──────────────────────────────────
 def mcp_call():
-    """연결 때 도구 목록 → 질문 → 모델이 도구 고름 → MCP 서버 → 노션 → 결과 → 답. 12초 · 한 번."""
-    d = _D("mc", 12)
-    xs = [(110, "사용자", ""), (400, "Claude Code", "MCP 클라이언트"), (720, "노션 MCP 서버", "mcp.notion.com"), (1030, "노션", "내 페이지")]
-    s = ""
-    for x, h, sub in xs:
-        s += _box(x - 100, 20, 200, 74, h, sub, fill=K if h == "Claude Code" else W, stroke=K,
-                  cls="tw" if h == "Claude Code" else "tt")
-        s += f'<line x1="{x}" y1="94" x2="{x}" y2="410" stroke="{G}" stroke-width="2" stroke-dasharray="6 6"/>'
-    steps = [(4, 400, 720, 130, "① 도구 목록 주세요", K), (12, 720, 400, 165, "notion-search · notion-fetch …", K),
-             (26, 110, 400, 210, "② 「주간 회의 페이지 찾아서 할 일만」", K), (36, 400, 400, 250, "③ 모델이 notion-search 고름", O),
-             (46, 400, 720, 290, "④ 호출", O), (54, 720, 1030, 290, "노션 API", O), (62, 1030, 720, 330, "페이지 내용", OK),
-             (70, 720, 400, 330, "결과", OK), (82, 400, 110, 375, "⑤ 할 일 표로 답", OK)]
-    for t, a, b, y, lab, col in steps:
-        mk = {K: "k", O: "o", OK: "g"}[col]
-        if a == b:
-            s += f'<g {d.show(t)}><rect x="{a - 150}" y="{y - 17}" width="300" height="34" rx="10" fill="#FFF8F1" stroke="{O}" stroke-width="2"/>' + _t(a, y + 1, lab, "to") + "</g>"
-            continue
-        dirn = 1 if b > a else -1
-        s += (f'<g {d.show(t + 4)}><line x1="{a + dirn * 6}" y1="{y}" x2="{b - dirn * 10}" y2="{y}" stroke="{col}" stroke-width="3" marker-end="url(#{d.id(mk)})"/>'
-              + _t((a + b) / 2, y - 14, lab, "tn" if col == K else ("to" if col == O else "tn"), extra=f'style="fill:{col};font-size:14px"') + "</g>")
-        s += _dot(d, [(0, a, y, 0), (t, a, y, 0), (t + .5, a, y, 1), (t + 5, b, y, 1), (t + 6, b, y, 0), (100, b, y, 0)], color=col, r=8)
+    """호스트(Claude Code)만 모델 · 서버와 통신. 연결 때 도구 이름 → 요청 → 모델이 도구를 고름 → 호스트가 서버로 호출 → 결과 → 답. 16초 · 한 번.
+    참고: modelcontextprotocol.io 「Architecture overview」 · IBM 「What is MCP?」 · ByteByteGo 「Why Everyone's Talking About MCP?」."""
+    d = _D("mc", 16)
+    MO = "#FFF3E6"
+    s = f'<g {d.show(1)}><rect x="20" y="40" width="150" height="56" rx="28" fill="{N}"/>' + _t(95, 68, "사용자", "tw", extra='style="font-size:18px"') + "</g>"
+    s += (f'<g {d.show(2)}><rect x="230" y="20" width="300" height="150" rx="16" fill="{K}"/>' + _t(380, 48, "Claude Code", "tw", extra='style="font-size:21px"')
+          + _t(380, 74, "호스트 · MCP 클라이언트", "tw", extra='style="font-weight:500;fill:#C9D3E0;font-size:14px"') + "</g>")
+    s += f'<g {d.show(4)}><rect x="790" y="20" width="260" height="150" rx="16" fill="{MO}" stroke="{O}" stroke-width="3"/>' + _t(920, 72, "모델", "tt", extra='style="font-size:22px"') + _t(920, 102, "도구를 고르기만", "ts") + "</g>"
+    s += f'<g {d.show(6)}>' + _box(230, 300, 300, 100, "노션 MCP 서버", "mcp.notion.com") + "</g>"
+    s += f'<g {d.show(8)}>' + _box(790, 300, 260, 100, "노션", "내 페이지", fill=BG, stroke=G) + "</g>"
+    # ① 연결할 때 도구 이름
+    s += _flow(d, 10, [(262, 174), (262, 294)], K, "k", span=4)
+    s += _flow(d, 14, [(292, 296), (292, 176)], K, "k", "① 연결할 때 · 도구 이름 목록", 250, 236, "end", span=4)
+    for x, w, n in ((246, 136, "notion-search"), (390, 124, "notion-fetch")):
+        s += f'<g {d.show(18)}><rect x="{x}" y="118" width="{w}" height="30" rx="8" fill="#2C4C75"/>' + _t(x + w / 2, 133, n, "tw", extra='style="font-family:var(--mono,monospace);font-size:13px"') + "</g>"
+    # ② 요청 ~ ⑦ 답
+    s += f'<g {d.show(22, 80)}>' + _t(95, 116, "「회의 페이지에서 할 일만」", "ts", extra='style="font-size:13.5px"') + "</g>"
+    s += _flow(d, 22, [(174, 68), (226, 68)], N, "k", "②", 200, 52, span=3)
+    s += _flow(d, 30, [(534, 48), (784, 48)], K, "k", "③ 요청 + 도구 이름", 659, 32)
+    s += _flow(d, 40, [(786, 92), (536, 92)], O, "o", "④ notion-search 호출", 659, 76)
+    s += _flow(d, 50, [(450, 174), (450, 294)], O, "o", "⑤ 호출 전달", 438, 222, "end", span=4)
+    s += _flow(d, 57, [(534, 334), (784, 334)], O, "o", "노션 API", 659, 318, span=4)
+    s += _flow(d, 63, [(786, 372), (536, 372)], OK, "g", "페이지 내용", 659, 390, span=4)
+    s += _flow(d, 69, [(500, 296), (500, 176)], OK, "g", "⑥ 결과", 512, 262, "start", span=4)
+    s += _flow(d, 75, [(534, 140), (784, 140)], OK, "g", "결과를 붙여 다시", 659, 124, span=4)
+    s += _flow(d, 84, [(226, 156), (150, 156), (150, 100)], OK, "g", "⑦ 답", 120, 176, span=4)
+    # 모델과 서버 사이엔 선이 없음
+    s += (f'<g {d.show(90)}><path d="M800 174 L540 296" stroke="{S}" stroke-width="2.5" stroke-dasharray="6 6"/>'
+          f'<circle cx="670" cy="235" r="14" fill="{W}" stroke="{S}" stroke-width="2.5"/><path d="M664 229 L676 241 M676 229 L664 241" stroke="{S}" stroke-width="3"/>'
+          + _t(692, 235, "모델 ↔ 서버 직접 연결 없음", "tn", "start", 'style="font-size:14.5px"') + "</g>")
     return d.svg(1160, 420, s)
