@@ -74,73 +74,89 @@ def _dot(d, pts, color=O, r=10, label=""):
     return f'<g {d.a(stops)}><circle r="{r}" fill="{color}"/>{lab}</g>'
 
 
+# ── 0 배경 · 아는 것과 하는 것 ───────────────────────
+def chat_vs_agent():
+    """같은 요청 · 채팅은 방법만 답하고 일은 사람 손 · 에이전트는 직접 읽고 쓰고 저장. 12초 · 한 번.
+    참고: IBM Technology 「What is OpenClaw?」 00:00~01:35 · Claude Code 문서 「How Claude Code works」."""
+    d = _D("cv", 12)
+    s = ""
+    rows = [(30, "채팅", 2, [("파일 열기", R), ("복사 · 붙여 넣기", R), ("표 만들기", R), ("저장", R)],
+             "「회의록을 열어 할 일을 표로 정리하세요」", "일은 사람 손으로", R),
+            (260, "에이전트", 50, [("Glob 찾기", K), ("Read 읽기", K), ("표 작성", K), ("Write 저장", K)],
+             "도구로 직접 처리", "out/11-10_정리.md", OK)]
+    for y, name, t, steps, reply, end, col in rows:
+        s += _t(20, y + 14, name, "tt", "start", 'style="font-size:22px"')
+        s += (f'<g {d.show(t)}><rect x="20" y="{y + 40}" width="290" height="50" rx="25" fill="{N}"/>'
+              + _t(165, y + 65, "「11/10 회의록 정리해 줘」", "tw", extra='style="font-size:16px"') + "</g>")
+        s += (f'<g {d.show(t + 6)}><path d="M314 {y + 65} H350" stroke="{G}" stroke-width="3" marker-end="url(#{d.id("k")})"/>'
+              f'<rect x="356" y="{y + 40}" width="380" height="50" rx="12" fill="{W}" stroke="{K}" stroke-width="2"/>'
+              + _t(546, y + 65, reply, "tn", extra='style="font-size:15px"') + "</g>")
+        who = "사람" if name == "채팅" else "하네스"
+        s += f'<g {d.show(t + 12)}>' + _t(20, y + 128, who, "tn", "start", f'style="fill:{col if name == "채팅" else K}"') + "</g>"
+        for i, (st, c) in enumerate(steps):
+            x = 90 + i * 162
+            s += (f'<g {d.show(t + 14 + i * 5)}><rect x="{x}" y="{y + 108}" width="148" height="40" rx="10" fill="{W}" stroke="{c}" stroke-width="2.5"/>'
+                  + _t(x + 74, y + 129, st, "tn", extra=f'style="fill:{c}"') + "</g>")
+        s += (f'<g {d.show(t + 36)}><rect x="760" y="{y + 100}" width="380" height="56" rx="14" fill="{"#FDECEA" if col == R else "#E8F5E9"}" stroke="{col}" stroke-width="2.5"/>'
+              + _t(950, y + 129, end, "tt", extra=f'style="fill:{col};font-size:19px"') + "</g>")
+    s += f'<line x1="20" y1="232" x2="1140" y2="232" stroke="{G}" stroke-width="2" stroke-dasharray="6 6"/>'
+    return d.svg(1160, 430, s)
+
+
 # ── 1 에이전트 루프 ─────────────────────────────────
 def agent_loop():
-    """모델은 다음 행동을 글로 씀 → 하네스가 실제로 실행 → 결과를 붙여 다시 모델로.
-    도구 호출이 없으면 끝. 아래 줄: 회차마다 처음부터 다시 읽는 컨텍스트가 길어짐. 18초 · 한 번."""
-    d = _D("lp", 18)
+    """컨텍스트 조립(하네스) → 모델 판단 → 도구 필요? → 도구 실행(하네스) → 결과를 붙여 다시 조립 · 아니오면 답.
+    상자를 하나씩 그려 고리를 닫고(0~24%), 점이 세 바퀴(Glob · Read · Write) 돈 뒤 고리 밖으로. 20초 · 한 번.
+    참고: Claude Code 「How Claude Code works」 · IBM 「What is OpenClaw?」 · IBM 「AI Model vs Agentic Harness」 · Nate Herk 「Agent Loops Clearly Explained」."""
+    d = _D("lp", 20)
     s = ""
-    # 사용자 요청
-    s += (f'<g {d.show(1)}><rect x="40" y="16" width="300" height="50" rx="25" fill="{N}"/>'
-          + _t(190, 41, "「11/10 회의록 정리해 줘」", "tw", extra='style="font-size:17px"') + "</g>")
-    s += f'<path d="M190 66 V96" stroke="{N}" stroke-width="3" marker-end="url(#{d.id("k")})"/>'
-    # 모델
-    s += f'<rect x="40" y="100" width="300" height="190" rx="18" fill="{W}" stroke="{K}" stroke-width="3"/>'
-    s += _t(190, 140, "Claude 모델", "tt", extra='style="font-size:22px"') + _t(190, 170, "다음 행동을 글로 씀", "ts")
-    # 하네스
-    s += f'<rect x="560" y="100" width="300" height="190" rx="18" fill="{K}"/>'
-    s += _t(710, 140, "Claude Code", "tw", extra='style="font-size:22px"') + _t(710, 170, "하네스 · 실제로 실행", "tw", extra='style="font-weight:500;fill:#C9D3E0"')
+    MO = "#FFF3E6"
+    # 상자 · 화살표 차례로 그림
+    s += f'<g {d.show(1)}><rect x="20" y="70" width="150" height="56" rx="28" fill="{N}"/>' + _t(95, 98, "요청", "tw", extra='style="font-size:18px"') + "</g>"
+    s += f'<g {d.show(3)}><path d="M174 98 H226" stroke="{N}" stroke-width="3.5" marker-end="url(#{d.id("k")})"/></g>'
+    s += (f'<g {d.show(4)}><rect x="232" y="30" width="290" height="140" rx="16" fill="{K}"/>'
+          + _t(377, 62, "컨텍스트 조립", "tw", extra='style="font-size:21px"') + _t(377, 88, "하네스 · 요청 + 지금까지의 결과", "tw", extra='style="font-weight:500;fill:#C9D3E0;font-size:14px"') + "</g>")
+    s += f'<g {d.show(7)}><path d="M526 100 H636" stroke="{K}" stroke-width="3.5" marker-end="url(#{d.id("k")})"/>' + _t(581, 84, "전체를 보냄", "ts", extra='style="font-size:13px"') + "</g>"
+    s += (f'<g {d.show(8)}><rect x="642" y="30" width="260" height="140" rx="16" fill="{MO}" stroke="{O}" stroke-width="3"/>'
+          + _t(772, 82, "모델 판단", "tt", extra='style="font-size:22px"') + _t(772, 112, "다음 행동 고르기", "ts") + "</g>")
+    s += f'<g {d.show(11)}><path d="M772 174 V214" stroke="{O}" stroke-width="3.5" marker-end="url(#{d.id("o")})"/></g>'
+    s += (f'<g {d.show(12)}><path d="M772 220 L852 262 L772 304 L692 262 Z" fill="{W}" stroke="{O}" stroke-width="3"/>'
+          + _t(772, 263, "도구 필요?", "tn", extra='style="font-size:16px"') + "</g>")
+    s += (f'<g {d.show(15)}><path d="M772 308 V372 H526" fill="none" stroke="{O}" stroke-width="3.5" marker-end="url(#{d.id("o")})"/>'
+          + _t(786, 334, "예 · 도구 호출", "to", "start") + "</g>")
+    s += (f'<g {d.show(16)}><rect x="232" y="320" width="290" height="110" rx="16" fill="{K}"/>'
+          + _t(377, 346, "도구 실행", "tw", extra='style="font-size:21px"') + _t(377, 368, "하네스", "tw", extra='style="font-weight:500;fill:#C9D3E0;font-size:14px"') + "</g>")
     chips = {}
     for i, n in enumerate(("Glob", "Read", "Write")):
-        x = 585 + i * 88
+        x = 256 + i * 82
         chips[n] = x
-        s += f'<rect x="{x}" y="215" width="76" height="40" rx="10" fill="#2C4C75"/>' + _t(x + 38, 236, n, "tw", extra='style="font-family:var(--mono,monospace)"')
-    # 내 폴더
-    s += f'<rect x="900" y="100" width="240" height="190" rx="18" fill="{BG}" stroke="{G}" stroke-width="2"/>' + _t(920, 124, "내 폴더", "tn", "start")
-    files = [("원본/11-03_주간회의", 156), ("원본/11-05_프로모션", 186), ("원본/11-10_주간회의", 216)]
-    for n, y in files:
-        s += f'<rect x="916" y="{y - 13}" width="208" height="26" rx="6" fill="{W}" stroke="{G}"/>' + _t(928, y, n, "tm", "start", 'style="font-size:13px"')
-    s += (f'<g {d.show(62)}><rect x="916" y="{259}" width="208" height="26" rx="6" fill="#E8F5E9" stroke="{OK}" stroke-width="2"/>'
-          + _t(928, 272, "out/11-10_정리.md", "tm", "start", f'style="font-size:13px;fill:{OK}"') + "</g>")
-    s += f'<path d="M864 195 H896" stroke="{G}" stroke-width="3"/>'
-    # 화살표 두 줄
-    dim = d.a([(0, "opacity:1"), (73, "opacity:1"), (76, "opacity:.15"), (100, "opacity:.15")])
-    s += (f'<g {dim}><path d="M344 150 H552" stroke="{O}" stroke-width="3.5" marker-end="url(#{d.id("o")})"/>'
-          f'<path d="M556 248 H348" stroke="{OK}" stroke-width="3.5" marker-end="url(#{d.id("g")})"/></g>')
+        s += f'<g {d.show(17)}><rect x="{x}" y="388" width="74" height="30" rx="8" fill="#2C4C75"/>' + _t(x + 37, 404, n, "tw", extra='style="font-family:var(--mono,monospace);font-size:14px"') + "</g>"
+    # 고리를 닫는 화살표 (마지막에)
+    s += (f'<g {d.show(21)}><path d="M300 316 V174" stroke="{OK}" stroke-width="4" marker-end="url(#{d.id("g")})"/>'
+          + _t(186, 245, "결과를 붙임", "tn", extra=f'style="fill:{OK};font-size:16px"') + "</g>")
+    s += (f'<g {d.show(19)}><path d="M856 262 H930" stroke="{N}" stroke-width="3.5" marker-end="url(#{d.id("k")})"/>' + _t(893, 246, "아니오", "tn")
+          + f'<rect x="936" y="226" width="200" height="72" rx="14" fill="{W}" stroke="{N}" stroke-width="2.5"/>' + _t(1036, 262, "답 → 사용자", "tt") + "</g>")
+    # 컨텍스트 칩 (요청 + 결과)
+    s += f'<g {d.show(5)}><rect x="250" y="116" width="58" height="34" rx="8" fill="{N}"/>' + _t(279, 133, "요청", "tw", extra='style="font-size:14px"') + "</g>"
 
-    rounds = [(6, "Glob 원본/*.md", "Glob", [156, 186, 216], "파일 3개"),
-              (28, "Read 11-10_주간회의.md", "Read", [216], "본문 · 할 일 5건"),
-              (50, "Write out/11-10_정리.md", "Write", [], "저장 완료")]
-    for i, (T, call, tool, hl, res) in enumerate(rounds):
-        end = T + 21
-        s += f'<g {d.show(T, end)}>' + _t(190, 236, f"{i + 1}회차", "to", extra='style="font-size:24px"') + "</g>"
-        s += f'<g {d.show(T + 2, end)}>' + _t(450, 128, call, "tm", extra='style="font-size:14.5px"') + "</g>"
-        s += _dot(d, [(0, 344, 150, 0), (T + 2, 344, 150, 0), (T + 2.5, 344, 150, 1), (T + 8, 552, 150, 1), (T + 8.5, 552, 150, 0), (100, 552, 150, 0)], color=O, r=9)
+    C, M, DM, DN, EX = (377, 100), (772, 100), (772, 262), (772, 372), (377, 372)
+    T = [26, 41, 56]
+    pts = [(0, *C, 0), (T[0] - .5, *C, 0)]
+    for i, (t0, tool) in enumerate(zip(T, ("Glob", "Read", "Write"))):
+        pts += [(t0, *C, 1), (t0 + 3, *M, 1), (t0 + 6, *DM, 1), (t0 + 8, *DN, 1), (t0 + 11, *EX, 1), (t0 + 14, 300, 372, 1), (t0 + 15, 300, 120, 1)]
+        s += f'<path d="M772 220 L852 262 L772 304 L692 262 Z" fill="{O}" fill-opacity=".25" {d.show(t0 + 5, t0 + 8)}/>'
         x = chips[tool]
-        s += f'<rect x="{x}" y="215" width="76" height="40" rx="10" fill="{O}" {d.show(T + 8, T + 13)}/>'
-        s += f'<g {d.show(T + 8, T + 13)}>' + _t(x + 38, 236, tool, "tw", extra='style="font-family:var(--mono,monospace)"') + "</g>"
-        for y in hl:
-            s += f'<rect x="914" y="{y - 15}" width="212" height="30" rx="7" fill="none" stroke="{O}" stroke-width="3" {d.show(T + 9, T + 14)}/>'
-        s += _dot(d, [(0, 552, 248, 0), (T + 12, 552, 248, 0), (T + 12.5, 552, 248, 1), (T + 18, 348, 248, 1), (T + 18.5, 348, 248, 0), (100, 348, 248, 0)], color=OK, r=9)
-        s += f'<g {d.show(T + 13, end)}>' + _t(450, 272, res, "tn", extra=f'style="font-size:15px;fill:{OK}"') + "</g>"
-    # 끝 · 도구 호출 없음
-    s += f'<g {d.show(72)}>' + _t(190, 236, "4회차", "to", extra='style="font-size:24px"') + "</g>"
-    s += f'<g {d.show(75)}>' + _t(450, 128, "도구 호출 없음", "to", extra='style="font-size:15px"') + "</g>"
-
-    # 컨텍스트 줄
-    s += _t(40, 330, "컨텍스트 · 회차마다 처음부터 다시 읽음", "tn", "start")
-    blocks = [(1, "요청", 70, N), (8, "호출", 64, O), (22, "결과", 64, OK), (30, "호출", 64, O), (44, "결과 · 회의록 본문", 250, OK),
-              (52, "호출", 64, O), (66, "결과", 64, OK), (80, "답", 70, K)]
-    x = 40
-    for t, lab, w, col in blocks:
-        s += (f'<g {d.show(t)}><rect x="{x}" y="350" width="{w - 4}" height="40" rx="8" fill="{col}"/>'
-              + _t(x + (w - 4) / 2, 371, lab, "tw", extra='style="font-size:14px"') + "</g>")
-        x += w
-    # 답
-    s += (f'<g {d.show(82)}><rect x="40" y="410" width="560" height="46" rx="12" fill="{W}" stroke="{N}" stroke-width="2"/>'
-          + _t(60, 433, "답 · 할 일 5건 · 담당 · 기한 표 → out/11-10_정리.md", "tn", "start", 'style="font-size:16px"')
-          + _t(620, 433, "도구 호출이 없으면 루프 끝", "to", "start", 'style="font-size:17px"') + "</g>")
-    return d.svg(1160, 470, s)
+        s += f'<g {d.show(t0 + 10, t0 + 14)}><rect x="{x}" y="388" width="74" height="30" rx="8" fill="{O}"/>' + _t(x + 37, 404, tool, "tw", extra='style="font-family:var(--mono,monospace);font-size:14px"') + "</g>"
+        cx = 316 + i * 64
+        s += f'<g {d.show(t0 + 14)}><rect x="{cx}" y="116" width="58" height="34" rx="8" fill="{OK}"/>' + _t(cx + 29, 133, f"결과{i + 1}", "tw", extra='style="font-size:14px"') + "</g>"
+    pts += [(71, *C, 1), (74, *M, 1), (77, *DM, 1), (81, 930, 262, 1), (82, 930, 262, 0), (100, 930, 262, 0)]
+    s += _dot(d, pts, color=O, r=11)
+    s += f'<path d="M772 220 L852 262 L772 304 L692 262 Z" fill="{N}" fill-opacity=".12" {d.show(76)}/>'
+    s += f'<g {d.show(82)}><rect x="936" y="226" width="200" height="72" rx="14" fill="#E8F5E9" stroke="{OK}" stroke-width="3"/>' + _t(1036, 262, "답 → 사용자", "tt", extra=f'style="fill:{OK}"') + "</g>"
+    # 범례
+    s += (f'<g {d.show(86)}><rect x="642" y="400" width="22" height="22" rx="5" fill="{MO}" stroke="{O}" stroke-width="2.5"/>' + _t(672, 412, "모델 · 판단", "tn", "start")
+          + f'<rect x="800" y="400" width="22" height="22" rx="5" fill="{K}"/>' + _t(830, 412, "하네스 · 조립 · 실행", "tn", "start") + "</g>")
+    return d.svg(1160, 440, s)
 
 
 # ── 2 컨텍스트가 쌓이는 모습 ─────────────────────────

@@ -108,8 +108,15 @@ def agenda():
 def s31():
     t = "3-1"
     return [divider("01", "하네스 엔지니어링", "")] + [
+        light("아는 것과 하는 것", anim.chat_vs_agent()
+              + note("참고", "IBM Technology 「What is OpenClaw?」 · Claude Code 문서 「How Claude Code works」 — 도구가 없으면 글로만 답함"), t),
+        light("신입 인턴 비유", viz2.maprows([
+            ("팀장의 지시", "사용자 요청", ""), ("다음 할 일을 머리로 정함", "모델 판단", "무엇을 먼저 볼지 · 어떤 도구를 쓸지"),
+            ("컴퓨터 · 파일로 직접 처리", "하네스가 도구 실행", "찾기 · 읽기 · 저장"), ("결과를 보고 다음 할 일", "결과가 컨텍스트에 붙음", "다음 판단의 재료"),
+            ("다 됐으면 보고", "도구 호출 없음 → 답", "루프 끝")], "인턴", "에이전트"), t),
         pick("에이전트의 구조", t),
-        light("에이전트 루프", anim.agent_loop(), t),
+        light("에이전트 루프", anim.agent_loop()
+              + note("참고", "Claude Code 「How Claude Code works」 · IBM Technology 「What is OpenClaw?」 · Nate Herk 「Agent Loops Clearly Explained」"), t),
         pick("채팅 → 에이전트 → 하네스", t),
         pick("프롬프트 · 컨텍스트 · 하네스 선택 기준", t),
         pick("Harness = 마구(馬具)", t),
