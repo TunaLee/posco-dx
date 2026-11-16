@@ -84,50 +84,11 @@ def build_vibe3():
     out = Path(os.environ["V3_OUT"]) if os.environ.get("V3_OUT") else ROOT / "docs" / "vibe3.html"
     out.write_text(html)
     print(out, len(parts) - 1, "장")
-    if os.environ.get("V3_OUT") or os.environ.get("V3_ONLY"):
-        return
-    # 단원별 파일 — docs/vibe3-N.html (표지 + 그 차시 장)
-    import importlib
-    import v3kit
-    for i, (c, t, _) in enumerate(v3kit.AGENDA, 1):
-        mod = importlib.import_module(f"v3_c{i}")
-        cov = v3kit.cover().replace("바이브코딩 · 3", f"바이브코딩 · {c}").replace("하네스 엔지니어링<br/>· 내 업무 에이전트", t)
-        p = [art.DEFS, cov] + mod.slides()
-        o = ROOT / "docs" / f"vibe3-{i}.html"
-        o.write_text(tpl.replace("{{DECK_TITLE}}", f"{c} {t}").replace("{{SLIDES}}", "\n\n".join(p)))
-        print(o.name, len(p) - 1, "장")
-
-
-def build_vibe1():
-    """바이브코딩 온라인 강의 1부 — 단원마다 한 파일 → docs/vibe1-N.html (V1_ONLY=3,6 으로 일부만)."""
-    import importlib
-    import v1kit
-    import v3kit
-    only = [x for x in os.environ.get("V1_ONLY", "").split(",") if x]
-    base = (ROOT / "src" / "template.html").read_text()
-    css0 = intro.CSS + explain.CSS + deck.CSS + deck_gas.CSS + hx.CSS + stats_hx.CSS + hx.mcp_fig.CSS + hx.viz2.CSS + v3kit.CSS + v1kit.CSS
-    for i, (u, title, _, _) in enumerate(v1kit.UNITS, 1):
-        if only and str(i) not in only:
-            continue
-        try:
-            mod = importlib.import_module(f"v1_u{i}")
-        except ModuleNotFoundError as e:
-            if e.name != f"v1_u{i}":
-                raise
-            continue
-        parts = [art.DEFS, v1kit.cover(u), v1kit.roadmap(u)] + mod.slides() + [v1kit.nextup(u)]
-        tpl = base.replace("</style>", css0 + getattr(mod, "CSS", "") + "</style>", 1)
-        out = ROOT / "docs" / v1kit.file_of(u)
-        out.write_text(tpl.replace("{{DECK_TITLE}}", f"{u} {title}").replace("{{SLIDES}}", "\n\n".join(parts)))
-        print(out.name, len(parts) - 1, "장")
 
 
 if __name__ == "__main__":
     if sys.argv[1:] == ["vibe3"]:
         build_vibe3()
-    elif sys.argv[1:] == ["vibe1"]:
-        build_vibe1()
     else:
         build()
         build_vibe3()
-        build_vibe1()
