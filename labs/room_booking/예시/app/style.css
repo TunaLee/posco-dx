@@ -1,0 +1,33 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; background: #f5f6f8; color: #1d2733; }
+header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 16px 20px; background: #fff; border-bottom: 1px solid #e3e6ea; }
+h1 { font-size: 20px; margin: 0; }
+.date { display: flex; gap: 6px; align-items: center; }
+.date input { font: inherit; padding: 6px 8px; border: 1px solid #cfd5dc; border-radius: 8px; }
+button { font: inherit; padding: 6px 12px; border: 1px solid #cfd5dc; border-radius: 8px; background: #fff; cursor: pointer; }
+button.primary { background: #2563eb; border-color: #2563eb; color: #fff; }
+button.danger { background: #dc2626; border-color: #dc2626; color: #fff; }
+main { padding: 16px; }
+
+.grid { display: grid; grid-template-columns: 56px repeat(3, minmax(0, 1fr)); background: #fff; border: 1px solid #e3e6ea; border-radius: 12px; overflow: hidden; }
+.grid .head { position: sticky; top: 0; background: #f0f3f7; font-weight: 700; font-size: 14px; padding: 10px 6px; text-align: center; border-bottom: 1px solid #e3e6ea; }
+.grid .time { font-size: 12px; color: #6b7785; padding: 4px 6px; text-align: right; border-top: 1px solid #f0f2f5; height: 34px; }
+.grid .cell { border-top: 1px solid #f0f2f5; border-left: 1px solid #f0f2f5; height: 34px; cursor: pointer; position: relative; }
+.grid .cell:hover { background: #eef4ff; }
+.grid .cell.busy { background: #dbe7ff; cursor: pointer; }
+.grid .cell.first { border-top: 2px solid #2563eb; }
+.grid .cell .tag { position: absolute; inset: 2px 6px; font-size: 12px; line-height: 1.3; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: #1e3a8a; }
+
+dialog { border: none; border-radius: 14px; padding: 20px; width: min(360px, 92vw); box-shadow: 0 10px 40px rgba(0,0,0,.2); }
+dialog h2 { margin: 0 0 12px; font-size: 18px; }
+label { display: block; font-size: 14px; margin-bottom: 10px; }
+label input, label select { display: block; width: 100%; margin-top: 4px; font: inherit; padding: 8px; border: 1px solid #cfd5dc; border-radius: 8px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.err { color: #dc2626; font-size: 14px; min-height: 20px; margin: 4px 0 8px; }
+.btns { display: flex; justify-content: flex-end; gap: 8px; }
+
+@media (max-width: 480px) {
+  .grid { grid-template-columns: 44px repeat(3, minmax(0, 1fr)); }
+  .grid .head { font-size: 12px; }
+  .grid .cell .tag { font-size: 11px; inset: 2px 3px; }
+}

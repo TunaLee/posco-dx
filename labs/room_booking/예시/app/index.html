@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>회의실 예약</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>회의실 예약</h1>
+    <div class="date">
+      <button id="prev" aria-label="이전 날">◀</button>
+      <input type="date" id="day" />
+      <button id="next" aria-label="다음 날">▶</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <dialog id="form">
+    <form method="dialog" id="bookForm">
+      <h2 id="formTitle">예약</h2>
+      <label>이름 <input name="who" required placeholder="김하늘" /></label>
+      <label>회의 이름 <input name="title" required placeholder="주간 회의" /></label>
+      <div class="row">
+        <label>시작 <select name="start"></select></label>
+        <label>끝 <select name="end"></select></label>
+      </div>
+      <p id="err" class="err"></p>
+      <div class="btns">
+        <button type="button" id="close">닫기</button>
+        <button type="submit" class="primary">저장</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="detail">
+    <h2 id="dTitle"></h2>
+    <p id="dInfo"></p>
+    <div class="btns">
+      <button type="button" id="dClose">닫기</button>
+      <button type="button" id="dCancel" class="danger">예약 취소</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
